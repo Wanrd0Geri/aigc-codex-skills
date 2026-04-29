@@ -1,0 +1,7 @@
+interface:
+  display_name: "Seedance Prompt Master"
+  short_description: "生成和优化 Seedance 2.0 专业视频提示词"
+  default_prompt: "Use $seedance-prompt-master to 帮我把这个想法改写成 Seedance 2.0 可直接使用的视频提示词。"
+
+policy:
+  allow_implicit_invocation: true

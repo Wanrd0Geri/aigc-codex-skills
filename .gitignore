@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
+*.zip
+*.skill
+skill-review-*/
+github-cinematic-storyboard-enhancer/
+__pycache__/
+*.pyc

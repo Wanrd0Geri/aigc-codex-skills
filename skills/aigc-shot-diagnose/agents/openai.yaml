@@ -1,0 +1,7 @@
+interface:
+  display_name: "AIGC Shot Diagnose"
+  short_description: "Diagnose why an AIGC image or frame feels weak."
+  default_prompt: "Use $aigc-shot-diagnose to explain why this AIGC image or frame feels wrong and what to fix first."
+
+policy:
+  allow_implicit_invocation: true

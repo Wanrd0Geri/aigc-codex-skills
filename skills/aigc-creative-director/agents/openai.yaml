@@ -1,0 +1,7 @@
+interface:
+  display_name: "AIGC Creative Director"
+  short_description: "Shape AIGC short film ideas into director-level creative plans."
+  default_prompt: "Use $aigc-creative-director to turn my AIGC short film idea into a clear creative direction and shot strategy."
+
+policy:
+  allow_implicit_invocation: true

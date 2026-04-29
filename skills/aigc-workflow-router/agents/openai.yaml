@@ -1,0 +1,7 @@
+interface:
+  display_name: "AIGC Workflow Router"
+  short_description: "Route AIGC creative requests to the right production skill."
+  default_prompt: "Use $aigc-workflow-router to decide the right AIGC creative workflow and next action."
+
+policy:
+  allow_implicit_invocation: true
