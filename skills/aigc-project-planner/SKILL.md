@@ -1,9 +1,9 @@
----
-name: aigc-workflow-router
-description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route those directly to aigc-shot-diagnose, aigc-creative-director, cinematic-storyboard-enhancer, or seedance-prompt-master.
+﻿---
+name: aigc-project-planner
+description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route those directly to aigc-visual-diagnose, aigc-creative-director, aigc-image-edit-prompt, or aigc-seedance-prompt.
 ---
 
-# AIGC Workflow Router
+# AIGC Project Planner
 
 Use this skill as the production coordinator for AIGC film, animation, short video, and cinematic image work when the task spans a whole project, multiple shots, or multiple production stages.
 
@@ -17,9 +17,9 @@ Choose one primary path. Do not run every skill at once.
 - **Multi-shot sequence with unclear order**: map stages first, then hand off the next concrete task.
 - **Multiple assets with unclear roles**: define asset roles before handing off.
 - **Idea, script, scene, or mood without a clear shooting plan**: use `aigc-creative-director`.
-- **Uploaded image/frame feels wrong, ugly, flat, AI-looking, or the user cannot name the problem**: use `aigc-shot-diagnose`.
-- **Image/keyframe already needs a ready image-to-image edit prompt for Nano Banana series, ChatGPT image editor series, or another image editor**: use `cinematic-storyboard-enhancer`.
-- **Seedance series, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, video extension, video editing, or shot-bridge prompt**: use `seedance-prompt-master`.
+- **Uploaded image/frame feels wrong, ugly, flat, AI-looking, or the user cannot name the problem**: use `aigc-visual-diagnose`.
+- **Image/keyframe already needs a ready image-to-image edit prompt for Nano Banana series, ChatGPT image editor series, or another image editor**: use `aigc-image-edit-prompt`.
+- **Seedance series, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, video extension, video editing, or shot-bridge prompt**: use `aigc-seedance-prompt`.
 
 If multiple paths apply, pick the earliest unresolved creative bottleneck:
 1. Intent and story problem.
@@ -51,7 +51,7 @@ Use this structure for routing or project-flow requests:
 [Concrete action: answer 1-3 questions, upload asset, diagnose image, produce shot plan, or draft Seedance prompt.]
 
 ## 执行提示
-[A ready sentence the user can send next, such as "Use $aigc-shot-diagnose...".]
+[A ready sentence the user can send next, such as "Use $aigc-visual-diagnose...".]
 ```
 
 For whole-project planning, include a compact pipeline:
@@ -65,9 +65,9 @@ For whole-project planning, include a compact pipeline:
 When handing off, preserve the decision context:
 
 - To `aigc-creative-director`: provide theme, audience/platform, duration, protagonist, conflict, mood, and reference style if known.
-- To `aigc-shot-diagnose`: provide the image/frame plus the user's target feeling and what they already like.
-- To `cinematic-storyboard-enhancer`: provide what must be preserved, target model, and the top visual problems to fix.
-- To `seedance-prompt-master`: provide shot goal, duration, reference asset roles, start/end state, motion, camera behavior, and continuity constraints.
+- To `aigc-visual-diagnose`: provide the image/frame plus the user's target feeling and what they already like.
+- To `aigc-image-edit-prompt`: provide what must be preserved, target model, and the top visual problems to fix.
+- To `aigc-seedance-prompt`: provide shot goal, duration, reference asset roles, start/end state, motion, camera behavior, and continuity constraints.
 
 ## Avoid
 

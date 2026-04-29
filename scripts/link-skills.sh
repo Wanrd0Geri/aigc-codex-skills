@@ -41,6 +41,30 @@ mkdir -p "$CODEX_SKILLS_DIR"
 echo "Linking skills from $SKILLS_ROOT"
 echo "Target Codex skills directory: $CODEX_SKILLS_DIR"
 
+LEGACY_SKILLS=(
+  "aigc-workflow-router"
+  "aigc-shot-diagnose"
+  "cinematic-storyboard-enhancer"
+  "seedance-prompt-master"
+)
+
+for name in "${LEGACY_SKILLS[@]}"; do
+  legacy_path="$CODEX_SKILLS_DIR/$name"
+  if [[ -L "$legacy_path" ]]; then
+    rm "$legacy_path"
+    echo "Removed legacy skill link: $name"
+  elif [[ -e "$legacy_path" ]]; then
+    if [[ "$FORCE" -ne 1 ]]; then
+      echo "Legacy skill exists as a real directory: $legacy_path. Re-run with --force to back it up." >&2
+      continue
+    fi
+
+    backup="${legacy_path}.backup-$(date +%Y%m%d-%H%M%S)"
+    mv "$legacy_path" "$backup"
+    echo "Backed up legacy skill directory to: $backup"
+  fi
+done
+
 for source in "$SKILLS_ROOT"/*; do
   [[ -d "$source" ]] || continue
   name="$(basename "$source")"

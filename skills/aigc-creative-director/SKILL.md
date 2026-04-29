@@ -1,4 +1,4 @@
----
+﻿---
 name: aigc-creative-director
 description: Develop AIGC short-film, animation, cinematic video, storyboard, and keyframe ideas with director-level judgment. Use when the user has a vague concept, script, scene, character, theme, mood, or reference and asks "怎么拍", "怎么做成短片", "帮我设计镜头", "帮我做分镜", "这个想法怎么高级一点", "导演角度看看", "美术/摄影方向怎么定", or needs creative brief, story logic, emotional beat, blocking, visual strategy, and shot plan before prompt writing.
 ---
@@ -85,9 +85,9 @@ End with the next practical artifact:
 
 - For planning: output a brief and shot strategy.
 - For storyboards/keyframes: output a shot list with image intent.
-- For still-frame review: hand off to `aigc-shot-diagnose`.
-- For image-to-image repair prompts: hand off to `cinematic-storyboard-enhancer`.
-- For Seedance video prompts: hand off to `seedance-prompt-master` with duration, shot goal, reference roles, motion, camera, start state, end state, and stability constraints.
+- For still-frame review: hand off to `aigc-visual-diagnose`.
+- For image-to-image repair prompts: hand off to `aigc-image-edit-prompt`.
+- For Seedance video prompts: hand off to `aigc-seedance-prompt` with duration, shot goal, reference roles, motion, camera, start state, end state, and stability constraints.
 
 ## Output Structure
 

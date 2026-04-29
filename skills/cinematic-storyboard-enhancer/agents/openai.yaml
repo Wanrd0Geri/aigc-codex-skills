@@ -1,7 +1,0 @@
-interface:
-  display_name: "Cinematic Storyboard Enhancer"
-  short_description: "Diagnose flat AI storyboards and write cinematic edit prompts."
-  default_prompt: "用 $cinematic-storyboard-enhancer 诊断这张关键帧，并写一份适合图像编辑器的中英双语电影感修图 prompt。"
-
-policy:
-  allow_implicit_invocation: true

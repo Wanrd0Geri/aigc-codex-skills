@@ -1,0 +1,7 @@
+﻿interface:
+  display_name: "AIGC Image Edit Prompt"
+  short_description: "Write cinematic image-edit prompts for AIGC keyframes."
+  default_prompt: "用 $aigc-image-edit-prompt 诊断这张关键帧，并写一份适合图像编辑器的中英双语电影感修图 prompt。"
+
+policy:
+  allow_implicit_invocation: true

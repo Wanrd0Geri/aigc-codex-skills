@@ -1,9 +1,9 @@
----
-name: aigc-shot-diagnose
+﻿---
+name: aigc-visual-diagnose
 description: Diagnose uploaded AIGC images, video frames, storyboards, keyframes, concept art, or generated stills when the user says the result feels wrong, ugly, flat, cheap, AI-looking, not cinematic, poorly composed, badly lit, visually inconsistent, or uses phrases like "不好看", "说不上来哪里怪", "AI味重", "不高级", "不电影感", "构图怪", "光影乱", "人物没融入画面", "质感差", "画面很平". Analyze from director, cinematography, production design, storyboard/editing, and AIGC generation-control perspectives, then rank what to fix first.
 ---
 
-# AIGC Shot Diagnose
+# AIGC Visual Diagnose
 
 Use this skill when the user has an image or frame that feels weak but they cannot name why. Diagnose before writing prompts. The goal is to teach the visual problem and identify the highest-leverage fixes.
 
@@ -49,8 +49,8 @@ Read `references/production-design-dimensions.md` when the image feels AI-lookin
 ### 5. Choose the Next Handoff
 
 - If the user wants to understand the problem only, stop after diagnosis and next steps.
-- If they want an image-to-image repair prompt, hand off to `cinematic-storyboard-enhancer`.
-- If they want the frame to become a Seedance video shot, hand off to `seedance-prompt-master`.
+- If they want an image-to-image repair prompt, hand off to `aigc-image-edit-prompt`.
+- If they want the frame to become a Seedance video shot, hand off to `aigc-seedance-prompt`.
 - If the concept itself is weak, hand off to `aigc-creative-director`.
 
 ## Output Structure
@@ -74,7 +74,7 @@ Use this structure:
 [Which specialized skill or action should follow.]
 ```
 
-If the user asks for a repair prompt, says they want to continue into image editing, or the natural next step is `cinematic-storyboard-enhancer`, add this handoff block:
+If the user asks for a repair prompt, says they want to continue into image editing, or the natural next step is `aigc-image-edit-prompt`, add this handoff block:
 
 ```markdown
 ## 给修图 prompt 的交接摘要

@@ -1,9 +1,9 @@
----
-name: cinematic-storyboard-enhancer
-description: Write bilingual image-to-image edit prompts for Nano Banana series (currently Nano Banana Pro / Gemini image editor) or ChatGPT image editor series (currently ChatGPT Images 2.0) after diagnosing why a storyboard, keyframe, concept art, or AI still lacks cinematic quality, while preserving the subject. Use when the user has an image and explicitly wants an edit prompt, image repair prompt, cinematic enhancement prompt, color/lighting prompt, Nano Banana prompt, ChatGPT Images prompt, OpenAI image prompt, Gemini image prompt, or before/after cinematic transformation. If the user only says the image feels wrong, ugly, AI-looking, or "说不上来哪里怪" and does not ask for an edit prompt yet, prefer aigc-shot-diagnose first.
+﻿---
+name: aigc-image-edit-prompt
+description: Write bilingual image-to-image edit prompts for Nano Banana series (currently Nano Banana Pro / Gemini image editor) or ChatGPT image editor series (currently ChatGPT Images 2.0) after diagnosing why a storyboard, keyframe, concept art, or AI still lacks cinematic quality, while preserving the subject. Use when the user has an image and explicitly wants an edit prompt, image repair prompt, cinematic enhancement prompt, color/lighting prompt, Nano Banana prompt, ChatGPT Images prompt, OpenAI image prompt, Gemini image prompt, or before/after cinematic transformation. If the user only says the image feels wrong, ugly, AI-looking, or "说不上来哪里怪" and does not ask for an edit prompt yet, prefer aigc-visual-diagnose first.
 ---
 
-# Cinematic Storyboard Enhancer
+# AIGC Image Edit Prompt
 
 This skill turns a flat-looking storyboard or AI-generated still into a cinematic frame by **diagnosing what's wrong**, then **writing a precise image-to-image prompt** that fixes it while preserving the subject the user already likes.
 
@@ -11,7 +11,7 @@ This skill turns a flat-looking storyboard or AI-generated still into a cinemati
 
 The user has an image (usually a storyboard panel, keyframe, or AI-generated still) that *almost* works but feels uncinematic — washed out, lit wrong, color-polluted, with subjects that look pasted on top of the background. They want a prompt they can paste into **Nano Banana series** or **ChatGPT image editor series** to fix it.
 
-If the user only wants to understand why an image feels wrong and has not asked for a ready edit prompt, route the task to `aigc-shot-diagnose` first.
+If the user only wants to understand why an image feels wrong and has not asked for a ready edit prompt, route the task to `aigc-visual-diagnose` first.
 
 The user does NOT want you to redraw the image yourself. They want a **diagnosis report + a ready-to-paste prompt**.
 
@@ -38,7 +38,7 @@ Before diagnosing anything, describe what's actually in the frame, neutrally. Th
 
 If the user uploaded a **second image as a reference target**, do this same neutral read for it too, then explicitly note 5-8 differences. Those differences become the transformation list.
 
-If the user provides a handoff block from `aigc-shot-diagnose`, use it as the starting diagnosis. Verify it against the image, correct only obvious mismatches, and avoid repeating a full diagnosis unless the handoff is missing or clearly insufficient.
+If the user provides a handoff block from `aigc-visual-diagnose`, use it as the starting diagnosis. Verify it against the image, correct only obvious mismatches, and avoid repeating a full diagnosis unless the handoff is missing or clearly insufficient.
 
 ### Step 2 — Diagnose against the 8 cinematic dimensions
 
