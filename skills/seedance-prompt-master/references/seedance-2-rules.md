@@ -4,7 +4,7 @@ Use these rules when drafting the final Seedance prompt.
 
 ## Official Notes And Platform Defaults
 
-- Seedance 2.0 / Seedance 2.0 Fast workflows may include text-to-video, image-to-video, multimodal references, video editing, video extension, and shot continuation. Confirm platform-specific UI/API limits when the user targets a specific provider.
+- Seedance series workflows may include text-to-video, image-to-video, multimodal references, video editing, video extension, and shot continuation. The current rules are based on Seedance 2.0 / 2.0 Fast; confirm platform-specific UI/API limits when the user targets a specific provider or later version.
 - Common generation settings such as resolution and aspect ratio are selected in the platform UI. Do not write aspect ratio, frame ratio, or canvas ratio in the final prompt unless the user explicitly asks to include it. Use the user's requested segment duration when provided. For long-form work, generate connected segments and split only when the target platform's duration limit requires it.
 - Treat real recognizable human faces, celebrity likeness, trademarked characters, and protected IP cautiously. If the user references such material, keep the prompt generic or ask for rights-safe handling when needed.
 - Do not expose asset IDs as visual subjects. Build a semantic bridge from each reference asset to its visual role.

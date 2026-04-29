@@ -1,6 +1,6 @@
 ---
 name: cinematic-storyboard-enhancer
-description: Write bilingual image-to-image edit prompts for Nano Banana Pro or ChatGPT Images 2.0 after diagnosing why a storyboard, keyframe, concept art, or AI still lacks cinematic quality, while preserving the subject. Use when the user has an image and explicitly wants an edit prompt, image repair prompt, cinematic enhancement prompt, color/lighting prompt, Nano Banana Pro prompt, ChatGPT Images 2.0 prompt, or before/after cinematic transformation. If the user only says the image feels wrong, ugly, AI-looking, or "说不上来哪里怪" and does not ask for an edit prompt yet, prefer aigc-shot-diagnose first.
+description: Write bilingual image-to-image edit prompts for Nano Banana series (currently Nano Banana Pro / Gemini image editor) or ChatGPT image editor series (currently ChatGPT Images 2.0) after diagnosing why a storyboard, keyframe, concept art, or AI still lacks cinematic quality, while preserving the subject. Use when the user has an image and explicitly wants an edit prompt, image repair prompt, cinematic enhancement prompt, color/lighting prompt, Nano Banana prompt, ChatGPT Images prompt, OpenAI image prompt, Gemini image prompt, or before/after cinematic transformation. If the user only says the image feels wrong, ugly, AI-looking, or "说不上来哪里怪" and does not ask for an edit prompt yet, prefer aigc-shot-diagnose first.
 ---
 
 # Cinematic Storyboard Enhancer
@@ -9,7 +9,7 @@ This skill turns a flat-looking storyboard or AI-generated still into a cinemati
 
 ## When to use
 
-The user has an image (usually a storyboard panel, keyframe, or AI-generated still) that *almost* works but feels uncinematic — washed out, lit wrong, color-polluted, with subjects that look pasted on top of the background. They want a prompt they can paste into **Nano Banana Pro** or **ChatGPT Images 2.0** to fix it.
+The user has an image (usually a storyboard panel, keyframe, or AI-generated still) that *almost* works but feels uncinematic — washed out, lit wrong, color-polluted, with subjects that look pasted on top of the background. They want a prompt they can paste into **Nano Banana series** or **ChatGPT image editor series** to fix it.
 
 If the user only wants to understand why an image feels wrong and has not asked for a ready edit prompt, route the task to `aigc-shot-diagnose` first.
 
@@ -37,6 +37,8 @@ Before diagnosing anything, describe what's actually in the frame, neutrally. Th
 - **Mood read**: what the image currently *says* emotionally, in one sentence
 
 If the user uploaded a **second image as a reference target**, do this same neutral read for it too, then explicitly note 5-8 differences. Those differences become the transformation list.
+
+If the user provides a handoff block from `aigc-shot-diagnose`, use it as the starting diagnosis. Verify it against the image, correct only obvious mismatches, and avoid repeating a full diagnosis unless the handoff is missing or clearly insufficient.
 
 ### Step 2 — Diagnose against the 8 cinematic dimensions
 
@@ -80,12 +82,12 @@ Default transform-list (these are fair game):
 
 Use one skill for both models; only the final prompt template changes.
 
-- If the user says **Nano Banana**, **Nano Banana Pro**, **Gemini image**, **Gemini 3 Pro Image**, or **Google image editor**, use the Nano Banana Pro template.
-- If the user says **ChatGPT Images 2.0**, **GPT image 2.0**, **GPT image**, **OpenAI image**, or **ChatGPT image editor**, use the ChatGPT Images 2.0 template.
+- If the user says **Nano Banana**, **Nano Banana Pro**, **Gemini image**, **Gemini 3 Pro Image**, **Google image editor**, or a later Nano Banana/Gemini image version, use the Nano Banana template.
+- If the user says **ChatGPT Images 2.0**, **GPT image 2.0**, **GPT image**, **OpenAI image**, **ChatGPT image editor**, or a later ChatGPT/OpenAI image editor version, use the ChatGPT Images template.
 - If the user names a target model, output only that model's prompt.
 - If the user does not name a model, ask once which model they plan to use. If they do not answer, ask for compatibility, or want to compare, output both versions.
 
-Read `references/prompt-templates.md` for the exact template structure for Nano Banana Pro and ChatGPT Images 2.0 — they differ in prompt length, parameter tolerance, and how much named cinematography language they respond to best.
+Read `references/prompt-templates.md` for the current template structure for Nano Banana Pro and ChatGPT Images 2.0. For later model versions, apply the closest template and mention briefly that the version-specific behavior is based on the current documented template unless the user provides newer constraints.
 
 Read `references/cinematic-language.md` for the precise vocabulary to reach for. Vague words ("moody", "epic", "cinematic") are weak — these models respond much better to specific cinematography terms ("low-key lighting at 1:8 ratio", "teal-and-shadow grade with lifted blacks at IRE 12", "single soft moonlight key from camera-left at 30°").
 
@@ -96,29 +98,29 @@ Output **both Chinese and English** versions. They should be semantic mirrors, n
 Use this structure for the final response:
 
 ```
-## 视觉诊断 / Visual Diagnosis
+## 视觉诊断
 [Step 1 neutral read in 3-4 sentences]
 
-## 八维评估 / 8-Dimension Assessment
+## 八维评估
 [Table or list with status for each dimension]
 
-## 核心问题 / Core Issues
+## 核心问题
 [Top 3 issues, ranked by impact]
 
-## 优化策略 / Transformation Strategy
+## 优化策略
 [What to preserve, what to change, in plain language]
 
-## 提示词 - 中文版 / Prompt - Chinese
+## 中文提示词
 [Full prompt in Chinese, formatted for the chosen model]
 
-## 提示词 - English / Prompt - English
+## English Prompt
 [Full prompt in English, formatted for the chosen model]
 
-## 使用说明 / Usage Notes
+## 使用说明
 [Which model this is tuned for, how to paste it, what to expect]
 ```
 
-If outputting both models, keep the diagnosis and strategy shared, then provide separate Nano Banana Pro and ChatGPT Images 2.0 prompt sections.
+If outputting both models, keep the diagnosis and strategy shared in Chinese, then provide separate Nano Banana and ChatGPT Images prompt sections.
 
 ## What good looks like
 
@@ -129,11 +131,11 @@ A good output for this skill should make the user think: "Ah, *that's* why my im
 - **Don't be vague.** "Make it more cinematic" in the output prompt is failure — the prompt itself must be specific enough that another cinematographer could shoot it.
 - **Don't redraw the user's image yourself.** This skill outputs a prompt; it does not call image generation tools.
 - **Don't change what the user didn't ask to change.** If the diagnosis says "the costume is fine" then the [Preserve] block must explicitly protect the costume.
-- **Don't pile on every possible improvement.** Pick the 3-5 highest-leverage changes. A surgical prompt outperforms a maximalist one — both Nano Banana Pro and ChatGPT Images 2.0 lose precision when given too many transformation directives at once.
+- **Don't pile on every possible improvement.** Pick the 3-5 highest-leverage changes. A surgical prompt outperforms a maximalist one — image editors lose precision when given too many transformation directives at once.
 - **Don't translate Chinese cinematography vocabulary literally into English.** "电影感" is not "movie feeling" — it's "cinematic quality" or, more precisely, named techniques like "low-key lighting", "anamorphic compression", "film stock emulation".
 
 ## Reference files
 
 - `references/diagnostic-dimensions.md` — Full criteria for the 8 dimensions, with examples of "working / weak / broken" for each
 - `references/cinematic-language.md` — Vocabulary library: lighting terms, color grading terms, lens language, atmosphere terms, in both Chinese and English
-- `references/prompt-templates.md` — Exact prompt structure templates for Nano Banana Pro and ChatGPT Images 2.0, with model-specific quirks documented
+- `references/prompt-templates.md` — Current prompt structure templates for Nano Banana Pro and ChatGPT Images 2.0, with model-specific quirks documented

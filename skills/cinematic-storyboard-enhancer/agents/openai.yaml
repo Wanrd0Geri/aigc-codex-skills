@@ -1,7 +1,7 @@
 interface:
   display_name: "Cinematic Storyboard Enhancer"
   short_description: "Diagnose flat AI storyboards and write cinematic edit prompts."
-  default_prompt: "Use $cinematic-storyboard-enhancer to diagnose this storyboard image and write a bilingual edit prompt for Nano Banana Pro or ChatGPT Images 2.0."
+  default_prompt: "用 $cinematic-storyboard-enhancer 诊断这张关键帧，并写一份适合图像编辑器的中英双语电影感修图 prompt。"
 
 policy:
   allow_implicit_invocation: true

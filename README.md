@@ -4,11 +4,11 @@ Private Codex skills for AIGC short-film, animation, cinematic image, storyboard
 
 ## Skills
 
-- `aigc-workflow-router`: decides the right production path and routes to the correct specialized skill.
+- `aigc-workflow-router`: plans multi-stage AIGC projects and routes whole-project workflows to the correct specialized skill.
 - `aigc-creative-director`: turns vague short-film or animation ideas into director-level creative plans and shot strategy.
 - `aigc-shot-diagnose`: explains why an AIGC image/frame feels weak from director, cinematography, production design, storyboard, and prompt-control perspectives.
 - `cinematic-storyboard-enhancer`: writes bilingual image-to-image edit prompts for Nano Banana Pro or ChatGPT Images 2.0.
-- `seedance-prompt-master`: writes and improves Seedance 2.0 text-to-video, image-to-video, extension, edit, and bridge prompts.
+- `seedance-prompt-master`: writes and improves Seedance series text-to-video, image-to-video, extension, edit, and bridge prompts.
 
 ## Install On Windows
 
@@ -41,16 +41,16 @@ Use natural language. The skill descriptions are written to catch common working
 
 - "这张图不好看，但我说不上来为什么"
 - "我有一个短片想法，帮我设计怎么拍"
-- "这个项目下一步怎么办"
+- "这个 AIGC 短片项目下一步怎么办"
 - "把这个镜头变成 Seedance 图生视频提示词"
 - "把这张关键帧提升电影感，给 Nano Banana Pro prompt"
 
 For maximum control, explicitly name a skill:
 
 ```text
-Use $aigc-shot-diagnose to explain why this frame feels wrong.
-Use $aigc-creative-director to turn this idea into a short-film shot plan.
-Use $seedance-prompt-master to write a Seedance 2.0 image-to-video prompt.
+用 $aigc-shot-diagnose 看一下这张画面为什么不好。
+用 $aigc-creative-director 把这个想法整理成短片镜头方案。
+用 $seedance-prompt-master 写一份 Seedance 图生视频提示词。
 ```
 
 ## Source Notes

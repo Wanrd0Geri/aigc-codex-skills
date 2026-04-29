@@ -1,7 +1,7 @@
 interface:
   display_name: "AIGC Creative Director"
   short_description: "Shape AIGC short film ideas into director-level creative plans."
-  default_prompt: "Use $aigc-creative-director to turn my AIGC short film idea into a clear creative direction and shot strategy."
+  default_prompt: "用 $aigc-creative-director 把我的 AIGC 短片想法整理成清晰的导演方向和镜头策略。"
 
 policy:
   allow_implicit_invocation: true

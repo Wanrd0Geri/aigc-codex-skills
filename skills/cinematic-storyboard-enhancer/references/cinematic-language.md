@@ -1,6 +1,6 @@
 # 电影语言术语库 / Cinematic Vocabulary Library
 
-The point of this file: **specific cinematography terms beat generic adjectives** when prompting Nano Banana Pro and ChatGPT Images 2.0. "Make it moody" is interpreted dozens of ways. "Low-key 1:8 lighting ratio with crushed blacks" gives a precise target.
+The point of this file: **specific cinematography terms beat generic adjectives** when prompting Nano Banana series and ChatGPT image editor series. "Make it moody" is interpreted dozens of ways. "Low-key 1:8 lighting ratio with crushed blacks" gives a precise target.
 
 When writing the transformation prompt, reach for terms from this file rather than inventing your own.
 

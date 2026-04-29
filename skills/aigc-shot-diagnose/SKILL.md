@@ -44,6 +44,8 @@ Name the top 3 problems by impact. For each, provide:
 - What to change.
 - Whether it is a director, camera/light, art-design, composition, or prompt-control fix.
 
+Read `references/production-design-dimensions.md` when the image feels AI-looking, cheap, visually random, over-designed, texture-poor, cluttered, world-inconsistent, or when the user says `AI味重`, `不高级`, `质感差`, `背景乱`, `角色不突出`, `道具随机`, or `人物没融入画面`. Use it to separate art-direction problems from lighting, grading, and model-control problems.
+
 ### 5. Choose the Next Handoff
 
 - If the user wants to understand the problem only, stop after diagnosis and next steps.
@@ -70,6 +72,17 @@ Use this structure:
 
 ## 下一步建议
 [Which specialized skill or action should follow.]
+```
+
+If the user asks for a repair prompt, says they want to continue into image editing, or the natural next step is `cinematic-storyboard-enhancer`, add this handoff block:
+
+```markdown
+## 给修图 prompt 的交接摘要
+- Preserve: [Faces, identity, costume, pose, blocking, camera, or other elements to protect.]
+- Fix: [Top 3 fixes by impact.]
+- Cinematography: [Light, exposure, black point, temperature, atmosphere, depth.]
+- Production Design: [Character, costume, prop, material, color hierarchy, world consistency.]
+- Avoid: [Things the edit prompt must not change or introduce.]
 ```
 
 ## Diagnosis Standards

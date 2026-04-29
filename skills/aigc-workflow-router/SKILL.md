@@ -1,21 +1,25 @@
 ---
 name: aigc-workflow-router
-description: Route AIGC short-film, animation, storyboard, keyframe, image, and video-production requests to the right creative workflow. Use when the user asks how to推进一个AIGC项目, plan a short film workflow, decide the next step for an image/video, connect director judgment with prompt production, or says things like "这个项目怎么做", "下一步怎么办", "帮我拆流程", "这个图/视频该怎么改", "从想法到成片怎么推进". Coordinates with aigc-creative-director, aigc-shot-diagnose, cinematic-storyboard-enhancer, and seedance-prompt-master.
+description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route those directly to aigc-shot-diagnose, aigc-creative-director, cinematic-storyboard-enhancer, or seedance-prompt-master.
 ---
 
 # AIGC Workflow Router
 
-Use this skill as the production coordinator for AIGC film, animation, short video, and cinematic image work. Decide the right workflow first, then either perform the routing-level planning or hand off to the specialized skill.
+Use this skill as the production coordinator for AIGC film, animation, short video, and cinematic image work when the task spans a whole project, multiple shots, or multiple production stages.
+
+Do not use this skill for single-asset requests. If the user asks about one uploaded image, one frame, one shot, one prompt, or one reference asset, route directly to the relevant specialist.
 
 ## Routing Rules
 
 Choose one primary path. Do not run every skill at once.
 
+- **Whole project or short-film pipeline**: stay in this router, build the production path, then name the first specialized skill to use.
+- **Multi-shot sequence with unclear order**: map stages first, then hand off the next concrete task.
+- **Multiple assets with unclear roles**: define asset roles before handing off.
 - **Idea, script, scene, or mood without a clear shooting plan**: use `aigc-creative-director`.
 - **Uploaded image/frame feels wrong, ugly, flat, AI-looking, or the user cannot name the problem**: use `aigc-shot-diagnose`.
-- **Image/keyframe already needs a ready image-to-image edit prompt for Nano Banana Pro, ChatGPT Images 2.0, or another image editor**: use `cinematic-storyboard-enhancer`.
-- **Seedance, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, video extension, video editing, or shot-bridge prompt**: use `seedance-prompt-master`.
-- **Whole project or short-film pipeline**: stay in this router, build the production path, then name the next specialized skill to use first.
+- **Image/keyframe already needs a ready image-to-image edit prompt for Nano Banana series, ChatGPT image editor series, or another image editor**: use `cinematic-storyboard-enhancer`.
+- **Seedance series, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, video extension, video editing, or shot-bridge prompt**: use `seedance-prompt-master`.
 
 If multiple paths apply, pick the earliest unresolved creative bottleneck:
 1. Intent and story problem.
@@ -52,12 +56,9 @@ Use this structure for routing or project-flow requests:
 
 For whole-project planning, include a compact pipeline:
 
-1. Creative brief and core expression.
-2. Director plan and shot strategy.
-3. Keyframe or storyboard production.
-4. Still-frame diagnosis and image prompt repair.
-5. Seedance video prompt drafting.
-6. Review, regenerate, edit, and lock continuity.
+1. Define creative intent, assets, and stage order.
+2. Produce or diagnose the next concrete artifact.
+3. Hand off to the specialist skill needed for that artifact.
 
 ## Handoff Contracts
 
@@ -71,6 +72,7 @@ When handing off, preserve the decision context:
 ## Avoid
 
 - Do not answer every request with a long production bible.
+- Do not intercept single-image, single-frame, single-shot, or single-prompt requests.
 - Do not produce final Seedance prompts when the user is still asking for creative direction.
 - Do not produce image-edit prompts when the user only asked why an image feels wrong.
 - Do not overwrite specialized skill rules; route to them when the task is clearly specialized.

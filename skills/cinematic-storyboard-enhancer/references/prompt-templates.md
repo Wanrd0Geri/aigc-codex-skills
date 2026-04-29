@@ -1,6 +1,6 @@
 # 提示词模板 / Prompt Templates
 
-This file specifies the exact prompt structure for **Nano Banana Pro** and **ChatGPT Images 2.0**. They solve the same image-editing task, but they respond best to different prompt densities and vocabulary.
+This file specifies the current prompt structure for **Nano Banana Pro** and **ChatGPT Images 2.0**. Treat later Nano Banana, Gemini image editor, ChatGPT image editor, or OpenAI image editor versions as the closest matching family unless the user provides newer constraints. They solve the same image-editing task, but they respond best to different prompt densities and vocabulary.
 
 Always output **bilingual (Chinese + English)** versions. They are semantic mirrors, not literal translations.
 

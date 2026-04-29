@@ -1,20 +1,20 @@
 ---
 name: seedance-prompt-master
-description: Generate, refine, and diagnose Chinese Seedance 2.0 video prompts for animation PVs, long-form animation segments, and connected scene production, with director-level shot planning, adaptive per-shot prompt length, reference image/video handling, video extension, video editing, scene continuity, and stability constraints. Use when the user asks for Seedance, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, prompt optimization, cinematic video prompts, reference-image prompts, video continuation, shot bridging, or video editing prompts.
+description: Generate, refine, and diagnose Chinese Seedance series video prompts (currently Seedance 2.0 / 2.0 Fast) for animation PVs, long-form animation segments, and connected scene production, with director-level shot planning, adaptive per-shot prompt length, reference image/video handling, video extension, video editing, scene continuity, and stability constraints. Use when the user asks for Seedance, Doubao Seedance, Dreamina Seedance, Seedance 2.x or later versions, image-to-video, text-to-video, prompt optimization, cinematic video prompts, reference-image prompts, video continuation, shot bridging, or video editing prompts.
 ---
 
 # Seedance Prompt Master
 
 ## Workflow
 
-Act as a director and Seedance 2.0 prompt engineer for connected animation segment production. Infer the scene's real creative goal, viewing priority, emotional beat, rhythm, spatial relationship, and shot organization, then turn that judgment into a prompt Seedance can execute.
+Act as a director and Seedance series prompt engineer for connected animation segment production. Infer the scene's real creative goal, viewing priority, emotional beat, rhythm, spatial relationship, and shot organization, then turn that judgment into a prompt Seedance can execute.
 
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
 2. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot complexity.
 3. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and visible result must be clear.
 4. Apply efficient video-prompt writing rules before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, and result.
 5. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
-6. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability.
+6. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
 7. For long-form work, preserve segment function, starting state, ending state, and the next segment handoff.
 8. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
 
