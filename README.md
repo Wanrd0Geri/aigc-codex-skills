@@ -34,7 +34,7 @@
 
 ### `aigc-visual-diagnose`
 
-用于诊断单张图、关键帧、视频帧、分镜或概念图为什么不好看。它会从导演、摄影、美术、分镜剪辑和 AIGC 控制角度分析，并告诉你最应该先修哪里。
+用于深度诊断单张图、关键帧、视频帧、分镜或概念图为什么不好看。它回答的是“为什么画面弱、哪里有问题、从导演/摄影/美术/AIGC 控制角度怎么修”。它不负责判断这张图能不能进入视频或下一步该去哪。
 
 适合这样说：
 
@@ -46,7 +46,7 @@
 
 ### `aigc-shot-diagnosis-pipeline`
 
-用于把单张关键帧、生成图或视频帧当作镜头生产检查点，判断它能不能进入修图或 Seedance 视频生成，并给出下一步执行路径。它更关注“是否能继续推进”和“先修哪里”，不直接替代完整画面诊断、修图 prompt 或视频 prompt。
+用于把单张关键帧、生成图或视频帧当作镜头生产检查点，判断它能不能继续推进、应该先修图还是重做、能不能进入 Seedance，并把下一步交给正确的专业 skill。它回答的是“能不能用 / 下一步去哪”，不是完整画面深度诊断。
 
 适合这样说：
 
@@ -80,6 +80,17 @@
 用 $aigc-seedance-prompt 设计这个镜头的延展提示词。
 ```
 
+## 选择入口
+
+```text
+整个项目怎么推进？           -> aigc-project-planner
+只有想法，还没镜头？         -> aigc-creative-director
+为什么这张图不好？           -> aigc-visual-diagnose
+这张图能不能继续/下一步去哪？ -> aigc-shot-diagnosis-pipeline
+已经决定要修图？             -> aigc-image-edit-prompt
+已经决定要做 Seedance？       -> aigc-seedance-prompt
+```
+
 ## 安装到 Windows Codex
 
 ```powershell
@@ -108,7 +119,7 @@ chmod +x scripts/link-skills.sh
 关键任务建议显式点名，例如：
 
 ```text
-用 $aigc-visual-diagnose 看这张图。
+用 $aigc-visual-diagnose 看这张图为什么不好。
 用 $aigc-shot-diagnosis-pipeline 判断这帧能不能进入视频。
 用 $aigc-image-edit-prompt 写修图 prompt。
 用 $aigc-seedance-prompt 写 Seedance 视频 prompt。
