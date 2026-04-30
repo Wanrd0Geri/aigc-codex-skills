@@ -44,6 +44,18 @@
 用 $aigc-visual-diagnose 从导演、摄影、美术角度诊断这帧哪里怪。
 ```
 
+### `aigc-shot-diagnosis-pipeline`
+
+用于把单张关键帧、生成图或视频帧当作镜头生产检查点，判断它能不能进入修图或 Seedance 视频生成，并给出下一步执行路径。它更关注“是否能继续推进”和“先修哪里”，不直接替代完整画面诊断、修图 prompt 或视频 prompt。
+
+适合这样说：
+
+```text
+用 $aigc-shot-diagnosis-pipeline 判断这张关键帧能不能进入视频。
+用 $aigc-shot-diagnosis-pipeline 看这个镜头下一步应该修图还是重做。
+用 $aigc-shot-diagnosis-pipeline 给这张图做生产检查。
+```
+
 ### `aigc-image-edit-prompt`
 
 用于在你已经决定要修图时，输出适合 Nano Banana 系列、Gemini 图像编辑器、ChatGPT Images 或 OpenAI 图像编辑器的中英双语修图 prompt。它会尽量保留人物、构图、服装、姿态等你想保留的内容。
@@ -97,6 +109,7 @@ chmod +x scripts/link-skills.sh
 
 ```text
 用 $aigc-visual-diagnose 看这张图。
+用 $aigc-shot-diagnosis-pipeline 判断这帧能不能进入视频。
 用 $aigc-image-edit-prompt 写修图 prompt。
 用 $aigc-seedance-prompt 写 Seedance 视频 prompt。
 ```
