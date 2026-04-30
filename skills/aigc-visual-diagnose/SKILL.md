@@ -1,11 +1,13 @@
-﻿---
+---
 name: aigc-visual-diagnose
-description: Diagnose uploaded AIGC images, video frames, storyboards, keyframes, concept art, or generated stills when the user says the result feels wrong, ugly, flat, cheap, AI-looking, not cinematic, poorly composed, badly lit, visually inconsistent, or uses phrases like "不好看", "说不上来哪里怪", "AI味重", "不高级", "不电影感", "构图怪", "光影乱", "人物没融入画面", "质感差", "画面很平". Analyze from director, cinematography, production design, storyboard/editing, and AIGC generation-control perspectives, then rank what to fix first.
+description: Diagnose uploaded AIGC images, video frames, storyboards, keyframes, concept art, or generated stills when the user wants a detailed explanation of why the image feels wrong, ugly, flat, cheap, AI-looking, not cinematic, poorly composed, badly lit, visually inconsistent, or uses phrases like "不好看", "说不上来哪里怪", "AI味重", "不高级", "不电影感", "构图怪", "光影乱", "人物没融入画面", "质感差", "画面很平". Analyze from director, cinematography, production design, storyboard/editing, and AIGC generation-control perspectives. Do not use for production routing questions such as whether one frame can move forward, enter Seedance, be repaired, or should be redesigned; use aigc-shot-diagnosis-pipeline for those decisions.
 ---
 
 # AIGC Visual Diagnose
 
-Use this skill when the user has an image or frame that feels weak but they cannot name why. Diagnose before writing prompts. The goal is to teach the visual problem and identify the highest-leverage fixes.
+Use this skill when the user has an image or frame that feels weak and wants to understand why. Diagnose before writing prompts. The goal is to teach the visual problem and identify the highest-leverage fixes.
+
+Do not use this skill as the single-frame production gate. If the user asks whether a frame can move forward, enter Seedance, be repaired, or should be redesigned, route to `aigc-shot-diagnosis-pipeline`.
 
 ## Workflow
 
@@ -50,8 +52,9 @@ Read `references/production-design-dimensions.md` when the image feels AI-lookin
 
 - If the user wants to understand the problem only, stop after diagnosis and next steps.
 - If they want an image-to-image repair prompt, hand off to `aigc-image-edit-prompt`.
-- If they want the frame to become a Seedance video shot, hand off to `aigc-seedance-prompt`.
+- If they want the frame to become a Seedance video shot, hand off to `aigc-seedance-prompt` only when the user has already decided to proceed.
 - If the concept itself is weak, hand off to `aigc-creative-director`.
+- If the user asks after diagnosis `能不能用`, `能不能进视频`, `下一步是什么`, or `该修图还是重做`, explicitly route to `aigc-shot-diagnosis-pipeline` and pass along the diagnosis summary as context.
 
 ## Output Structure
 
@@ -85,6 +88,16 @@ If the user asks for a repair prompt, says they want to continue into image edit
 - Avoid: [Things the edit prompt must not change or introduce.]
 ```
 
+If the next user turn becomes a production-routing question, use this response pattern:
+
+```markdown
+这是生产决策问题，建议交给 `aigc-shot-diagnosis-pipeline`。
+可交接的诊断摘要：
+- Preserve: [what works]
+- Main blockers: [top issues]
+- Risk: [why this may block progress]
+```
+
 ## Diagnosis Standards
 
 - Be concrete: name the visible evidence, not just the vibe.
@@ -97,6 +110,7 @@ If the user asks for a repair prompt, says they want to continue into image edit
 
 - Do not call image generation tools.
 - Do not immediately write a full prompt unless the user asks for one.
+- Do not make production gate decisions such as `Green`, `Yellow`, `Red`, `can enter video`, or `should redesign`; route those to `aigc-shot-diagnosis-pipeline`.
 - Do not list every possible flaw with equal weight.
 - Do not say only "add cinematic lighting", "improve composition", or other generic fixes.
 - Do not treat every image as live-action cinema; animation, stylized art, and commercial visuals have their own standards.
