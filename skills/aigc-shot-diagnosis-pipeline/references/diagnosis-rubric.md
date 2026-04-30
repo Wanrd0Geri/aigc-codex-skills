@@ -2,65 +2,75 @@
 
 Use this reference to decide whether a single AIGC shot frame should move forward, be repaired, or be redesigned.
 
-## Greenlight
+The goal is not to score beauty. The goal is to prevent wasting production time on frames that cannot support the next step.
 
-The frame can move into image editing or Seedance video generation when:
+## Decision Matrix
 
-- The shot has a clear story function and emotional read.
-- The subject is immediately readable, with a clear first point of attention.
-- The composition, camera angle, and depth support the intended shot.
-- Light direction, contrast, and color mood are coherent enough to preserve.
-- Character identity, costume, props, and environment feel consistent.
-- AIGC artifacts are minor and can be fixed through targeted image editing.
-- The frame implies a plausible next action, camera movement, or continuation.
+| Dimension | Green | Yellow | Red |
+|---|---|---|---|
+| Story purpose | Clear shot function and emotional read | Readable but weak or generic | Unclear, empty, or contradictory |
+| Subject readability | Main subject is readable at first glance | Subject exists but framing, contrast, or environment weakens it | Main subject cannot be read quickly |
+| Composition and camera | Shot size, angle, crop, and depth support the purpose | Usable but weakens subject, emotion, or implied motion | Crop, pose, silhouette, or angle makes the frame unusable |
+| Lighting and color | Motivated light, useful contrast, and coherent color mood | Direction is close but depth, hierarchy, or atmosphere is weak | Light, color, and exposure fight each other |
+| Production design | Costume, props, setting, and materials belong to one world | Mostly usable but details feel random, cheap, or inconsistent | World, era, costume, props, or materials conflict at the root |
+| AIGC control | Minor artifacts only; identity and structure are stable | Visible instability that can be repaired without changing the shot | Identity drift, malformed anatomy, broken structure, or severe artifacts |
+| Video potential | Clear action, motion direction, camera possibility, or continuation | Video is possible but action path, camera behavior, or end state is vague | No plausible action, motion direction, or continuation when the target is video |
 
-Recommended handoff:
+## Single-Point Red Blocks
 
-- Use `aigc-image-edit-prompt` when only targeted repair is needed.
-- Use `aigc-seedance-prompt` when the frame is stable enough for image-to-video.
+Some Red findings can block the whole shot even if other dimensions look good.
 
-## Yellowlight
+### AI Can Judge Directly
 
-The frame can continue, but only after fixing 1-3 high-impact problems:
+Treat these as Red when clearly visible:
 
-- The idea is readable, but the camera or composition weakens the subject.
-- Lighting or color is close, but the frame lacks depth, atmosphere, or hierarchy.
-- Production design is mostly usable, but details feel random, cheap, or inconsistent.
-- Identity, anatomy, hands, eyes, props, or materials show visible AIGC instability.
-- The frame can become video, but the action path, camera behavior, or start/end state is under-defined.
+- Identity drift that changes the character.
+- Malformed anatomy, broken hands, broken eyes, or impossible body structure.
+- Severe artifacts that damage the subject or shot structure.
+- Crop, silhouette, or pose that makes the frame unusable as a shot.
 
-Recommended handoff:
+### Needs User Confirmation
 
-- Use this skill to name the blockers and preserve list.
-- Then use `aigc-image-edit-prompt` for a repair prompt before entering Seedance.
+Treat these as **Suspected Red** unless the user already supplied enough context:
 
-## Redlight
+- Story purpose is unclear.
+- Main subject may not be readable at first glance.
+- Video extension may be impossible or unmotivated.
 
-Do not move into video generation yet when:
+Only check video-extension Red when the user's target is video. If the frame is only meant to become a still image, poster, concept art, or repair prompt, lack of motion is not a Red block.
 
-- The shot purpose is unclear or emotionally empty.
-- The subject cannot be read quickly.
-- Blocking, pose, silhouette, or crop makes the frame unusable as a shot.
-- Lighting, color, and production design fight each other rather than form one world.
-- The frame has major identity drift, malformed anatomy, broken props, or style averaging.
-- There is no clear action, motion direction, camera intent, or continuation path.
+Use this format for Suspected Red:
 
-Recommended handoff:
+```markdown
+状态：疑似 Red（需要确认）
+原因：[specific visible reason]
+请确认：[one concrete question the user can answer quickly]
+```
 
-- Use `aigc-creative-director` when the concept or emotional purpose is weak.
-- Use `aigc-visual-diagnose` when the frame needs deeper artistic diagnosis before repair.
+Example:
 
-## Check Dimensions
+```markdown
+状态：疑似 Red（需要确认）
+原因：主角和环境的明度接近，我能识别主体，但观众第一眼可能先看到背景。
+请确认：你打开这张图的第一秒，视线先落在主角脸上吗？如果不是，建议判 Red。
+```
 
-- **Story purpose**: What must the viewer understand from this shot?
-- **Subject readability**: Where does the eye go first, and is that correct?
-- **Composition**: Does the shot size, angle, crop, and depth serve the subject?
-- **Lighting**: Is there a motivated source, clear contrast, and useful atmosphere?
-- **Color**: Does color guide attention instead of flattening the frame?
-- **Production design**: Do costume, props, setting, and materials belong to the same world?
-- **AIGC trace**: Are there artifacts, style averaging, over-smoothing, or prompt-control failures?
-- **Action potential**: Does the frame imply what happens next?
-- **Seedance controllability**: Can the shot be described with stable subject, motion, camera, start state, and end state?
+## Production Status Rules
+
+- **Green**: all core dimensions are usable, no Red block, and only minor repair is needed.
+- **Yellow**: 1-3 important issues should be fixed, but the shot structure can survive repair.
+- **Red**: at least one root-level block makes prompt writing wasteful.
+- **Suspected Red**: likely root-level block, but final judgment depends on user intent or first-glance human perception.
+
+Local prop issues, small material errors, minor background clutter, or small color mismatches should usually be Yellow, not Red, if the main shot structure remains usable.
+
+## Recommended Paths
+
+- **Direct edit**: Green or Yellow, still-image target, no video required.
+- **Edit then video**: Yellow with a video target; repair the keyframe before Seedance.
+- **Direct video**: Green with stable subject, clear action potential, and usable camera continuation.
+- **Redesign first**: Red due to concept, shot design, or structural image failure.
+- **Deep diagnose first**: the frame needs deeper visual analysis before a production decision.
 
 ## Routing Rules
 
@@ -68,4 +78,4 @@ Recommended handoff:
 - Route broad visual diagnosis to `aigc-visual-diagnose`.
 - Route targeted repair prompts to `aigc-image-edit-prompt`.
 - Route video prompt writing to `aigc-seedance-prompt`.
-- If the user only asks for a production decision, stay in this skill and provide the next-step checklist.
+- If the user only asks for a production decision, stay in `aigc-shot-diagnosis-pipeline` and provide the next-step checklist.
