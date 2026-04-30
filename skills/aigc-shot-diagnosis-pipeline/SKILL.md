@@ -1,69 +1,90 @@
 ---
 name: aigc-shot-diagnosis-pipeline
-description: Diagnose a single AIGC shot frame, generated still, keyframe, storyboard frame, or video frame as a production pipeline checkpoint. Use when the user wants to know whether a frame is good enough, why it feels wrong, what should be fixed first, whether it can move into image editing or Seedance video generation, or which AIGC skill should be used next. Prioritize production decisions over full prompt writing.
+description: Diagnose a single AIGC shot frame, generated still, keyframe, storyboard frame, or video frame as a production pipeline checkpoint. Use when the user asks whether one frame can move forward, whether it can enter image editing or Seedance video generation, whether it should be repaired or redesigned, what blocks production, or which AIGC skill should be used next. Do not use for detailed artistic image critique; use aigc-visual-diagnose for "why does this look wrong" analysis.
 ---
 
 # AIGC Shot Diagnosis Pipeline
 
-Use this skill as a single-shot production checkpoint. Diagnose the current frame, decide what production stage it is in, and route the user to the next concrete action.
+Use this skill as a single-shot production checkpoint. Decide whether the current frame can move forward, what blocks it, and which specialist workflow should handle the next step.
 
-Do not treat this as a general image critique. The goal is to answer: "Can this shot move forward, and if not, what must be fixed first?"
+Do not treat this as a full visual critique. The goal is to answer: "Can this shot move forward, and if not, what must be fixed first?"
+
+## Boundary
+
+- Use this skill for production decisions: `能不能用`, `能不能进视频`, `下一步去哪`, `该修图还是重做`, `是否可以进入 Seedance`.
+- Do not do complete deep visual diagnosis here. If the user asks `为什么不好`, `哪里怪`, `详细分析画面问题`, or wants director/cinematography/art-direction critique, route to `aigc-visual-diagnose`.
+- Do not write full image-edit or Seedance prompts by default. Route to `aigc-image-edit-prompt` or `aigc-seedance-prompt` after the production decision.
 
 ## Workflow
 
 ### 1. Identify the Current Stage
 
-Classify the frame into one primary stage:
+Classify the frame into one primary problem stage:
 
 - **Concept problem**: the idea, story function, emotion, or shot purpose is unclear.
 - **Shot design problem**: blocking, camera angle, composition, silhouette, or implied motion does not support the shot.
-- **Image quality problem**: lighting, color, production design, texture, integration, or AI artifacts weaken the frame.
-- **Edit-prompt ready**: the frame has enough structure and only needs targeted image repair.
-- **Video-prompt ready**: the frame is visually stable enough to become a Seedance image-to-video shot.
+- **Image quality problem**: lighting, color, production design, texture, integration, or AIGC artifacts weaken an otherwise usable shot.
+- **Ready**: the concept, shot design, and image structure are stable enough to choose an execution path.
 
-Read `references/diagnosis-rubric.md` when the frame's production status is ambiguous, when the user asks whether it is ready for video, or when you need to separate Greenlight, Yellowlight, and Redlight decisions.
+If the frame cannot be judged without deeper artistic analysis, choose **Deep diagnose first** as the recommended path and hand off to `aigc-visual-diagnose`.
 
-If no image/frame is available, ask the user to upload the frame or describe the shot.
+### 2. Assign a Production Status
 
-### 2. Diagnose the Frame
+Use `references/diagnosis-rubric.md` to classify the frame:
 
-Read the frame through these lenses:
+- **Green**: proceed. The frame can move into image editing or video generation.
+- **Yellow**: proceed only after fixing 1-3 high-impact issues.
+- **Red**: do not write prompts yet. Redesign, regenerate, or return to an upstream creative/shot-design step.
+- **Suspected Red**: the model sees a likely blocker but needs user confirmation, usually for story purpose, first-glance subject readability, or video-extension potential.
 
-- **Story function**: what this shot is supposed to communicate.
-- **Subject readability**: whether the viewer knows where to look first.
-- **Camera and composition**: shot size, angle, depth, crop, and visual hierarchy.
-- **Lighting and color**: motivated light, contrast, mood, and color priority.
-- **Production design**: costume, props, setting, materials, era, and world consistency.
-- **AIGC control**: identity drift, style averaging, over-processing, malformed details, or prompt ambiguity.
-- **Video readiness**: whether the frame implies a clear action, camera movement, start state, and continuation path.
+### 3. Choose the Recommended Path
 
-### 3. Rank the Production Blockers
+Pick one path, not a list of possibilities:
+
+- **Direct edit**: the frame is not intended for video or only needs a still-image repair.
+- **Edit then video**: the frame can become video, but targeted image repair should happen first.
+- **Direct video**: the frame is stable enough for `aigc-seedance-prompt` without prior image repair.
+- **Redesign first**: the frame has a root problem that prompt writing will not fix.
+- **Deep diagnose first**: the production decision depends on a deeper visual diagnosis.
+
+### 4. Rank the Production Blockers
 
 Name the top 3 blockers by impact. For each blocker, state:
 
 - Why it blocks the shot.
 - What must change.
 - Whether it is a concept, shot design, image repair, or video-readiness problem.
-- Whether it should be fixed before moving to video.
+- Whether it must be fixed before moving to video.
 
 Do not list every flaw. Focus on the problems that most affect production progress.
 
-### 4. Preserve What Works
+### 5. Preserve What Works
 
 Explicitly identify what should not be changed:
 
 - Character identity, face, costume, pose, camera angle, environment, color mood, or composition if they are already useful.
 - Any visual choice that supports the shot intention, even if it is unusual.
 
-### 5. Choose the Next Handoff
+### 6. Prompt-Writing Boundary
 
-Route to one next action:
+Default behavior: output diagnosis, production status, recommended path, and handoff summary. Do not write a full image-edit or Seedance prompt.
 
-- Use `aigc-creative-director` if the shot idea or emotional purpose is weak.
-- Use `aigc-visual-diagnose` if the user needs a deeper artistic diagnosis of the frame.
-- Use `aigc-image-edit-prompt` if the frame is structurally good and needs a repair prompt.
-- Use `aigc-seedance-prompt` if the frame is ready for image-to-video or video extension.
-- Stay in this skill if the user only needs a production decision and next-step checklist.
+Exception: if the user explicitly asks in the same request for diagnosis plus a prompt, continue only when the production status allows it.
+
+- **Green**: proceed to the relevant prompt workflow.
+- **Yellow**: explain the risk first, then proceed only if the user explicitly wants to accept the risk.
+- **Red**: do not write the prompt. Explain which upstream fix is needed first.
+- **Suspected Red**: ask one concrete confirmation question before writing a prompt.
+
+Use this risk format when the user insists on a prompt from a Yellow frame:
+
+```markdown
+状态：Yellow（建议先修图）
+你明确要求直接进入 [Seedance / image editing]，可以继续，但有这些风险：
+- [Unfixed issue] may cause [specific production consequence].
+- [Unfixed issue] may cause [specific production consequence].
+如果接受这些风险，下一步交给 `[target skill]`。
+```
 
 ## Output Structure
 
@@ -71,31 +92,37 @@ Use this structure in Chinese:
 
 ```markdown
 ## 当前阶段判断
-[One stage classification and why.]
+[Concept problem / Shot design problem / Image quality problem / Ready, with one-sentence reason.]
+
+## 生产状态
+[Green / Yellow / Red / Suspected Red, with the decisive evidence.]
 
 ## 能保留的部分
 [What already works and should be protected.]
 
-## 最影响成片的 3 个问题
+## 最影响推进的 3 个问题
 1. [Problem / why it matters / what to change.]
 2. [Problem / why it matters / what to change.]
 3. [Problem / why it matters / what to change.]
 
-## 是否可以进入下一步
-[Ready for image edit, ready for Seedance, or must fix first.]
-
-## 推荐修正路径
-[Concrete next action and the exact skill to use.]
+## 推荐路径
+[Direct edit / Edit then video / Direct video / Redesign first / Deep diagnose first, plus exact next skill.]
 
 ## 交接摘要
 [Context the next skill needs: preserve, fix, avoid, shot goal, motion/camera if relevant.]
+```
+
+If the status is Suspected Red, replace `推荐路径` with:
+
+```markdown
+## 需要你确认
+[One concrete question the user can answer quickly.]
 ```
 
 ## Standards
 
 - Prefer production judgment over aesthetic commentary.
 - Separate "not beautiful" from "not usable for this shot".
-- Never write a full image-edit or Seedance prompt unless the user explicitly asks.
-- Do not route to every skill. Pick one next step.
-- Be direct about whether the frame is ready or not ready.
+- Pick one next step.
+- Be direct about whether the frame is ready, repairable, blocked, or uncertain.
 - Use practical Chinese by default.
