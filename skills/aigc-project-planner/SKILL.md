@@ -1,6 +1,6 @@
-﻿---
+---
 name: aigc-project-planner
-description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route those directly to aigc-visual-diagnose, aigc-creative-director, aigc-image-edit-prompt, or aigc-seedance-prompt.
+description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route single-frame production decisions to aigc-shot-diagnosis-pipeline, deep visual critique to aigc-visual-diagnose, creative direction to aigc-creative-director, ready image-edit prompts to aigc-image-edit-prompt, or Seedance/video prompts to aigc-seedance-prompt.
 ---
 
 # AIGC Project Planner
@@ -18,6 +18,7 @@ Choose one primary path. Do not run every skill at once.
 - **Multiple assets with unclear roles**: define asset roles before handing off.
 - **Idea, script, scene, or mood without a clear shooting plan**: use `aigc-creative-director`.
 - **Uploaded image/frame feels wrong, ugly, flat, AI-looking, or the user cannot name the problem**: use `aigc-visual-diagnose`.
+- **Single frame needs a production decision such as whether it can move forward, enter video, be repaired, be redesigned, or what next skill should be used**: use `aigc-shot-diagnosis-pipeline`.
 - **Image/keyframe already needs a ready image-to-image edit prompt for Nano Banana series, ChatGPT image editor series, or another image editor**: use `aigc-image-edit-prompt`.
 - **Seedance series, Doubao Seedance, Dreamina Seedance, image-to-video, text-to-video, video extension, video editing, or shot-bridge prompt**: use `aigc-seedance-prompt`.
 
@@ -66,13 +67,14 @@ When handing off, preserve the decision context:
 
 - To `aigc-creative-director`: provide theme, audience/platform, duration, protagonist, conflict, mood, and reference style if known.
 - To `aigc-visual-diagnose`: provide the image/frame plus the user's target feeling and what they already like.
+- To `aigc-shot-diagnosis-pipeline`: provide the frame, user target, intended next step if known, what already works, and any known production concern.
 - To `aigc-image-edit-prompt`: provide what must be preserved, target model, and the top visual problems to fix.
 - To `aigc-seedance-prompt`: provide shot goal, duration, reference asset roles, start/end state, motion, camera behavior, and continuity constraints.
 
 ## Avoid
 
 - Do not answer every request with a long production bible.
-- Do not intercept single-image, single-frame, single-shot, or single-prompt requests.
+- Do not keep single-image, single-frame, single-shot, or single-prompt requests inside project planning; route them to the relevant specialist.
 - Do not produce final Seedance prompts when the user is still asking for creative direction.
 - Do not produce image-edit prompts when the user only asked why an image feels wrong.
 - Do not overwrite specialized skill rules; route to them when the task is clearly specialized.

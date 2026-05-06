@@ -1,4 +1,4 @@
-﻿---
+---
 name: aigc-seedance-prompt
 description: Generate, refine, and diagnose Chinese Seedance series video prompts (currently Seedance 2.0 / 2.0 Fast) for animation PVs, long-form animation segments, and connected scene production, with director-level shot planning, adaptive per-shot prompt length, reference image/video handling, video extension, video editing, scene continuity, and stability constraints. Use when the user asks for Seedance, Doubao Seedance, Dreamina Seedance, Seedance 2.x or later versions, image-to-video, text-to-video, prompt optimization, cinematic video prompts, reference-image prompts, video continuation, shot bridging, or video editing prompts.
 ---

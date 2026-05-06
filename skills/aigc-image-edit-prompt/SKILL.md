@@ -1,4 +1,4 @@
-﻿---
+---
 name: aigc-image-edit-prompt
 description: Write bilingual image-to-image edit prompts for Nano Banana series (currently Nano Banana Pro / Gemini image editor) or ChatGPT image editor series (currently ChatGPT Images 2.0) after diagnosing why a storyboard, keyframe, concept art, or AI still lacks cinematic quality, while preserving the subject. Use when the user has an image and explicitly wants an edit prompt, image repair prompt, cinematic enhancement prompt, color/lighting prompt, Nano Banana prompt, ChatGPT Images prompt, OpenAI image prompt, Gemini image prompt, or before/after cinematic transformation. If the user only says the image feels wrong, ugly, AI-looking, or "说不上来哪里怪" and does not ask for an edit prompt yet, prefer aigc-visual-diagnose first.
 ---
