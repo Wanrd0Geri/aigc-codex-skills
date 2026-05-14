@@ -106,6 +106,90 @@ ChatGPT Images 2.0 (the ChatGPT image editor / OpenAI image surface) is more **i
 - Can drift if given too many transformation directives
 - Numerical values (IRE, degrees, hex codes) help less than they do for Nano Banana Pro — prefer named ratios and plain-language visual outcomes
 - Can over-stylize if given too many evocative adjectives
+- Can create fragmented, over-textured rendering when prompts pile up "detailed", "painterly", "concept art", "volumetric", or gritty atmosphere language
+
+### Adaptive surface cleanliness controls
+
+Use this only when the image or user complaint points to **碎裂感 / fragmented rendering**: broken edges, noisy surfaces, visible brush texture, painterly buildup, random ornament density, gritty micro-detail, or concept-art patchwork. Do **not** paste the whole list by default. Choose the smallest set that fixes the diagnosed problem.
+
+**Level 0 — omit**
+Use no texture-control terms when the source already has clean surfaces and the edit only needs light, grade, depth, or subject integration.
+
+**Level 0.5 — clean source, preventive guard**
+Use this when the uploaded source image is already clean, but the edit target or model family may add unwanted micro-texture. Keep it as a light preserve/transform instruction, not a heavy negative list:
+
+```
+Preserve the source image's clean surface quality and clear large shapes. Do not add unnecessary micro-detail or fragmented texture.
+```
+
+Chinese equivalent:
+
+```
+保留原图干净的表面质感和清晰的大形结构，不要额外增加不必要的微细节或碎片化纹理。
+```
+
+Do not add `no painterly texture`, `no visible brush strokes`, or the full Level 2/3 negative list unless fragmentation is already visible or strongly likely from the requested style change.
+
+**Level 1 — mild cleanup**
+Add 1-2 positive terms to `TRANSFORM`:
+
+```
+clear large shapes
+clean smooth surfaces
+soft natural shading
+simple material planes
+```
+
+Chinese equivalents:
+
+```
+清晰的大形结构
+干净平滑的表面
+柔和自然的明暗过渡
+简洁的材质块面
+```
+
+**Level 2 — visible fragmentation**
+Add 2-3 positive terms and 1-3 targeted negatives:
+
+```
+low micro-detail
+minimal texture
+smooth rendering
+no fragmented details
+no visible brush strokes
+no noisy surface patterns
+```
+
+Chinese equivalents:
+
+```
+降低微细节密度
+最小化纹理噪声
+平滑干净的渲染
+不要碎片化细节
+不要可见笔触
+不要随机表面噪纹
+```
+
+**Level 3 — severe broken/painterly texture**
+Use one compact surface directive plus targeted negatives:
+
+```
+Surface cleanliness: preserve clear large shapes, clean smooth surfaces, simple material planes, soft natural shading, low micro-detail, and smooth rendering.
+
+NEGATIVE: painterly texture, visible brush strokes, fragmented details, noisy surface patterns, excessive micro-texture, gritty concept-art texture.
+```
+
+Chinese equivalent:
+
+```
+表面控制：保留清晰的大形结构、干净平滑的表面、简洁材质块面、柔和自然明暗、低微细节密度和平滑渲染。
+
+负面词：绘画化纹理、可见笔触、碎片化细节、随机表面噪纹、过度微纹理、粗粝概念图质感。
+```
+
+Before adding surface-control terms, remove or replace prompt words that push the opposite direction: `masterpiece`, `ultra detailed`, `highly detailed`, `intricate`, `dramatic texture`, `cinematic texture`, `painterly`, `concept art`, `artstation`, `gritty`. Use `volumetric`, `moody`, or `cinematic` only when anchored to a concrete visual technique, e.g. `gentle atmospheric depth`, `single soft directional key`, or `clean cinematic composition`.
 
 ### Template — English version
 
@@ -224,3 +308,4 @@ Before delivering the prompt to the user, verify:
 4. **Negative prompt directly mirrors the diagnosis's ❌ findings.** Don't list generic negatives — list the specific issues this image has.
 5. **Both Chinese and English versions exist and say the same thing semantically.** Do not omit one.
 6. **The prompt would make sense to a real cinematographer.** If you wouldn't dare show it to a DP, it's still too vague.
+7. **Surface cleanliness terms are adaptive.** If fragmented rendering is not part of the diagnosis, omit clean/smooth/no-texture terms. If the source is clean but the edit may introduce fragmentation, use Level 0.5. If fragmentation is already visible, choose Level 1, 2, or 3 instead of dumping every negative word into the prompt.

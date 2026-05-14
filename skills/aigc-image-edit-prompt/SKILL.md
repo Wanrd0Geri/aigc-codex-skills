@@ -91,6 +91,15 @@ Read `references/prompt-templates.md` for the current template structure for Nan
 
 Read `references/cinematic-language.md` for the precise vocabulary to reach for. Vague words ("moody", "epic", "cinematic") are weak — these models respond much better to specific cinematography terms ("low-key lighting at 1:8 ratio", "teal-and-shadow grade with lifted blacks at IRE 12", "single soft moonlight key from camera-left at 30°").
 
+For ChatGPT Images 2.0 / GPT-image style outputs, explicitly check whether the source or desired edit risks **碎裂感 / fragmented rendering**: noisy micro-texture, visible brush strokes, painterly surface buildup, broken edges, over-detailed ornaments, or patchwork concept-art texture. If present, use the adaptive surface-cleanliness controls in `references/prompt-templates.md`. Add only the level needed for the image:
+
+- Clean source, prevention only: a light preserve/transform guard that keeps the source's clean surface quality and clear large shapes.
+- Mild issue: 1-2 positive structure terms in `TRANSFORM`.
+- Clear issue: 2-3 positive terms plus 1-3 matching negatives.
+- Severe issue: a compact `surface cleanliness` directive plus targeted negatives.
+
+Do not paste the whole texture-control vocabulary into every prompt. If the diagnosis is about lighting, color, depth, or subject integration and the surfaces are already clean, omit heavy negative terms.
+
 Output **both Chinese and English** versions. They should be semantic mirrors, not literal translations — Chinese and English cinematography vocabulary don't map 1:1, and each language has terms the models recognize better.
 
 ### Step 5 — Present the result
