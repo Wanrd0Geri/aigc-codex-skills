@@ -12,7 +12,7 @@ Act as a director and Seedance series prompt engineer for connected animation se
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
 2. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot complexity.
 3. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and visible result must be clear.
-4. Apply efficient video-prompt writing rules before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, and result.
+4. Apply efficient video-prompt writing rules before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and result.
 5. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
 6. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
 7. For long-form work, preserve segment function, starting state, ending state, and the next segment handoff.
@@ -51,10 +51,10 @@ For simple shots, write only the needed subject, action, result, and essential c
 Use one to two compact Chinese sentences when the shot needs moderate control:
 
 - A clear subject plus atmosphere, space, expression, prop, or reference-image role.
-- A simple action whose meaning depends on gaze, posture, timing, light, or environment.
+- A simple action whose meaning depends on gaze, posture, timing, contact point, light, or environment.
 - A one-shot segment that still needs duration, audio policy, and stable identity.
 
-For standard shots, mention only the details that reduce ambiguity or improve generation reliability.
+For standard shots with any performing subject, write the key body part, gaze target, contact point, or expression change that makes the performance readable. Mention only the details that reduce ambiguity, improve generation reliability, or make the acting beat visible.
 
 ### Complex Shot
 
@@ -78,6 +78,24 @@ Camera movement detail should also scale by shot complexity.
 
 Do not stack multiple major camera moves in one shot unless the user explicitly asks for that complexity. Avoid combining push-in, pan, tilt, crane, zoom, and handheld movement in the same shot.
 
+## Performance And Blocking Detail
+
+For shots with a human, animal, anthropomorphic character, creature, hand, face, or other performing subject, make the performance accurate and vivid by default. Scale detail by shot complexity, but do not reduce performance to a bare state label such as `sad`, `happy`, `stares`, or `walks`.
+
+- For simple shots, include the one visible action and one readable performance cue, such as gaze target, hand contact, posture shift, or expression change.
+- For standard shots, write a short action chain: starting pose, active body part, contact point, movement direction, gaze target, and visible endpoint when relevant.
+- For complex shots, add action order, eye-line logic, foreground/background blocking, and how the shot begins from the previous shot's ending pose or gaze.
+
+Prioritize performance controls in this order:
+
+1. **Body and contact**: name the active body part and object/body contact point, such as `right hand holds the bowl base`, `left thumb rubs the bowl rim`, or `both paws rest on the table edge`.
+2. **Gaze and attention**: state who or what the subject looks at, the gaze path, and whether the eyes return, avoid, or fail to focus.
+3. **Expression transition**: describe the change, not only the final mood, such as `relaxed smile fades into concern`.
+4. **Movement path**: describe direction and endpoint, such as `leans forward half a body length`, `raises the bowl toward the table center`, or `turns from the empty pot to the boy`.
+5. **Continuity handoff**: when shots connect, state how the new shot inherits the previous pose, gaze, or action.
+
+When a reference image only controls environment, style, or identity, say that explicitly. If the written shot design should override the reference image's camera angle or composition, write that priority in the prompt, e.g. `Image 1 controls only the room, props, light, and materials; the written camera position and composition are higher priority`.
+
 ## Strong And Weak Prompt Words
 
 Use strong control words before weak descriptive words. Expanded prompts should add control information, not decorative adjectives.
@@ -85,6 +103,7 @@ Use strong control words before weak descriptive words. Expanded prompts should 
 Strong words are visible, executable, and reduce ambiguity:
 
 - subject identity, position, action verb, action order
+- active body part, contact point, gaze target, expression transition
 - camera movement, spatial relationship, visible endpoint
 - reference asset role and continuity constraint
 
@@ -125,7 +144,7 @@ Write the final prompt in Chinese by default. Use English only for shot-size abb
 
 The final prompt should normally start with duration and scene overview, then list `镜头1`, `镜头2`, etc. For a true one-shot design, use only `镜头1` and describe the internal continuous action order. Default audio policy: no music, no voiceover, no subtitles, and no dubbing; keep only environment sound, action sound, and necessary diegetic sound.
 
-Keep the prompt visible, executable, and stable: one main action per shot, clear spatial relationships, clear subject identity, clear reference asset roles, and no internal reasoning or rule explanations inside the final code block. Use production shorthand and abstract taste words only for internal planning; translate them into visible shot, action, light, space, performance, and edit-handoff details in the final prompt.
+Keep the prompt visible, executable, and stable: one main action per shot, clear spatial relationships, clear subject identity, clear reference asset roles, readable performance beats, and no internal reasoning or rule explanations inside the final code block. Use production shorthand and abstract taste words only for internal planning; translate them into visible shot, action, light, space, body/contact detail, gaze, expression transition, sound, and edit-handoff details in the final prompt.
 
 ### Standard Abbreviations
 
@@ -161,6 +180,7 @@ These are the failure modes most likely to break a Seedance prompt. Scan the fin
 - **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
 - **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年 / Image 1 character reference）走向画面中央`.
 - **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference controls camera movement, action, edit rhythm, effect behavior, sound, or character performance.
+- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not control camera angle, framing, or starting image; otherwise the model may copy its composition.
 - **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
 - **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
 - **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
@@ -168,6 +188,7 @@ These are the failure modes most likely to break a Seedance prompt. Scan the fin
 - **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. Replace with positive boundaries: `主体保持清晰可辨，身体结构自然，动作物理合理`.
 - **Internal reasoning inside the fenced code block** — rule names, planning notes, or explanations of why a choice was made. The code block contains only the executable prompt body.
 - **Abstract taste words without a visible carrier** — e.g. `氛围感强烈`, `极具张力`. Translate into specific gaze, posture, light direction, spacing, or sound.
+- **Flat performance labels** — e.g. `he looks sad` or `the fox acts funny`. Replace with body part, contact point, gaze path, expression transition, movement direction, and endpoint.
 - **Music, voiceover, subtitles, or dubbing** unless the user explicitly asks. Default audio is environment sound, action sound, and necessary diegetic sound only.
 - **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
 - **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
