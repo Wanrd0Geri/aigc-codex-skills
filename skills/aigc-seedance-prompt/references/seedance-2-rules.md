@@ -14,33 +14,36 @@ Use these rules when drafting the final Seedance prompt.
 
 Put the final Seedance prompt in one fenced code block. The code block contains only the prompt body, not explanations, headings, or rules.
 
-Recommended Chinese skeleton:
+Write the prompt as **natural Chinese prose**, not a parameter list. The shot lead-in (`镜头N：x秒，景别。`) is the only structured marker — everything after it should read as complete sentences a director would say to a crew. See SKILL.md `Shot Line And Execution Body` for the writing-style discipline.
+
+Recommended shape:
 
 ```text
-时长：x秒。场景概述。无配乐，无旁白，无字幕，无配音，仅保留环境音、动作声与必要现场声。
+时长：x秒。一句话场景概述，写清地点、时间和氛围。无配乐，无旁白，无字幕，无配音，仅保留环境音、动作声与必要的现场声。
 
-镜头1：景别（英文缩写），角度，运镜（English camera term）。主体动作、表演细节、空间关系、可见结果。
-镜头2：...
+镜头1：x秒，景别。一句话写清角度、机位、运镜方向与画面重点，紧接着用一到两句自然语言描述主体动作、表演细节与空间关系，最后落在一个可见的结束状态。
+
+镜头2：x秒，景别。同样的写法——先一句空间与机位的设定，再用自然语言推进动作和镜头变化，最后给出可与下一段衔接的姿态、位置或光线状态。
 ```
 
-Use integer durations and shot counts. Keep subjects and actions concrete. Do not write a plot synopsis or a parameter checklist.
+Use integer durations and shot counts. Keep subjects and actions concrete. Do not write a plot synopsis or a parameter checklist. Natural prose should stay efficient: simple shots can remain short, and added wording must improve action clarity, continuity, or generation stability. Do not let any single sentence run for more than 4-5 comma-separated clauses; if a sentence stretches longer, break it with a period and continue with a connective such as `随后`、`紧接着`、`此时` or `与此同时`.
 
 ## Reference Asset Mapping
 
 Use stable, ordered labels for references:
 
 - Chinese collaboration labels: `@图1`, `@图2`, `@视频1`, `@视频2`, `@音频1`, `@音频2`.
-- Platform-facing labels when needed: `Image 1`, `Image 2`, `Video 1`, `Video 2`, `Audio 1`, `Audio 2`.
+- Platform-facing labels when the target UI requires them: `Image 1`, `Image 2`, `Video 1`, `Video 2`, `Audio 1`, `Audio 2`. Omit them in ordinary Chinese-only prompts unless useful for asset mapping.
 
 After every reference label, immediately attach a semantic noun or role to prevent ambiguity:
 
-- Good: `@图1（白衣少年 / Image 1 character reference）站在画面左侧`
-- Good: `@图2（老宅场景 / Image 2 scene reference）作为空间与光线参考`
-- Good: `@视频1（原始镜头 / Video 1 motion reference）向后平滑延长`
-- Good: `@视频1（剪辑节奏与现场音 / Video 1 rhythm and sound reference）作为动作停顿和环境声参考`
-- Good: `@音频1（BGM节奏 / Audio 1 beat reference）只控制剪辑节奏和情绪强度`
-- Good: `@图3（产品外观与标识 / Image 3 product reference）作为商品形状、材质和logo参考`
-- Good: `@图4（字体与版式 / Image 4 typography reference）仅在用户明确需要文字画面时使用`
+- Good: `@图1（白衣少年角色参考）站在画面左侧`
+- Good: `@图2（老宅场景参考）作为空间与光线参考`
+- Good: `@视频1（原始镜头参考）向后平滑延长`
+- Good: `@视频1（剪辑节奏与现场音参考）作为动作停顿和环境声参考`
+- Good: `@音频1（节奏参考）只控制剪辑节奏和情绪强度`
+- Good: `@图3（产品外观与标识参考）作为商品形状、材质和logo参考`
+- Good: `@图4（字体与版式参考）仅在用户明确需要文字画面时使用`
 - Avoid: `asset-xxx 跑向前方`
 - Avoid: `@图1 走向`
 - Avoid: `参考 @视频1`
@@ -64,12 +67,12 @@ For long images, collages, or grids, recommend splitting them into single refere
 
 Each shot should prioritize:
 
-- Shot size and angle.
-- Camera movement, with only one main movement per shot.
-- Main action.
-- Performance details.
-- Visible result or state change.
-- Spatial relationships and reference roles.
+- Shot number, duration, and shot size as a short structured opening ending in a period: `镜头N：x秒，景别。`
+- Angle, camera position, main camera movement, and visual focus written as one complete Chinese sentence with a verb, immediately after the lead-in.
+- Main action, written as natural sentences with subject and verb.
+- Performance details woven into the action prose, not stacked as separate slots.
+- Visible result or state change at the end of the paragraph.
+- Spatial relationships and reference roles named explicitly inside the sentences where they apply.
 
 Only add sound when it materially affects rhythm, action, or presence. Use `声音：` after the relevant shot description.
 
@@ -92,7 +95,7 @@ Example pattern:
 
 For extension or continuation:
 
-- Name the source as `@视频1（原始镜头 / Video 1 source clip）`.
+- Name the source as `@视频1（原始镜头参考）`.
 - Continue from the source clip's ending posture, movement direction, light state, and camera momentum.
 - Define the next visible action and endpoint.
 
