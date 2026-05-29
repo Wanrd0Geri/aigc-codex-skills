@@ -1,12 +1,26 @@
 # AIGC Codex Skills
 
-这是一套个人 AIGC 创作工作流 skills，用于短片、动画、电影感关键帧、分镜、图像编辑提示词和 Seedance 视频提示词。
+这是一套个人 AIGC 创作工作流 skills，用于短片、动画、电影感关键帧、分镜、自然语言提示词、图像编辑提示词和 Seedance 视频提示词。
 
 ## 命名规则
 
 所有 skill 都使用 `aigc-` 前缀，方便在 Codex 里搜索和显式调用。
 
 ## Skills 与使用方式
+
+### `aigc-natural-language-prompt`
+
+用于把粗糙想法、关键词串、参数堆叠 prompt 或旧提示词，改写成自然语言、导演讲戏式的可执行画面提示词。它重点处理“镜头看见什么、主体在哪里、动作如何发生、画面最后停在哪里”，避免只写抽象氛围词或参数表。
+
+它也会作为其他 prompt 型 skill 的最终语言检查标准：在输出 Seedance、图像编辑或可直接使用的 AIGC prompt 前，优先保证提示词是自然语言、画面关系清楚、没有无依据的画面外因果。
+
+适合这样说：
+
+```text
+用 $aigc-natural-language-prompt 把这段提示词改成自然语言、导演讲戏式 prompt。
+用 $aigc-natural-language-prompt 优化这段参数堆叠的提示词。
+用 $aigc-natural-language-prompt 判断这段 prompt 哪些地方不够自然。
+```
 
 ### `aigc-project-planner`
 
@@ -83,6 +97,7 @@
 ## 选择入口
 
 ```text
+提示词像参数表/想改成导演讲戏式？ -> aigc-natural-language-prompt
 整个项目怎么推进？           -> aigc-project-planner
 只有想法，还没镜头？         -> aigc-creative-director
 为什么这张图不好？           -> aigc-visual-diagnose
@@ -119,6 +134,7 @@ chmod +x scripts/link-skills.sh
 关键任务建议显式点名，例如：
 
 ```text
+用 $aigc-natural-language-prompt 把这段 prompt 改成自然语言导演讲戏式。
 用 $aigc-visual-diagnose 看这张图为什么不好。
 用 $aigc-shot-diagnosis-pipeline 判断这帧能不能进入视频。
 用 $aigc-image-edit-prompt 写修图 prompt。
