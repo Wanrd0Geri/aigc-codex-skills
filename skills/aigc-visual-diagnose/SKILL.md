@@ -1,6 +1,6 @@
 ---
 name: aigc-visual-diagnose
-description: Diagnose uploaded AIGC images, video frames, storyboards, keyframes, concept art, or generated stills when the user wants a detailed explanation of why the image feels wrong, ugly, flat, cheap, AI-looking, not cinematic, poorly composed, badly lit, visually inconsistent, or uses phrases like "不好看", "说不上来哪里怪", "AI味重", "不高级", "不电影感", "构图怪", "光影乱", "人物没融入画面", "质感差", "画面很平". Analyze from director, cinematography, production design, storyboard/editing, and AIGC generation-control perspectives. Do not use for production routing questions such as whether one frame can move forward, enter Seedance, be repaired, or should be redesigned; use aigc-shot-diagnosis-pipeline for those decisions.
+description: Explain why an uploaded AIGC image, frame, storyboard, keyframe, or concept looks weak, ugly, flat, cheap, AI-looking, visually inconsistent, or not cinematic. Use for "为什么不好看", "哪里怪", "不好看", "AI味重", "不高级", "质感差", "构图/光影/人物融入问题" analysis. Do not decide whether it can move forward, enter Seedance, be repaired, or should be redesigned; use aigc-shot-diagnosis-pipeline for production-gate decisions.
 ---
 
 # AIGC Visual Diagnose
@@ -30,7 +30,7 @@ State the likely creative intention in one sentence. If the intention is unclear
 
 ### 3. Diagnose Through Five Lenses
 
-Use concise, specific observations:
+Use concise, specific observations. Cover only lenses with real findings in the final answer; do not force all five lenses into equal-length sections.
 
 - **Director**: unclear story function, weak emotional carrier, no subject desire, no readable action, or no attention priority.
 - **Cinematography**: flat framing, wrong shot size, unmotivated camera, weak depth, confusing lens feel, poor exposure, or incoherent light.
@@ -46,7 +46,7 @@ Name the top 3 problems by impact. For each, provide:
 - What to change.
 - Whether it is a director, camera/light, art-design, composition, or prompt-control fix.
 
-Read `references/production-design-dimensions.md` when the image feels AI-looking, cheap, visually random, over-designed, texture-poor, cluttered, world-inconsistent, or when the user says `AI味重`, `不高级`, `质感差`, `背景乱`, `角色不突出`, `道具随机`, or `人物没融入画面`. Use it to separate art-direction problems from lighting, grading, and model-control problems.
+Read `references/production-design-dimensions.md` only when the image shows art-direction, material, world-coherence, character-silhouette, prop, or subject-environment hierarchy problems. Do not load it for ordinary exposure, grading, lens, or composition issues.
 
 ### 5. Choose the Next Handoff
 
@@ -58,7 +58,7 @@ Read `references/production-design-dimensions.md` when the image feels AI-lookin
 
 ## Output Structure
 
-Use this structure:
+Use this structure by default:
 
 ```markdown
 ## 画面观察
@@ -68,7 +68,7 @@ Use this structure:
 [What the image appears to be trying to do.]
 
 ## 五类诊断
-[Director / Cinematography / Production Design / Storyboard-Editing / AIGC Control.]
+[Only the lenses that contain real findings. If the user asks for a full breakdown, include all five lenses.]
 
 ## 最关键的 3 个问题
 [Ranked fixes with why and how.]

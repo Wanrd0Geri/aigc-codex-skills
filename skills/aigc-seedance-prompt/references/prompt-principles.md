@@ -77,6 +77,18 @@ Use abstract terms only for planning. In the final prompt, translate them:
 
 If a word cannot be filmed or heard, translate it before placing it in the final prompt.
 
+## Natural Prompt Language
+
+Natural prompt language is a quality-control pass, not a request to make the wording longer. The final text should sound like a director describing a shot that can be filmed, animated, or edited. The cross-skill standard lives in `aigc-natural-language-prompt`; this reference applies that standard to Seedance prompts.
+
+- Prefer complete visual sentences over parameter chains. A useful sentence usually contains subject, action, space, camera relationship, and visible result.
+- Turn abstract adjectives into carriers the viewer can notice: posture, distance, contact, gaze, light direction, shadow coverage, material response, environment reaction, sound, or timing.
+- Describe only current-shot visible/audible details or facts already established by previous shots. Do not invent a source such as wind, light, sound, or movement direction if the source is not visible or previously established.
+- For cuts, state the new frame relationship when needed: what previous view it comes from, where the camera now is, and which objects or subjects remain visible.
+- Keep only the specific detail that changes generation behavior. Remove generic boosters such as `cinematic`, `premium`, `masterpiece`, `high quality`, `ultra detailed`, `氛围感`, `高级感`, and `质感拉满` unless translated into visible choices.
+- Avoid over-smoothing the language into ad copy. The prompt can be elegant, but it must remain operational: what enters frame, what moves, what the camera does, what changes, and what remains at the end.
+- If two clauses only repeat the same mood, keep the stronger visible one and delete the weaker decorative one.
+
 ## Style Handling
 
 - If the user specifies a style, follow it.

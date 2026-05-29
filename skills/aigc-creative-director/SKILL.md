@@ -1,6 +1,6 @@
 ---
 name: aigc-creative-director
-description: Develop AIGC short-film, animation, cinematic video, storyboard, and keyframe ideas with director-level judgment. Use when the user has a vague concept, script, scene, character, theme, mood, or reference and asks "怎么拍", "怎么做成短片", "帮我设计镜头", "帮我做分镜", "这个想法怎么高级一点", "导演角度看看", "美术/摄影方向怎么定", or needs creative brief, story logic, emotional beat, blocking, visual strategy, and shot plan before prompt writing.
+description: Develop AIGC short-film, animation, storyboard, keyframe, or cinematic video ideas before prompt writing. Use when the user needs director-level creative direction, shot design, visual strategy, emotional logic, or asks how a vague concept, scene, script, mood, or reference should be filmed. Do not use for ready image-edit prompts or Seedance prompts unless the creative direction is still unresolved.
 ---
 
 # AIGC Creative Director
@@ -88,6 +88,8 @@ End with the next practical artifact:
 - For still-frame review: hand off to `aigc-visual-diagnose`.
 - For image-to-image repair prompts: hand off to `aigc-image-edit-prompt`.
 - For Seedance video prompts: hand off to `aigc-seedance-prompt` with duration, shot goal, reference roles, motion, camera, start state, end state, and stability constraints.
+
+If this skill outputs any ready prompt directly, apply `aigc-natural-language-prompt` as the final language pass first. The user should not need to invoke it manually. Keep creative direction separate from the final executable prompt.
 
 ## Output Structure
 

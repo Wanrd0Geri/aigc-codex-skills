@@ -1,6 +1,6 @@
 ---
 name: aigc-shot-diagnosis-pipeline
-description: Diagnose a single AIGC shot frame, generated still, keyframe, storyboard frame, or video frame as a production pipeline checkpoint. Use when the user asks whether one frame can move forward, whether it can enter image editing or Seedance video generation, whether it should be repaired or redesigned, what blocks production, or which AIGC skill should be used next. Do not use for detailed artistic image critique; use aigc-visual-diagnose for "why does this look wrong" analysis.
+description: Decide whether a single AIGC frame or shot can move forward, needs repair, or must be redesigned; this is a production-gate decision, not a broad aesthetic critique. Use when the user asks whether it can be used, enter image editing or Seedance, what blocks production, or which AIGC skill comes next. For "why does this look wrong" analysis, use aigc-visual-diagnose.
 ---
 
 # AIGC Shot Diagnosis Pipeline
@@ -30,7 +30,7 @@ If the frame cannot be judged without deeper artistic analysis, choose **Deep di
 
 ### 2. Assign a Production Status
 
-Use `references/diagnosis-rubric.md` to classify the frame:
+Use `references/diagnosis-rubric.md` to classify the frame. It defines status thresholds only; use this SKILL.md for routing and handoff behavior.
 
 - **Green**: proceed. The frame can move into image editing or video generation.
 - **Yellow**: proceed only after fixing 1-3 high-impact issues.

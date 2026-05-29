@@ -18,6 +18,26 @@ Both models respond to this three-block edit grammar. The blocks should always b
 
 This structure outperforms freeform prose for image-editing tasks on both models because it gives them an explicit lock-list before the creative directives.
 
+### Natural directive style
+
+The block format is structural, but the lines inside it should read like clear editing instructions. Use `aigc-natural-language-prompt` as the cross-skill standard for natural, director-style wording; here the same standard is adapted to `[Preserve] / [Transform] / [Avoid]`. Avoid both extremes: a poetic paragraph with no constraints, or a keyword pile that ignores the source image.
+
+Good edit directives usually name:
+
+- **where** the change appears: face side, costume edge, background layer, foreground haze, window light, ground shadow
+- **what** changes: direction, hardness, color temperature, density, contrast, saturation, material response
+- **what must remain stable**: identity, pose, composition, character count, prop shape, clean surface quality
+- **visible result**: subject integrates with environment, depth separates layers, shadows stop looking milky, highlights stop clipping
+
+Rewrite parameter-like lines before output:
+
+- Weak: `cinematic lighting, dramatic contrast, premium atmosphere`
+- Better: `Replace the flat front light with one soft key from camera-left, deepen the background shadows, and keep the face readable with a narrow warm fill.`
+- Weak: `高级电影感，氛围更强，质感更好`
+- Better: `把正面平光改为画面左侧的柔和主光，背景阴影压深，人物面部保留可读的暖色补光，让主体和环境光线统一。`
+
+Use this style for both Chinese and English prompts. They do not need literal word-for-word translation, but they must preserve the same edit intent and protection boundaries.
+
 ---
 
 ## Nano Banana Pro template
@@ -235,77 +255,15 @@ Style reference: [optional — name a DP, film, or stock if it sharpens the targ
 
 ---
 
-## Worked example — wuxia night forest scene
-
-This is the example case the skill was originally built around. Use it as a calibration reference.
-
-### Diagnosis summary
-Source image: two riders in foggy forest, but image was over-bright with strong god rays, green-tinted fog, lifted blacks, and subjects lit independently from the scene.
-
-### Nano Banana Pro prompt (English)
-
-```
-Edit this image with the following cinematic adjustments. Preserve the source faithfully where specified.
-
-[Preserve]
-- All character faces, hair, robes, sword pommels, and Tang-dynasty styling
-- Both foreground riders' poses and the bay horses' postures
-- Background figures (the standing woman, the rider in blue, the standing figure on right edge)
-- Camera angle, framing, and the layered depth composition
-
-[Transform]
-- Lighting: replace the strong overhead god ray shafts with diffuse cool moonlight from upper-left at roughly 30 degrees, soft falloff, single motivated key
-- Color grade: unified cool blue-cyan palette, monochromatic, remove all green and yellow tints from atmosphere and shadows; shift skin tones slightly cool
-- Black point: crush blacks deeply, true black at IRE 0-10, no lifted shadows
-- Atmosphere: keep haze but reduce its brightness by 50%, give it depth gradient — foreground crisp, midground softly veiled, background dissolved into darkness
-- Subject integration: add subtle cool blue rim light on both foreground riders' shoulders and horse manes from the upper-left moonlight direction
-- Overall exposure: push the whole image 1.5 stops darker, target a low-key night-scene exposure
-
-[Avoid]
-- Bright god ray shafts (the original's biggest problem)
-- Green or yellow tint anywhere in the fog or shadows
-- Bright glowing fog that flattens depth
-- Lifted milky shadows
-- Multiple competing light sources
-
-Output: a single edited image, low-key wuxia night forest cinematography, subjects fully integrated into the cool moonlight.
-```
-
-### ChatGPT Images 2.0 prompt (English)
-
-```
-Image edit task. Preserve subject identity; transform cinematography only.
-
-PRESERVE EXACTLY:
-- Both foreground riders' faces, hair, robes, horses, poses
-- Background figures and their positions
-- Camera angle and composition
-
-TRANSFORM:
-- Lighting: single soft moonlight key from upper-left, motivated, no god rays
-- Grade: monochromatic cool teal day-for-night palette, all green removed
-- Contrast: 1:8 dramatic ratio with crushed blacks
-- Atmosphere: depth-graded haze, foreground clear background dissolved, haze 50% darker than source
-- Subject integration: cool blue rim light on riders matching the moonlight direction
-
-NEGATIVE:
-- god rays, light shafts, green tint, yellow tint, lifted shadows, bright fog, multiple keys, oversaturation
-
-Style reference: Wong Kar-wai night photography meets wuxia cinematography — Christopher Doyle's cool-blue forest sequences.
-```
-
-These two prompts targeting the same image will produce slightly different results — Nano Banana Pro will hew closer to numerical specs, while ChatGPT Images 2.0 will usually follow concise natural-language edit intent more reliably. Recommend the user try both only when they asked for compatibility or comparison.
-
----
-
 ## Final quality checks before outputting
 
 Before delivering the prompt to the user, verify:
 
 1. **Preservation block is specific.** "Preserve everything else" is too vague — name the things that matter.
 2. **Transformation block has 3-7 directives, not 12.** More than 7 = model loses focus. Pick the highest-leverage from the diagnosis.
-3. **Each transformation directive uses vocabulary from `cinematic-language.md`.** No vague mood words.
+3. **Each transformation directive uses precise cinematography vocabulary.** Consult `cinematic-language.md` only when the needed term is not already clear. No vague mood words.
 4. **Negative prompt directly mirrors the diagnosis's ❌ findings.** Don't list generic negatives — list the specific issues this image has.
 5. **Both Chinese and English versions exist and say the same thing semantically.** Do not omit one.
-6. **The prompt would make sense to a real cinematographer.** If you wouldn't dare show it to a DP, it's still too vague.
-7. **Surface cleanliness terms are adaptive.** If fragmented rendering is not part of the diagnosis, omit clean/smooth/no-texture terms. If the source is clean but the edit may introduce fragmentation, use Level 0.5. If fragmentation is already visible, choose Level 1, 2, or 3 instead of dumping every negative word into the prompt.
+6. **The prompt reads as natural edit language, not keyword stuffing.** Each directive should connect the edit target, the visual change, and the intended result.
+7. **The prompt would make sense to a real cinematographer.** If you wouldn't dare show it to a DP, it's still too vague.
+8. **Surface cleanliness terms are adaptive.** If fragmented rendering is not part of the diagnosis, omit clean/smooth/no-texture terms. If the source is clean but the edit may introduce fragmentation, use Level 0.5. If fragmentation is already visible, choose Level 1, 2, or 3 instead of dumping every negative word into the prompt.

@@ -10,14 +10,17 @@ description: Generate, refine, and diagnose Chinese Seedance series video prompt
 Act as a director and Seedance series prompt engineer for connected animation segment production. Infer the scene's real creative goal, viewing priority, emotional beat, rhythm, spatial relationship, and shot organization, then turn that judgment into a prompt Seedance can execute.
 
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
-2. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot complexity.
-3. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and visible result must be clear.
-4. Apply prompt principles before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and result.
-5. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
-6. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
-7. Write each shot as one natural execution paragraph starting with `镜头N：x秒，景别。`: keep shot number, duration, and shot size explicit and end the lead-in with a period, then continue in flowing Chinese sentences covering camera position, movement, action path, camera-subject relationship, visible result, and handoff — like a director talking the shot through to a crew, not a parameter checklist.
-8. For long-form work, preserve segment function, starting state, ending state, and the next segment handoff.
-9. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
+2. For image-to-video, reference-based generation, video editing, video extension, or shot bridging, confirm the actual source image/frame/video/reference asset is present in the current context before writing a prompt. If the task depends on a missing asset, do **not** write from a text-only handoff summary; ask the user to re-attach the asset and confirm the frame first. A handoff summary is context, never a substitute for the asset. For pure text-to-video, proceed without blocking.
+3. Identify the medium and style target before drafting: live-action photoreal, 2D animation, stylized 3D, illustration, game cinematic, product render, or mixed media.
+4. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot complexity.
+5. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and visible result must be clear.
+6. Apply prompt principles before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and result.
+7. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
+8. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
+9. Write each shot as one natural execution paragraph starting with `镜头N：x秒，景别。`: keep shot number, duration, and shot size explicit and end the lead-in with a period, then continue in flowing Chinese sentences covering camera position, movement, action path, camera-subject relationship, visible result, and handoff — like a director talking the shot through to a crew, not a parameter checklist.
+10. For long-form work, preserve segment function, starting state, ending state, and the next segment handoff.
+11. Before outputting any final prompt, apply `aigc-natural-language-prompt` as the final language pass. The user should not need to invoke it manually. Preserve Seedance-specific format and constraints while enforcing visible subject/action/space/result, no unsupported off-screen causes, and no parameter stacking.
+12. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
 
 ## Output Modes
 
@@ -78,6 +81,17 @@ Camera movement detail should also scale by shot complexity.
 - For complex shots, specify the starting frame, subject relationship, movement path, reveal order, ending frame, and visible result only when these details are needed to prevent confusion.
 
 Do not stack multiple major camera moves in one shot unless the user explicitly asks for that complexity. Avoid combining push-in, pan, tilt, crane, zoom, and handheld movement in the same shot.
+
+## Medium And Style Branch
+
+Identify the intended medium before choosing prompt vocabulary. Do not let live-action cinematography language override a non-photoreal target.
+
+- **Live-action photoreal**: use grounded lighting, exposure, lens distance, atmosphere, and material response terms when they help.
+- **2D animation / illustration**: prioritize clean silhouette, line/design consistency, readable color blocks, stable character shape, and rhythmized pose changes. Avoid film grain, IRE values, film-stock names, and photoreal skin/material language unless the user asks for them.
+- **Stylized 3D / game cinematic**: prioritize stable model identity, readable staging, clean material hierarchy, soft but controlled lighting, natural ear/tail/cloth/hair motion, and clear action timing. Use engine or game-cutscene style terms only as global constraints; shot bodies still need concrete actions and spatial relationships.
+- **Product / object render**: prioritize shape accuracy, logo/mark preservation, material response, contact shadows, reflection control, and camera-object relationship.
+
+If the user's references imply a medium, inherit that medium without renaming it. If style is unspecified, keep the prompt neutral and execution-focused.
 
 ## Shot Line And Execution Body
 
@@ -150,6 +164,18 @@ Weak words may be used only when anchored to visible carriers. Do not rely on we
 
 For each shot, write strong controls first, then add weak atmosphere only if it changes the intended image or emotion.
 
+## Natural Description Pass
+
+Before returning a final prompt, do one prose pass for naturalness. For general natural-language rewrites or teaching requests, use `aigc-natural-language-prompt`; inside this Seedance skill, apply the same standard while preserving Seedance-specific duration, reference mapping, and shot-bridge rules. Natural does not mean casual or vague; it means the shot reads like a coherent visual action instead of prompt-engineering syntax.
+
+- Each sentence should name a visible subject and a real verb. Replace noun piles such as `中景、冷色、孤独、电影感` with filmed relationships such as `中景固定拍摄，人物独自站在冷白路灯下，身后的街道空旷`.
+- Keep cause and sequence readable. Use `先`, `随后`, `此时`, `最终` only when they clarify the action order; do not add connectors as decoration.
+- Use adjectives only after the concrete carrier is clear. `压抑` should become tight spacing, low ceiling, held breath, blocked doorway, heavy shadow, or another visible/audible cue.
+- Do not invent an off-screen source or cause. If the source is not visible in the current shot or clearly established by a previous shot, write only the visible result, such as `额前碎发被轻轻吹开`.
+- When a shot cuts from a previous view, state the current frame relationship only when it prevents confusion, such as `从上一镜头的远景切到桌前右侧中近景`.
+- Remove prompt-flavored filler before output: `高质量`, `大师级`, `极致细节`, `电影质感`, `氛围拉满`, `高级感`. If the idea matters, translate it into camera, light, blocking, material, sound, or movement.
+- Check that the shot can be acted or animated. If a phrase cannot be seen, heard, performed, lit, framed, or timed, rewrite it before placing it in the final code block.
+
 ### Confirmation Policy
 
 Default to self-judgment and produce the prompt directly. Ask the user before finalizing only when ambiguity changes the actual creative direction or generation strategy:
@@ -170,6 +196,7 @@ Load only the reference needed for the task:
 - Read `references/seedance-2-rules.md` for all final prompt drafting, reference image/video handling, text-to-video, image-to-video, video edit, video extension, shot bridge, and official Seedance 2.0 constraints.
 - Read `references/task-patterns.md` when the request targets a specific format such as product ads, UGC, creative VFX, dialogue drama, music beat sync, one-take, educational visualization, or multi-video fusion.
 - Read `references/examples.md` only as an optional calibration aid when the output shape is unfamiliar. Do not load examples for routine Seedance prompts.
+- Use `aigc-natural-language-prompt` as the cross-skill standard when the user is primarily asking how to make prompt language more natural, director-style, visible, and non-parameterized rather than asking for Seedance-specific final drafting.
 
 ## Prompt Contract
 

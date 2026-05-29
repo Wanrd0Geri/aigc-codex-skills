@@ -1,6 +1,6 @@
 # 八维诊断标准 / 8-Dimension Diagnostic Criteria
 
-This file is the diagnostic rubric. Walk through every dimension in order. For each, decide ✅ Working / ⚠️ Weak / ❌ Broken, and note specifically what's happening.
+This file is the diagnostic rubric. Scan every dimension internally, decide whether each one is working, weak, or broken, then rank the findings by impact. Do not turn this rubric into a full user-facing checklist unless the user explicitly asks for detailed grading.
 
 These dimensions are not arbitrary — they are the choices a cinematographer (DP) actively controls on every frame. AI-generated images tend to fail because the model averages across many sources and ends up making *no choice* — which reads as flat or incoherent.
 
@@ -146,6 +146,8 @@ These dimensions are not arbitrary — they are the choices a cinematographer (D
 
 ## How to use this rubric
 
-Don't just check boxes — **rank the findings by impact**. A single ❌ on dimension 6 (subject integration) usually hurts an image more than three ⚠️s on dimensions 7-8. The transformation prompt should target the top 3-5 issues, not all 8.
+Don't just check boxes — **rank the findings by impact**. A single broken subject-integration issue usually hurts an image more than several mild composition or color-emotion issues. The transformation prompt should target the top 3-5 issues, not all 8.
+
+Default output guidance: summarize only the decisive issues. Include a full 8-dimension table only when the user asks for exhaustive critique, comparison, or grading.
 
 If two dimensions are giving conflicting fix directions (e.g., dimension 4 says "push darker" but dimension 6 says "add rim light to subjects"), there is no conflict — these stack: push the overall scene darker AND add a localized rim light. The model handles this fine if the prompt is clearly structured.

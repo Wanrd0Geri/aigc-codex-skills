@@ -27,6 +27,20 @@ When the requested shot includes multiple people, large action, occlusion, compl
 - Give each important subject a position or prop anchor.
 - Make the action endpoint visible before starting the next action.
 
+## Duration Budget
+
+Before drafting, back-calculate how many readable beats the requested duration can hold. Do not compress too many actions into a short segment.
+
+Rough timing:
+
+- one readable action beat: about 2-3 seconds
+- one camera movement plus one action: about 3-4 seconds
+- one expression or attention transition: about 1-2 seconds on its own
+- one object interaction with contact and reaction: about 2-3 seconds
+- one multi-character handoff or chase beat: about 3-5 seconds
+
+If the requested duration cannot hold all beats, split shots, reduce actions, or suggest extending the segment. Preserve the visible start state, action, and endpoint instead of squeezing several beats into one unreadable shot.
+
 ## Positive Motion Boundaries
 
 Prefer positive boundaries over negative warning lists:
@@ -41,6 +55,7 @@ Prefer positive boundaries over negative warning lists:
 Before returning the final prompt, silently scan against the `Common Failures To Avoid` list in the main `SKILL.md`. In addition, verify these segment-level points:
 
 - Each shot has one main action and one main camera movement.
+- The duration can realistically hold the number of action, camera, expression, and handoff beats.
 - The final shot has a readable endpoint (posture, gaze, object position, or camera endpoint that can connect to the next segment).
 - Subject identity anchors are stable (clothing, silhouette, prop, or position) for every important subject.
 - Spatial relationships (left/right, foreground/background, near/far) are stated where they affect the action.

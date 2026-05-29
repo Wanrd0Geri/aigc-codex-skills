@@ -1,6 +1,6 @@
 ---
 name: aigc-project-planner
-description: Plan and route whole AIGC short-film, animation, storyboard, keyframe, image, and video-production projects across multiple stages or assets. Use when the user asks how to推进一个AIGC项目, plan a whole short film workflow, coordinate multi-shot or multi-asset production, connect creative direction with keyframes and video prompts, or says things like "整个项目怎么做", "从想法到成片怎么推进", "帮我拆全片流程", "这个短片 pipeline 怎么安排". Do not use for single-image, single-frame, single-shot, single-prompt, or single-reference requests; route single-frame production decisions to aigc-shot-diagnosis-pipeline, deep visual critique to aigc-visual-diagnose, creative direction to aigc-creative-director, ready image-edit prompts to aigc-image-edit-prompt, or Seedance/video prompts to aigc-seedance-prompt.
+description: Plan and route multi-stage AIGC projects across concepts, keyframes, image repair, and video prompts. Use for whole short-film/animation workflows, multi-shot or multi-asset planning, pipeline questions, and "下一步该做什么" at project level. Do not use for a single image, frame, shot, prompt, or reference asset; route those directly to the relevant specialist skill.
 ---
 
 # AIGC Project Planner
@@ -16,6 +16,7 @@ Choose one primary path. Do not run every skill at once.
 - **Whole project or short-film pipeline**: stay in this router, build the production path, then name the first specialized skill to use.
 - **Multi-shot sequence with unclear order**: map stages first, then hand off the next concrete task.
 - **Multiple assets with unclear roles**: define asset roles before handing off.
+- **Prompt wording problem**: when the user asks for `自然语言提示词`, `导演讲戏式提示词`, `prompt 更自然`, `不要参数堆叠`, or wants a rough idea/old prompt rewritten into visible, executable image or video language, use `aigc-natural-language-prompt`.
 - **Idea, script, scene, or mood without a clear shooting plan**: use `aigc-creative-director`.
 - **Uploaded image/frame feels wrong, ugly, flat, AI-looking, or the user cannot name the problem**: use `aigc-visual-diagnose`.
 - **Single frame needs a production decision such as whether it can move forward, enter video, be repaired, be redesigned, or what next skill should be used**: use `aigc-shot-diagnosis-pipeline`.
@@ -25,9 +26,10 @@ Choose one primary path. Do not run every skill at once.
 If multiple paths apply, pick the earliest unresolved creative bottleneck:
 1. Intent and story problem.
 2. Shot design problem.
-3. Still-frame quality problem.
-4. Image-edit prompt problem.
-5. Video-generation prompt problem.
+3. Prompt wording and natural-language execution problem.
+4. Still-frame quality problem.
+5. Image-edit prompt problem.
+6. Video-generation prompt problem.
 
 ## Operating Style
 
@@ -66,6 +68,7 @@ For whole-project planning, include a compact pipeline:
 When handing off, preserve the decision context:
 
 - To `aigc-creative-director`: provide theme, audience/platform, duration, protagonist, conflict, mood, and reference style if known.
+- To `aigc-natural-language-prompt`: provide the rough idea or old prompt, target artifact if known, style/reference constraints, and any wording concern such as parameter stacking, unsupported off-screen causes, unclear cuts, or abstract mood words.
 - To `aigc-visual-diagnose`: provide the image/frame plus the user's target feeling and what they already like.
 - To `aigc-shot-diagnosis-pipeline`: provide the frame, user target, intended next step if known, what already works, and any known production concern.
 - To `aigc-image-edit-prompt`: provide what must be preserved, target model, and the top visual problems to fix.
@@ -75,6 +78,7 @@ When handing off, preserve the decision context:
 
 - Do not answer every request with a long production bible.
 - Do not keep single-image, single-frame, single-shot, or single-prompt requests inside project planning; route them to the relevant specialist.
+- Do not send pure wording rewrites directly to Seedance or image editing when the user is first asking what a natural-language prompt should be; route to `aigc-natural-language-prompt`.
 - Do not produce final Seedance prompts when the user is still asking for creative direction.
 - Do not produce image-edit prompts when the user only asked why an image feels wrong.
 - Do not overwrite specialized skill rules; route to them when the task is clearly specialized.

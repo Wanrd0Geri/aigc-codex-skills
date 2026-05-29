@@ -72,10 +72,6 @@ Local prop issues, small material errors, minor background clutter, or small col
 - **Redesign first**: Red due to concept, shot design, or structural image failure.
 - **Deep diagnose first**: the frame needs deeper visual analysis before a production decision.
 
-## Routing Rules
+## Boundary Note
 
-- Route weak concepts to `aigc-creative-director`.
-- Route broad visual diagnosis to `aigc-visual-diagnose`.
-- Route targeted repair prompts to `aigc-image-edit-prompt`.
-- Route video prompt writing to `aigc-seedance-prompt`.
-- If the user only asks for a production decision, stay in `aigc-shot-diagnosis-pipeline` and provide the next-step checklist.
+This reference defines status and path criteria only. Use the main `SKILL.md` for routing language, output structure, and handoff summaries so the same boundary is not maintained in two places.
