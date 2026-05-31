@@ -1,6 +1,6 @@
 ---
 name: aigc-image-edit-prompt
-description: Write bilingual image-to-image edit prompts for Nano Banana/Gemini image editors or ChatGPT/OpenAI image editors only when the actual source image is present or attached. Use when the user has an image and explicitly wants a repair/edit/cinematic enhancement prompt while preserving subject identity. If the user only asks why an image feels wrong, route to aigc-visual-diagnose first.
+description: Write image-to-image edit prompts for Nano Banana/Gemini image editors or ChatGPT/OpenAI image editors only when the actual source image is present or attached. Use when the user has an image and explicitly wants a repair/edit/cinematic enhancement prompt while preserving subject identity. If the user only asks why an image feels wrong, route to aigc-visual-diagnose first.
 ---
 
 # AIGC Image Edit Prompt
@@ -19,7 +19,7 @@ The user does NOT want you to redraw the image yourself. They want a **diagnosis
 
 A "cinematic" image is not a style — it's a set of disciplined choices a real cinematographer makes about light, color, and atmosphere. Most AI-generated images fail to feel cinematic because they violate one or more of these choices. Your job is to identify *which* choices are being violated, name them in cinematography vocabulary, and write a prompt that corrects them surgically without destroying what already works.
 
-The output is always **two artifacts**:
+The default output has **two artifacts** unless the user asks for prompt-only output:
 1. **A diagnosis report** — what's wrong, in plain language plus cinematography terms
 2. **A bilingual edit prompt (中文 + English)** — image-to-image instructions in `[Preserve] / [Transform] / [Avoid]` format, tuned for the user's chosen target model
 
@@ -82,7 +82,7 @@ Read `references/prompt-templates.md` for the current model templates and adapti
 
 Read `references/cinematic-language.md` only when you need precise cinematography vocabulary. Do not load it just to produce generic "more cinematic" phrasing; use it to sharpen specific lighting, color, lens, atmosphere, or grade choices.
 
-Before outputting any final edit prompt, apply `aigc-natural-language-prompt` as the final language pass. The user should not need to invoke it manually. Preserve the chosen image-editor template while enforcing visible edit targets, concrete outcomes, and no keyword stuffing.
+Before outputting any final edit prompt, preserve the chosen image-editor template while enforcing visible edit targets, concrete outcomes, and no keyword stuffing. Use `aigc-natural-language-prompt` only when the draft has template voice, abstract filler, unclear visual logic, or the user asks for natural-language cleanup.
 
 Before output, run a natural-description pass on both Chinese and English prompts:
 
@@ -102,7 +102,7 @@ For ChatGPT Images 2.0 / GPT-image style outputs, explicitly check whether the s
 
 Do not paste the whole texture-control vocabulary into every prompt. If the diagnosis is about lighting, color, depth, or subject integration and the surfaces are already clean, omit heavy negative terms.
 
-Output **both Chinese and English** versions. They should be semantic mirrors, not literal translations — Chinese and English cinematography vocabulary don't map 1:1, and each language has terms the models recognize better.
+Output **both Chinese and English** versions by default. If the user asks for one language only, provide that language and keep the same edit intent.
 
 ### Step 5 — Present the result
 

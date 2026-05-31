@@ -2,13 +2,13 @@
 
 This file specifies the current prompt structure for **Nano Banana Pro** and **ChatGPT Images 2.0**. Treat later Nano Banana, Gemini image editor, ChatGPT image editor, or OpenAI image editor versions as the closest matching family unless the user provides newer constraints. They solve the same image-editing task, but they respond best to different prompt densities and vocabulary.
 
-Always output **bilingual (Chinese + English)** versions. They are semantic mirrors, not literal translations.
+Default to **bilingual (Chinese + English)** versions unless the user asks for one language only. They are semantic mirrors, not literal translations.
 
 ---
 
 ## Universal structure: `[Preserve] / [Transform] / [Avoid]`
 
-Both models respond to this three-block edit grammar. The blocks should always be in this order:
+Both models respond to this three-block edit grammar. Keep the blocks in this order when using this edit-prompt structure:
 
 ```
 [Preserve] What must NOT change about the source image

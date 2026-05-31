@@ -1,15 +1,15 @@
 ---
 name: aigc-natural-language-prompt
-description: Rewrite rough AIGC ideas, keyword stacks, parameter-heavy prompts, or old image/video prompts into natural-language, director-style prompts, and act as the required final language pass before any AIGC skill outputs a prompt. Use when the user asks for natural-language prompts, director-style prompts, prompt more natural, no parameter stacking, 自然语言提示词, 导演讲戏式提示词, prompt 更自然, 不要参数堆叠, or wants to improve prompt narration logic and visible image logic before handing off to Seedance, image editing, or another AIGC specialist skill.
+description: Rewrite rough AIGC ideas, keyword stacks, parameter-heavy prompts, or old image/video prompts into natural-language, director-style prompts. Use when the user asks for natural-language prompts, prompt more natural, no parameter stacking, 自然语言提示词, 导演讲戏式提示词, prompt 更自然, 去 AI 味, 去模板腔, 不要参数堆叠, or wants to improve prompt narration logic and visible image logic before handing off to Seedance, image editing, or another AIGC specialist skill.
 ---
 
 # AIGC Natural Language Prompt
 
 Use this skill to turn a rough AIGC idea, parameter list, old prompt, or abstract mood description into a natural-language prompt that reads like a director describing a shot to a camera, animation, lighting, or editing team.
 
-Natural language does **not** mean casual, literary, longer, or more poetic. It means executable visual language: describe what the current frame can see or hear, what has already been established by a previous shot, how the subject acts inside the space, and what visible state the shot ends on.
+Natural language does **not** mean casual, literary, longer, or more poetic. It means executable visual language: describe what the current frame can see or hear, what has already been established by a previous shot, how the subject acts inside the space, and which continuity anchor is useful when shots need to connect.
 
-When another AIGC skill is about to output a final prompt, this skill's contract is the required final language pass. The user should not need to invoke it manually.
+This skill is not a mandatory final rewrite layer for every AIGC prompt. Use it when the user asks for natural-language cleanup, when a prompt contains template voice, AI-flavored filler, ambiguous visual logic, unsupported causality, or when another AIGC skill needs a targeted language diagnosis. Do not rewrite a prompt just to force a uniform house style.
 
 ## Workflow
 
@@ -19,12 +19,13 @@ When another AIGC skill is about to output a final prompt, this skill's contract
    - abstract intent that must become visible
    - platform/style constraints that belong in a global setup
    - unsupported off-screen causes or spatial claims
+   - AI-flavored filler, template slots, decorative transitions, or forced summary endings
    - prompt-engineering filler that should be removed or translated
 3. Apply the natural-language criteria before rewriting. Read `references/natural-language-criteria.md` when the user asks what counts as natural language, when quality is uncertain, or when the prompt contains camera/source/space ambiguity.
 4. Use `references/rewrite-patterns.md` when converting parameter stacks, abstract mood words, platform words, off-screen causality, or multi-character action.
 5. Read `references/examples.md` only when the user asks for examples, when calibrating a new pattern, or when the output shape is unfamiliar.
 6. Write the final prompt in Chinese by default. Use English or bilingual output only when the user asks or the target model requires it.
-7. If the final target is clearly Seedance, image editing, visual diagnosis, or creative direction, either hand off to the relevant specialist skill or provide a short handoff note after the natural-language rewrite.
+7. If the final target is clearly Seedance, image editing, visual diagnosis, or creative direction, either hand off to the relevant specialist skill or provide a short handoff note after the natural-language rewrite. Do not add this handoff when the user asked for prompt-only output.
 
 ## Output Modes
 
@@ -37,7 +38,7 @@ Use this structure unless the user asks for prompt only:
 [3-5 bullets naming the standards used for this rewrite.]
 
 ## 原提示词问题
-[2-5 bullets naming the specific failures: parameter stack, abstract mood, unsupported off-screen source, unclear cut, missing action endpoint, etc.]
+[2-5 bullets naming the specific failures: parameter stack, abstract mood, unsupported off-screen source, unclear cut, forced ending summary, AI-flavored filler, etc.]
 
 ## 改写提示词
 ```text
@@ -65,8 +66,9 @@ The rewritten prompt must obey these rules:
 - Convert abstract words into visible carriers: posture, gaze, contact point, distance, light, shadow, material, sound, timing, or environmental reaction.
 - Do not invent off-screen causes. If the source is not visible or established, write the visible result instead.
 - For cuts and shot changes, state how the current shot enters the scene: from which previous view, current camera side, framing, and visible retained objects.
-- For multiple characters, assign identity, position, role, action, reaction, and endpoint before writing chaotic group movement.
-- Keep style terms in global constraints when they matter, but make shot bodies concrete: what enters frame, what moves, what reacts, and what remains at the end.
+- For multiple characters, assign identity, position, role, action, reaction, and only the continuity anchor needed to keep the movement readable.
+- Keep style terms in global constraints when they matter, but make shot bodies concrete: what enters frame, what moves, what reacts, and what a later shot needs to inherit.
+- Remove AI-flavored prose when it does not control the image: promotional adjectives, rule-of-three padding, "not only...but also..." logic, generic conclusions, and explanations of creative intent that the camera cannot see.
 
 ## Specialist Boundaries
 
@@ -85,4 +87,5 @@ Before final output, scan for these failures:
 - emotional labels without visible carriers
 - camera directions without a visible subject or frame relationship
 - group action without roles, positions, paths, or reactions
-- final shots without a visible ending state
+- forced ending-state summaries that do not help the next shot connect
+- missing continuity anchors only when the next shot depends on pose, gaze, object position, movement direction, light state, or camera position

@@ -42,7 +42,7 @@ Infer what the user is trying to make:
 - Format: short film, animation PV, keyframe, ad, trailer, music video, scene test, or concept proof.
 - Audience/platform: social short video, portfolio piece, pitch, festival-style short, commercial asset, or internal test.
 - Duration and deliverable: single image, several keyframes, one Seedance clip, connected clips, or full sequence.
-- Emotional promise: what the viewer should feel in the first seconds and at the end.
+- Emotional promise: what the viewer should feel first, and what should visibly shift during the piece.
 
 Ask only when a missing answer changes the direction. Otherwise state assumptions and continue.
 
@@ -75,7 +75,7 @@ Choose restrained, specific visual rules:
 - **Light**: motivated source, direction, contrast, color temperature, and mood.
 - **Production design**: environment, props, costume, material, era, and texture hierarchy.
 - **Color**: dominant palette, accent color, saturation rule, and what emotion it supports.
-- **Editing**: cut point, start state, end state, and continuity handoff.
+- **Editing**: cut point, start state, and continuity handoff only where it affects the next shot or segment.
 
 Avoid generic quality words unless they are anchored to visible choices.
 
@@ -87,9 +87,9 @@ End with the next practical artifact:
 - For storyboards/keyframes: output a shot list with image intent.
 - For still-frame review: hand off to `aigc-visual-diagnose`.
 - For image-to-image repair prompts: hand off to `aigc-image-edit-prompt`.
-- For Seedance video prompts: hand off to `aigc-seedance-prompt` with duration, shot goal, reference roles, motion, camera, start state, end state, and stability constraints.
+- For Seedance video prompts: hand off to `aigc-seedance-prompt` with duration, shot goal, reference roles, motion, camera, start state, and only the continuity anchors needed for connected shots or segments.
 
-If this skill outputs any ready prompt directly, apply `aigc-natural-language-prompt` as the final language pass first. The user should not need to invoke it manually. Keep creative direction separate from the final executable prompt.
+If this skill outputs any ready prompt directly, keep creative direction separate from the executable prompt and apply `aigc-natural-language-prompt` only when the draft contains template voice, abstract filler, unclear visual logic, or the user asks for natural-language cleanup.
 
 ## Output Structure
 
@@ -114,7 +114,7 @@ Use this structure unless the user requests a different artifact:
 
 ## Quality Rules
 
-- Every shot must have one main visual focus and one main action or state change.
+- Every shot must have one main visual focus and one main action or attention change.
 - Make abstract moods visible through posture, spacing, light, sound, or object behavior.
 - Use fewer stronger choices instead of many decorative adjectives.
 - Preserve continuity of character identity, costume, space, light direction, and emotional progression.

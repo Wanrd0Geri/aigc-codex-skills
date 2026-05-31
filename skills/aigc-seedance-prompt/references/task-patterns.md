@@ -7,10 +7,10 @@ Use this reference when a request matches a specific video format. These pattern
 For vague or mixed requests, silently scan six dimensions before drafting:
 
 1. Input: image, video, audio, or text references and their roles.
-2. Content: subject, environment, action, emotion carrier, and visible result.
+2. Content: subject, environment, action, emotion carrier, and visible change or continuity anchor when needed.
 3. Style: only user-provided or reference-established style, plus visible light, color, texture, or material behavior.
 4. Camera: shot size, angle, one main movement, and camera rule such as one-take or fixed frame.
-5. Structure: timing, shot order, transition, ending state, and segment handoff.
+5. Structure: timing, shot order, transition, and only the segment handoff details that matter.
 6. Edit: what changes, what stays unchanged, and which reference controls the edit.
 
 Use only dimensions that reduce ambiguity. Do not force all six into a simple prompt.

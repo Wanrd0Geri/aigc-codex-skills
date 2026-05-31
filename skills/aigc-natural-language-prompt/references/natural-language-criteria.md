@@ -4,7 +4,7 @@ Use this reference to judge whether an AIGC prompt is truly natural-language and
 
 ## Core Definition
 
-Natural-language prompt = complete visual sentences that translate abstract intent into what the camera can see, what the viewer can hear, how the subject acts inside the space, and what state remains at the end.
+Natural-language prompt = complete visual sentences that translate abstract intent into what the camera can see, what the viewer can hear, how the subject acts inside the space, and which continuity anchor matters when the shot must connect.
 
 Director-style prompt = the wording a director could say to a camera, animation, lighting, or editing team: what the shot sees first, where subjects are, how action develops, how light or sound supports it, and where the shot lands.
 
@@ -17,8 +17,9 @@ A prompt is natural-language enough when it meets these checks:
 3. **Spatial relationship**: the prompt says where subjects sit in frame or space: foreground, background, left/right, near/far, table edge, window side, doorframe, floor, wall, etc.
 4. **Action order**: complex motion uses sequence words only when they clarify order: `先`, `随后`, `此时`, `紧接着`, `最终`.
 5. **Visible carrier**: mood and quality words become posture, gaze, contact, distance, light, material, sound, or movement.
-6. **Endpoint**: the shot ends on a visible state: pose, gaze, object position, light state, movement direction, or frame composition.
+6. **Continuity anchor**: when connection matters, the prompt preserves one useful anchor such as pose, gaze, object position, light state, movement direction, or frame composition. Do not force an ending-state sentence into every shot.
 7. **Scale control**: simple shots stay short; complex shots expand only to prevent misunderstanding.
+8. **No AI-flavored padding**: the prompt avoids decorative boosters, rule-of-three filler, generic conclusions, and language that explains intent instead of describing visible action.
 
 ## Off-Screen Causality Rule
 
@@ -51,7 +52,7 @@ Good multi-character prompts usually define:
 - what each one wants or does in the beat
 - who reacts to whom
 - what path each character follows
-- what visible arrangement the shot ends on
+- what visible arrangement the next beat needs to inherit, if continuity matters
 
 For lively scenes, write concrete events such as grabbing a spoon, climbing onto a bench, catching a bowl, circling a table, or crowding into a close-up. Do not rely on `热闹`, `顽皮`, or `灵动` alone.
 
@@ -79,4 +80,5 @@ Avoid repeating `高质量`, `高级感`, `电影感`, `cinematic`, or `Unreal E
 - It explains a cause that is not visible.
 - Characters are present but not spatially assigned.
 - Camera movement is named but its subject relationship is unclear.
-- The shot has action but no ending state.
+- The prompt forces a summary ending even when Seedance can naturally continue the action.
+- The connected shot lacks a useful anchor even though the next view depends on pose, gaze, object position, movement direction, or light state.

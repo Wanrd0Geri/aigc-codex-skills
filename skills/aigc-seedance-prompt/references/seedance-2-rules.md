@@ -21,7 +21,7 @@ Recommended shape:
 ```text
 时长：x秒。一句话场景概述，写清地点、时间和氛围。无配乐，无旁白，无字幕，无配音，仅保留环境音、动作声与必要的现场声。
 
-镜头1：x秒，景别。一句话写清角度、机位、运镜方向与画面重点，紧接着用一到两句自然语言描述主体动作、表演细节与空间关系，最后落在一个可见的结束状态。
+镜头1：x秒，景别。一句话写清角度、机位、运镜方向与画面重点，紧接着用一到两句自然语言描述主体动作、表演细节与空间关系；只有在承接下一镜头或下一段时，才补充必要的姿态、位置、视线、光线或运动方向锚点。
 
 镜头2：x秒，景别。同样的写法——先一句空间与机位的设定，再用自然语言推进动作和镜头变化，最后给出可与下一段衔接的姿态、位置或光线状态。
 ```
@@ -71,7 +71,7 @@ Each shot should prioritize:
 - Angle, camera position, main camera movement, and visual focus written as one complete Chinese sentence with a verb, immediately after the lead-in.
 - Main action, written as natural sentences with subject and verb.
 - Performance details woven into the action prose, not stacked as separate slots.
-- Visible result or state change at the end of the paragraph.
+- Visible action or state change when it improves readability; continuity anchors only when the next shot depends on them.
 - Spatial relationships and reference roles named explicitly inside the sentences where they apply.
 
 Only add sound when it materially affects rhythm, action, or presence. Use `声音：` after the relevant shot description.
@@ -97,7 +97,7 @@ For extension or continuation:
 
 - Name the source as `@视频1（原始镜头参考）`.
 - Continue from the source clip's ending posture, movement direction, light state, and camera momentum.
-- Define the next visible action and endpoint.
+- Define the next visible action and the minimum continuity anchor needed to continue.
 
 For shot bridge:
 

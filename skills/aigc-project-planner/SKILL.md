@@ -72,7 +72,7 @@ When handing off, preserve the decision context:
 - To `aigc-visual-diagnose`: provide the image/frame plus the user's target feeling and what they already like.
 - To `aigc-shot-diagnosis-pipeline`: provide the frame, user target, intended next step if known, what already works, and any known production concern.
 - To `aigc-image-edit-prompt`: provide what must be preserved, target model, and the top visual problems to fix.
-- To `aigc-seedance-prompt`: provide shot goal, duration, reference asset roles, start/end state, motion, camera behavior, and continuity constraints.
+- To `aigc-seedance-prompt`: provide shot goal, duration, reference asset roles, starting state, motion, camera behavior, and only the continuity anchors needed for connected shots or segments.
 
 ## Avoid
 

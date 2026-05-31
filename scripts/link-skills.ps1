@@ -21,11 +21,18 @@ if (-not (Test-Path -LiteralPath $SkillsRoot)) {
     throw "Skills directory not found: $SkillsRoot"
 }
 
+$BackupRoot = [Environment]::GetFolderPath("Desktop")
+if (-not $BackupRoot) {
+    $BackupRoot = Join-Path $HOME "Desktop"
+}
+New-Item -ItemType Directory -Path $BackupRoot -Force | Out-Null
+
 New-Item -ItemType Directory -Path $CodexSkillsDir -Force | Out-Null
 
 $ResolvedSkillsRoot = (Resolve-Path -LiteralPath $SkillsRoot).Path
 Write-Host "Linking skills from $ResolvedSkillsRoot"
 Write-Host "Target Codex skills directory: $CodexSkillsDir"
+Write-Host "Backup directory: $BackupRoot"
 
 $LegacySkillNames = @(
     "aigc-workflow-router",
@@ -52,7 +59,7 @@ foreach ($LegacyName in $LegacySkillNames) {
         Write-Host "Removed legacy skill link: $LegacyName"
     } elseif ($Force) {
         $Stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-        $Backup = "$LegacyPath.backup-$Stamp"
+        $Backup = Join-Path $BackupRoot "$LegacyName.backup-$Stamp"
         Move-Item -LiteralPath $LegacyPath -Destination $Backup
         Write-Host "Backed up legacy skill directory to: $Backup"
     } else {
@@ -102,7 +109,7 @@ foreach ($Skill in Get-ChildItem -LiteralPath $SkillsRoot -Directory) {
             }
 
             $Stamp = Get-Date -Format "yyyyMMdd-HHmmss"
-            $Backup = "$Destination.backup-$Stamp"
+            $Backup = Join-Path $BackupRoot "$($Skill.Name).backup-$Stamp"
             Move-Item -LiteralPath $Destination -Destination $Backup
             Write-Host "Backed up existing directory to: $Backup"
         }

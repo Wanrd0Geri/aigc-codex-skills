@@ -1,7 +1,7 @@
 interface:
   display_name: "AIGC Natural Language Prompt"
-  short_description: "Rewrite AIGC prompts into director-style natural language."
-  default_prompt: "Use $aigc-natural-language-prompt to rewrite this prompt into director-style natural-language visual instructions."
+  short_description: "Clean AIGC prompt language, logic, and AI-flavored phrasing."
+  default_prompt: "Use $aigc-natural-language-prompt to remove AI-flavored phrasing, ambiguity, and parameter stacking from this AIGC prompt."
 
 policy:
   allow_implicit_invocation: true

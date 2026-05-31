@@ -4,18 +4,18 @@ Use this reference when a Seedance request needs creative completion, shot desig
 
 ## Core Judgment
 
-- Identify the segment goal: what the viewer must understand, feel, or see change by the end.
+- Identify the segment goal: what the viewer must understand, feel, or see change during the segment.
 - Decide the viewing priority: the person, object, gesture, spatial change, or emotional turn that should attract attention first.
 - Choose the emotional carrier: performance, pause, breath, gaze, contact point, posture, object movement, light state, sound, or spatial distance.
-- Keep every shot anchored to visible action and state change. Abstract mood words must become visible or audible cues.
-- Prefer the fewest shots and shortest reasonable duration that preserve the idea, starting state, ending state, and long-form handoff.
+- Keep every shot anchored to visible action, spatial logic, and any continuity detail that matters. Abstract mood words must become visible or audible cues.
+- Prefer the fewest shots and shortest reasonable duration that preserve the idea, starting state, and long-form handoff when the clip is part of a connected sequence.
 
 ## Incomplete Information
 
 Default to reasonable creative assumptions and draft. Ask only when the missing answer changes the actual shot design or generation strategy:
 
 - Reference roles are impossible to infer: character, scene, first frame, end frame, style, motion, sound, or edit rhythm.
-- Blocking relationships such as left/right, near/far, front/back, primary/secondary, or start/end state affect the action.
+- Blocking relationships such as left/right, near/far, front/back, primary/secondary, start state, or required handoff anchor affect the action.
 - The user explicitly says not to fill gaps without confirmation.
 - The request contains a hard contradiction that cannot be resolved by priority.
 
@@ -28,7 +28,7 @@ Each shot should have:
 - one clear visual focus
 - one main action
 - optional micro-actions only when they strengthen that action
-- a visible result or state change
+- a visible action or state change when it helps the shot read
 - shot size, angle, camera movement, performance, and spatial relationship that serve the segment goal
 
 ## Shot Line And Execution Notes
@@ -37,7 +37,7 @@ Write each shot as one practical execution paragraph in natural Chinese prose:
 
 1. Shot lead-in: `镜头N：x秒，景别。` End with a period so the prose body starts cleanly.
 2. Composition sentence: write angle, camera position, main camera movement, and visual focus as one complete Chinese sentence with a verb — not as a chain of bare parameter phrases.
-3. Execution body: practical, flowing sentences covering what appears first, where subjects or objects start, how they move, how the camera relates to them, what frame-space they cross, what exits or lands, and what visible result remains. Use connectives (`随后`, `紧接着`, `与此同时`, `此时`, `最终`) so beats actually link.
+3. Execution body: practical, flowing sentences covering what appears first, where subjects or objects start, how they move, how the camera relates to them, what frame-space they cross, what exits or lands, and what a later shot needs to inherit. Use connectives (`随后`, `紧接着`, `与此同时`, `此时`) only when they make beats actually link; use `最终` only when a concrete endpoint matters.
 
 Use this style because Seedance responds better when the shot number, duration, and shot size are explicit and the rest reads like executable shooting instructions a director would speak aloud — not a comma-chained parameter dump and not a rigid template.
 
@@ -51,7 +51,7 @@ For action, VFX, object, flight, impact, transformation, or creature/character p
 - whether the camera is fixed or following, and from which side/height/distance
 - movement direction, speed change, pause, impact, rebound, or continuation
 - environment reaction such as cloud movement, water displacement, debris fall, light bloom, shadow shift, or mist clearing
-- final state that the next shot can inherit
+- posture, gaze, object position, movement direction, or light state only when the next shot must inherit it
 
 Do not drop composition information, but do not place it on a separate composition-label line. Put the shot size in the structured lead-in (`镜头N：x秒，景别。`), then write the angle, camera position, camera movement, and visual focus as the first complete sentence of the prose body.
 
@@ -81,12 +81,12 @@ If a word cannot be filmed or heard, translate it before placing it in the final
 
 Natural prompt language is a quality-control pass, not a request to make the wording longer. The final text should sound like a director describing a shot that can be filmed, animated, or edited. The cross-skill standard lives in `aigc-natural-language-prompt`; this reference applies that standard to Seedance prompts.
 
-- Prefer complete visual sentences over parameter chains. A useful sentence usually contains subject, action, space, camera relationship, and visible result.
+- Prefer complete visual sentences over parameter chains. A useful sentence usually contains subject, action, space, camera relationship, and only the continuity detail needed for this shot.
 - Turn abstract adjectives into carriers the viewer can notice: posture, distance, contact, gaze, light direction, shadow coverage, material response, environment reaction, sound, or timing.
 - Describe only current-shot visible/audible details or facts already established by previous shots. Do not invent a source such as wind, light, sound, or movement direction if the source is not visible or previously established.
 - For cuts, state the new frame relationship when needed: what previous view it comes from, where the camera now is, and which objects or subjects remain visible.
 - Keep only the specific detail that changes generation behavior. Remove generic boosters such as `cinematic`, `premium`, `masterpiece`, `high quality`, `ultra detailed`, `氛围感`, `高级感`, and `质感拉满` unless translated into visible choices.
-- Avoid over-smoothing the language into ad copy. The prompt can be elegant, but it must remain operational: what enters frame, what moves, what the camera does, what changes, and what remains at the end.
+- Avoid over-smoothing the language into ad copy. The prompt can be elegant, but it must remain operational: what enters frame, what moves, what the camera does, what changes, and what the next shot needs to keep.
 - If two clauses only repeat the same mood, keep the stronger visible one and delete the weaker decorative one.
 
 ## Style Handling
@@ -104,7 +104,7 @@ For connected shots or long-form animation segments, preserve:
 - character appearance, costume, props, and identifying details
 - light direction, color temperature, and scene geography
 - facing direction, relative position, movement path, and action handoff
-- emotional progression and stable ending state
+- emotional progression and only the stable handoff details needed for connected segments
 
 Define the segment function before drafting: what it carries from the previous segment, what changes inside this segment, and what the next segment can inherit. Leave a clear edit point when the clip is meant to connect into a longer sequence.
 

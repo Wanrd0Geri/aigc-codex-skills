@@ -11,8 +11,8 @@ Check the segment in this order:
 3. Space: left/right, near/far, foreground/background, and key object positions are clear.
 4. Camera: each shot has one shot size, one angle, and at most one main camera movement.
 5. Emotion carrier: emotion is shown through gaze, pause, breath, hand movement, posture, light, or sound.
-6. Result: each shot ends with a visible state change or readable endpoint.
-7. Handoff: if this is part of a longer sequence, the ending posture, gaze, object position, or camera endpoint can connect to the next segment.
+6. Readability: each shot has a clear visible action or state change when the action would otherwise be ambiguous.
+7. Handoff: if this is part of a longer sequence, preserve only the posture, gaze, object position, movement direction, light state, or camera position the next segment must inherit.
 
 If one of these is missing, fix it before adding style, atmosphere, or continuity details.
 
@@ -25,7 +25,7 @@ When the requested shot includes multiple people, large action, occlusion, compl
 - Reduce the number of active subjects in the same shot.
 - Keep the main subject's size and screen position stable.
 - Give each important subject a position or prop anchor.
-- Make the action endpoint visible before starting the next action.
+- Make the action readable before starting the next action; use an endpoint only when overlapping actions would confuse the model.
 
 ## Duration Budget
 
@@ -39,7 +39,7 @@ Rough timing:
 - one object interaction with contact and reaction: about 2-3 seconds
 - one multi-character handoff or chase beat: about 3-5 seconds
 
-If the requested duration cannot hold all beats, split shots, reduce actions, or suggest extending the segment. Preserve the visible start state, action, and endpoint instead of squeezing several beats into one unreadable shot.
+If the requested duration cannot hold all beats, split shots, reduce actions, or suggest extending the segment. Preserve the visible start state, main action, and necessary continuity anchor instead of squeezing several beats into one unreadable shot.
 
 ## Positive Motion Boundaries
 
@@ -56,7 +56,7 @@ Before returning the final prompt, silently scan against the `Common Failures To
 
 - Each shot has one main action and one main camera movement.
 - The duration can realistically hold the number of action, camera, expression, and handoff beats.
-- The final shot has a readable endpoint (posture, gaze, object position, or camera endpoint that can connect to the next segment).
+- The final shot includes a continuity anchor only when a next segment depends on posture, gaze, object position, movement direction, light state, or camera position.
 - Subject identity anchors are stable (clothing, silhouette, prop, or position) for every important subject.
 - Spatial relationships (left/right, foreground/background, near/far) are stated where they affect the action.
 

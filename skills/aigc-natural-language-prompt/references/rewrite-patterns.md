@@ -7,7 +7,7 @@ Use these patterns when converting rough AIGC prompts into director-style natura
 Pattern:
 
 ```text
-[shot size / camera] + [visible subject] + [position] + [action] + [environment relation] + [visible result]
+[shot size / camera] + [visible subject] + [position] + [action] + [environment relation] + [continuity anchor when needed]
 ```
 
 Before:
@@ -144,5 +144,6 @@ After rewriting:
 - remove repeated style words once the visual evidence is present
 - split sentences with more than 4-5 comma clauses
 - keep simple shots short
-- ensure each complex shot has a visible endpoint
+- keep only the endpoint or continuity anchor that prevents real confusion
 - keep only platform terms that change the model's output
+- remove AI-flavored filler such as generic praise, abstract taste words, "not only...but also..." reasoning, rule-of-three padding, and forced conclusion sentences

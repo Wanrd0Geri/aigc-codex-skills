@@ -14,7 +14,7 @@ The goal is not to score beauty. The goal is to prevent wasting production time 
 | Lighting and color | Motivated light, useful contrast, and coherent color mood | Direction is close but depth, hierarchy, or atmosphere is weak | Light, color, and exposure fight each other |
 | Production design | Costume, props, setting, and materials belong to one world | Mostly usable but details feel random, cheap, or inconsistent | World, era, costume, props, or materials conflict at the root |
 | AIGC control | Minor artifacts only; identity and structure are stable | Visible instability that can be repaired without changing the shot | Identity drift, malformed anatomy, broken structure, or severe artifacts |
-| Video potential | Clear action, motion direction, camera possibility, or continuation | Video is possible but action path, camera behavior, or end state is vague | No plausible action, motion direction, or continuation when the target is video |
+| Video potential | Clear action, motion direction, camera possibility, or continuation | Video is possible but action path, camera behavior, or required continuity anchor is vague | No plausible action, motion direction, or continuation when the target is video |
 
 ## Single-Point Red Blocks
 
