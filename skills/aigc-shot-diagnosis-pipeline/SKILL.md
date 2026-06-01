@@ -1,6 +1,6 @@
 ---
 name: aigc-shot-diagnosis-pipeline
-description: Decide whether a single AIGC frame or shot can move forward, needs repair, or must be redesigned; this is a production-gate decision, not a broad aesthetic critique. Use when the user asks whether it can be used, enter image editing or Seedance, what blocks production, or which AIGC skill comes next. For "why does this look wrong" analysis, use aigc-visual-diagnose.
+description: Use when the user asks whether a single AIGC frame or shot can be used, enter image editing, enter Seedance/video, be repaired, be redesigned, what blocks production, or which AIGC skill should handle the next step.
 ---
 
 # AIGC Shot Diagnosis Pipeline
@@ -19,6 +19,13 @@ Do not treat this as a full visual critique. The goal is to answer: "Can this sh
 
 ### 1. Identify the Current Stage
 
+CHECKPOINT - Production Gate Only:
+
+- If the user asks "why does this look bad", use `aigc-visual-diagnose` instead.
+- If the user asks for a ready image-edit prompt without a production decision, use `aigc-image-edit-prompt`.
+- If the user asks for a ready Seedance prompt from a stable frame, use `aigc-seedance-prompt`.
+- If the frame/image is missing, ask the user to upload it before assigning Green, Yellow, Red, or Suspected Red.
+
 Classify the frame into one primary problem stage:
 
 - **Concept problem**: the idea, story function, emotion, or shot purpose is unclear.
@@ -36,6 +43,17 @@ Use `references/diagnosis-rubric.md` to classify the frame. It defines status th
 - **Yellow**: proceed only after fixing 1-3 high-impact issues.
 - **Red**: do not write prompts yet. Redesign, regenerate, or return to an upstream creative/shot-design step.
 - **Suspected Red**: the model sees a likely blocker but needs user confirmation, usually for story purpose, first-glance subject readability, or video-extension potential.
+
+### Status Evidence Rules
+
+Assign exactly one status and ground it in visible evidence:
+
+- Use **Green** only when the frame has clear subject readability, usable composition, stable identity/design, and a plausible next action.
+- Use **Yellow** when 1-3 repairable issues block quality but the shot idea and structure remain usable.
+- Use **Red** when prompt writing would waste effort because the concept, subject read, shot design, identity, or video potential is structurally broken.
+- Use **Suspected Red** when the blocker depends on user intent or first-glance human perception.
+
+Do not soften the status with a list of equal options. Name the recommended path that follows from the status.
 
 ### 3. Choose the Recommended Path
 
@@ -119,6 +137,14 @@ If the status is Suspected Red, replace `推荐路径` with:
 [One concrete question the user can answer quickly.]
 ```
 
+## Failure Branches
+
+- If the frame is missing, do not infer status from a description; ask for the image or frame.
+- If story purpose is unclear and could change the status, use Suspected Red and ask one confirmation question.
+- If a user asks for a prompt from a Red frame, decline the prompt and name the upstream redesign step.
+- If a user asks for a prompt from a Yellow frame, state the risk and route to the right specialist only after the user accepts the risk.
+- If the image has several aesthetic flaws but none block production, classify by production readiness rather than taste.
+
 ## Standards
 
 - Prefer production judgment over aesthetic commentary.
@@ -126,3 +152,10 @@ If the status is Suspected Red, replace `推荐路径` with:
 - Pick one next step.
 - Be direct about whether the frame is ready, repairable, blocked, or uncertain.
 - Use practical Chinese by default.
+
+## Avoid
+
+- Do not write full image-edit or Seedance prompts unless the user explicitly asks and the production status allows it.
+- Do not output a long art critique when a Green/Yellow/Red decision is enough.
+- Do not provide several equal next steps; pick one recommended path.
+- Do not override a specialist skill's prompt format.

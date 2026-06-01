@@ -1,0 +1,17 @@
+[
+  {
+    "id": "planner-1-project-next-step",
+    "prompt": "我想做一个三段式 AIGC 短片，有概念、有两张参考图，但不知道下一步该干什么。",
+    "expected": "Treats it as project-level planning, defines current stage, asset roles, one recommended path, and the next concrete action."
+  },
+  {
+    "id": "planner-2-single-image-route",
+    "prompt": "这张图能不能进 Seedance？下一步去哪？",
+    "expected": "Routes to aigc-shot-diagnosis-pipeline rather than producing a broad project plan."
+  },
+  {
+    "id": "planner-3-finished-artifact-route",
+    "prompt": "直接给我一个 Seedance 提示词。",
+    "expected": "Routes to aigc-seedance-prompt instead of staying in planning."
+  }
+]

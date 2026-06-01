@@ -1,0 +1,7 @@
+interface:
+  display_name: "AIGC 图像反推提示词"
+  short_description: "把图片反推成精准文生图提示词。"
+  default_prompt: "用 $aigc-image-reverse-prompt 把这张图片反推成中英双语文生图提示词，准确描述人物关系、环境、光影、色彩、动作、构图和风格。"
+
+policy:
+  allow_implicit_invocation: true

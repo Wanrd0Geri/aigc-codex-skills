@@ -1,0 +1,17 @@
+[
+  {
+    "id": "reverse-1-bilingual-default",
+    "prompt": "反推这张图的提示词，要中文和英文。",
+    "expected": "Requires the image, then outputs faithful Chinese and English prompt counterparts with no -- parameters in the English block."
+  },
+  {
+    "id": "reverse-2-multiple-image-roles",
+    "prompt": "图1参考人物，图2参考风格，帮我复刻成即梦和 GPT Image 都能用的提示词。",
+    "expected": "Separates image roles before drafting, keeps one shared inventory, and adapts wording without changing locked elements."
+  },
+  {
+    "id": "reverse-3-variation",
+    "prompt": "保持人物关系和构图不变，把天气换成下雨天。",
+    "expected": "Rewrites the full prompt with rain while preserving subject count, relationship, pose, camera, and composition."
+  }
+]

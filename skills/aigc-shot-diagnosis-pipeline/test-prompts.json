@@ -1,0 +1,17 @@
+[
+  {
+    "id": "shot-1-production-gate",
+    "prompt": "这张关键帧能不能用，能不能直接进 Seedance？",
+    "expected": "Requires the frame, assigns one Green/Yellow/Red/Suspected Red status, identifies blockers, and picks one next path."
+  },
+  {
+    "id": "shot-2-why-looks-bad-route",
+    "prompt": "这张图为什么不好看？详细分析一下光影和构图。",
+    "expected": "Routes to aigc-visual-diagnose instead of assigning production status."
+  },
+  {
+    "id": "shot-3-yellow-risk-prompt",
+    "prompt": "如果是 Yellow 也先给我 Seedance prompt，我能接受风险。",
+    "expected": "States the specific risk first, then routes to the correct prompt workflow only if user accepts."
+  }
+]

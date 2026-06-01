@@ -1,6 +1,6 @@
 ---
 name: aigc-project-planner
-description: Plan and route multi-stage AIGC projects across concepts, keyframes, image repair, and video prompts. Use for whole short-film/animation workflows, multi-shot or multi-asset planning, pipeline questions, and "下一步该做什么" at project level. Do not use for a single image, frame, shot, prompt, or reference asset; route those directly to the relevant specialist skill.
+description: Use when the user asks for project-level AIGC workflow planning, multi-shot or multi-asset routing, short-film/animation pipeline order, asset-role decisions, or "下一步该做什么" beyond a single image, frame, shot, prompt, or reference.
 ---
 
 # AIGC Project Planner
@@ -12,6 +12,12 @@ Do not use this skill for single-asset requests. If the user asks about one uplo
 ## Routing Rules
 
 Choose one primary path. Do not run every skill at once.
+
+CHECKPOINT - Scope Gate:
+
+- If the request is one image, one frame, one shot, one prompt, or one reference asset, do not keep it in project planning.
+- If the request spans multiple stages, assets, shots, or asks "下一步该做什么" at project level, stay in this skill long enough to choose the next concrete workflow.
+- If a user asks for a finished artifact, route to the specialist that produces that artifact instead of producing a planner answer.
 
 - **Whole project or short-film pipeline**: stay in this router, build the production path, then name the first specialized skill to use.
 - **Multi-shot sequence with unclear order**: map stages first, then hand off the next concrete task.
@@ -30,6 +36,26 @@ If multiple paths apply, pick the earliest unresolved creative bottleneck:
 4. Still-frame quality problem.
 5. Image-edit prompt problem.
 6. Video-generation prompt problem.
+
+If two bottlenecks appear equally important, choose the one that blocks the next artifact from being produced. Do not provide parallel skill chains unless the user explicitly asks for alternatives.
+
+## Failure Branches
+
+- If the user asks for one concrete artifact, stop planning and route to the specialist that produces it.
+- If the project scope is broad but the next artifact is missing, name the first artifact to create instead of designing the whole pipeline.
+- If asset roles conflict, assign roles before routing: source image, style reference, character reference, environment reference, keyframe, or video reference.
+- If the user asks "下一步" without enough context, recommend the lowest-risk next step and ask only one question if the next step would otherwise split into different workflows.
+- If a request mixes project planning with a single-frame production gate, use `aigc-shot-diagnosis-pipeline` for that frame and return to planning only after the gate decision.
+
+## Planning Depth Budget
+
+Keep planning proportional to the decision:
+
+- **Routing request**: output the current stage, one recommended skill, and the next action.
+- **Small project**: output 3-5 stages with the first artifact to produce.
+- **Large project**: define asset roles, stage order, dependencies, and stopping points; avoid writing specialist prompts inside the plan.
+
+The planner's output must end with one concrete next action. If the next action is unclear, ask one targeted question and include the recommended default.
 
 ## Operating Style
 
@@ -82,3 +108,5 @@ When handing off, preserve the decision context:
 - Do not produce final Seedance prompts when the user is still asking for creative direction.
 - Do not produce image-edit prompts when the user only asked why an image feels wrong.
 - Do not overwrite specialized skill rules; route to them when the task is clearly specialized.
+- Do not use `aigc-natural-language-prompt` as a mandatory final stage; use it only for language cleanup, template voice, parameter stacks, or unclear visible logic.
+- Do not route a single-frame production decision to broad project planning; use `aigc-shot-diagnosis-pipeline`.

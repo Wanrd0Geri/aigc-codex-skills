@@ -1,0 +1,17 @@
+[
+  {
+    "id": "seedance-1-15s-compression-lip-sync",
+    "prompt": "给我一个15秒 Seedance 提示词：威尔史密斯在片场吃意面，一镜到底，有两句台词，要口型同步，最后遮住镜头黑场。",
+    "expected": "Compresses to one main location, one camera path, short dialogue with visible mouth time, no platform settings, and one clear ending beat."
+  },
+  {
+    "id": "seedance-2-missing-reference-gate",
+    "prompt": "用这张图做图生视频，人物慢慢回头看镜头，给 Seedance prompt。",
+    "expected": "Stops and asks for the actual image/frame if it is not present; does not draft from text-only summary."
+  },
+  {
+    "id": "seedance-3-one-shot-complexity-tradeoff",
+    "prompt": "8秒一镜到底：女主从地铁站跑到天台，群演追逐，爆炸，无人机环绕，最后切到特写落泪。",
+    "expected": "Flags the one-shot/duration conflict, preserves the strongest action beat, reduces locations and camera moves, or proposes a stable split."
+  }
+]

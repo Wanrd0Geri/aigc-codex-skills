@@ -1,6 +1,6 @@
 ---
 name: aigc-image-edit-prompt
-description: Write image-to-image edit prompts for Nano Banana/Gemini image editors or ChatGPT/OpenAI image editors only when the actual source image is present or attached. Use when the user has an image and explicitly wants a repair/edit/cinematic enhancement prompt while preserving subject identity. If the user only asks why an image feels wrong, route to aigc-visual-diagnose first.
+description: Use when the user has an attached image or frame and asks for a Nano Banana/Gemini, ChatGPT/OpenAI, or other image-to-image repair/edit prompt that preserves subject identity, pose, camera, composition, or useful design choices.
 ---
 
 # AIGC Image Edit Prompt
@@ -29,6 +29,13 @@ The default output has **two artifacts** unless the user asks for prompt-only ou
 
 Before writing any edit prompt, confirm the actual source image or frame is present in the current context. If it is not present, do **not** write a prompt from a text-only handoff summary; ask the user to re-attach the image and confirm the frame first. A handoff summary is context, never a substitute for the source image.
 
+CHECKPOINT - Source Image Gate:
+
+- If no image is present, stop and ask for the image.
+- If the user supplied only a diagnosis summary, use it as context but still ask for the actual source image before writing an edit prompt.
+- If the user asks only "why does this look wrong" and does not ask for an edit prompt, route to `aigc-visual-diagnose`.
+- If the user asks whether the frame can move into video, route to `aigc-shot-diagnosis-pipeline` before writing image-edit instructions.
+
 Before diagnosing anything, describe what's actually in the frame, neutrally. This forces you to look instead of pattern-matching. Cover:
 
 - **Subject & blocking**: who/what is in frame, where they are, what action
@@ -42,6 +49,16 @@ Before diagnosing anything, describe what's actually in the frame, neutrally. Th
 If the user uploaded a **second image as a reference target**, do this same neutral read for it too, then explicitly note 5-8 differences. Those differences become the transformation list.
 
 If the user provides a handoff block from `aigc-visual-diagnose`, use it as the starting diagnosis. Verify it against the image, correct only obvious mismatches, and avoid repeating a full diagnosis unless the handoff is missing or clearly insufficient.
+
+If a handoff block conflicts with the visible image, trust the visible image and briefly note the correction before drafting.
+
+### Failure Branches
+
+- If the source image is missing, do not write an edit prompt from memory, filename, or diagnosis text; ask for the image.
+- If the user has not chosen Nano Banana/Gemini or ChatGPT/OpenAI image editing, ask once for the target model; if they ask for compatibility, output both templates.
+- If the user asks for a full redesign rather than repair, identify what can no longer be preserved before writing a prompt.
+- If the requested fix would change face identity, costume, pose, camera angle, or character count, warn and rewrite the prompt to protect those elements unless the user explicitly wants them changed.
+- If a production-gate handoff says Red, do not write a repair prompt as if the frame is usable; point back to redesign or upstream shot planning.
 
 ### Step 2 — Diagnose the highest-impact cinematic problems
 
@@ -68,6 +85,16 @@ Default transform-list (these are fair game):
 - Atmosphere (fog density, depth gradient)
 - Black point and highlight roll-off
 - Edge light / rim light on subjects (to integrate them with environment)
+
+### Edit Strength Budget
+
+Choose the smallest edit strength that can fix the image:
+
+- **Light repair**: preserve composition and identity; adjust light direction, contrast, color balance, haze depth, or black point.
+- **Medium repair**: preserve subject identity, pose, camera, and main environment; change lighting system, material hierarchy, integration, or background clarity.
+- **Heavy repair**: use only when the user accepts redesign risk; state what may change before drafting.
+
+Keep the final prompt surgical. Prefer 3-7 transform directives and 1-3 avoid directives. If a fix does not affect the visible problem, leave it out.
 
 ### Step 4 — Choose the target model and write the bilingual edit prompt
 
@@ -144,6 +171,8 @@ A good output for this skill should make the user think: "Ah, *that's* why my im
 - **Don't pile on every possible improvement.** Pick the 3-5 highest-leverage changes. A surgical prompt outperforms a maximalist one — image editors lose precision when given too many transformation directives at once.
 - **Don't translate Chinese cinematography vocabulary literally into English.** "电影感" is not "movie feeling" — it's "cinematic quality" or, more precisely, named techniques like "low-key lighting", "anamorphic compression", "film stock emulation".
 - **Don't let the final prompt read like a parameter dump.** Keep the block structure, but make the wording describe visible edits a model can apply to the source image.
+- **Don't accept a Yellow or Red production decision silently.** If `aigc-shot-diagnosis-pipeline` says the frame should be redesigned or repaired first, state that risk before writing an edit prompt.
+- **Don't use text-to-image reverse-prompt language.** This skill edits an existing image, so the prompt must protect source identity, blocking, camera, and useful design choices.
 
 ## Reference files
 

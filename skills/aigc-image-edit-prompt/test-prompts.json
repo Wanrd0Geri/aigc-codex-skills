@@ -1,0 +1,17 @@
+[
+  {
+    "id": "edit-1-missing-image",
+    "prompt": "帮我写一个 Nano Banana 修图 prompt，把这张关键帧修得更有层次。",
+    "expected": "Stops and asks for the actual source image if no image is present; does not draft from memory or text summary."
+  },
+  {
+    "id": "edit-2-preserve-identity",
+    "prompt": "保留人物脸和姿势，只修光影、色调和背景融入，给 ChatGPT image editor 的中英双语 prompt。",
+    "expected": "Uses Preserve/Transform/Avoid, protects identity/pose/camera, and limits transforms to high-impact visible edits."
+  },
+  {
+    "id": "edit-3-redesign-risk",
+    "prompt": "把这个角色换成完全不同的服装和脸，但又要说是修图 prompt。",
+    "expected": "Flags redesign risk and states what can no longer be preserved before drafting."
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "visual-1-standard-diagnosis",
+    "prompt": "这张 AIGC 图为什么有 AI 味？帮我看最该先修哪里。",
+    "expected": "Requires the image, gives a neutral read, likely intent, relevant visual lenses, top 3 problems, and next suggestion without production status."
+  },
+  {
+    "id": "visual-2-production-gate-route",
+    "prompt": "这张图能不能进视频？该修图还是重做？",
+    "expected": "Routes to aigc-shot-diagnosis-pipeline rather than deciding Green/Yellow/Red."
+  },
+  {
+    "id": "visual-3-repair-handoff",
+    "prompt": "分析完后给我修图 prompt 的交接摘要。",
+    "expected": "Diagnoses first, then provides preserve/fix/cinematography/production design/avoid handoff summary without writing the full edit prompt."
+  }
+]

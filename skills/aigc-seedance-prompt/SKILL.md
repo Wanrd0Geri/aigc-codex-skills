@@ -1,6 +1,6 @@
 ---
 name: aigc-seedance-prompt
-description: Generate, refine, and diagnose Chinese Seedance series video prompts for text-to-video, image-to-video, reference-based generation, video editing, extension, and shot bridging. Use for Seedance/Doubao/Dreamina video prompt work that needs attention-focused shot wording, reference-role mapping, scene continuity, stability controls, and director-level shot judgment.
+description: Use when the user asks for Seedance, Doubao, or Dreamina video prompts, text-to-video, image-to-video, reference-based generation, video edit, extension, shot bridge, prompt optimization, duration compression, lip sync, or scene continuity.
 ---
 
 # AIGC Seedance Prompt
@@ -8,6 +8,15 @@ description: Generate, refine, and diagnose Chinese Seedance series video prompt
 ## Workflow
 
 Act as a director and Seedance series prompt engineer for connected animation segment production. Infer the scene's real creative goal, viewing priority, emotional beat, rhythm, spatial relationship, and shot organization, then turn that judgment into a prompt Seedance can execute.
+
+CHECKPOINT - Asset And Task Gate:
+
+- For pure text-to-video, proceed from the written brief.
+- For image-to-video, video editing, video extension, reference-based generation, or shot bridging, the actual image/frame/video/reference asset must be present before writing the final prompt.
+- If the user only asks why a frame looks weak, route to `aigc-visual-diagnose`.
+- If the user asks whether a frame can enter video, route to `aigc-shot-diagnosis-pipeline`.
+- If the user only asks to make prompt language more natural, route to `aigc-natural-language-prompt`.
+- If the creative idea has no shot purpose or visual strategy yet, route to `aigc-creative-director`.
 
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
 2. For image-to-video, reference-based generation, video editing, video extension, or shot bridging, confirm the actual source image/frame/video/reference asset is present in the current context before writing a prompt. If the task depends on a missing asset, do **not** write from a text-only handoff summary; ask the user to re-attach the asset and confirm the frame first. A handoff summary is context, never a substitute for the asset. For pure text-to-video, proceed without blocking.
@@ -21,6 +30,16 @@ Act as a director and Seedance series prompt engineer for connected animation se
 10. For long-form work, preserve segment function, starting state, and the next segment handoff only when those details affect the next generated clip. Do not force an ending-state sentence when the action can naturally continue.
 11. Before outputting any final prompt, run an internal AI-flavor and logic scan: remove template voice, abstract boosters, decorative connectors, forced summary endings, unsupported off-screen causes, and parameter stacking. Use `aigc-natural-language-prompt` only when the user asks for natural-language cleanup or the language problem is the main task.
 12. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
+
+### Failure Branches
+
+- If duration is too short for the requested actions, compress the action chain or split the shot; do not squeeze multiple locations, reveals, and dialogue beats into one unreadable clip.
+- If a reference asset could control identity, environment, style, and composition at the same time, assign explicit roles before drafting.
+- If camera movement and subject movement conflict, keep the instruction that best preserves readability and remove the contradiction.
+- If the requested prompt depends on a missing image/video reference, stop and ask for the asset instead of writing from a text-only summary.
+- If a Yellow production decision is carried over from `aigc-shot-diagnosis-pipeline`, state the risk outside the code block before drafting only when the user explicitly accepts that risk.
+- If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, adjust framing, reduce dialogue, or state the risk before drafting.
+- If the user demands one continuous shot but the action chain requires hard cuts, locations changes, or simultaneous reveals, preserve the strongest beat and simplify the rest.
 
 ## Output Modes
 
@@ -38,6 +57,16 @@ Act as a director and Seedance series prompt engineer for connected animation se
 ## Prompt Detail Budget
 
 Use the shortest Chinese wording that preserves the user's intent and Seedance generation stability. Length is decided per shot or action unit, not per whole video. Do not reveal the `simple` / `standard` / `complex` labels in the final prompt.
+
+## Short Duration Compression
+
+For clips of 15 seconds or less, compress before drafting:
+
+1. Keep one main location, one main action chain, one camera strategy, and one clear ending beat.
+2. Reduce simultaneous subjects, background business, dialogue lines, and camera moves before adding detail.
+3. Preserve the user's must-have elements first: protagonist identity, core gag or emotional beat, reference role, spoken line, and ending action.
+4. Move resolution, frame rate, lens brand, aspect ratio, and other platform settings out of the prompt body unless the user explicitly asks to include them.
+5. If the request cannot fit the duration, say what was reduced in one short note outside the final code block.
 
 ### Simple Shot
 
@@ -71,6 +100,14 @@ Expand only when detail prevents likely misunderstanding:
 - The user is choosing between a conservative stable result and a more ambitious visual effect.
 
 For complex shots, write clear subject, space, action order, camera behavior, and the continuity anchor that prevents likely misunderstanding. Keep the detail purposeful; do not pad with generic quality terms.
+
+## One-Shot vs Multi-Shot Decision
+
+Use one continuous shot when uninterrupted performance, immersion, POV, or a single action path is the main expression. Use multiple shots when the request needs separate locations, distinct reveals, dialogue coverage, or action beats that would overload one generation.
+
+If the user asks for `一镜到底` but also asks for multiple incompatible beats, keep `一镜到底` only when the main action can stay in one location and one camera path. Otherwise explain the tradeoff briefly and draft the most stable version.
+
+For one-shot prompts, use only `镜头1：x秒，景别。` and describe the internal beat order in natural prose. Do not list hard cuts, montage transitions, or separate camera resets inside a one-shot prompt.
 
 ## Camera Movement Detail
 
@@ -141,6 +178,16 @@ Prioritize performance controls in this order:
 3. **Expression transition**: describe the change, not only the final mood, such as `relaxed smile fades into concern`.
 4. **Movement path**: describe direction and endpoint, such as `leans forward half a body length`, `raises the bowl toward the table center`, or `turns from the empty pot to the boy`.
 5. **Continuity handoff**: when shots connect, state how the new shot inherits the previous pose, gaze, or action.
+
+## Dialogue And Lip Sync
+
+When the user requests dialogue, speech, lip sync, or visible mouth movement:
+
+- State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
+- Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
+- Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
+- Keep default audio policy unless the user asks otherwise: no music, no voiceover, no subtitles, and no dubbing; only diegetic speech and necessary action/environment sound.
+- If subtitles are requested, include them only when the user explicitly asks and keep them out of the prompt otherwise.
 
 When a reference image only controls environment, style, or identity, say that explicitly. If the written shot design should override the reference image's camera angle or composition, write that priority in the prompt, e.g. `@图1只控制房间、道具、光线和材质；镜头位置与构图以文字描述为准`。
 
@@ -240,3 +287,5 @@ These are the failure modes most likely to break a Seedance prompt. Scan the fin
 - **Music, voiceover, subtitles, or dubbing** unless the user explicitly asks. Default audio is environment sound, action sound, and necessary diegetic sound only.
 - **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
 - **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
+- **Treating reference-image prompts like text-to-video prompts** — when references exist, name what each reference controls and what the written shot overrides.
+- **Overusing natural-language cleanup** — do not run a separate cleanup pass unless the user asks or the draft has visible language defects.

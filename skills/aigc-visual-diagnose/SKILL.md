@@ -1,6 +1,6 @@
 ---
 name: aigc-visual-diagnose
-description: Explain why an uploaded AIGC image, frame, storyboard, keyframe, or concept looks weak, ugly, flat, cheap, AI-looking, visually inconsistent, or not cinematic. Use for "为什么不好看", "哪里怪", "不好看", "AI味重", "不高级", "质感差", "构图/光影/人物融入问题" analysis. Do not decide whether it can move forward, enter Seedance, be repaired, or should be redesigned; use aigc-shot-diagnosis-pipeline for production-gate decisions.
+description: Use when the user provides an AIGC image, frame, storyboard, keyframe, or concept and asks why it looks weak, ugly, flat, cheap, AI-looking, visually inconsistent, not cinematic, 哪里怪, 为什么不好看, 质感差, or has composition/light/art-direction problems.
 ---
 
 # AIGC Visual Diagnose
@@ -13,6 +13,21 @@ Do not use this skill as the single-frame production gate. If the user asks whet
 
 ### 1. Read the Frame Neutrally
 
+CHECKPOINT - Diagnosis Scope:
+
+- If no image or frame is available, ask the user to upload one before diagnosing.
+- If the user asks whether it can move forward, enter video, be repaired, or should be redesigned, route to `aigc-shot-diagnosis-pipeline`.
+- If the user asks for a ready image-edit prompt in the same turn, diagnose first, then hand off only the high-impact repair summary to `aigc-image-edit-prompt`.
+- If the user asks for a Seedance prompt, do not write it here; provide the diagnosis summary and route to `aigc-shot-diagnosis-pipeline` first unless the user has already made the production decision.
+
+### Failure Branches
+
+- If the image is missing, do not diagnose from memory, filename, or a prompt description; ask for the image or frame.
+- If the user mainly wants a production status, route to `aigc-shot-diagnosis-pipeline` instead of assigning Green, Yellow, or Red here.
+- If the image can support two different creative intentions, state the likely assumption and ask one question only when that assumption changes the diagnosis.
+- If the problem is concept-level rather than visual execution, hand off to `aigc-creative-director` after naming the visible symptom.
+- If the user asks for a repair prompt after diagnosis, pass only the preserve/fix/avoid summary to `aigc-image-edit-prompt`; do not draft the edit prompt in this skill.
+
 Describe what is actually visible before judging:
 
 - Subject, action, pose, expression, and blocking.
@@ -23,6 +38,16 @@ Describe what is actually visible before judging:
 - Mood read: what emotion the image currently communicates.
 
 If no image is available, ask the user to upload one or describe the frame.
+
+### Diagnosis Depth Budget
+
+Use the smallest diagnosis that teaches the decisive issue:
+
+- **Quick diagnosis**: 3-5 sentences plus the top 3 problems.
+- **Standard diagnosis**: neutral read, likely intent, relevant lenses, top 3 problems, and next suggestion.
+- **Deep diagnosis**: use only when the user asks for a full breakdown, comparison, grading, or art-direction analysis.
+
+Do not force all five lenses into the final answer when only two contain decisive findings. Do not assign production status; route that to `aigc-shot-diagnosis-pipeline`.
 
 ### 2. Infer the Intended Effect
 
@@ -114,3 +139,5 @@ If the next user turn becomes a production-routing question, use this response p
 - Do not list every possible flaw with equal weight.
 - Do not say only "add cinematic lighting", "improve composition", or other generic fixes.
 - Do not treat every image as live-action cinema; animation, stylized art, and commercial visuals have their own standards.
+- Do not assign Green, Yellow, Red, "can enter video", or "must redesign" statuses; those belong to `aigc-shot-diagnosis-pipeline`.
+- Do not turn a diagnosis into a ready prompt unless the user explicitly asks for the next prompt.

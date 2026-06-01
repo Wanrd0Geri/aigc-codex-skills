@@ -1,0 +1,17 @@
+[
+  {
+    "id": "nlp-1-light-rewrite",
+    "prompt": "把这个 prompt 改自然点：中景，女孩，雨夜街口，孤独，冷色调，电影感，高质量。",
+    "expected": "Outputs one compact rewritten prompt, translating abstract words into visible rain, spacing, light, and posture without long diagnosis."
+  },
+  {
+    "id": "nlp-2-seedance-preprocess",
+    "prompt": "这个是给 Seedance 的，帮我去 AI 味：15秒，一镜到底，片场，男演员递意面，电影感拉满，4K，24fps，ARRI，最后黑场。",
+    "expected": "Keeps duration, one-shot action chain, dialogue or ending cue if present, removes platform settings, and hands off to Seedance only outside prompt-only mode."
+  },
+  {
+    "id": "nlp-3-ambiguous-style-mix",
+    "prompt": "改成自然语言：未来城市，女主角很酷，赛博朋克，又要宫崎骏，又要写实电影感，情绪复杂。",
+    "expected": "Chooses or asks about the dominant visible medium instead of blending incompatible styles; converts emotion into visible gaze, posture, light, and environment."
+  }
+]

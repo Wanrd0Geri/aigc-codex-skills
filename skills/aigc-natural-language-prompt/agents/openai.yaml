@@ -1,7 +1,7 @@
 interface:
   display_name: "AIGC Natural Language Prompt"
   short_description: "Clean AIGC prompt language, logic, and AI-flavored phrasing."
-  default_prompt: "Use $aigc-natural-language-prompt to remove AI-flavored phrasing, ambiguity, and parameter stacking from this AIGC prompt."
+  default_prompt: "用 $aigc-natural-language-prompt 把这个 AIGC prompt 改成自然、可执行的视觉语言，去掉 AI 味、歧义和参数堆叠。"
 
 policy:
   allow_implicit_invocation: true

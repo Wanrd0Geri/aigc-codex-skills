@@ -1,6 +1,6 @@
 ---
 name: aigc-creative-director
-description: Develop AIGC short-film, animation, storyboard, keyframe, or cinematic video ideas before prompt writing. Use when the user needs director-level creative direction, shot design, visual strategy, emotional logic, or asks how a vague concept, scene, script, mood, or reference should be filmed. Do not use for ready image-edit prompts or Seedance prompts unless the creative direction is still unresolved.
+description: Use when the user has a vague AIGC film, animation, storyboard, keyframe, scene, script, mood, or reference idea that needs director-level creative direction, shot purpose, visual strategy, emotional logic, or shooting design before prompt writing.
 ---
 
 # AIGC Creative Director
@@ -35,6 +35,16 @@ Keep each explanation to one sentence. Do not turn the answer into a film lectur
 
 ## Workflow
 
+### CHECKPOINT - Scope Before Output
+
+Before drafting, decide whether the user is asking for creative direction or for a downstream production artifact.
+
+- If the concept lacks story function, emotional target, shot purpose, or visual strategy, stay in this skill.
+- If the user already asks for a ready Seedance prompt, image-edit prompt, reverse prompt, or visual diagnosis, route to the specialist skill instead of duplicating that work.
+- If the request contains one uploaded image and asks why it looks weak, route to `aigc-visual-diagnose`.
+- If the request asks whether a frame can move forward, route to `aigc-shot-diagnosis-pipeline`.
+- If the request only asks to make an existing prompt more natural, route to `aigc-natural-language-prompt`.
+
 ### 1. Clarify the Real Creative Goal
 
 Infer what the user is trying to make:
@@ -45,6 +55,23 @@ Infer what the user is trying to make:
 - Emotional promise: what the viewer should feel first, and what should visibly shift during the piece.
 
 Ask only when a missing answer changes the direction. Otherwise state assumptions and continue.
+
+### Failure Branches
+
+- If the user's idea could become two different pieces with different audiences, ask one concrete question and recommend the default direction.
+- If the user asks for too many shots, characters, locations, or reveals for the stated duration, simplify the structure and explain which emotional beat is being protected.
+- If the visual references conflict with the written goal, identify the conflict and choose which source should control story, style, character, or composition before planning.
+- If the task is rights-sensitive because it names a real person, celebrity, trademarked character, or protected IP, keep the direction generic unless the user confirms rights-safe handling.
+
+### Planning Depth Budget
+
+Choose the smallest planning depth that unlocks the next artifact:
+
+- **One-shot idea**: give the core creative problem, one recommended visual strategy, and one usable shot plan.
+- **Short sequence**: give a compact brief and 3-8 shots, each with one visual focus and one emotional purpose.
+- **Whole project**: define stages only until the next concrete artifact is clear, then hand off to `aigc-project-planner` or the specialist skill.
+
+Do not expand a simple request into a production bible. Do not write final prompts unless the user asks and the creative direction is already settled.
 
 ### 2. Build the Creative Brief
 
@@ -126,3 +153,5 @@ Use this structure unless the user requests a different artifact:
 - Do not recommend complex camera moves just because they sound cinematic.
 - Do not add backstory that will not appear on screen.
 - Do not make a full production bible for a simple one-shot request.
+- Do not force `aigc-natural-language-prompt` as a final cleanup step when the creative direction is already visually clear.
+- Do not present several possible pipelines when one unresolved creative bottleneck is obvious.

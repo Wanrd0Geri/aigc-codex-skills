@@ -1,0 +1,17 @@
+[
+  {
+    "id": "creative-1-vague-short-film",
+    "prompt": "我想做一个关于孤独机器人找家的 AIGC 短片，帮我想怎么拍。",
+    "expected": "Stays in creative direction, identifies emotional promise, gives a compact brief and practical shot strategy without writing final Seedance prompts."
+  },
+  {
+    "id": "creative-2-overloaded-duration",
+    "prompt": "做一个10秒动画：三个主角、两座城市、追逐、爆炸、反转结局，都要很震撼。",
+    "expected": "Simplifies the concept, protects one emotional beat, and explains what must be reduced for stable AIGC generation."
+  },
+  {
+    "id": "creative-3-downstream-routing",
+    "prompt": "这张图为什么看起来很假？帮我分析构图和光影。",
+    "expected": "Routes to aigc-visual-diagnose instead of producing a creative brief."
+  }
+]
