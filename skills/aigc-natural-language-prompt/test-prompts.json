@@ -13,5 +13,15 @@
     "id": "nlp-3-ambiguous-style-mix",
     "prompt": "改成自然语言：未来城市，女主角很酷，赛博朋克，又要宫崎骏，又要写实电影感，情绪复杂。",
     "expected": "Chooses or asks about the dominant visible medium instead of blending incompatible styles; converts emotion into visible gaze, posture, light, and environment."
+  },
+  {
+    "id": "nlp-4-preserve-platform-reference-anchors",
+    "prompt": "帮我把这个 Seedance prompt 改自然点：@图1控制少年外貌和服装，@图2控制老狐狸形象，@图3控制人物站位，镜头从门口方向后拉，所有人听到响声后看向镜头。",
+    "expected": "Preserves literal @图1, @图2, and @图3 labels, softens role wording to 作为...参考 or similar, and does not rewrite anchors as 参考图1/图1 or remove @."
+  },
+  {
+    "id": "nlp-5-preserve-filename-reference-anchors",
+    "prompt": "帮我改自然点：@庠序场景.png控制旧学堂环境和大门方向，@裘水镜-磨皮版.png控制人物外貌，镜头从门口方向拍，台词不要改。",
+    "expected": "Preserves literal file-name anchors @庠序场景.png and @裘水镜-磨皮版.png exactly, softens 控制 to 作为...参考 or similar, and does not rewrite anchors as 参考图1, 图1, or plain file names."
   }
 ]

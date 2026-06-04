@@ -13,5 +13,15 @@
     "id": "seedance-3-one-shot-complexity-tradeoff",
     "prompt": "8秒一镜到底：女主从地铁站跑到天台，群演追逐，爆炸，无人机环绕，最后切到特写落泪。",
     "expected": "Flags the one-shot/duration conflict, preserves the strongest action beat, reduces locations and camera moves, or proposes a stable split."
+  },
+  {
+    "id": "seedance-4-structured-reference-composition",
+    "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1控制主角身份，@图2控制配角，@图3控制怪物背面，@图4控制冷蓝树林色调。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人，不要新增人物。",
+    "expected": "Uses the complex reference/composition structure: total duration and global constraints first, literal @图N labels with soft reference-role wording such as 作为...参考, camera/composition requirements, per-shot paragraphs, and avoid notes. It preserves character count, foreground wall percentage, long-lens hidden viewpoint, and scoped reference roles without rewriting @图N as 参考图N."
+  },
+  {
+    "id": "seedance-5-preserve-filename-reference-anchors",
+    "prompt": "帮我优化一个12秒 Seedance 提示词。@庠序场景.png作为旧学堂环境参考，@裘水镜-磨皮版.png作为人物外貌参考，@111.png作为分镜构图参考。不要用控制这个词，保留这些@文件名引用。",
+    "expected": "Preserves literal file-name anchors @庠序场景.png, @裘水镜-磨皮版.png, and @111.png exactly; uses soft role wording such as 作为...参考; does not rewrite them as 参考图1, 图1, or plain file names."
   }
 ]

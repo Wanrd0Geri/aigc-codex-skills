@@ -33,6 +33,8 @@ Use integer durations and shot counts. Keep subjects and actions concrete. Do no
 Use stable, ordered labels for references:
 
 - Chinese collaboration labels: `@图1`, `@图2`, `@视频1`, `@视频2`, `@音频1`, `@音频2`.
+- Existing platform anchors from the user's prompt, including file-name anchors such as `@庠序场景.png`, must be preserved exactly unless the user asks to relabel them.
+- If the user writes `图1`, `参考图1`, or `第一张图` without `@`, normalize it to the matching platform anchor such as `@图1` when that mapping is clear.
 - Platform-facing labels when the target UI requires them: `Image 1`, `Image 2`, `Video 1`, `Video 2`, `Audio 1`, `Audio 2`. Omit them in ordinary Chinese-only prompts unless useful for asset mapping.
 
 After every reference label, immediately attach a semantic noun or role to prevent ambiguity:
@@ -41,12 +43,14 @@ After every reference label, immediately attach a semantic noun or role to preve
 - Good: `@图2（老宅场景参考）作为空间与光线参考`
 - Good: `@视频1（原始镜头参考）向后平滑延长`
 - Good: `@视频1（剪辑节奏与现场音参考）作为动作停顿和环境声参考`
-- Good: `@音频1（节奏参考）只控制剪辑节奏和情绪强度`
+- Good: `@音频1（节奏参考）仅作为剪辑节奏和情绪强度参考`
 - Good: `@图3（产品外观与标识参考）作为商品形状、材质和logo参考`
 - Good: `@图4（字体与版式参考）仅在用户明确需要文字画面时使用`
 - Avoid: `asset-xxx 跑向前方`
 - Avoid: `@图1 走向`
 - Avoid: `参考 @视频1`
+- Avoid: `参考图1控制角色外貌`
+- Avoid: changing `@庠序场景.png` into `庠序场景.png` or `参考图1` without preserving `@`
 - Avoid: bare labels without a character, object, scene, first-frame, or end-frame role.
 
 When multiple references are provided, assign each a clear responsibility. Common roles include character, face, costume, scene, prop, lighting, action, camera movement, edit rhythm, effect behavior, first frame, end frame, style, product appearance, typography, BGM, sound effect, voice tone, or spoken rhythm. Keep the most important 1-3 responsibilities unless the user explicitly needs more.
@@ -59,7 +63,7 @@ For video references, name the exact layer being reused:
 - Effects: transformation behavior, particles, destruction, liquid, smoke, light, or transition logic.
 - Sound: environment sound, action sound, voice tone, BGM rhythm, or beat timing.
 
-For audio references, define whether they control BGM, beat sync, sound effects, voice tone, speech pace, or emotional rhythm. Do not add music or voiceover just because audio exists; use it only when the user requests or the reference role requires it.
+For audio references, define whether they serve as BGM, beat sync, sound effect, voice tone, speech pace, or emotional rhythm reference. Do not add music or voiceover just because audio exists; use it only when the user requests or the reference role requires it.
 
 For long images, collages, or grids, recommend splitting them into single references. If the user proceeds without splitting, clarify which sub-area or visual role each reference should carry.
 

@@ -47,7 +47,7 @@ For multiple subjects, establish identity, position, role, and interaction befor
 
 Good multi-character prompts usually define:
 
-- which reference controls each character
+- which literal `@...` reference anchor is used for each character or action
 - where each character starts
 - what each one wants or does in the beat
 - who reacts to whom

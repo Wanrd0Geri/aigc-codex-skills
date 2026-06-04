@@ -34,12 +34,14 @@ CHECKPOINT - Asset And Task Gate:
 ### Failure Branches
 
 - If duration is too short for the requested actions, compress the action chain or split the shot; do not squeeze multiple locations, reveals, and dialogue beats into one unreadable clip.
-- If a reference asset could control identity, environment, style, and composition at the same time, assign explicit roles before drafting.
+- If a reference asset could be used for identity, environment, style, and composition at the same time, assign explicit reference roles before drafting.
 - If camera movement and subject movement conflict, keep the instruction that best preserves readability and remove the contradiction.
 - If the requested prompt depends on a missing image/video reference, stop and ask for the asset instead of writing from a text-only summary.
 - If a Yellow production decision is carried over from `aigc-shot-diagnosis-pipeline`, state the risk outside the code block before drafting only when the user explicitly accepts that risk.
 - If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, adjust framing, reduce dialogue, or state the risk before drafting.
 - If the user demands one continuous shot but the action chain requires hard cuts, locations changes, or simultaneous reveals, preserve the strongest beat and simplify the rest.
+- If a simple request starts accumulating unnecessary reference, camera, and avoid sections, collapse it back to total duration, one shot paragraph, and only essential avoid notes.
+- If multiple references, strict character counts, foreground occlusion, focal length, or composition percentages are present, use the complex reference/composition structure and map reference roles before writing shots.
 
 ## Output Modes
 
@@ -53,6 +55,51 @@ CHECKPOINT - Asset And Task Gate:
   3. **关键修改** (1-3 short bullets, each pointing at one change: `把 X 改成了 Y,因为...`)
 
 - **Creative guidance**: if the user only has a vague idea and asks how to design it, provide the key problem, 2 practical directions, and a recommended direction. When enough information is available, also provide the final prompt at the end.
+
+## Output Structure Selection
+
+Choose the lightest structure that will keep the prompt executable. Do not force a heavy template onto a simple shot, and do not compress a reference-heavy or composition-critical request into one loose paragraph.
+
+Use **simple structure** when the request has one clear subject, one space, one action chain, no complex reference mapping, and no hard composition ratio:
+
+```text
+本视频总时长 X 秒，单镜头。
+[一句话写清楚风格、主体、空间、声音规则]
+
+镜头1：X秒，景别/机位。
+[镜头在哪里拍，先看到什么，主体做什么动作，最后停在什么状态]
+
+规避：
+[只写最容易跑偏的1-3点；没有明显跑偏风险时省略]
+```
+
+Use **complex reference/composition structure** when any of these are present: multiple reference images or videos, strict character count, reference-role separation, foreground occlusion, voyeur/hidden-camera framing, explicit lens/focal length, precise subject position, composition percentage, monster/prop/environment reference separation, multi-shot continuity, or a user-provided structured prompt they want preserved.
+
+```text
+本视频总时长 X 秒，单镜头 / N个镜头。
+[全局风格、人物数量、声音规则、不可新增内容]
+
+参考图引用：
+@图1（角色 / 外貌 / 服装参考）作为……参考。
+@图2（角色 / 道具 / 生物参考）作为……参考。
+@图3（人物位置 / 构图关系参考）作为……参考。
+@图4（环境 / 光线 / 材质参考）作为……参考。
+@图5（环境 / 道具 / 怪物 / 色调参考）作为……参考。
+
+摄影与构图总要求：
+[机位、焦距、景深、前景占比、主体位置、背景层次、运动方式]
+
+镜头1：X秒，景别，机位 / 焦距。
+[镜头放在哪里，向哪里看，先看到什么，主体如何进入或动作如何发生，最后停在什么状态]
+
+镜头2：X秒，景别，机位 / 焦距。
+[多镜头时逐镜头写清楚动作衔接]
+
+规避：
+[不要新增人物，不要正面海报感，不要广角变形，不要参考图混用，不要改变核心构图]
+```
+
+In both structures, section headings are allowed inside the fenced prompt only when they help the generation model parse global constraints before shot execution. Keep headings short and concrete. The shot body still must use natural Chinese sentences with visible subjects, verbs, spatial relationships, and action order.
 
 ## Prompt Detail Budget
 
@@ -189,7 +236,7 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - Keep default audio policy unless the user asks otherwise: no music, no voiceover, no subtitles, and no dubbing; only diegetic speech and necessary action/environment sound.
 - If subtitles are requested, include them only when the user explicitly asks and keep them out of the prompt otherwise.
 
-When a reference image only controls environment, style, or identity, say that explicitly. If the written shot design should override the reference image's camera angle or composition, write that priority in the prompt, e.g. `@图1只控制房间、道具、光线和材质；镜头位置与构图以文字描述为准`。
+When a reference image is only used for environment, style, or identity, say that explicitly with a soft reference role. Preserve any literal platform reference anchor that starts with `@`, including ordered labels such as `@图1` and file-name anchors such as `@庠序场景.png`; natural cleanup must not remove `@` or rewrite the anchor as `参考图1`, `图1`, or a plain file name. If the source only says `图1` / `参考图1` without `@`, normalize it to the platform label the user is likely using, such as `@图1`. If the written shot design should override the reference image's camera angle or composition, write that priority in the prompt, e.g. `@图1（房间、道具、光线和材质参考）作为空间质感参考；镜头位置与构图以文字描述为准`。
 
 ## Strong And Weak Prompt Words
 
@@ -251,7 +298,7 @@ Load only the reference needed for the task:
 
 Write the final prompt in Chinese by default. Do not include English shot-size abbreviations or English camera movement terms unless the user explicitly asks for bilingual camera labels.
 
-The final prompt should normally start with duration and scene overview, then write each shot as a natural Chinese paragraph beginning with `镜头N：x秒，景别。` and continuing in flowing sentences with verbs and connectives. For a true one-shot design, use only `镜头1：x秒，景别。` and describe the internal continuous action order in prose. Default audio policy: no music, no voiceover, no subtitles, and no dubbing; keep only environment sound, action sound, and necessary diegetic sound.
+The final prompt should normally start with duration and scene overview, then write each shot as a natural Chinese paragraph beginning with `镜头N：x秒，景别。` and continuing in flowing sentences with verbs and connectives. For simple requests, use the simple structure from Output Structure Selection: total duration and scene setup, one shot paragraph, and only necessary avoid notes. For complex reference-heavy or composition-critical requests, use the complex structure: total duration and global constraints, reference-role mapping, camera/composition requirements, shot paragraphs, and avoid notes. For a true one-shot design, use only `镜头1：x秒，景别。` and describe the internal continuous action order in prose. Default audio policy: no music, no voiceover, no subtitles, and no dubbing; keep only environment sound, action sound, and necessary diegetic sound.
 
 Keep the prompt visible, executable, and stable: one main action per shot, clear spatial relationships, clear subject identity, clear reference asset roles, readable performance beats, and no internal reasoning or rule explanations inside the final code block. Use production shorthand and abstract taste words only for internal planning; translate them into visible shot, action, light, space, body/contact detail, gaze, expression transition, camera-subject relationship, action path, environmental reaction, sound, and only the edit-handoff details that matter.
 
@@ -274,8 +321,8 @@ These are the failure modes most likely to break a Seedance prompt. Scan the fin
 - **Parameter-list writing style** — e.g. `镜头1：5秒，中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：5秒，中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
 - **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
 - **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
-- **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference controls camera movement, action, edit rhythm, effect behavior, sound, or character performance.
-- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not control camera angle, framing, or starting image; otherwise the model may copy its composition.
+- **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
+- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
 - **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking-like following in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
 - **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
 - **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
@@ -287,5 +334,5 @@ These are the failure modes most likely to break a Seedance prompt. Scan the fin
 - **Music, voiceover, subtitles, or dubbing** unless the user explicitly asks. Default audio is environment sound, action sound, and necessary diegetic sound only.
 - **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
 - **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
-- **Treating reference-image prompts like text-to-video prompts** — when references exist, name what each reference controls and what the written shot overrides.
+- **Treating reference-image prompts like text-to-video prompts** — when references exist, preserve literal `@...` anchors such as `@图1` or `@庠序场景.png`, name what each reference is used for, and state what the written shot overrides.
 - **Overusing natural-language cleanup** — do not run a separate cleanup pass unless the user asks or the draft has visible language defects.

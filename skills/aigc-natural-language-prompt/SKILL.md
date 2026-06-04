@@ -18,6 +18,7 @@ This skill is not a mandatory final rewrite layer for every AIGC prompt. Use it 
    - visible facts already present in the prompt
    - abstract intent that must become visible
    - platform/style constraints that belong in a global setup
+   - platform reference anchors that start with `@`, such as `@图1`, `@视频1`, `@音频1`, or file-name anchors like `@庠序场景.png`, that must remain literal
    - unsupported off-screen causes or spatial claims
    - AI-flavored filler, template slots, decorative transitions, or forced summary endings
    - prompt-engineering filler that should be removed or translated
@@ -99,7 +100,8 @@ The rewritten prompt must obey these rules:
 - For cuts and shot changes, state how the current shot enters the scene: from which previous view, current camera side, framing, and visible retained objects.
 - For multiple characters, assign identity, position, role, action, reaction, and only the continuity anchor needed to keep the movement readable.
 - Keep style terms in global constraints when they matter, but make shot bodies concrete: what enters frame, what moves, what reacts, and what a later shot needs to inherit.
-- Remove AI-flavored prose when it does not control the image: promotional adjectives, rule-of-three padding, "not only...but also..." logic, generic conclusions, and explanations of creative intent that the camera cannot see.
+- Preserve literal platform reference anchors that start with `@`, such as `@图1`, `@视频1`, `@音频1`, or `@庠序场景.png`; natural-language cleanup may soften the role wording after the anchor, but must not rewrite the anchor as `参考图1`, `图1`, a plain file name, or remove `@`.
+- Remove AI-flavored prose when it does not affect the generated image: promotional adjectives, rule-of-three padding, "not only...but also..." logic, generic conclusions, and explanations of creative intent that the camera cannot see.
 
 ## Seedance Preprocessing Boundary
 
@@ -107,7 +109,7 @@ When the source prompt is clearly intended for Seedance but the user asks only f
 
 Preserve:
 
-- duration, subject identity, main action chain, visible camera relation, dialogue content, and necessary reference roles
+- duration, subject identity, main action chain, visible camera relation, dialogue content, literal `@...` reference anchors, and necessary reference roles
 - only the continuity anchor needed by the next shot or segment
 
 Remove or translate:
@@ -138,4 +140,5 @@ Before final output, scan for these failures:
 - forced ending-state summaries that do not help the next shot connect
 - missing continuity anchors only when the next shot depends on pose, gaze, object position, movement direction, light state, or camera position
 - over-expanded rewrites that change a compact usable prompt into a long creative brief
+- missing or normalized-away reference anchors, such as changing `@图1（角色参考）` into `参考图1` or `@庠序场景.png` into `庠序场景.png`
 - Seedance-specific final formatting when the user only asked for natural-language cleanup
