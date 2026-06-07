@@ -10,6 +10,11 @@
     "expected": "Uses Preserve/Transform/Avoid, protects identity/pose/camera, and limits transforms to high-impact visible edits."
   },
   {
+    "id": "edit-4-unspecified-model",
+    "prompt": "这张图人物和构图都要保留，只把光影、色彩和背景融合修得更高级，给我中英双语修图 prompt。",
+    "expected": "Does not block unnecessarily on target-model choice; if the edit intent is clear and no model is named, outputs compatible Nano Banana/Gemini and ChatGPT/OpenAI versions."
+  },
+  {
     "id": "edit-3-redesign-risk",
     "prompt": "把这个角色换成完全不同的服装和脸，但又要说是修图 prompt。",
     "expected": "Flags redesign risk and states what can no longer be preserved before drafting."

@@ -12,6 +12,7 @@ Act as a director and Seedance series prompt engineer for connected animation se
 CHECKPOINT - Asset And Task Gate:
 
 - For pure text-to-video, proceed from the written brief.
+- If the request names a project, script, storyboard, episode/scene/shot identifiers, shot range, or project package, route to `aigc-script-context` first unless the user explicitly asks for a standalone text-to-video prompt.
 - For image-to-video, video editing, video extension, reference-based generation, or shot bridging, the actual image/frame/video/reference asset must be present before writing the final prompt.
 - If the user only asks why a frame looks weak, route to `aigc-visual-diagnose`.
 - If the user asks whether a frame can enter video, route to `aigc-shot-diagnosis-pipeline`.
@@ -20,16 +21,17 @@ CHECKPOINT - Asset And Task Gate:
 
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
 2. For image-to-video, reference-based generation, video editing, video extension, or shot bridging, confirm the actual source image/frame/video/reference asset is present in the current context before writing a prompt. If the task depends on a missing asset, do **not** write from a text-only handoff summary; ask the user to re-attach the asset and confirm the frame first. A handoff summary is context, never a substitute for the asset. For pure text-to-video, proceed without blocking.
-3. Identify the medium and style target before drafting: live-action photoreal, 2D animation, stylized 3D, illustration, game cinematic, product render, or mixed media.
-4. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot attention load.
-5. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and any necessary continuity anchor must be clear.
-6. Apply prompt principles before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and concrete visual change.
-7. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
-8. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
-9. Write each shot as one natural execution paragraph starting with `镜头N：x秒，景别。`: keep shot number, duration, and shot size explicit and end the lead-in with a period, then continue in flowing Chinese sentences that include only the camera, movement, action path, camera-subject relationship, and continuity details needed for this shot to generate clearly. Do not fill fixed slots.
-10. For long-form work, preserve segment function, starting state, and the next segment handoff only when those details affect the next generated clip. Do not force an ending-state sentence when the action can naturally continue.
-11. Before outputting any final prompt, run an internal AI-flavor and logic scan: remove template voice, abstract boosters, decorative connectors, forced summary endings, unsupported off-screen causes, and parameter stacking. Use `aigc-natural-language-prompt` only when the user asks for natural-language cleanup or the language problem is the main task.
-12. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
+3. When using a shot context card or handoff, preserve locked facts, source priority, character identity, shot function, previous state, and risk notes before drafting; do not reinterpret them unless the user gives a newer instruction. Map context-card fields directly: `源优先级` -> source priority, `当前画面事实` and `参考图角色` -> locked facts, `人物表演` -> performance constraints, `上一镜承接` -> previous state, `本镜剧情功能` -> shot function, and `禁止偏移` -> risk notes.
+4. Identify the medium and style target before drafting: live-action photoreal, 2D animation, stylized 3D, illustration, game cinematic, product render, or mixed media.
+5. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot attention load.
+6. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and any necessary continuity anchor must be clear.
+7. Apply prompt principles before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and concrete visual change.
+8. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
+9. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
+10. Write each shot as one natural execution paragraph starting with `镜头N：x秒，景别。`: keep shot number, duration, and shot size explicit and end the lead-in with a period, then continue in flowing Chinese sentences that include only the camera, movement, action path, camera-subject relationship, and continuity details needed for this shot to generate clearly. Do not fill fixed slots.
+11. For long-form work, preserve segment function, starting state, and the next segment handoff only when those details affect the next generated clip. Do not force an ending-state sentence when the action can naturally continue.
+12. Before outputting any final prompt, run an internal AI-flavor and logic scan: remove template voice, abstract boosters, decorative connectors, forced summary endings, unsupported off-screen causes, and parameter stacking. Use `aigc-natural-language-prompt` only when the user asks for natural-language cleanup or the language problem is the main task.
+13. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that code block.
 
 ### Failure Branches
 
@@ -147,6 +149,17 @@ Expand only when detail prevents likely misunderstanding:
 - The user is choosing between a conservative stable result and a more ambitious visual effect.
 
 For complex shots, write clear subject, space, action order, camera behavior, and the continuity anchor that prevents likely misunderstanding. Keep the detail purposeful; do not pad with generic quality terms.
+
+## Positive Direction Discipline
+
+Treat every generation attempt as a fresh first run for the video model. When the user is reacting to a failed clip, convert the failure into the desired visible shot instead of carrying a long corrective blacklist into the next prompt.
+
+Why this matters: Seedance, Hailuo, and similar video models do not know that a new prompt is a repair of a previous failed generation unless the actual prior clip is provided as an edit source. Negative lists can still make the unwanted concept salient inside the fresh prompt ("do not show X" still names X). Positive, visible staging tells the model what to render now: where the camera starts, what subject is in frame, how the action moves, and what state the shot should end on.
+
+- Replace failure notes with positive staging. Use `the camera starts at table height beside the old desk, watching the fox students from their side-front` instead of `do not use the previous reference angle`.
+- Use avoid notes only for hard, current-run constraints: visible text/UI from references, forbidden identity changes, unsafe content, or a small number of known visual artifacts. Do not build an avoid section from every previous model mistake.
+- Keep the positive instruction denser than the negative instruction. If an avoid note is needed, make sure the corresponding desired action, composition, or ending state has already been stated clearly in the shot body.
+- For multi-shot continuity, describe the inherited visible state at the start of each shot and the concrete ending state of the previous shot. Do not assume the model remembers an earlier failed generation.
 
 ## One-Shot vs Multi-Shot Decision
 

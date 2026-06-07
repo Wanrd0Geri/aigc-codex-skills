@@ -37,7 +37,7 @@ Describe what is actually visible before judging:
 - Production design: costume, props, environment, material, era, and texture.
 - Mood read: what emotion the image currently communicates.
 
-If no image is available, ask the user to upload one or describe the frame.
+If no image is available, ask the user to upload the image or frame. If the user can provide only text, treat the response as a text-only creative assumption check, not as visual diagnosis.
 
 ### Diagnosis Depth Budget
 

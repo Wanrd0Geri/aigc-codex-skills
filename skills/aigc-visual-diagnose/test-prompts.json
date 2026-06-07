@@ -13,5 +13,10 @@
     "id": "visual-3-repair-handoff",
     "prompt": "分析完后给我修图 prompt 的交接摘要。",
     "expected": "Diagnoses first, then provides preserve/fix/cinematography/production design/avoid handoff summary without writing the full edit prompt."
+  },
+  {
+    "id": "visual-4-missing-image",
+    "prompt": "我没法传图，画面大概是一个角色站在雨夜街头，你帮我诊断为什么不好看。",
+    "expected": "Does not present text-only description as visual diagnosis; asks for the image/frame or clearly labels any response as a text-only creative assumption check."
   }
 ]

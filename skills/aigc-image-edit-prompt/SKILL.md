@@ -55,7 +55,7 @@ If a handoff block conflicts with the visible image, trust the visible image and
 ### Failure Branches
 
 - If the source image is missing, do not write an edit prompt from memory, filename, or diagnosis text; ask for the image.
-- If the user has not chosen Nano Banana/Gemini or ChatGPT/OpenAI image editing, ask once for the target model; if they ask for compatibility, output both templates.
+- If the user has not chosen Nano Banana/Gemini or ChatGPT/OpenAI image editing, ask once for the target model only when the model choice materially changes the edit strategy. If the user asks for compatibility or the request should not pause on model choice, output both templates.
 - If the user asks for a full redesign rather than repair, identify what can no longer be preserved before writing a prompt.
 - If the requested fix would change face identity, costume, pose, camera angle, or character count, warn and rewrite the prompt to protect those elements unless the user explicitly wants them changed.
 - If a production-gate handoff says Red, do not write a repair prompt as if the frame is usable; point back to redesign or upstream shot planning.
@@ -103,7 +103,7 @@ Use one skill for both models; only the final prompt template changes.
 - If the user says **Nano Banana**, **Nano Banana Pro**, **Gemini image**, **Gemini 3 Pro Image**, **Google image editor**, or a later Nano Banana/Gemini image version, use the Nano Banana template.
 - If the user says **ChatGPT Images 2.0**, **GPT image 2.0**, **GPT image**, **OpenAI image**, **ChatGPT image editor**, or a later ChatGPT/OpenAI image editor version, use the ChatGPT Images template.
 - If the user names a target model, output only that model's prompt.
-- If the user does not name a model, ask once which model they plan to use. If they do not answer, ask for compatibility, or want to compare, output both versions.
+- If the user does not name a model, ask once only when the model choice materially changes the edit strategy. If the user asks for compatibility, wants to compare, or has already provided enough image/edit intent to proceed, output both Nano Banana/Gemini and ChatGPT/OpenAI versions.
 
 Read `references/prompt-templates.md` for the current model templates and adaptive surface-cleanliness controls. For later model versions, apply the closest template unless the user provides newer constraints.
 

@@ -23,5 +23,15 @@
     "id": "seedance-5-preserve-filename-reference-anchors",
     "prompt": "帮我优化一个12秒 Seedance 提示词。@庠序场景.png作为旧学堂环境参考，@裘水镜-磨皮版.png作为人物外貌参考，@111.png作为分镜构图参考。不要用控制这个词，保留这些@文件名引用。",
     "expected": "Preserves literal file-name anchors @庠序场景.png, @裘水镜-磨皮版.png, and @111.png exactly; uses soft role wording such as 作为...参考; does not rewrite them as 参考图1, 图1, or plain file names."
+  },
+  {
+    "id": "seedance-6-project-shot-range-route",
+    "prompt": "把我的新短片项目第一集6-22到6-24直接写成 Seedance 提示词。",
+    "expected": "Routes project/script/storyboard/shot-range requests to aigc-script-context first unless the user explicitly asks for a standalone text-to-video prompt; does not skip the shot context card."
+  },
+  {
+    "id": "seedance-7-handoff-locked-facts",
+    "prompt": "根据这个镜头任务卡写 Seedance：源优先级=当前分镜高于大纲；当前画面事实=角色只站在门内半步；参考图角色=@图1只做人物身份参考；上一镜承接=右手仍按在门框上；本镜剧情功能=克制反应；禁止偏移=不要新增第二个人，不要改成室外。",
+    "expected": "Preserves source priority, current visual facts, reference role, previous state, shot function, and risk notes from the card; does not reinterpret the shot into a different location, character count, or action."
   }
 ]
