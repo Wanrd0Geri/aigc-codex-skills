@@ -1,0 +1,7 @@
+interface:
+  display_name: "AIGC Vibe Creating Prompt"
+  short_description: "提纯氛围、意象和体验感的视频提示词。"
+  default_prompt: "用 $aigc-vibe-creating-prompt 把这个想法提纯成更有氛围、更适合视频生成的提示词。"
+
+policy:
+  allow_implicit_invocation: false

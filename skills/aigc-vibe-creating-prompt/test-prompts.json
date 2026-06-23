@@ -1,0 +1,62 @@
+[
+  {
+    "id": "vibe-1-abstract-needs-anchor",
+    "prompt": "用 $aigc-vibe-creating-prompt 写一个关于自由、高级感、很有力量的视频提示词。",
+    "expected": "Asks for visual anchor, action or state, and style/use direction before rewriting; does not invent a full scene."
+  },
+  {
+    "id": "vibe-2-anchor-dialogue-duration-preserved",
+    "prompt": "用 $aigc-vibe-creating-prompt 改写：@图1作为角色参考，5秒，角色站在雨里说“别回头”，远处有低沉雷声。",
+    "expected": "Preserves @图1 exactly, keeps 5秒, keeps the dialogue “别回头” unchanged, and keeps thunder as sound."
+  },
+  {
+    "id": "vibe-3-not-final-seedance-format",
+    "prompt": "用 $aigc-vibe-creating-prompt 直接写成最终 Seedance 提示词。",
+    "expected": "Provides a VC version only or explains that final Seedance formatting belongs to aigc-seedance-prompt."
+  },
+  {
+    "id": "vibe-4-multishot-experience-order",
+    "prompt": "用 $aigc-vibe-creating-prompt 提纯：镜头1女孩推开旧门；镜头2灰尘在阳光里漂；镜头3她看到桌上的旧照片。",
+    "expected": "Keeps the event order and experiential flow; does not collapse the three moments into unrelated prose."
+  },
+  {
+    "id": "vibe-5-low-fit-ui-demo",
+    "prompt": "用 $aigc-vibe-creating-prompt 优化：录屏展示 APP 登录、点击设置、打开通知开关。",
+    "expected": "Marks the task as low-fit for VC and preserves or lightly cleans the functional instruction."
+  },
+  {
+    "id": "vibe-6-mature-direct-pass",
+    "prompt": "用 $aigc-vibe-creating-prompt 看看这段：黄昏的旧码头，一个老人把湿漉漉的红围巾挂回栏杆，海风吹动破旧船帆。",
+    "expected": "Uses 直接放行 or 轻度提纯; does not expand into a long invented backstory."
+  },
+  {
+    "id": "vibe-7-technical-control-translation",
+    "prompt": "用 $aigc-vibe-creating-prompt 改写：35mm镜头，f1.4浅景深，手持推进，拍一个男孩穿过蓝色雾气。",
+    "expected": "Translates low-value technical camera controls into visible viewing results and briefly notes that technical controls were softened."
+  },
+  {
+    "id": "vibe-8-ab-test-support",
+    "prompt": "我想比较效果，用 $aigc-vibe-creating-prompt 先给这个想法出 VC 版：一只纸船在城市积水里漂向霓虹灯。",
+    "expected": "Outputs a clear VC version and notes it can be compared with a standard aigc-seedance-prompt version."
+  },
+  {
+    "id": "vibe-9-scene-expression-matrix",
+    "prompt": "用 $aigc-vibe-creating-prompt 处理：镜头1固定机位，35mm，f1.8，一个女孩在废弃车站等一辆永远不会来的车，广播里反复响起同一句站名。",
+    "expected": "Treats precise control language as potentially VC-translatable because the scene goal is emotional/story-driven; preserves event order and translates low-value camera controls into viewer-facing atmosphere."
+  },
+  {
+    "id": "vibe-10-four-part-output-labels",
+    "prompt": "用 $aigc-vibe-creating-prompt 把这个改得更有记忆感：老人把旧照片放回抽屉，窗外下着小雨。",
+    "expected": "Uses visible user-facing labels for 判断, 执行动作, 输出结果, and optional 补充说明; does not expose S/E/I or mode numbers."
+  },
+  {
+    "id": "vibe-11-sound-priority",
+    "prompt": "用 $aigc-vibe-creating-prompt 改写：黑暗房间里，孩子看着门缝里的光，旁白必须保留“我一直在这里”，背景音乐是很轻的八音盒。",
+    "expected": "Preserves the narration text “我一直在这里” exactly, keeps the music requirement, and rewrites only the visual portion."
+  },
+  {
+    "id": "vibe-12-optional-vc-for-partial-fit-brand",
+    "prompt": "用 $aigc-vibe-creating-prompt 优化：一个护肤品广告，展示瓶身、水珠、干净台面和清爽质感。",
+    "expected": "Treats brand/product display as partial-fit; preserves product intent and provides light refinement or an optional VC version rather than forcing a dramatic story."
+  }
+]
