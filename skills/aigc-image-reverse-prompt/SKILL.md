@@ -19,7 +19,7 @@ CHECKPOINT - Image Presence Gate:
 - If the user provides only a filename, link text, or written description, ask for the image unless the task is explicitly to improve that text description.
 - If the user asks to edit the source image rather than reproduce or adapt it, route to `aigc-image-edit-prompt`.
 - If the user asks why the source image looks weak, route to `aigc-visual-diagnose`.
-- If the user asks whether the image can enter video production, route to `aigc-shot-diagnosis-pipeline`.
+- If the user asks whether the image can enter video production, route to `aigc-visual-diagnose` for a readiness note before writing video prompts.
 
 If the user provides multiple images, identify each image's role before drafting:
 

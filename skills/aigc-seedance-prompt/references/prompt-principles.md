@@ -5,6 +5,7 @@ Use this reference when a Seedance request needs creative completion, shot desig
 ## Core Judgment
 
 - Identify the segment goal: what the viewer must understand, feel, or see change during the segment.
+- For ordinary pure text-to-video requests, keep the Vibe-first expressive core before execution detail: story moment, emotional direction, visual anchor, action/state, local tone, and video theme.
 - Decide the viewing priority: the person, object, gesture, spatial change, or emotional turn that should attract attention first.
 - Choose the emotional carrier: performance, pause, breath, gaze, contact point, posture, object movement, light state, sound, or spatial distance.
 - Keep every shot anchored to visible action, spatial logic, and any continuity detail that matters. Abstract mood words must become visible or audible cues.
@@ -89,6 +90,20 @@ Natural prompt language is a quality-control pass, not a request to make the wor
 - Avoid over-smoothing the language into ad copy. The prompt can be elegant, but it must remain operational: what enters frame, what moves, what the camera does, what changes, and what the next shot needs to keep.
 - If two clauses only repeat the same mood, keep the stronger visible one and delete the weaker decorative one.
 
+## Seedance Logic Scan
+
+Before final output, apply this scan while preserving Seedance-specific duration, reference mapping, and shot-bridge rules:
+
+- Each sentence should name a visible subject and a real verb. Replace noun piles such as `中景、冷色、孤独、电影感` with filmed relationships such as `中景固定拍摄，人物独自站在冷白路灯下，身后的街道空旷`.
+- Keep cause and sequence readable. Use `先`, `随后`, `此时`, or `最终` only when they clarify action order; do not add connectors as decoration.
+- Use adjectives only after the concrete carrier is clear. `压抑` should become tight spacing, low ceiling, held breath, blocked doorway, heavy shadow, or another visible/audible cue.
+- Do not invent an off-screen source or cause. If the source is not visible in the current shot or clearly established by a previous shot, write only the visible result, such as `额前碎发被轻轻吹开`.
+- When a shot cuts from a previous view, state the current frame relationship only when it prevents confusion, such as `从上一镜头的远景切到桌前右侧中近景`.
+- Remove prompt-flavored filler before output: `高质量`, `大师级`, `极致细节`, `电影质感`, `氛围拉满`, `高级感`. If the idea matters, translate it into camera, light, blocking, material, sound, or movement.
+- Remove AI-flavored structure before output: "不只是...更是...", rule-of-three padding, generic conclusions, decorative `最终`, and any sentence that explains creative intent instead of controlling the visible shot.
+- Do not write a closing state merely to make the prompt feel complete. Add a continuity anchor only when it prevents confusion in the next shot or connected segment.
+- Check that the shot can be acted or animated. If a phrase cannot be seen, heard, performed, lit, framed, or timed, rewrite it before placing it in the final code block.
+
 ## Style Handling
 
 - If the user specifies a style, follow it.
@@ -96,6 +111,17 @@ Natural prompt language is a quality-control pass, not a request to make the wor
 - If style is unspecified, write neutral execution quality only: clear subject, coherent light, readable action, stable identity, and clean frame.
 - Do not invent labels such as `三渲二`, `UE5风格`, `照片级写实`, `cel shading`, or `cinematic` unless the user or references establish them.
 - Separate style, material, color tone, and lighting. When inheriting style, do not accidentally change light direction, shadow relationship, or color mood unless requested.
+
+## Medium Vocabulary Branch
+
+Identify the intended medium before choosing prompt vocabulary. Do not let live-action cinematography language override a non-photoreal target.
+
+- **Live-action photoreal**: use grounded lighting, exposure, lens distance, atmosphere, and material response terms when they help.
+- **2D animation / illustration**: prioritize clean silhouette, line/design consistency, readable color blocks, stable character shape, and rhythmized pose changes. Avoid film grain, IRE values, film-stock names, and photoreal skin/material language unless the user asks for them.
+- **Stylized 3D / game cinematic**: prioritize stable model identity, readable staging, clean material hierarchy, soft but controlled lighting, natural ear/tail/cloth/hair motion, and clear action timing. Use engine or game-cutscene style terms only as global constraints; shot bodies still need concrete actions and spatial relationships.
+- **Product / object render**: prioritize shape accuracy, logo/mark preservation, material response, contact shadows, reflection control, and camera-object relationship.
+
+If the user's references imply a medium, inherit that medium without renaming it. If style is unspecified, keep the prompt neutral and execution-focused.
 
 ## Continuity
 

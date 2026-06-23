@@ -1,6 +1,6 @@
 # AIGC Codex Skills
 
-这是一套面向 AIGC 影视、动画、图像和视频生产的个人 Codex skills。它不是通用 prompt 模板库，而是一组按任务阶段分工的工作流入口：从想法梳理、项目规划、画面诊断、生产决策，到图像反推、图像编辑、自然语言提示词和 Seedance 视频提示词。
+这是一套面向 AIGC 影视、动画、图像和视频生产的个人 Codex skills。它不是通用 prompt 模板库，而是一组按任务阶段分工的工作流入口：从画面诊断、图像反推、图像编辑、自然语言提示词清理、Vibe Creating 创作型视频提示词，到长脚本上下文整理和 Seedance 视频提示词。
 
 ## 使用方式
 
@@ -8,9 +8,10 @@
 
 ```text
 用 $aigc-visual-diagnose 看看这张图为什么不好看。
-用 $aigc-shot-diagnosis-pipeline 判断这帧能不能进入视频。
 用 $aigc-image-reverse-prompt 反推这张图的中英文提示词。
 用 $aigc-image-edit-prompt 写一份 Nano Banana 修图 prompt。
+用 $aigc-vibe-creating-prompt 把这个想法提纯成更有氛围的视频提示词。
+用 $aigc-script-context 把剧本和分镜整理成镜头上下文卡。
 用 $aigc-seedance-prompt 写一个 15 秒 Seedance 视频 prompt。
 ```
 
@@ -24,28 +25,6 @@
 
 ## Skill 入口
 
-### `aigc-project-planner`
-
-用于规划整个 AIGC 项目、短片流程、多镜头制作顺序、多资产协同和“下一步该做什么”。它处理项目级问题，不处理单张图、单个镜头或单条 prompt。
-
-适合这样说：
-
-```text
-用 $aigc-project-planner 帮我规划这个 AIGC 短片项目的整体流程。
-用 $aigc-project-planner 看看我现在有角色图、场景图和故事想法，下一步该做什么。
-```
-
-### `aigc-creative-director`
-
-用于把模糊想法、场景、角色、故事或情绪整理成导演方向、视觉策略、镜头目的和拍摄设计。它适合在还没有明确 prompt 之前，先确定这个画面或镜头到底要表达什么。
-
-适合这样说：
-
-```text
-用 $aigc-creative-director 把这个短片想法整理成导演方向和镜头策略。
-用 $aigc-creative-director 从导演角度看看这个角色出场怎么拍。
-```
-
 ### `aigc-visual-diagnose`
 
 用于分析单张图、关键帧、视频帧、分镜或概念图为什么弱、哪里怪、为什么 AI 味重、为什么不电影感。它回答的是“画面问题是什么，以及从导演、摄影、美术、AIGC 控制角度怎么修”。
@@ -55,17 +34,6 @@
 ```text
 用 $aigc-visual-diagnose 看一下这张画面为什么不好。
 用 $aigc-visual-diagnose 从导演、摄影、美术角度诊断这帧哪里怪。
-```
-
-### `aigc-shot-diagnosis-pipeline`
-
-用于把单张关键帧、生成图或视频帧当作生产检查点，判断它能不能继续推进、该先修图还是重做、能不能进入 Seedance，并把下一步交给正确的专业 skill。它回答的是“能不能用 / 下一步去哪”，不是完整美术诊断。
-
-适合这样说：
-
-```text
-用 $aigc-shot-diagnosis-pipeline 判断这张关键帧能不能进入视频。
-用 $aigc-shot-diagnosis-pipeline 看这个镜头下一步应该修图还是重做。
 ```
 
 ### `aigc-image-reverse-prompt`
@@ -106,6 +74,31 @@
 用 $aigc-natural-language-prompt 判断这段 prompt 哪些地方不够自然。
 ```
 
+### `aigc-vibe-creating-prompt`
+
+用于 Vibe Creating 表达方式，把粗想法、情绪画面、意象片段、多镜头氛围或混合技术描述，提纯成更有体验感、更适合视频生成的提示词。它可以作为简单文生视频、情绪、记忆、意象类短片的生产候选，也可以作为 Seedance 最终稿之前的创作核心。
+
+当你明确想要 Vibe、氛围、记忆、情绪、意象或体验感版本时，可以自然触发；任务关键或容易误路由时建议明确点名 `$aigc-vibe-creating-prompt`。复杂参考图、视频编辑、续写、对口型和项目分镜承接仍交给 `aigc-seedance-prompt` 或 `aigc-script-context`。
+
+适合这样说：
+
+```text
+用 $aigc-vibe-creating-prompt 把这个想法提纯成更有氛围的视频提示词。
+用 $aigc-vibe-creating-prompt 直接给这个童年记忆场景出一版可生成的视频提示词。
+用 $aigc-vibe-creating-prompt 先出一版 VC 风格，我想和标准 Seedance 版比较效果。
+```
+
+### `aigc-script-context`
+
+用于把剧本、分镜表、镜头清单或长篇 AIGC 视频项目整理成镜头级上下文卡、连续性移交和 Seedance 前置故事信息。它不直接写最终视频 prompt，而是为后续 `aigc-seedance-prompt` 准备角色、动机、动作链和禁偏离信息。
+
+适合这样说：
+
+```text
+用 $aigc-script-context 把这场戏整理成 Seedance 前置镜头上下文。
+用 $aigc-script-context 根据剧本和分镜表生成每个镜头的上下文卡。
+```
+
 ### `aigc-seedance-prompt`
 
 用于 Seedance、豆包、Dreamina 视频提示词，包括文生视频、图生视频、参考图生成、视频编辑、视频延展、镜头桥接、提示词优化、时长压缩、口型同步和镜头连续性。
@@ -123,13 +116,12 @@
 ## 快速选择
 
 ```text
-整个项目怎么推进？                    -> aigc-project-planner
-只有想法，还没镜头策略？              -> aigc-creative-director
 为什么这张图不好看？                  -> aigc-visual-diagnose
-这张图能不能继续 / 下一步去哪？       -> aigc-shot-diagnosis-pipeline
 反推、复刻、仿写参考图？              -> aigc-image-reverse-prompt
 已经决定要修图？                      -> aigc-image-edit-prompt
 提示词像参数表，想改自然？            -> aigc-natural-language-prompt
+想产出更有氛围 / 意象 / 体验感的版本？ -> aigc-vibe-creating-prompt
+长剧本 / 分镜要先整理镜头上下文？     -> aigc-script-context
 已经决定要做 Seedance / 豆包视频？    -> aigc-seedance-prompt
 ```
 

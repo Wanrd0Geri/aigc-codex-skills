@@ -7,9 +7,9 @@ description: Use when the user explicitly calls this skill or asks for Vibe Crea
 
 ## Core Position
 
-Vibe Creating is an independent effect-exploration layer. Its goal is to preserve the user's real expressive intent while making the prompt easier for a video model to understand through image center, emotional direction, key imagery, and experiential continuity.
+Vibe Creating is a creative production entry and optional exploration layer. Its goal is to preserve the user's real expressive intent while making the prompt easier for a video model to understand through image center, emotional direction, key imagery, and experiential continuity.
 
-Use it when the user wants a more atmospheric, emotional, memory-like, image-driven, or experiential version to compare against a standard execution prompt. Do not make it the mandatory final prompt layer.
+Use it when the user wants a more atmospheric, emotional, memory-like, image-driven, or experiential video prompt. It can be used directly as a production candidate for simple text-to-video scenes, and it can also provide the expressive core for a later Seedance final prompt. Do not use it as the universal final layer for complex reference mapping, video edit, extension, strict lip sync, or project continuity work.
 
 ## Quick Start
 
@@ -23,6 +23,7 @@ CHECKPOINT - VC Fit And Constraint Gate:
 
 - If the user did not explicitly call this skill or ask for VC/vibe-style expression, do not take over another AIGC skill's job.
 - If final Seedance/Doubao/Dreamina formatting, exact reference mapping, platform execution, video edit, extension, or shot bridge is the main request, hand off to `aigc-seedance-prompt`.
+- If the user asks for pure text-to-video with atmosphere, memory, emotion, imagery, or subjective feeling, this skill may produce the production candidate directly; mention Seedance handoff only when the user asks for final platform formatting or A/B comparison.
 - If any hard constraint conflicts with a vibe rewrite, keep the hard constraint and make the VC version optional.
 - If the input lacks a visible anchor, action/state, or tone, ask the minimum questions before rewriting.
 
@@ -212,6 +213,13 @@ Skill 的目标是帮用户更准确地表达，不是替用户改写成另一�
 当无需补充说明时，可省略第四段。简单请求可以把“判断”和“执行动作”各压缩成一行，但不要省略动作标签。
 
 If the user asks for A/B comparison, provide the VC version and a handoff note: use `aigc-seedance-prompt` for the standard execution version or final platform version.
+
+## References
+
+Load references only when they materially change the answer:
+
+- Read `references/seedance-official-vibe-guide.md` when the user explicitly asks for official Seedance Vibe guidance, wants official-style calibration, asks why Vibe works, compares Vibe vs Seedance outputs, or a Vibe draft needs style correction.
+- Do not load the official guide for ordinary short Vibe prompts. The core workflow above is enough for normal use.
 
 ## Quick Reference
 

@@ -8,6 +8,21 @@ Natural-language prompt = complete visual sentences that translate abstract inte
 
 Director-style prompt = the wording a director could say to a camera, animation, lighting, or editing team: what the shot sees first, where subjects are, how action develops, how light or sound supports it, and where the shot lands.
 
+## AIGC De-AI Is Not Prose Polishing
+
+For this skill, removing AI flavor means making the prompt more generatable, not making it sound more like a human essay. The success test is whether the model receives clearer visual, motion, spatial, reference, and continuity control.
+
+Do not add author voice, first-person commentary, jokes, personal opinions, literary reflections, or intentionally messy phrasing. Those may be useful in ordinary writing, but they weaken prompt control.
+
+Convert AI-writing cliches into visible control:
+
+- `这不仅是画面，更是情绪表达` -> show the character's posture, gaze, breathing, distance, or contact point
+- `通过光影展现命运感` -> specify light direction, shadow depth, silhouette, blocked path, or scale contrast
+- `氛围拉满` -> describe sound, movement density, background reaction, light falloff, or object motion
+- `高级感/电影感/史诗感` -> define composition, material response, depth layers, color temperature, camera distance, and readable silhouette
+
+Technical parameters may be removed when they are decorative or redundant, but production controls must survive: duration, shot count, shot labels, reference anchors, dialogue, action order, scene location, and continuity anchors.
+
 ## Pass Criteria
 
 A prompt is natural-language enough when it meets these checks:
@@ -20,6 +35,7 @@ A prompt is natural-language enough when it meets these checks:
 6. **Continuity anchor**: when connection matters, the prompt preserves one useful anchor such as pose, gaze, object position, light state, movement direction, or frame composition. Do not force an ending-state sentence into every shot.
 7. **Scale control**: simple shots stay short; complex shots expand only to prevent misunderstanding.
 8. **No AI-flavored padding**: the prompt avoids decorative boosters, rule-of-three filler, generic conclusions, and language that explains intent instead of describing visible action.
+9. **Production-control preservation**: protected anchors, duration, shot count, dialogue, reference roles, and main action order remain traceable after cleanup.
 
 ## Off-Screen Causality Rule
 

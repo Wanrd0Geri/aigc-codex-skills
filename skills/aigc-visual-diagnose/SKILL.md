@@ -7,7 +7,7 @@ description: Use when the user provides an AIGC image, frame, storyboard, keyfra
 
 Use this skill when the user has an image or frame that feels weak and wants to understand why. Diagnose before writing prompts. The goal is to teach the visual problem and identify the highest-leverage fixes.
 
-Do not use this skill as the single-frame production gate. If the user asks whether a frame can move forward, enter Seedance, be repaired, or should be redesigned, route to `aigc-shot-diagnosis-pipeline`.
+If the user asks whether a frame can move forward, enter Seedance, be repaired, or should be redesigned, include a concise production-readiness note after the visual diagnosis. Keep it practical: name the blocker, then point to `aigc-image-edit-prompt` for repair prompts or `aigc-seedance-prompt` when the user has decided to proceed.
 
 ## Workflow
 
@@ -16,16 +16,16 @@ Do not use this skill as the single-frame production gate. If the user asks whet
 CHECKPOINT - Diagnosis Scope:
 
 - If no image or frame is available, ask the user to upload one before diagnosing.
-- If the user asks whether it can move forward, enter video, be repaired, or should be redesigned, route to `aigc-shot-diagnosis-pipeline`.
+- If the user asks whether it can move forward, enter video, be repaired, or should be redesigned, give a short readiness judgment and name the next practical step.
 - If the user asks for a ready image-edit prompt in the same turn, diagnose first, then hand off only the high-impact repair summary to `aigc-image-edit-prompt`.
-- If the user asks for a Seedance prompt, do not write it here; provide the diagnosis summary and route to `aigc-shot-diagnosis-pipeline` first unless the user has already made the production decision.
+- If the user asks for a Seedance prompt, do not write it here; provide the diagnosis summary and route to `aigc-seedance-prompt` only when the user has already decided to proceed.
 
 ### Failure Branches
 
 - If the image is missing, do not diagnose from memory, filename, or a prompt description; ask for the image or frame.
-- If the user mainly wants a production status, route to `aigc-shot-diagnosis-pipeline` instead of assigning Green, Yellow, or Red here.
+- If the user mainly wants a production status, avoid Green/Yellow/Red labels; answer with `can proceed`, `repair first`, or `redesign first`, plus one reason.
 - If the image can support two different creative intentions, state the likely assumption and ask one question only when that assumption changes the diagnosis.
-- If the problem is concept-level rather than visual execution, hand off to `aigc-creative-director` after naming the visible symptom.
+- If the problem is concept-level rather than visual execution, name the missing intention and ask for the shot purpose before diagnosing visual execution.
 - If the user asks for a repair prompt after diagnosis, pass only the preserve/fix/avoid summary to `aigc-image-edit-prompt`; do not draft the edit prompt in this skill.
 
 Describe what is actually visible before judging:
@@ -47,7 +47,7 @@ Use the smallest diagnosis that teaches the decisive issue:
 - **Standard diagnosis**: neutral read, likely intent, relevant lenses, top 3 problems, and next suggestion.
 - **Deep diagnosis**: use only when the user asks for a full breakdown, comparison, grading, or art-direction analysis.
 
-Do not force all five lenses into the final answer when only two contain decisive findings. Do not assign production status; route that to `aigc-shot-diagnosis-pipeline`.
+Do not force all five lenses into the final answer when only two contain decisive findings. If production readiness is requested, keep it to a short next-step note after the diagnosis.
 
 ### 2. Infer the Intended Effect
 
@@ -78,8 +78,8 @@ Read `references/production-design-dimensions.md` only when the image shows art-
 - If the user wants to understand the problem only, stop after diagnosis and next steps.
 - If they want an image-to-image repair prompt, hand off to `aigc-image-edit-prompt`.
 - If they want the frame to become a Seedance video shot, hand off to `aigc-seedance-prompt` only when the user has already decided to proceed.
-- If the concept itself is weak, hand off to `aigc-creative-director`.
-- If the user asks after diagnosis `能不能用`, `能不能进视频`, `下一步是什么`, or `该修图还是重做`, explicitly route to `aigc-shot-diagnosis-pipeline` and pass along the diagnosis summary as context.
+- If the concept itself is weak, state the missing shot purpose and ask for it before recommending repairs.
+- If the user asks after diagnosis `能不能用`, `能不能进视频`, `下一步是什么`, or `该修图还是重做`, answer with a concise next-step note and pass the diagnosis summary to `aigc-image-edit-prompt` or `aigc-seedance-prompt` when useful.
 
 ## Output Structure
 
@@ -116,7 +116,10 @@ If the user asks for a repair prompt, says they want to continue into image edit
 If the next user turn becomes a production-routing question, use this response pattern:
 
 ```markdown
-这是生产决策问题，建议交给 `aigc-shot-diagnosis-pipeline`。
+这是生产推进问题，先给一个轻量判断：
+- Next step: [can proceed / repair first / redesign first]
+- Reason: [single decisive blocker or enabling condition]
+
 可交接的诊断摘要：
 - Preserve: [what works]
 - Main blockers: [top issues]
@@ -135,9 +138,9 @@ If the next user turn becomes a production-routing question, use this response p
 
 - Do not call image generation tools.
 - Do not immediately write a full prompt unless the user asks for one.
-- Do not make production gate decisions such as `Green`, `Yellow`, `Red`, `can enter video`, or `should redesign`; route those to `aigc-shot-diagnosis-pipeline`.
+- Do not use Green/Yellow/Red production labels; use plain next-step wording.
 - Do not list every possible flaw with equal weight.
 - Do not say only "add cinematic lighting", "improve composition", or other generic fixes.
 - Do not treat every image as live-action cinema; animation, stylized art, and commercial visuals have their own standards.
-- Do not assign Green, Yellow, Red, "can enter video", or "must redesign" statuses; those belong to `aigc-shot-diagnosis-pipeline`.
+- Do not turn the whole answer into a production checklist; keep readiness notes secondary to the visual diagnosis.
 - Do not turn a diagnosis into a ready prompt unless the user explicitly asks for the next prompt.

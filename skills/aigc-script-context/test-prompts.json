@@ -1,0 +1,42 @@
+[
+  {
+    "id": "script-context-1-linyuanxing-shot-card",
+    "prompt": "用临渊行上下文，先帮我做第一集第五场5-7的镜头任务卡，不要写最终Seedance提示词。",
+    "expected": "If the Lin Yuan Xing project package is available, loads it and follows storyboard > script > outline priority; if absent, asks for the package or source files instead of inventing facts. Does not write the final video prompt."
+  },
+  {
+    "id": "script-context-2-source-conflict",
+    "prompt": "大纲里写得不一样，但分镜和第一集剧本是最新的。帮我分析第一集第六场苏云回答人妖区别这一段。",
+    "expected": "Uses outline only for world/personality context, treats current script/storyboard as factual, and translates Su Yun's moral position into visible performance and continuity notes."
+  },
+  {
+    "id": "script-context-3-seedance-handoff",
+    "prompt": "用临渊行上下文和我发的参考图，帮我写第一集第五场5-10的Seedance 2.0提示词。",
+    "expected": "Builds an internal shot card from the available project package or asks for missing project sources. When package defaults are available, preserves them, maps references semantically, follows current reference images for scene color/light, then hands off to aigc-seedance-prompt."
+  },
+  {
+    "id": "script-context-4-exclude-scene-6b",
+    "prompt": "把第一集第六场整理成可生产镜头任务卡，注意第六场B先不要。",
+    "expected": "Excludes Scene 6B placeholder rows and does not invent the moved dream sequence; marks only executable Scene 6 shots from the current storyboard."
+  },
+  {
+    "id": "script-context-5-character-sheet-not-lighting",
+    "prompt": "这些白底人物设定图是角色资产。帮我做第五场人物参考映射。",
+    "expected": "Uses character sheets only for identity, clothing, age, silhouette, and distinguishing traits; does not infer final scene lighting or color from the white-background sheets."
+  },
+  {
+    "id": "script-context-6-raw-source-fallback",
+    "prompt": "用临渊行上下文，帮我做第一集第十二场12-8的镜头任务卡；这一场还没有单独的scene-context文件。",
+    "expected": "Does not rely on the scene-index summary alone. If the project package and raw-source extraction rules are available, uses them to pull storyboard/script context and apply exclusions; if absent, asks for the source package/files before building detailed facts."
+  },
+  {
+    "id": "script-context-7-ambiguous-project",
+    "prompt": "帮我把第一集6-22到6-24做成镜头任务卡，我现在有两个短片项目同时在做。",
+    "expected": "Asks one project-selection question before building the card and does not merge storyboard, script, outline, assets, or exclusions across projects."
+  },
+  {
+    "id": "script-context-8-generic-project-package",
+    "prompt": "用我这个新短片项目包里的剧本和分镜，整理第二集第三场3-4到3-6的镜头任务卡；这不是临渊行。",
+    "expected": "Identifies the active non-Lin-Yuan-Xing project package first, uses that package's own storyboard/script/source priority, and does not fall back to the Lin Yuan Xing paths or assumptions."
+  }
+]

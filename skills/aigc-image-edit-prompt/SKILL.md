@@ -34,7 +34,7 @@ CHECKPOINT - Source Image Gate:
 - If no image is present, stop and ask for the image.
 - If the user supplied only a diagnosis summary, use it as context but still ask for the actual source image before writing an edit prompt.
 - If the user asks only "why does this look wrong" and does not ask for an edit prompt, route to `aigc-visual-diagnose`.
-- If the user asks whether the frame can move into video, route to `aigc-shot-diagnosis-pipeline` before writing image-edit instructions.
+- If the user asks whether the frame can move into video, route to `aigc-visual-diagnose` for a readiness note before writing image-edit instructions.
 
 Before diagnosing anything, describe what's actually in the frame, neutrally. This forces you to look instead of pattern-matching. Cover:
 
@@ -58,7 +58,7 @@ If a handoff block conflicts with the visible image, trust the visible image and
 - If the user has not chosen Nano Banana/Gemini or ChatGPT/OpenAI image editing, ask once for the target model only when the model choice materially changes the edit strategy. If the user asks for compatibility or the request should not pause on model choice, output both templates.
 - If the user asks for a full redesign rather than repair, identify what can no longer be preserved before writing a prompt.
 - If the requested fix would change face identity, costume, pose, camera angle, or character count, warn and rewrite the prompt to protect those elements unless the user explicitly wants them changed.
-- If a production-gate handoff says Red, do not write a repair prompt as if the frame is usable; point back to redesign or upstream shot planning.
+- If a prior readiness note says redesign first, do not write a repair prompt as if the frame is usable; state the redesign risk before drafting.
 
 ### Step 2 — Diagnose the highest-impact cinematic problems
 
@@ -171,7 +171,7 @@ A good output for this skill should make the user think: "Ah, *that's* why my im
 - **Don't pile on every possible improvement.** Pick the 3-5 highest-leverage changes. A surgical prompt outperforms a maximalist one — image editors lose precision when given too many transformation directives at once.
 - **Don't translate Chinese cinematography vocabulary literally into English.** "电影感" is not "movie feeling" — it's "cinematic quality" or, more precisely, named techniques like "low-key lighting", "anamorphic compression", "film stock emulation".
 - **Don't let the final prompt read like a parameter dump.** Keep the block structure, but make the wording describe visible edits a model can apply to the source image.
-- **Don't accept a Yellow or Red production decision silently.** If `aigc-shot-diagnosis-pipeline` says the frame should be redesigned or repaired first, state that risk before writing an edit prompt.
+- **Don't ignore a prior readiness warning.** If the user carries over a diagnosis that says the frame should be redesigned or repaired first, state that risk before writing an edit prompt.
 - **Don't use text-to-image reverse-prompt language.** This skill edits an existing image, so the prompt must protect source identity, blocking, camera, and useful design choices.
 
 ## Reference files

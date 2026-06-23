@@ -137,6 +137,79 @@ After:
 把原本平直的正面光改为画面左侧的柔和主光，让人物右侧脸颊进入更深的阴影。背景整体压暗，保留少量冷色环境光，使人物轮廓从暗部中分离出来。
 ```
 
+## AI Writing Cliche To Visual Control
+
+Do not keep AI-writing cliches as final prompt control. Translate them into what the frame can show or what the viewer can hear.
+
+Before:
+
+```text
+这不仅是一个画面，更是少年命运感的表达，通过光影展现宿命，整体氛围拉满，高级电影感。
+```
+
+After:
+
+```text
+少年站在旧学堂门槛外，身体被门框分成一明一暗两侧。画面左侧的冷光只照到他的肩线和半张脸，身后的长廊逐层压暗，门内的木桌和书卷只留下模糊轮廓。他没有立刻进门，右手停在门边，指节微微收紧，雨声从空旷庭院里传来。
+```
+
+Pattern:
+
+- `不仅是...更是...` -> remove the value-raising frame and keep the visible beat
+- `命运感/宿命感` -> blocked path, scale contrast, delayed movement, shadow split, object threshold
+- `氛围拉满` -> sound, light falloff, background reaction, object motion, spatial emptiness or density
+- `高级感/电影感` -> controlled light direction, depth layers, silhouette, material response, restrained color
+
+## Protected Anchor Rewrite
+
+Reference anchors are production controls. Preserve the literal anchor and soften only the role wording around it.
+
+Before:
+
+```text
+@图1控制角色外貌，@图2控制旧学堂场景，@视频1控制动作节奏，画面要有电影感和命运感。
+```
+
+After:
+
+```text
+@图1作为角色外貌和服装参考，@图2作为旧学堂空间、门口方向和室内陈设参考，@视频1作为动作节奏参考。镜头从学堂门口内侧固定拍摄，角色站在门槛外的半明半暗位置，先停住脚步，再慢慢抬眼看向屋内；门框把他的身体切成前景亮面和背景暗面，木桌、书卷和墙面在纵深里逐渐虚化。
+```
+
+Rules:
+
+- preserve `@图1`, `@视频1`, `@音频1`, and file-name anchors like `@庠序场景.png` exactly
+- do not rewrite anchors as `参考图1`, `图1`, plain file names, or generic labels
+- `控制` may become `作为...参考`, `用于约束...`, or another soft role phrase after the literal anchor
+- if dialogue or lyrics are attached to an anchor, do not paraphrase them unless the user explicitly asks
+
+## Scope-Safe Multi-Shot Cleanup
+
+When a source prompt already has numbered shots, preserve the shot count, order, duration, dialogue, and main action chain before removing AI flavor.
+
+Before:
+
+```text
+三镜头去 AI 味：镜头1少年站在雨里宿命感拉满；镜头2他回头看门口，电影感高级；镜头3手慢慢握住剑，情绪复杂，最后有震撼收束。
+```
+
+After:
+
+```text
+镜头1：中景固定拍摄雨中的石阶，少年站在画面中央偏后的位置，肩线被雨水压低，身后的门口只剩一块暗色轮廓。他没有立刻移动，只低头看向脚边被雨水打散的倒影。
+
+镜头2：镜头来到少年右侧前方的中近景，保留他身后的门口虚影。他慢慢回头看向门口，眼神先停在门槛处，再移到门内更深的暗处，雨声在画面外继续。
+
+镜头3：近景只拍他的右手、剑柄和被雨水打湿的衣袖。手指先悬在剑柄旁边，随后一根一根收紧，剑柄上的水珠被指节挤开，画面停在握紧的一瞬间。
+```
+
+Rules:
+
+- one source shot should remain one output shot unless the user asks for a structural rewrite
+- preserve each shot's main action before adding visual carriers
+- remove abstract endings such as `震撼收束` only after giving the shot a visible landing point
+- do not collapse a multi-shot prompt into one paragraph just to make it sound smoother
+
 ## Final Compression Pass
 
 After rewriting:

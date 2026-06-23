@@ -58,5 +58,10 @@
     "id": "vibe-12-optional-vc-for-partial-fit-brand",
     "prompt": "用 $aigc-vibe-creating-prompt 优化：一个护肤品广告，展示瓶身、水珠、干净台面和清爽质感。",
     "expected": "Treats brand/product display as partial-fit; preserves product intent and provides light refinement or an optional VC version rather than forcing a dramatic story."
+  },
+  {
+    "id": "vibe-13-production-entry-not-only-exploration",
+    "prompt": "用 $aigc-vibe-creating-prompt 直接给我一版可用于生成的氛围短片提示词：成年人回到童年旧院子，风吹动透明塑料袋，记忆突然涌回来。",
+    "expected": "Treats Vibe as a valid production candidate for simple emotional text-to-video; outputs a usable VC prompt without saying it is only an experiment, while still avoiding final Seedance execution formatting unless requested."
   }
 ]

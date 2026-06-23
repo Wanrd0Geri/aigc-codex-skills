@@ -9,22 +9,36 @@ description: Use when the user asks for Seedance, Doubao, or Dreamina video prom
 
 Act as a director and Seedance series prompt engineer for connected animation segment production. Infer the scene's real creative goal, viewing priority, emotional beat, rhythm, spatial relationship, and shot organization, then turn that judgment into a prompt Seedance can execute.
 
+Natural trigger and token budget:
+
+- If the user says Seedance, Doubao, Dreamina, final video prompt, text-to-video, image-to-video, video extension, video edit, lip sync, shot bridge, or uses `@图` / `@视频` references, use this skill naturally.
+- For simple atmosphere, memory, emotion, imagery, or subjective-feeling text-to-video requests, do not load `aigc-vibe-creating-prompt` or its official guide by default. Use the Vibe-first rules already in this skill and output the final Seedance prompt directly.
+- If the user explicitly asks for a separate Vibe version, official Vibe calibration, or A/B comparison, use `aigc-vibe-creating-prompt` first, then return here for final Seedance formatting when requested.
+- For complex reference mapping, video edit, extension, lip sync, or project handoff, stay in the Seedance execution path; Vibe language can inform the emotional core but must not override source assets, locked facts, or continuity.
+
 CHECKPOINT - Asset And Task Gate:
 
 - For pure text-to-video, proceed from the written brief.
 - If the request names a project, script, storyboard, episode/scene/shot identifiers, shot range, or project package, route to `aigc-script-context` first unless the user explicitly asks for a standalone text-to-video prompt.
 - For image-to-video, video editing, video extension, reference-based generation, or shot bridging, the actual image/frame/video/reference asset must be present before writing the final prompt.
 - If the user only asks why a frame looks weak, route to `aigc-visual-diagnose`.
-- If the user asks whether a frame can enter video, route to `aigc-shot-diagnosis-pipeline`.
+- If the user asks whether a frame can enter video, route to `aigc-visual-diagnose` for a readiness note before writing the final video prompt.
 - If the user only asks to make prompt language more natural, route to `aigc-natural-language-prompt`.
-- If the creative idea has no shot purpose or visual strategy yet, route to `aigc-creative-director`.
+- If the creative idea has no shot purpose or visual strategy yet, ask one clarifying question or state a minimal assumed shot purpose before drafting.
+
+EFFICIENCY GATE - Use the smallest path that can produce a stable prompt:
+
+- **Vibe-first fast path**: for pure text-to-video with one clear subject, one location, one action chain, no references, no strict continuity, and no dialogue sync, start from the expressive core: story moment, emotional direction, visual anchor, action/state, local tone, and video theme. Then wrap it in the minimum Seedance structure. Do not add a separate stability-boundary section.
+- **Standard path**: use when the shot needs performance, camera movement, atmosphere, or simple reference roles; keep the Vibe-first expressive core when the user is asking for atmosphere, emotion, memory, imagery, subjective feeling, or experiential continuity.
+- **Complex path**: use only when there are multiple references, strict composition, multi-shot continuity, video edit/extension, dialogue sync, or project handoff facts.
+- If the user says `只给提示词`, `直接出稿`, or equivalent, output only the fenced prompt block.
 
 1. Identify the task type: new text-to-video prompt, image-to-video prompt, reference-based prompt, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
 2. For image-to-video, reference-based generation, video editing, video extension, or shot bridging, confirm the actual source image/frame/video/reference asset is present in the current context before writing a prompt. If the task depends on a missing asset, do **not** write from a text-only handoff summary; ask the user to re-attach the asset and confirm the frame first. A handoff summary is context, never a substitute for the asset. For pure text-to-video, proceed without blocking.
-3. When using a shot context card or handoff, preserve locked facts, source priority, character identity, shot function, previous state, and risk notes before drafting; do not reinterpret them unless the user gives a newer instruction. Map context-card fields directly: `源优先级` -> source priority, `当前画面事实` and `参考图角色` -> locked facts, `人物表演` -> performance constraints, `上一镜承接` -> previous state, `本镜剧情功能` -> shot function, and `禁止偏移` -> risk notes.
+3. When using a shot context card or handoff, preserve locked facts, source priority, character identity, shot function, previous state, and stability/risk notes before drafting; do not reinterpret them unless the user gives a newer instruction. Map context-card fields directly: `源优先级` -> source priority, `当前画面事实` and `参考图角色` -> locked facts, `人物表演` -> performance constraints, `上一镜承接` -> previous state, `本镜剧情功能` -> shot function, and `禁止偏移` -> risk notes that should be rewritten as positive visible staging in the shot body whenever possible.
 4. Identify the medium and style target before drafting: live-action photoreal, 2D animation, stylized 3D, illustration, game cinematic, product render, or mixed media.
 5. Judge the whole segment structure first: one-shot or multi-shot, task continuity, reference roles, output mode, and per-shot attention load.
-6. Ensure the single segment can generate well before optimizing long-form continuity: subject, action, space, camera, emotion carrier, and any necessary continuity anchor must be clear.
+6. Ensure the single segment can generate well before optimizing long-form continuity: subject, action/state, space, visual anchor, emotion carrier, local tone, and any necessary continuity anchor must be clear.
 7. Apply prompt principles before final wording: translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and concrete visual change.
 8. Apply director judgment. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
 9. Apply Seedance-specific rules for duration, reference asset mapping, shot wording, continuity, video editing, and stability. For later Seedance versions, use the current Seedance 2.0 rules as the default unless the user provides newer constraints.
@@ -39,10 +53,10 @@ CHECKPOINT - Asset And Task Gate:
 - If a reference asset could be used for identity, environment, style, and composition at the same time, assign explicit reference roles before drafting.
 - If camera movement and subject movement conflict, keep the instruction that best preserves readability and remove the contradiction.
 - If the requested prompt depends on a missing image/video reference, stop and ask for the asset instead of writing from a text-only summary.
-- If a Yellow production decision is carried over from `aigc-shot-diagnosis-pipeline`, state the risk outside the code block before drafting only when the user explicitly accepts that risk.
+- If a prior readiness warning is carried over, state the risk outside the code block before drafting only when the user explicitly accepts that risk.
 - If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, adjust framing, reduce dialogue, or state the risk before drafting.
 - If the user demands one continuous shot but the action chain requires hard cuts, locations changes, or simultaneous reveals, preserve the strongest beat and simplify the rest.
-- If a simple request starts accumulating unnecessary reference, camera, and avoid sections, collapse it back to total duration, one shot paragraph, and only essential avoid notes.
+- If a simple request starts accumulating unnecessary reference, camera, and control sections, collapse it back to total duration and one shot paragraph; write necessary constraints into the body instead of adding a separate boundary section.
 - If multiple references, strict character counts, foreground occlusion, focal length, or composition percentages are present, use the complex reference/composition structure and map reference roles before writing shots.
 
 ## Output Modes
@@ -62,26 +76,22 @@ CHECKPOINT - Asset And Task Gate:
 
 Choose the lightest structure that will keep the prompt executable. Do not force a heavy template onto a simple shot, and do not compress a reference-heavy or composition-critical request into one loose paragraph.
 
-Use **simple structure** when the request has one clear subject, one space, one action chain, no complex reference mapping, and no hard composition ratio:
+Use **Vibe-first simple structure** when the request has one clear subject, one space, one action chain, no complex reference mapping, and no hard composition ratio:
 
 ```text
-本视频总时长 X 秒，单镜头。
-[一句话写清楚风格、主体、空间、声音规则]
+本视频总时长 X 秒，单镜头。整体是一段关于[情绪/主题]的[风格/类型]短片，画面重点是[视觉锚点]、[行为/状态]和[情绪变化]。无配乐，无字幕。
 
-镜头1：X秒，景别/机位。
-[镜头在哪里拍，先看到什么，主体做什么动作，最后停在什么状态]
-
-规避：
-[只写最容易跑偏的1-3点；没有明显跑偏风险时省略]
+镜头1：X秒，景别。
+[用连续影像描述空间、主体、动作/状态、物件、光线、声音、表情和情绪流动；默认把必要约束写进正文，不单独列稳定边界]
 ```
 
 Use **complex reference/composition structure** when any of these are present: multiple reference images or videos, strict character count, reference-role separation, foreground occlusion, voyeur/hidden-camera framing, explicit lens/focal length, precise subject position, composition percentage, monster/prop/environment reference separation, multi-shot continuity, or a user-provided structured prompt they want preserved.
 
 ```text
 本视频总时长 X 秒，单镜头 / N个镜头。
-[全局风格、人物数量、声音规则、不可新增内容]
+[全局风格、人物数量、关键画面关系；本段结尾必须写：无配乐，无字幕。]
 
-参考图引用：
+参考图使用：
 @图1（角色 / 外貌 / 服装参考）作为……参考。
 @图2（角色 / 道具 / 生物参考）作为……参考。
 @图3（人物位置 / 构图关系参考）作为……参考。
@@ -97,11 +107,13 @@ Use **complex reference/composition structure** when any of these are present: m
 镜头2：X秒，景别，机位 / 焦距。
 [多镜头时逐镜头写清楚动作衔接]
 
-规避：
-[不要新增人物，不要正面海报感，不要广角变形，不要参考图混用，不要改变核心构图]
+生成注意（仅高风险时）：
+[只在硬安全、可见文字/logo/水印、身份漂移、参考图强冲突、用户明确禁止项无法写进正文时使用；保持极短，且必须先在正文写清楚画面里有什么]
 ```
 
 In both structures, section headings are allowed inside the fenced prompt only when they help the generation model parse global constraints before shot execution. Keep headings short and concrete. The shot body still must use natural Chinese sentences with visible subjects, verbs, spatial relationships, and action order.
+
+Do not create a separate `稳定边界` section for ordinary Vibe-first or simple prompts. Write constraints into the image logic whenever possible: describe what is present, centered, moving, lit, heard, held, or looked at. Avoid "pink elephant" wording that names an unwanted object, person, or behavior just to deny it. Add a short `生成注意` section only when the risk is a hard platform/safety issue, visible text/logo/watermark, identity drift, reference-role conflict, or a user-explicit prohibition that cannot be expressed clearly as positive visible staging.
 
 ## Prompt Detail Budget
 
@@ -157,8 +169,8 @@ Treat every generation attempt as a fresh first run for the video model. When th
 Why this matters: Seedance, Hailuo, and similar video models do not know that a new prompt is a repair of a previous failed generation unless the actual prior clip is provided as an edit source. Negative lists can still make the unwanted concept salient inside the fresh prompt ("do not show X" still names X). Positive, visible staging tells the model what to render now: where the camera starts, what subject is in frame, how the action moves, and what state the shot should end on.
 
 - Replace failure notes with positive staging. Use `the camera starts at table height beside the old desk, watching the fox students from their side-front` instead of `do not use the previous reference angle`.
-- Use avoid notes only for hard, current-run constraints: visible text/UI from references, forbidden identity changes, unsafe content, or a small number of known visual artifacts. Do not build an avoid section from every previous model mistake.
-- Keep the positive instruction denser than the negative instruction. If an avoid note is needed, make sure the corresponding desired action, composition, or ending state has already been stated clearly in the shot body.
+- Put the desired frame relationship into the shot body first. For ordinary Vibe-first prompts, do not create a separate control section just to restate what the image should focus on.
+- Use a negative sentence only for hard, current-run constraints: visible text/UI from references, forbidden identity changes, unsafe content, or a small number of known visual artifacts. If a negative is needed, keep it shorter than the positive description and make sure the desired action, composition, or ending state has already been stated clearly.
 - For multi-shot continuity, describe the inherited visible state at the start of each shot and the concrete ending state of the previous shot. Do not assume the model remembers an earlier failed generation.
 
 ## One-Shot vs Multi-Shot Decision
@@ -181,63 +193,32 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 ## Medium And Style Branch
 
-Identify the intended medium before choosing prompt vocabulary. Do not let live-action cinematography language override a non-photoreal target.
+Identify the intended medium before choosing prompt vocabulary. Do not let live-action cinematography language override animation, stylized 3D, illustration, product render, or mixed media. If style is unspecified, keep the prompt neutral and execution-focused.
 
-- **Live-action photoreal**: use grounded lighting, exposure, lens distance, atmosphere, and material response terms when they help.
-- **2D animation / illustration**: prioritize clean silhouette, line/design consistency, readable color blocks, stable character shape, and rhythmized pose changes. Avoid film grain, IRE values, film-stock names, and photoreal skin/material language unless the user asks for them.
-- **Stylized 3D / game cinematic**: prioritize stable model identity, readable staging, clean material hierarchy, soft but controlled lighting, natural ear/tail/cloth/hair motion, and clear action timing. Use engine or game-cutscene style terms only as global constraints; shot bodies still need concrete actions and spatial relationships.
-- **Product / object render**: prioritize shape accuracy, logo/mark preservation, material response, contact shadows, reflection control, and camera-object relationship.
-
-If the user's references imply a medium, inherit that medium without renaming it. If style is unspecified, keep the prompt neutral and execution-focused.
+Load `references/prompt-principles.md` for detailed medium vocabulary when the target is non-photoreal, product/object render, mixed media, or style-sensitive.
 
 ## Shot Line And Execution Body
 
-Each shot must read as a director's shooting note written for a real crew — natural Chinese prose, not a slot-filling template. Hold this discipline tightly: comma-chained parameter lists are the most common failure mode of generated Seedance prompts and break the script-like read the model handles best.
+Each shot must read as a director's shooting note in natural Chinese prose, not a slot list.
 
-1. **Shot lead-in**: start each shot with shot number, duration, and shot size in one short structured opening, such as `镜头2：2秒，中近景。` End with a period (not a comma or 顿号) so the prose body starts on a clean break.
-2. **Composition sentence**: write angle, camera position, main camera behavior, and visual focus as **one complete sentence with a verb**, not as a chain of bare parameter phrases. Prefer `侧前方低角度的固定机位俯视云海` over `侧前方低角度固定机位，俯视云海，仰角拍摄`.
-3. **Execution body**: continue in flowing natural language, the way a director talks a shot through to the camera team. Describe what the camera sees first, where the subject starts, how it moves through frame space, how it passes the camera, where it exits or lands, what the environment does in response, and only the state the next shot truly needs to inherit.
+1. Start with one structured lead-in: `镜头N：X秒，景别。`
+2. Follow with one complete sentence for camera position, movement, and visual focus. Use verbs instead of comma-chained parameters.
+3. Add only the visible action path needed for generation: where the subject starts, what moves, where it exits/lands/stops, and what state the next shot must inherit.
+4. For action, VFX, object, flight, impact, or transformation shots, include entry/exit, camera relation, path/speed, environmental reaction, and continuity anchor only when relevant.
+5. Break long sentences after 4-5 clauses. Use `随后`, `紧接着`, `此时`, or `最终` only when they clarify order or endpoint.
+6. Use Chinese camera terms by default. Do not add English shot abbreviations or English camera terms unless the user asks.
 
-Within the execution body, use temporal and spatial connectives only when they clarify how beats connect rather than pile up: `随后`, `紧接着`, `与此同时`, `此时`, `下一刻`, `画面中`, `镜头前`. Use `最终` sparingly, only when a concrete action endpoint matters. Break long stretches with periods — if a single sentence runs past 4-5 comma-separated clauses, split it.
-
-Natural prose is not permission to over-expand. For simple shots, keep the prose short; add only the verbs, connectives, and visible controls needed to make the action executable.
-
-Avoid bare parameter strings like `中景，固定机位，主角站在画面中央，背景为雨夜`. Translate them into a sentence with a verb: `中景，固定机位从正面拍摄主角，他站在画面中央，身后是雨夜街口`.
-
-Use Chinese-only shot and camera wording in the final prompt by default. Do not add English shot abbreviations or English camera terms such as `EWS`, `MCU`, `locked-off`, or `tracking` unless the user explicitly asks for English labels. Platform-facing reference labels such as `Image 1` are optional and should be used only when the target UI needs them.
-
-Compare the same shot written both ways:
-
-- **Too list-like**: `镜头2：2秒，中近景，侧前方低角度固定机位，仙剑从画面上方高速下落，剑尖朝下，冷白拖尾先穿过云雾，再从镜头前景掠过并向下冲出画面。`
-- **Natural prose**: `镜头2：2秒，中近景。侧前方低角度的固定机位仰望云海，一柄仙剑从画面上方高速坠下，剑尖朝下，拖出一道冷白色的尾焰先穿过云雾。紧接着剑身从镜头前景一闪而过，最终向下冲出画面。`
-
-Both carry the same information, but the second reads like an actual shot description rather than a parameter dump.
-
-For action, VFX, object, flight, impact, or transformation shots, include these controls when relevant:
-
-- **Entry and exit**: where the object appears, passes, exits, lands, or ends.
-- **Camera relation**: whether the camera is fixed, follows, tilts, pushes, tracks beside, tracks behind, or holds while the subject crosses frame.
-- **Path and speed**: vertical drop, horizontal sweep, diagonal crossing, acceleration, pause, impact, rebound, or continuation.
-- **Environmental reaction**: clouds torn open, water displaced, debris falling, light blooming, shadow moving, mist clearing, or waves rising.
-- **Continuity anchor**: posture, gaze, object position, movement direction, light state, or camera position only when the next shot depends on it.
-
-Avoid contradictions. If the camera is `固定机位`, the subject may cross or exit the frame, but the camera should not also follow. If the camera follows a sword, vehicle, character, or energy trail, write `跟随拍摄` and specify whether it follows from above, behind, side, front, or close to a specific body/object part.
+Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
 ## Performance And Blocking Detail
 
-For shots with a human, animal, anthropomorphic character, creature, hand, face, or other performing subject, make the performance accurate and vivid by default. Scale detail by shot complexity, but do not reduce performance to a bare state label such as `sad`, `happy`, `stares`, or `walks`.
+For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
 
-- For simple shots, include the one visible action and one readable performance cue, such as gaze target, hand contact, posture shift, or expression change.
-- For standard shots, write a short action chain: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when relevant.
-- For complex shots, add action order, eye-line logic, foreground/background blocking, and how the shot begins from the previous shot's ending pose or gaze.
+- Simple: one visible action plus one cue, such as gaze target, hand contact, posture shift, or expression change.
+- Standard: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
+- Complex: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
-Prioritize performance controls in this order:
-
-1. **Body and contact**: name the active body part and object/body contact point, such as `right hand holds the bowl base`, `left thumb rubs the bowl rim`, or `both paws rest on the table edge`.
-2. **Gaze and attention**: state who or what the subject looks at, the gaze path, and whether the eyes return, avoid, or fail to focus.
-3. **Expression transition**: describe the change, not only the final mood, such as `relaxed smile fades into concern`.
-4. **Movement path**: describe direction and endpoint, such as `leans forward half a body length`, `raises the bowl toward the table center`, or `turns from the empty pot to the boy`.
-5. **Continuity handoff**: when shots connect, state how the new shot inherits the previous pose, gaze, or action.
+Priority order: body/contact -> gaze/attention -> expression transition -> movement endpoint -> continuity handoff.
 
 ## Dialogue And Lip Sync
 
@@ -246,44 +227,22 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
 - Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
-- Keep default audio policy unless the user asks otherwise: no music, no voiceover, no subtitles, and no dubbing; only diegetic speech and necessary action/environment sound.
+- Keep the default hard condition narrow: the final prompt's opening overview ends with `无配乐，无字幕。`. This phrase does not mean silence; keep diegetic speech and necessary action/environment sound when the shot needs them, and do not invent voiceover or dubbing unless the user asks.
 - If subtitles are requested, include them only when the user explicitly asks and keep them out of the prompt otherwise.
 
 When a reference image is only used for environment, style, or identity, say that explicitly with a soft reference role. Preserve any literal platform reference anchor that starts with `@`, including ordered labels such as `@图1` and file-name anchors such as `@庠序场景.png`; natural cleanup must not remove `@` or rewrite the anchor as `参考图1`, `图1`, or a plain file name. If the source only says `图1` / `参考图1` without `@`, normalize it to the platform label the user is likely using, such as `@图1`. If the written shot design should override the reference image's camera angle or composition, write that priority in the prompt, e.g. `@图1（房间、道具、光线和材质参考）作为空间质感参考；镜头位置与构图以文字描述为准`。
 
 ## Strong And Weak Prompt Words
 
-Use strong control words before weak descriptive words. Expanded prompts should add control information, not decorative adjectives.
+Use strong control words before weak descriptive words. Strong controls are visible and executable: subject identity, position, action verb, action order, active body part, contact point, gaze target, expression transition, camera movement, spatial relationship, reference role, and continuity anchor.
 
-Strong words are visible, executable, and reduce ambiguity:
-
-- subject identity, position, action verb, action order
-- active body part, contact point, gaze target, expression transition
-- camera movement, spatial relationship, useful continuity anchor
-- reference asset role and continuity constraint
-
-Weak words are mood, taste, or atmosphere helpers, such as cinematic, lonely, mysterious, premium, tense, dreamy, epic, or beautiful.
-
-Weak words may be used only when anchored to visible carriers. Do not rely on weak words alone.
-
-- Bad: `镜头很电影感，氛围孤独。`
-- Good: `镜头固定在雨夜街口，人物独自站在路灯下，身后街道空旷，积水反射冷白灯光。`
-
-For each shot, write strong controls first, then add weak atmosphere only if it changes the intended image or emotion.
+Weak words such as cinematic, lonely, mysterious, premium, tense, dreamy, epic, beautiful, `高级感`, or `氛围感` may be used only after they are anchored to visible carriers. Load `references/prompt-principles.md` when abstract intent needs detailed translation.
 
 ## AI-Flavor And Logic Pass
 
-Before returning a final prompt, do a concise language and logic scan. For general natural-language rewrites or teaching requests, use `aigc-natural-language-prompt`; inside this Seedance skill, apply the same standard while preserving Seedance-specific duration, reference mapping, and shot-bridge rules. Natural does not mean casual or vague; it means the shot reads like a coherent visual action instead of prompt-engineering syntax.
+Before returning a final prompt, do a concise language and logic scan: every sentence should name something visible/audible, performable, lit, framed, timed, or inherited by a connected segment. Remove prompt-flavored filler, unsupported off-screen causes, forced conclusion sentences, and abstract explanations that do not control generation.
 
-- Each sentence should name a visible subject and a real verb. Replace noun piles such as `中景、冷色、孤独、电影感` with filmed relationships such as `中景固定拍摄，人物独自站在冷白路灯下，身后的街道空旷`.
-- Keep cause and sequence readable. Use `先`, `随后`, `此时`, `最终` only when they clarify the action order; do not add connectors as decoration.
-- Use adjectives only after the concrete carrier is clear. `压抑` should become tight spacing, low ceiling, held breath, blocked doorway, heavy shadow, or another visible/audible cue.
-- Do not invent an off-screen source or cause. If the source is not visible in the current shot or clearly established by a previous shot, write only the visible result, such as `额前碎发被轻轻吹开`.
-- When a shot cuts from a previous view, state the current frame relationship only when it prevents confusion, such as `从上一镜头的远景切到桌前右侧中近景`.
-- Remove prompt-flavored filler before output: `高质量`, `大师级`, `极致细节`, `电影质感`, `氛围拉满`, `高级感`. If the idea matters, translate it into camera, light, blocking, material, sound, or movement.
-- Remove AI-flavored structure before output: "不只是...更是...", rule-of-three padding, generic conclusions, decorative `最终`, and any sentence that explains creative intent instead of controlling the visible shot.
-- Do not write a closing state merely to make the prompt feel complete. Add a continuity anchor only when it prevents confusion in the next shot or connected segment.
-- Check that the shot can be acted or animated. If a phrase cannot be seen, heard, performed, lit, framed, or timed, rewrite it before placing it in the final code block.
+For heavy natural-language cleanup, use `aigc-natural-language-prompt`. For Seedance-specific language examples and logic checks, load `references/prompt-principles.md`.
 
 ### Confirmation Policy
 
@@ -298,11 +257,11 @@ Do not interrupt the user merely to ask whether an ordinary simple shot should b
 
 ## References
 
-Load only the reference needed for the task:
+Load references only when they materially change the answer:
 
 - Read `references/prompt-principles.md` when the task needs creative completion, shot design, style handling, long-form continuity, prompt efficiency, or translation from abstract intent into visible action.
 - Read `references/single-segment-quality-control.md` before finalizing new or optimized video prompts when a scene has multiple subjects, large actions, occlusion, complex blocking, unclear camera movement, or weak continuity.
-- Read `references/seedance-2-rules.md` for all final prompt drafting, reference image/video handling, text-to-video, image-to-video, video edit, video extension, shot bridge, and official Seedance 2.0 constraints.
+- Read `references/seedance-2-rules.md` when the task needs reference image/video handling, video edit, video extension, shot bridge, official Seedance 2.0 constraints, or a complex final prompt. For simple pure text-to-video, use the rules already in this SKILL.md.
 - Read `references/task-patterns.md` when the request targets a specific format such as product ads, UGC, creative VFX, dialogue drama, music beat sync, one-take, educational visualization, or multi-video fusion.
 - Read `references/examples.md` only as an optional calibration aid when the output shape is unfamiliar. Do not load examples for routine Seedance prompts.
 - Use `aigc-natural-language-prompt` as the cross-skill standard when the user is primarily asking how to make prompt language more natural, director-style, visible, and non-parameterized rather than asking for Seedance-specific final drafting.
@@ -311,41 +270,22 @@ Load only the reference needed for the task:
 
 Write the final prompt in Chinese by default. Do not include English shot-size abbreviations or English camera movement terms unless the user explicitly asks for bilingual camera labels.
 
-The final prompt should normally start with duration and scene overview, then write each shot as a natural Chinese paragraph beginning with `镜头N：x秒，景别。` and continuing in flowing sentences with verbs and connectives. For simple requests, use the simple structure from Output Structure Selection: total duration and scene setup, one shot paragraph, and only necessary avoid notes. For complex reference-heavy or composition-critical requests, use the complex structure: total duration and global constraints, reference-role mapping, camera/composition requirements, shot paragraphs, and avoid notes. For a true one-shot design, use only `镜头1：x秒，景别。` and describe the internal continuous action order in prose. Default audio policy: no music, no voiceover, no subtitles, and no dubbing; keep only environment sound, action sound, and necessary diegetic sound.
+The final prompt should normally start with duration and scene overview, and the opening overview paragraph must end with `无配乐，无字幕。` for every final Seedance prompt. This phrase does not mean silence: diegetic speech, environment sound, and necessary action sound may still be written when the shot needs them.
+
+For ordinary pure text-to-video requests, use the Vibe-first simple structure: one overview paragraph that names the emotional theme, visual anchors, action/state, and local tone, then each shot as a natural Chinese paragraph beginning with `镜头N：x秒，景别。` and continuing in flowing sentences with verbs and connectives. Do not add a separate `稳定边界` section for these prompts.
+
+For complex reference-heavy or composition-critical requests, use the complex structure: total duration and global constraints, a short `参考图使用` section for literal `@...` role mapping, camera/composition requirements when necessary, and shot paragraphs. Add `生成注意` only for high-risk constraints that cannot be integrated into the shot body. For a true one-shot design, use only `镜头1：x秒，景别。` and describe the internal continuous action order in prose.
 
 Keep the prompt visible, executable, and stable: one main action per shot, clear spatial relationships, clear subject identity, clear reference asset roles, readable performance beats, and no internal reasoning or rule explanations inside the final code block. Use production shorthand and abstract taste words only for internal planning; translate them into visible shot, action, light, space, body/contact detail, gaze, expression transition, camera-subject relationship, action path, environmental reaction, sound, and only the edit-handoff details that matter.
 
-### Chinese Shot And Camera Terms
+### Final Guardrails
 
-Use Chinese terms consistently across all shots:
+Before returning a final prompt, keep these high-frequency checks in the main path:
 
-**景别**：大特写、特写、中近景、中景、中远景、远景、大远景。
+- Write shot bodies as natural Chinese prose with visible subjects and verbs, not comma-chained parameter lists.
+- Preserve literal `@...` anchors and immediately attach each one to a semantic role.
+- Keep one main action and one main camera movement per shot; split overloaded beats instead of compressing them.
+- Describe what is in the frame before considering what to exclude. Avoid broad negative "do not show X" wording unless X is a hard safety, text/logo/watermark, identity-drift, or user-explicit risk.
+- Replace negative tag lists and abstract taste words with positive visible staging and concrete carriers.
 
-**角度/机位**：高空俯拍、低角度仰拍、侧前方角度、正面角度、背面角度、贴近海面、贴近主体上方半侧、远处海平面视角。
-
-**运镜**：固定机位、手持、缓慢推近、推近、后拉、横摇、垂直下摇、跟随拍摄、横向移动、升降、环绕。
-
-Use only one main camera movement per shot. Put the shot size, camera position, and movement near the beginning of the shot paragraph, then explain the real movement in natural language.
-
-## Common Failures To Avoid
-
-These are the failure modes most likely to break a Seedance prompt. Scan the final draft for each before returning it:
-
-- **Parameter-list writing style** — e.g. `镜头1：5秒，中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：5秒，中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
-- **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
-- **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
-- **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
-- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
-- **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking-like following in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
-- **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
-- **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
-- **Inventing style labels not established by the user or references** — e.g. `三渲二`, `UE5风格`, `照片级写实`, `cel shading`, `cinematic`. If style is unspecified, write neutral execution quality only.
-- **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. Replace with positive boundaries: `主体保持清晰可辨，身体结构自然，动作物理合理`.
-- **Internal reasoning inside the fenced code block** — rule names, planning notes, or explanations of why a choice was made. The code block contains only the executable prompt body.
-- **Abstract taste words without a visible carrier** — e.g. `氛围感强烈`, `极具张力`. Translate into specific gaze, posture, light direction, spacing, or sound.
-- **Flat performance labels** — e.g. `he looks sad` or `the fox acts funny`. Replace with body part, contact point, gaze path, expression transition, movement direction, and only the anchor needed for the next beat.
-- **Music, voiceover, subtitles, or dubbing** unless the user explicitly asks. Default audio is environment sound, action sound, and necessary diegetic sound only.
-- **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
-- **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
-- **Treating reference-image prompts like text-to-video prompts** — when references exist, preserve literal `@...` anchors such as `@图1` or `@庠序场景.png`, name what each reference is used for, and state what the written shot overrides.
-- **Overusing natural-language cleanup** — do not run a separate cleanup pass unless the user asks or the draft has visible language defects.
+For the full Chinese camera term list and extended failure checklist, load `references/seedance-2-rules.md` and `references/single-segment-quality-control.md` only when the task is complex, reference-heavy, or the draft is failing one of these guardrails.

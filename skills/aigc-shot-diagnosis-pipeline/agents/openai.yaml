@@ -1,7 +1,0 @@
-interface:
-  display_name: "AIGC Shot Diagnosis Pipeline"
-  short_description: "Decide whether an AIGC shot frame is ready to move forward."
-  default_prompt: "用 $aigc-shot-diagnosis-pipeline 判断这张关键帧能不能进入下一步，并告诉我应该修图、重做还是进入视频。"
-
-policy:
-  allow_implicit_invocation: true

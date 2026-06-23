@@ -23,5 +23,35 @@
     "id": "nlp-5-preserve-filename-reference-anchors",
     "prompt": "帮我改自然点：@庠序场景.png控制旧学堂环境和大门方向，@裘水镜-磨皮版.png控制人物外貌，镜头从门口方向拍，台词不要改。",
     "expected": "Preserves literal file-name anchors @庠序场景.png and @裘水镜-磨皮版.png exactly, softens 控制 to 作为...参考 or similar, and does not rewrite anchors as 参考图1, 图1, or plain file names."
+  },
+  {
+    "id": "nlp-6-humanizer-boundary",
+    "prompt": "把这个 AIGC prompt 去 AI 味：这不仅是一个画面，更是少年命运感的表达，要写得更有人味、更有作者观点。",
+    "expected": "Rejects generic humanizer moves such as first-person commentary, humor, author opinion, or prose-like voice; rewrites only the visual prompt into visible posture, light, distance, action, and environment."
+  },
+  {
+    "id": "nlp-7-protected-dialogue-duration",
+    "prompt": "帮我改自然点：12秒，固定中景，裘水镜站在学堂门口，对少年说“你看见的不一定是真的”，说完停顿两秒，少年没有回答。",
+    "expected": "Preserves the 12-second duration, fixed medium shot, character names, exact dialogue, two-second pause, and no-reply beat while cleaning only vague or AI-flavored phrasing around them."
+  },
+  {
+    "id": "nlp-8-shot-preserving-cleanup",
+    "prompt": "三镜头去 AI 味：镜头1少年站在雨里宿命感拉满；镜头2他回头看门口，电影感高级；镜头3手慢慢握住剑，情绪复杂，最后有震撼收束。",
+    "expected": "Keeps exactly three shots in the same order and preserves each main action; converts 宿命感, 电影感高级, 情绪复杂, and 震撼收束 into visible light, posture, gaze, hand movement, and spatial continuity."
+  },
+  {
+    "id": "nlp-9-ai-cliche-to-visible-carrier",
+    "prompt": "改成自然语言：通过光影展现命运感，整体氛围拉满，高级感、电影感、史诗感都要有。",
+    "expected": "Does not keep abstract writing cliches as final control language; translates them into concrete light direction, shadow depth, silhouette, scale, material response, movement, and sound."
+  },
+  {
+    "id": "nlp-10-anchor-role-softening",
+    "prompt": "帮我把这个 prompt 改自然：@图1控制角色外貌，@图2控制旧学堂场景，@视频1控制动作节奏，画面要有电影感和命运感。",
+    "expected": "Preserves @图1, @图2, and @视频1 exactly; softens 控制角色/场景/动作节奏 into 作为...参考 or similar role wording, and converts 电影感/命运感 into visible camera, light, posture, and pacing."
+  },
+  {
+    "id": "nlp-11-final-seedance-route",
+    "prompt": "帮我直接写最终 Seedance 提示词：10秒，雨夜旧车站，一个女孩听见广播后回头。",
+    "expected": "Routes to aigc-seedance-prompt instead of only doing natural-language cleanup; does not output a generic cleaned paragraph as if it were the final platform prompt."
   }
 ]

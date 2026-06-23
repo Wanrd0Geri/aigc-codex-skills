@@ -13,5 +13,10 @@
     "id": "reverse-3-variation",
     "prompt": "保持人物关系和构图不变，把天气换成下雨天。",
     "expected": "Rewrites the full prompt with rain while preserving subject count, relationship, pose, camera, and composition."
+  },
+  {
+    "id": "reverse-4-missing-image-filename-only",
+    "prompt": "帮我反推 C:\\\\path\\\\to\\\\参考图.png 的中英双语提示词，我现在只给你文件名。",
+    "expected": "Stops and asks for the actual visible image/frame; does not infer the prompt from filename, path, memory, or a text-only description."
   }
 ]

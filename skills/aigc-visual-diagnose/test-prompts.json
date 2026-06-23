@@ -7,7 +7,7 @@
   {
     "id": "visual-2-production-gate-route",
     "prompt": "这张图能不能进视频？该修图还是重做？",
-    "expected": "Routes to aigc-shot-diagnosis-pipeline rather than deciding Green/Yellow/Red."
+    "expected": "Gives a concise readiness note without Green/Yellow/Red labels, then points to image-edit or Seedance if a next prompt is needed."
   },
   {
     "id": "visual-3-repair-handoff",
@@ -18,5 +18,10 @@
     "id": "visual-4-missing-image",
     "prompt": "我没法传图，画面大概是一个角色站在雨夜街头，你帮我诊断为什么不好看。",
     "expected": "Does not present text-only description as visual diagnosis; asks for the image/frame or clearly labels any response as a text-only creative assumption check."
+  },
+  {
+    "id": "visual-5-no-final-prompt-overreach",
+    "prompt": "这张图为什么不好看？顺便直接给我完整 Seedance 提示词和修图 prompt。",
+    "expected": "Diagnoses the visible frame first, then gives concise handoff summaries for image-edit or Seedance if useful; does not write the full final Seedance prompt or full image-edit prompt inside this diagnosis skill."
   }
 ]

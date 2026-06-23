@@ -18,5 +18,10 @@
     "id": "edit-3-redesign-risk",
     "prompt": "把这个角色换成完全不同的服装和脸，但又要说是修图 prompt。",
     "expected": "Flags redesign risk and states what can no longer be preserved before drafting."
+  },
+  {
+    "id": "edit-5-product-light-cleanup",
+    "prompt": "这是一张产品图，只清理背景灰尘、压住反光、保持瓶身和标签真实，不要电影感，不要重做布景。",
+    "expected": "Uses the actual image as source, keeps the edit conservative and product-faithful, preserves label/shape/material accuracy, and does not force cinematic lighting, depth of field, or scene redesign."
   }
 ]

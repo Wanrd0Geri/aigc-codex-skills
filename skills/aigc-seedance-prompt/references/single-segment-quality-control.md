@@ -41,9 +41,9 @@ Rough timing:
 
 If the requested duration cannot hold all beats, split shots, reduce actions, or suggest extending the segment. Preserve the visible start state, main action, and necessary continuity anchor instead of squeezing several beats into one unreadable shot.
 
-## Positive Motion Boundaries
+## Positive Visible Staging
 
-Prefer positive boundaries over negative warning lists:
+Describe the desired visible staging before considering any negative warning list:
 
 - `动作限制在画面中景范围内，主角只向前移动两步，主体大小保持稳定。`
 - `镜头保持固定机位，人物从画面左侧前景走到中央，不改变朝向。`
@@ -52,7 +52,7 @@ Prefer positive boundaries over negative warning lists:
 
 ## Final Check
 
-Before returning the final prompt, silently scan against the `Common Failures To Avoid` list in the main `SKILL.md`. In addition, verify these segment-level points:
+Before returning the final prompt, silently scan against the failure checklist below. In addition, verify these segment-level points:
 
 - Each shot has one main action and one main camera movement.
 - The duration can realistically hold the number of action, camera, expression, and handoff beats.
@@ -62,10 +62,38 @@ Before returning the final prompt, silently scan against the `Common Failures To
 
 If anything is missing, fix it before adding style or atmosphere details.
 
+## Failure Checklist
+
+These are the failure modes most likely to break a Seedance prompt. Use this extended scan for complex, reference-heavy, or unstable drafts:
+
+- **Parameter-list writing style** — e.g. `镜头1：5秒，中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：5秒，中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
+- **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
+- **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
+- **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
+- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
+- **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking-like following in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
+- **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
+- **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
+- **Inventing style labels not established by the user or references** — e.g. `三渲二`, `UE5风格`, `照片级写实`, `cel shading`, `cinematic`. If style is unspecified, write neutral execution quality only.
+- **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. First describe what is visible and desired: `主体清晰可辨，身体结构自然，动作物理合理`. Use negative wording only for hard safety, visible text/logo/watermark, identity drift, or an explicit user prohibition that cannot be phrased as positive staging.
+- **Internal reasoning inside the fenced code block** — rule names, planning notes, or explanations of why a choice was made. The code block contains only the executable prompt body.
+- **Abstract taste words without a visible carrier** — e.g. `氛围感强烈`, `极具张力`. Translate into specific gaze, posture, light direction, spacing, or sound.
+- **Flat performance labels** — e.g. `he looks sad` or `the fox acts funny`. Replace with body part, contact point, gaze path, expression transition, movement direction, and only the anchor needed for the next beat.
+- **Music or subtitles drift** — every final prompt overview ends with `无配乐，无字幕。` Keep diegetic speech, environment sound, and necessary action sound only when the shot needs them.
+- **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
+- **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
+- **Treating reference-image prompts like text-to-video prompts** — when references exist, preserve literal `@...` anchors such as `@图1` or `@庠序场景.png`, name what each reference is used for, and state what the written shot overrides.
+- **Overusing natural-language cleanup** — do not run a separate cleanup pass unless the user asks or the draft has visible language defects.
+
 ## Minimal Example
 
 ```text
-时长：8秒。夜晚开阔地，巨大的飞行器从云层下方缓慢下降，冷蓝色光束落向地面。@图1（飞行器外形与材质参考）作为UFO主体；@图2（环境与地表空间参考）作为地形、云层和光线基准；@图3（主人公外观参考）作为人物脸部、服装和体态参考。无配乐，无旁白，无字幕，无配音，仅保留环境风声、低频空气震动声和尘土被气流卷起的细小声响。
+本视频总时长 8 秒，两个镜头。夜晚开阔地，巨大的飞行器从云层下方缓慢下降，冷蓝色光束落向地面，画面重点是 UFO 的体量、地表被光束压低的空气感，以及主人公抬头仰望的反应。无配乐，无字幕。
+
+参考图使用：
+@图1（飞行器外形与材质参考）作为 UFO 主体参考。
+@图2（环境与地表空间参考）作为地形、云层和光线基准。
+@图3（主人公外观参考）作为人物脸部、服装和体态参考。
 
 镜头1：4秒，远景。低角度固定机位贴近开阔地面拍摄，地面位于前景，云层和UFO位于画面中央上方。@图2（环境参考）的地面压在画面下方，远处云层被冷蓝色光线照亮。@图1（飞行器参考）的UFO从云层下方缓慢下降到画面中央，地面草叶被气流压低，少量尘土向外扩散，UFO的光束落点始终保持在画面中景范围内。
 
