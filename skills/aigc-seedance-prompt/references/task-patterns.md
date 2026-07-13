@@ -52,16 +52,16 @@ Prioritize emotional turn, performance carrier, and readable blocking.
 - Keep dialogue short enough for the segment duration.
 - Use gaze, pause, breath, hand tension, posture, or object handling as the emotion carrier.
 - Avoid long backstory. Show the emotional beat inside the clip.
-- If using subtitles, include them only when the user explicitly asks.
+- This workflow does not add subtitles; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
 
-## Music Beat Sync
+## Audio Beat And Rhythm Reference
 
 Prioritize beat ownership and action timing.
 
-- Assign `@音频1` or `@视频1` as rhythm, beat, BGM, or edit-reference role.
+- Assign `@音频1` or `@视频1` as rhythm, beat, speech-pace, sound-effect, or edit-reference role.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
 - Keep the number of beat events realistic for the duration.
-- If the user does not ask for music, do not add BGM by default; use environmental and action sounds.
+- Do not add BGM, songs, lyrics, or music-driven montage. A music-bearing reference may guide timing only; use dialogue, environmental sound, and action sound in the delivered clip.
 
 ## One-Take
 

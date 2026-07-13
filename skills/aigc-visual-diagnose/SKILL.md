@@ -7,11 +7,11 @@ description: Use when the user provides an AIGC image, frame, storyboard, keyfra
 
 Use this skill when the user has an image or frame that feels weak and wants to understand why. Diagnose before writing prompts. The goal is to teach the visual problem and identify the highest-leverage fixes.
 
+Cross-skill routing in this file assumes the companion AIGC skills are installed. If a named skill is unavailable, provide the diagnosis handoff summary and stop; do not silently imitate the missing specialist's final prompt.
+
 If the user asks whether a frame can move forward, enter Seedance, be repaired, or should be redesigned, include a concise production-readiness note after the visual diagnosis. Keep it practical: name the blocker, then point to `aigc-image-edit-prompt` for repair prompts or `aigc-seedance-prompt` when the user has decided to proceed.
 
 ## Workflow
-
-### 1. Read the Frame Neutrally
 
 CHECKPOINT - Diagnosis Scope:
 
@@ -22,11 +22,29 @@ CHECKPOINT - Diagnosis Scope:
 
 ### Failure Branches
 
-- If the image is missing, do not diagnose from memory, filename, or a prompt description; ask for the image or frame.
-- If the user mainly wants a production status, avoid Green/Yellow/Red labels; answer with `can proceed`, `repair first`, or `redesign first`, plus one reason.
-- If the image can support two different creative intentions, state the likely assumption and ask one question only when that assumption changes the diagnosis.
-- If the problem is concept-level rather than visual execution, name the missing intention and ask for the shot purpose before diagnosing visual execution.
-- If the user asks for a repair prompt after diagnosis, pass only the preserve/fix/avoid summary to `aigc-image-edit-prompt`; do not draft the edit prompt in this skill.
+Apply this table before the normal diagnosis. Never invent evidence to fill an unavailable or unreadable image region.
+
+| Trigger | First response | If still unresolved |
+|---|---|---|
+| No image or frame is available | Ask for the actual image or frame. | If upload is impossible, label the response `text-only assumption check`, request visible facts, and do not claim a visual diagnosis. |
+| The image is too small, blurred, cropped, or blocked | Name exactly what cannot be verified and request the original or a useful crop. | Restrict findings to readable evidence and omit any affected lens. |
+| Two creative intentions would produce different rankings | State the most likely assumption and ask one question. | If the user cannot clarify, proceed under the stated assumption and mark the verdict provisional. |
+| Multiple frames are unlabeled or their roles are unclear | Label them A/B in input order and state the assumed role of each. | Ask for the mapping before recommending which frame to keep. |
+| The stated intent has no visible functional failure | Say that the frame works for that intent and separate optional taste refinements. | Do not manufacture three problems to satisfy the output template. |
+| The problem is concept-level rather than visual execution | Name the missing shot purpose and ask for it before diagnosing execution. | Without a purpose, stop at the missing-intention diagnosis. |
+| The user asks for a final repair or Seedance prompt | Finish the diagnosis and provide only the handoff summary. | Route to the named specialist; if unavailable, stop at the summary. |
+
+#### Production Intervention Gate
+
+When the user asks whether to proceed, repair, or redo, compare the intended use with the current frame's structural support:
+
+- **`can proceed`**: composition, subject scale, pose or silhouette, spatial geometry, and identity already support the intended use; remaining issues are optional refinements.
+- **`repair first`**: the same composition, pose, and spatial logic remain usable; blockers are localized to anatomy cleanup, material, lighting, hierarchy, artifacts, or another bounded region.
+- **`redesign first`**: the intended use requires rebuilding subject scale or position, pose or silhouette, camera relationship, spatial layout, or motion supports. Preserve any working world, palette, identity, or style, but do not call a structural rebuild a repair.
+
+Give one decisive blocker with the verdict. Do not default to `repair first` merely because it is less disruptive. If the visible evidence cannot support the choice, say that the verdict is unavailable and request the missing crop or frame.
+
+### 1. Read the Frame Neutrally
 
 Describe what is actually visible before judging:
 

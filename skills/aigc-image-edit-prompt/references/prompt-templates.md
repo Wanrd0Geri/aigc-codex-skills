@@ -1,6 +1,6 @@
 # 提示词模板 / Prompt Templates
 
-This file specifies the current prompt structure for **Nano Banana Pro** and **ChatGPT Images 2.0**. Treat later Nano Banana, Gemini image editor, ChatGPT image editor, or OpenAI image editor versions as the closest matching family unless the user provides newer constraints. They solve the same image-editing task, but they respond best to different prompt densities and vocabulary.
+This file provides version-tolerant prompt structures for **Nano Banana/Gemini image editing** and **ChatGPT/OpenAI GPT Image editing**. Both families accept a source image plus natural-language edit instructions. Keep the stable shared rule: identify the exact change, state what must remain unchanged, and describe how the edited area should integrate. Do not hardcode prompt-length limits or claim that one provider inherently follows numerical values, bilingual text, or negative lists better unless the user provides current evidence.
 
 Default to **bilingual (Chinese + English)** versions unless the user asks for one language only. They are semantic mirrors, not literal translations.
 
@@ -8,15 +8,15 @@ Default to **bilingual (Chinese + English)** versions unless the user asks for o
 
 ## Universal structure: `[Preserve] / [Transform] / [Avoid]`
 
-Both models respond to this three-block edit grammar. Keep the blocks in this order when using this edit-prompt structure:
+Use this three-block grammar as this skill's delivery format. It is not vendor-required syntax; its purpose is to make the change set auditable:
 
 ```
 [Preserve] What must NOT change about the source image
-[Transform] What SHOULD change, with specific cinematography directives
+[Transform] What SHOULD change, with task-appropriate visible directives
 [Avoid] What the model should actively NOT introduce (negative prompt)
 ```
 
-This structure outperforms freeform prose for image-editing tasks on both models because it gives them an explicit lock-list before the creative directives.
+Use this structure to separate locked source facts from authorized changes. The headings are a working grammar, not permission to populate every category.
 
 ### Natural directive style
 
@@ -40,25 +40,16 @@ Use this style for both Chinese and English prompts. They do not need literal wo
 
 ---
 
-## Nano Banana Pro template
+## Nano Banana / Gemini template
 
-Nano Banana Pro (Google's `gemini-3-pro-image` family) is **conversational** — it parses natural language well, handles longer prompts (up to ~4000 tokens) without losing focus, and responds excellently to numerical specificity (light angles, ratios, IRE values, hex codes).
+Use a descriptive edit request tied to the supplied image. Name the specific element to change, describe how it should fit the source's style, lighting, perspective, or material logic, and explicitly keep everything else unchanged. For multiple input images, identify each image by role instead of assuming their order is self-explanatory.
 
-**Strengths to lean into:**
-- Long, structured prompts
-- Numerical precision (degrees, ratios, percentages)
-- Explicit preservation instructions
-- Multiple sequential directives in one block
-- Bilingual prompts (it actually handles mixed Chinese-English well)
-
-**Weaknesses to work around:**
-- Can over-interpret single descriptive adjectives ("dramatic" might trigger over-the-top changes)
-- Sometimes adds details not requested if the prompt feels "incomplete"
+Keep the request focused. Use numbers only when the user supplied them or a measurable boundary prevents ambiguity; do not add percentages, IRE values, or hex codes merely to make the prompt look precise.
 
 ### Template — English version
 
 ```
-Edit this image with the following cinematic adjustments. Preserve the source faithfully where specified.
+Edit the provided source image. Apply only the requested visible changes and preserve every unmentioned element.
 
 [Preserve]
 - All character faces, hair, and identifying features — do not redraw faces
@@ -68,24 +59,20 @@ Edit this image with the following cinematic adjustments. Preserve the source fa
 - Number and identity of characters — do not add or remove anyone
 
 [Transform]
-- Lighting: [specific direction, hardness, source, ratio]
-- Color grade: [specific palette, temperature, saturation level]
-- Black point: [crushed / lifted / specific IRE]
-- Atmosphere: [haze density, depth gradient, color]
-- Subject integration: [rim light direction and color, shadow temperature shift]
-- Overall exposure: [stops adjustment, midtone target]
+- [Authorized edit 1: name the location, visible change, and endpoint]
+- [Authorized edit 2]
+- [Add only the changes required in this edit pass]
 
 [Avoid]
-- [Specific issues from the diagnosis — e.g., "intense god rays", "green or yellow tint in atmosphere", "blown-out highlights", "uniform fog"]
-- Generic AI-image artifacts: oversaturation, plastic skin, symmetrical lighting
+- [Only the likely drift or addition that would violate this edit]
 
-Output: a single edited image preserving subject identity while applying the cinematographic transformations above.
+Output one edited image that applies only the changes above and keeps the protected source facts unchanged.
 ```
 
 ### Template — 中文版
 
 ```
-按以下电影级调整对此图进行编辑。在指定保留项上忠实于原图。
+编辑所提供的原图。只执行点名的可见修改，所有未提及内容保持不变。
 
 [保留 / Preserve]
 - 所有人物面部、发型、识别性特征——不要重绘面部
@@ -95,42 +82,27 @@ Output: a single edited image preserving subject identity while applying the cin
 - 人物数量与身份——不增减人物
 
 [改造 / Transform]
-- 光线：[具体方向、硬度、光源、光比]
-- 调色：[具体色板、色温、饱和度]
-- 黑位：[压黑 / 提黑 / 具体 IRE 值]
-- 氛围：[雾感浓度、景深渐变、颜色]
-- 主体融入：[轮廓光方向与颜色、阴影色温偏移]
-- 整体曝光：[档位调整、中间调目标值]
+- [授权修改1：写明位置、可见变化与结束状态]
+- [授权修改2]
+- [只保留本轮编辑真正需要的修改]
 
 [避免 / Avoid]
-- [来自诊断的具体问题——如"强烈神光柱"、"大气中的绿色/黄色色调"、"过曝高光"、"均匀雾气"]
-- 通用 AI 图像问题：过饱和、塑料质感皮肤、对称布光
+- [只写最可能违反本次编辑边界的漂移或新增项]
 
-输出：一张编辑后的单图，保留主体身份的同时应用上述电影级改造。
+输出一张编辑后的单图，只应用上述修改，并保持受保护的原图事实不变。
 ```
 
 ---
 
-## ChatGPT Images 2.0 template
+## ChatGPT / OpenAI GPT Image template
 
-ChatGPT Images 2.0 (the ChatGPT image editor / OpenAI image surface) is more **intent-oriented** — it does best with clear preservation constraints, concise transformation goals, and a focused negative list. Treat "GPT image 2.0", "GPT image", "OpenAI image", and "ChatGPT image editor" as aliases for this template.
+Use explicit `change only X` and `keep Y unchanged` instructions. For identity-, geometry-, layout-, brand-, or text-sensitive edits, repeat the protected facts in each new iteration if drift appears. Keep platform/API parameters such as quality, size, output format, mask, or input fidelity outside a paste-ready visual prompt unless the user explicitly asks for API settings.
 
-**Strengths to lean into:**
-- Clear edit intent in natural language
-- Named techniques and named DPs/film stocks when they sharpen the target
-- Compact, high-density directives
-- Direct preserve/transform contrast
-- Strong negative prompt response
+Prefer a clean base edit followed by small single-change iterations over one overloaded prompt. The adaptive surface-cleanliness section below is a local repair heuristic; invoke it only when the source or requested style actually shows that failure.
 
-**Weaknesses to work around:**
-- Can drift if given too many transformation directives
-- Numerical values (IRE, degrees, hex codes) help less than they do for Nano Banana Pro — prefer named ratios and plain-language visual outcomes
-- Can over-stylize if given too many evocative adjectives
-- Can create fragmented, over-textured rendering when prompts pile up "detailed", "painterly", "concept art", "volumetric", or gritty atmosphere language
+### Adaptive surface cleanliness controls — local/eval-derived heuristic
 
-### Adaptive surface cleanliness controls
-
-Use this only when the image or user complaint points to **碎裂感 / fragmented rendering**: broken edges, noisy surfaces, visible brush texture, painterly buildup, random ornament density, gritty micro-detail, or concept-art patchwork. Do **not** paste the whole list by default. Choose the smallest set that fixes the diagnosed problem.
+This section records a local observed failure pattern, not vendor-documented model behavior. Use it only when the image or user complaint points to **碎裂感 / fragmented rendering**: broken edges, noisy surfaces, visible brush texture, painterly buildup, random ornament density, gritty micro-detail, or concept-art patchwork. Do **not** paste the whole list by default. Choose the smallest set that fixes the diagnosed problem.
 
 **Level 0 — omit**
 Use no texture-control terms when the source already has clean surfaces and the edit only needs light, grade, depth, or subject integration.
@@ -214,43 +186,35 @@ Before adding surface-control terms, remove or replace prompt words that push th
 ### Template — English version
 
 ```
-Image edit task. Preserve subject identity; transform cinematography only.
+Image edit task. Preserve the protected source facts and apply only the requested visible changes.
 
 PRESERVE EXACTLY:
 - Character faces, hair, costumes, props, poses, positions, camera angle, composition, character count
 
 TRANSFORM:
-- Lighting: [single named technique, e.g., "low-key Rembrandt key from camera-left, soft moonlight motivated"]
-- Grade: [named palette, e.g., "monochromatic cool teal, day-for-night style"]
-- Contrast: [named ratio, e.g., "1:8 dramatic ratio with crushed blacks"]
-- Atmosphere: [named effect, e.g., "atmospheric haze with depth gradient, foreground clear, background dissolved"]
-- Subject integration: [named technique, e.g., "cool blue rim light tying subjects to environment key"]
+- [Authorized edit 1: location, visible change, endpoint]
+- [Authorized edit 2]
+- [Use only the directives required in this edit pass]
 
-NEGATIVE:
-- god rays, green tint in atmosphere, lifted milky shadows, blown highlights, plastic skin, oversaturation, uniform fog wall, multiple competing keys
-
-Style reference: [optional — name a DP, film, or stock if it sharpens the target, e.g., "Roger Deakins / Wong Kar-wai night palette / Kodak Vision3 250D emulation"]
+AVOID:
+- [Only the likely drift or addition that would violate this edit]
 ```
 
 ### Template — 中文版
 
 ```
-图像编辑任务。保留主体身份，仅改造摄影语言。
+图像编辑任务。保留受保护的原图事实，只执行本次点名的可见修改。
 
 严格保留：
 - 人物面部、发型、服装、道具、姿势、位置、镜头角度、构图、人物数量
 
 改造：
-- 光线：[一个具名技法，如"低调伦勃朗式布光，摄影机左侧软光月光为动机"]
-- 调色：[具名色板，如"单色冷青调，日转夜风格"]
-- 对比：[具名光比，如"1:8 戏剧性光比，黑位下沉"]
-- 氛围：[具名效果，如"具有景深渐变的大气雾感，前景清晰，背景溶解"]
-- 主体融入：[具名技法，如"冷蓝轮廓光将主体与环境主光绑定"]
+- [授权修改1：位置、可见变化与结束状态]
+- [授权修改2]
+- [只保留本轮编辑真正需要的修改]
 
-负面词：
-- 神光柱、大气中的绿色色调、灰朦朦的提黑阴影、过曝高光、塑料皮肤、过饱和、均匀的雾墙、多个竞争性主光
-
-风格参考：[可选——若能锐化目标，可指定摄影师、电影、胶片，如"Roger Deakins / 王家卫夜景调色 / 柯达 Vision3 250D 模拟"]
+避免：
+- [只写最可能违反本次编辑边界的漂移或新增项]
 ```
 
 ---
@@ -259,11 +223,13 @@ Style reference: [optional — name a DP, film, or stock if it sharpens the targ
 
 Before delivering the prompt to the user, verify:
 
-1. **Preservation block is specific.** "Preserve everything else" is too vague — name the things that matter.
-2. **Transformation block has 3-7 directives, not 12.** More than 7 = model loses focus. Pick the highest-leverage from the diagnosis.
-3. **Each transformation directive uses precise cinematography vocabulary.** Consult `cinematic-language.md` only when the needed term is not already clear. No vague mood words.
-4. **Negative prompt directly mirrors the diagnosis's ❌ findings.** Don't list generic negatives — list the specific issues this image has.
+1. **Preservation block names the critical invariants.** List identity, geometry, layout, text, brand, or material facts that would be costly to lose, then use `keep every other unmentioned element unchanged` as a catch-all.
+2. **Transformation block is focused.** Keep only the highest-impact changes for this pass; split many independent changes into later iterations.
+3. **Each transformation directive uses task-appropriate visible language.** Use cinematography vocabulary only for cinematic or lighting work; use material, surface, geometry, typography, or product language for those edit types.
+4. **Avoid controls match real drift risk.** State the desired positive visible result first. Add a short targeted exclusion only when it prevents a likely violation of the edit boundary; do not dump generic negatives.
 5. **Both Chinese and English versions exist and say the same thing semantically.** Do not omit one.
 6. **The prompt reads as natural edit language, not keyword stuffing.** Each directive should connect the edit target, the visual change, and the intended result.
 7. **The prompt would make sense to a real cinematographer.** If you wouldn't dare show it to a DP, it's still too vague.
 8. **Surface cleanliness terms are adaptive.** If fragmented rendering is not part of the diagnosis, omit clean/smooth/no-texture terms. If the source is clean but the edit may introduce fragmentation, use Level 0.5. If fragmentation is already visible, choose Level 1, 2, or 3 instead of dumping every negative word into the prompt.
+9. **Conservative scopes stay closed.** When the user says `只/仅/保持/不要重做/不要电影感`, every transform line must map to a named request; remove cinematic grade, depth, atmosphere, or styling that was not requested.
+10. **Exact text stays exact.** Quote protected label copy verbatim in both languages and keep spelling, count, placement, hierarchy, and legibility unchanged.

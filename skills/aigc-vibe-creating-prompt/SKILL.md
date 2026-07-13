@@ -1,245 +1,207 @@
 ---
 name: aigc-vibe-creating-prompt
-description: Use when the user explicitly calls this skill or asks for Vibe Creating, vibe-driven AIGC video prompts, atmosphere, emotion, imagery, memory, subjective feeling, or experiential continuity. Preserve anchors, dialogue, duration, action order, sound, and other hard constraints. Do not use for final Seedance formatting, image diagnosis, UI demos, or strict long-dialogue sync.
+description: Use only when the user explicitly names Vibe Creating, VC, vibe, this skill, or asks for a separate Vibe version or Vibe A/B comparison of an AIGC video prompt. Ordinary atmosphere/emotion/memory requests without naming Vibe belong to aigc-seedance-prompt. Preserve anchors, dialogue, duration, action order, sound, and other hard constraints. Do not perform final Seedance formatting or image diagnosis. When explicitly invoked on UI demos or strict long-dialogue sync, preserve or route rather than creatively rewrite.
 ---
 
 # AIGC Vibe Creating Prompt
 
-## Core Position
+## Position And Ownership
 
-Vibe Creating is a creative production entry and optional exploration layer. Its goal is to preserve the user's real expressive intent while making the prompt easier for a video model to understand through image center, emotional direction, key imagery, and experiential continuity.
+Vibe Creating (VC) is a platform-neutral expression layer for turning a clear video idea into a more coherent viewing experience. It strengthens the image center, emotional direction, key imagery, and experiential continuity without changing the user's facts or hard constraints.
 
-Use it when the user wants a more atmospheric, emotional, memory-like, image-driven, or experiential video prompt. It can be used directly as a production candidate for simple text-to-video scenes, and it can also provide the expressive core for a later Seedance final prompt. Do not use it as the universal final layer for complex reference mapping, video edit, extension, strict lip sync, or project continuity work.
+Activate only when the user explicitly names Vibe, VC, this skill, a Vibe version, or a Vibe A/B comparison. Do not infer activation from words such as 氛围、情绪、记忆、电影感.
 
-## Quick Start
+Keep artifact ownership strict:
 
-收到用户输入后，按三步执行：
+- Final Seedance, Doubao, or Dreamina wording; reference-role mapping; video edit; extension; shot bridge; duration compression; lip sync; and platform execution belong to aigc-seedance-prompt.
+- Language-only cleanup, 去 AI 味, or 导演讲戏式改写 without a separate Vibe artifact belongs to aigc-natural-language-prompt.
+- Visual quality diagnosis belongs to aigc-visual-diagnose.
+- VC owns only the platform-neutral experiential prompt or an optional Vibe comparison version.
 
-1. **先判断是否适合 VC**：识别这是不是一个适合通过创意转写放大效果的场景。
-2. **再判断当前怎么处理最合适**：直接放行、轻度提纯、直接改写、先补问、原样保留，还是提供可选 VC 版。
-3. **信息不够时反问、补充**：只问完成当前动作所必需的信息，不为了分类本身反复追问。
+A VC output may be the direct production candidate for a simple text-to-video scene. It is not merely an exploration draft. Complex execution work still hands its expressive core to the specialist that owns the final artifact.
 
-CHECKPOINT - VC Fit And Constraint Gate:
+Artifact wording wins over scene simplicity: any explicit request for a final Seedance, Doubao, or Dreamina prompt routes to aigc-seedance-prompt even when the scene itself is simple.
 
-- If the user did not explicitly call this skill or ask for VC/vibe-style expression, do not take over another AIGC skill's job.
-- If final Seedance/Doubao/Dreamina formatting, exact reference mapping, platform execution, video edit, extension, or shot bridge is the main request, hand off to `aigc-seedance-prompt`.
-- If the user asks for pure text-to-video with atmosphere, memory, emotion, imagery, or subjective feeling, this skill may produce the production candidate directly; mention Seedance handoff only when the user asks for final platform formatting or A/B comparison.
-- If any hard constraint conflicts with a vibe rewrite, keep the hard constraint and make the VC version optional.
-- If the input lacks a visible anchor, action/state, or tone, ask the minimum questions before rewriting.
+## Core Workflow
 
-## Scene And Expression Judgment
+Follow this order. Do not run the information check before ownership and scene fit.
 
-先根据场景判断（S）确定是否适合 VC，再结合表达判断（E）确定处理方式。信息密度检查（I）优先于具体动作：只要关键信息不足，就先补问，再进入对应动作。
+### 1. Gate Trigger And Artifact Owner
 
-### S1: VC 原生适配
+- If Vibe was not explicitly invoked, stop the VC workflow. Do not expose VC labels or analysis; continue with the proper specialist.
+- If the requested artifact is a final platform prompt, route to aigc-seedance-prompt. Do not create a competing pseudo-final VC prompt.
+- If the task is only language cleanup, route to aigc-natural-language-prompt.
+- If the user explicitly requests both artifacts in the current turn, author the VC side here and use aigc-seedance-prompt for the execution side. Do not infer platform constraints inside the VC workflow; let the execution specialist apply its own confirmation and default rules. If the user asks for the VC side first or only, return that side plus one handoff sentence; omit the sentence when the same request says prompt only or 不用解释.
 
-- **E1: 接近 VC 表达**  
-  默认 **直接改写**；若原文已成熟，可改为 **轻度提纯** 或 **直接放行**。
-- **E2: 混合表达**  
-  默认 **轻度提纯后再改写**，保留有效结构、叙事顺序和情绪推进。
-- **E3: 精准控制表达**  
-  识别为 **可 VC 转译**；不因执行写法直接拦截。去掉低价值技术控制后，转成更利于生成的自然画面表达。
+When the needed specialist is unavailable, provide only the platform-neutral VC artifact that is safe to produce and state the missing finalization step in one sentence.
 
-### S2: VC 部分适配
+### 2. Judge Fit And Choose One Handling Action
 
-- **E1: 接近 VC 表达**  
-  默认 **轻度提纯**；如原文已足够可用，可 **直接放行**。
-- **E2: 混合表达**  
-  默认给出 **可选 VC 版**，让用户决定是否采用更强体验化表达。
-- **E3: 精准控制表达**  
-  默认 **保留原意**，并说明如需要可额外提供一版 VC 转写。
+Choose the handling action internally; do not show classification codes.
 
-### S3: VC 低适配
+| Fit | Typical input | Default handling |
+|---|---|---|
+| Native | emotional scene, micro-narrative, memory, subjective perception, one shared multi-shot experience | direct rewrite; light refinement or direct pass when already mature |
+| Partial | brand or character showcase, stylized product display, creative idea mixed with execution language | light refinement or optional VC version |
+| Low | UI demo, tutorial, industrial procedure, functional explainer, strict word-level dialogue sync | preserve as-is or light cleanup; do not force atmosphere |
 
-- **E1: 接近 VC 表达**  
-  尽量 **贴近原意**，不强行 VC 化；必要时 **原样保留**。
-- **E2: 混合表达**  
-  优先 **原样保留** 或仅做非常有限的清理；只有用户明确要求时才局部风格化。
-- **E3: 精准控制表达**  
-  默认 **原样保留**；说明该需求更适合传统分镜工作流或执行型 prompt，而不是继续做 VC 改写。
+Available handling actions are: 直接放行, 轻度提纯, 直接改写, 先补问, 原样保留, 可选 VC 版. These are decision states, not mandatory output labels.
 
-Routing rules:
+Judge the scene goal before judging its wording:
 
-- **信息不足优先补问**：场景再适合，只要视觉锚点、主动作或风格方向缺失，就先问再写。
-- **用户硬约束优先**：只要用户明确要求保留台词、音乐、镜头编号、参数、段落结构或交付格式，就不能擅自删除；如需 VC 版，应作为额外版本或在用户同意后提供。
-- **多镜头优先保结构**：当用户本来就在用镜头段落表达统一体验时，不要把结构强行压成一段散文；但除非用户明确要求保留编号或列表格式，否则不默认延续编号输出。
-- **精准控制写法不等于低适配场景**：先看场景目标，再决定是否转译。
+- Precision-control language can still describe a native VC scene.
+- Treat a prompt as mature only when it already states a visible subject, action or state, space, and tone; contains no internal conflict; and needs no technical cleanup. Pass it directly instead of rewriting to demonstrate effort.
+- A partial-fit task keeps its commercial or functional intent. Do not add drama or story.
+- A low-fit task does not trigger style questions merely because it invoked Vibe.
 
-## Information Density Check
+Use these tie-breaks:
 
-即使场景适合 VC，也不能在关键信息缺失时强行改写。以下情况需要先补问：
+- Native: direct pass when mature; light refinement when complete and only redundant wording or raw technical values need cleanup; otherwise direct rewrite when complete.
+- Partial: light refinement when the requested cleanup can preserve the commercial or functional intent; use an optional VC version when experiential rewriting would change that intent or format.
+- Low: light cleanup only when wording or action order is unclear. Route when another workflow owns the requested artifact; otherwise preserve.
+- Any chosen rewrite with a blocking information gap becomes 先补问.
 
-- 没有明确视觉锚点
-- 只有抽象感受，没有人物、物件或场景
-- 有主体但没有动作或状态
-- 有画面碎片但没有主关系或风格方向
-- 极短输入虽已有主体和事件，但缺少明确风格方向、观看方式或重点瞬间
-- 多镜头内容存在明显跳转，但看不出它们为什么放在一起
+### 3. Lock Constraints Before Rewriting
 
-VC prompt 默认优先满足四层结构；缺哪一层，就优先补哪一层，不必机械按顺序全部追问：
+CHECKPOINT — build a silent lock list before changing any text.
 
-1. **视觉锚点**：最该被看见的核心，人、物、已命名概念或特效本体。
-2. **行为或状态**：正在发生什么，只写一个主要动作、状态或情节。
-3. **局部调性**：这一幕的感觉，一个氛围词或形容词即可。
-4. **视频主题**：应用场景加画面风格，如概念短片、微叙事、影视预演、情绪表达、通识还原、特效片段；超写实、电影感、动画、粘土风、东方写意、赛博、插画感。
+Lock all stated facts and dependencies:
 
-对于极短、抽象、单意象输入，优先把抽象词转成可见画面所需的信息；如果方向已基本明确，可以先给出初步判断，再补问最关键的 1-3 个缺口。
+- literal reference anchors and their assigned roles
+- subject identity, subject count, relationships, location, medium, and required objects
+- duration, aspect or format, shot count, shot order, action order, timing, ending state, and edit points
+- dialogue, narration, lyrics, on-screen text, music, sound effects, silence, no-music, and no-subtitle requirements
+- required structure, delivery format, forbidden changes, and any parameters the user explicitly asks to retain
 
-## Interaction Policy
+Apply this priority:
 
-不要向用户暴露内部分类标签，如 `S1 + E2` 或 `Mode 5`。内部先完成三个判断：**场景判断（S）**、**表达判断（E）**、**信息密度检查（I）**。信息不足时允许是初步判断，不强行定类。
+1. User facts and hard constraints
+2. Clarity and generation usefulness
+3. VC expression
 
-执行动作必须使用以下标签之一：
+If VC expression conflicts with a lock, keep the lock. Offer an optional variant only when it does not confuse the requested deliverable.
 
-- `直接放行`
-- `轻度提纯`
-- `直接改写`
-- `先补问`
-- `原样保留`
-- `可选 VC 版`
+### 4. Check Information Only For The Chosen Action
 
-处理原则：
+Ask questions only when an actual rewrite would otherwise require invention. Do not ask when routing, preserving, passing through, or lightly cleaning a complete functional instruction.
 
-- 场景适合 VC 但信息不足时，优先补完成当前动作所必需的最小信息量。
-- 当输入已同时具备清晰主体、结构、时间关系、核心意象和明确情绪目标，且文本本身已具有较强生成可用性时，默认优先直接放行；如仅需微调清晰度或收束表达，再做轻度提纯，不主动重写。
-- 场景适合 VC 但输入中混有未声明是否保留的精准控制时，可默认弱化、删除或转译；若本次做了相关处理，必须补充说明，并提示用户如需保留可继续指定。
-- 场景仅部分适配时，不默认强推 VC，优先保留原意或提供可选 VC 版。
-- 场景低适配时，应说明是目标或工作流不匹配，不是否定用户创意本身。
-- 用户明确指定的台词、旁白、音乐、音效、结构和参数要求优先保留。
+For a rewrite, check only:
 
-## Hard Constraint Protection
+1. Visible anchor — what must be seen
+2. Main action or state — what happens
+3. Local tone or experiential direction — how this moment feels
+4. Shared relation — what connects multiple shots, when applicable
 
-Before rewriting, identify and preserve:
+If a required item is missing, ask 1-3 short questions covering only the blocking gaps. For an abstract input such as 自由、高级感、很有力量, ask for a visible anchor, an action or state, and a style or use direction before drafting.
 
-- `@图1`, `@视频1`, file names, asset IDs, and other anchors exactly
-- character names, shot numbers, duration, platform limits, aspect/format constraints
-- dialogue, narration, lyrics, music, sound effects, and spoken text exactly
-- user-specified action order, reference image roles, required structure, and forbidden changes
+🔴 STOP — when any blocking gap remains, ask the minimum questions and end the turn. Do not draft until the user answers, unless the user explicitly requests a placeholder version.
 
-If the user explicitly asks to preserve parameters, shot numbers, or structure, keep them. If not, low-value technical controls may be translated into viewer-facing results.
+Do not demand camera mode, medium, style, or theme when the visible anchor and main action or state are present and any applicable multi-shot relation is clear. A request to continue with placeholders or a skeleton counts as explicit placeholder authorization; a generic request to continue anyway does not. Without explicit authorization, preserve the source instead of filling gaps.
 
-## Camera Language Policy
+Treat local tone as blocking only when the user requests a creative rewrite but supplies no emotional or experiential direction. Do not turn tone into a mandatory camera style, medium, or platform format.
 
-镜头语言不应一刀切删除。真正需要删除的是“告诉系统怎么拍”的低价值技术参数；真正需要保留或转译的是“让观众怎么感受”的镜头意图。
+### 5. Rewrite At The Minimum Necessary Strength
 
-**默认降权或删除**：
+Use the source's dominant force:
 
-- 焦段、毫米数
-- 机位术语
-- 运镜参数
-- 镜头号
-- 景深、光圈、曝光、快门
-- 设备说明、A/B 机、coverage
-- 纯剪辑指令
+- Narrative: preserve event order, causal relations, and emotional turns.
+- Emotion: strengthen environment, rhythm, texture, and felt state without adding a plot.
+- Memory: preserve fragility, absence, recurrence, and time slippage without inventing flashbacks.
+- Stream of consciousness: allow fragments while keeping every frame perceivable and the imagery internally related.
+- Multi-shot experience: preserve segment order and the shared motif; keep the requested structure.
+- Mixed refinement: retain useful execution information and remove only redundant explanation or the raw optical and equipment values defined in Step 6.
 
-用户明确要求保留参数时，优先遵守约束，再决定是否额外提供 VC 版。
+Make only supported changes:
 
-**未声明是否保留精准控制时**：
+- Clarify the visible subject-action-space relation.
+- Concentrate attention on one image center and one experiential direction.
+- Add no new subject, prop, relationship, backstory, plot turn, symbolic meaning, or emotional reversal.
+- Do not inflate a short input into long prose.
+- Keep a single clear scene concise; expand only when dialogue, timing, or multi-shot continuity requires it.
 
-- 默认不把技术控制当作必须保留项
-- 默认仍按更适合生成的 VC 创意版处理
-- 优先保留其中对情绪、叙事、观看感受有贡献的部分
-- 对纯技术性的镜头控制，默认删除或转译成自然结果
-- 不必先中断确认；但若已弱化、删除或转译部分技术控制，输出中必须简短说明
+### 6. Translate Technical Controls Conservatively
 
-## Sound And Constraint Priority Rules
+Do not delete camera language wholesale.
 
-台词、旁白、音乐、音效、歌词、口白和其他明确指定的声音内容，优先级高于创意优化。可以整理顺序，但**不能改写措辞、不能替换内容、不能删掉用户明确指定的声音要求**。
+- Apply camera translation only to light refinement, direct rewrite, or optional VC actions. For direct pass, preserve as-is, and route actions, leave camera wording untouched.
+- If the user names camera controls to retain, keep those named controls exactly. A generic instruction such as 保留全部参数 freezes every supplied camera value; undeclared values still follow the next rule.
+- If retention is undeclared during a rewrite, remove raw focal-length, aperture, shutter, ISO, exposure-compensation, and camera or lens model values. Translate only their supported effect on spatial breadth, subject separation, motion rendering, or brightness; do not reproduce the raw values.
+- Preserve qualitative constraints — fixed camera, handheld movement, viewpoint, shot distance, and movement direction — verbatim by default. Translate their perceptual effect only when the user explicitly requests a fully experiential version; keep the same viewing relationship and direction.
+- Shot labels may be removed only when their format is not protected and the original order remains unambiguous.
 
-当规则冲突时，按以下顺序执行：
+Preserve literal platform anchors beginning with @ exactly, including labels such as @图1, @视频1, @音频1, and file-name anchors. Never remove @, rename, translate, reorder, or replace an anchor with a generic phrase. Preserve the role assigned to each anchor.
 
-1. **用户明确指定的内容与硬约束**：台词、旁白、音乐、音效、镜头结构、参数保留要求、格式要求、风格限制等。
-2. **创意优化**：在不破坏约束的前提下，提纯故事、情绪、记忆、意象和统一体验。
-3. **VC 范式一致性**：只有在前两项满足后，才进一步收束语言，让提示词更适合模型理解和生成。
+Preserve audio wording, presence, absence, order, and timing. Never rearrange dialogue, narration, music, sound effects, or silence relative to actions unless the user permits it. If strict word-level sync defines the task, do not VC-rewrite it.
 
-补充规则：
+### 7. Run A Post-Rewrite Lock Audit
 
-- 用户明确写出的台词、旁白、音乐或音效，应原样保留。
-- 画面描述与声音要求混写在一起时，可以重排顺序，但不要改动声音内容本身。
-- 如果画面部分适合 VC，声音部分不适合改写，可以只改写画面部分。
-- 如果整条内容成立的前提是长篇、严格、逐字级的对白同步，则默认不走 VC 改写。
+Compare the candidate against the silent lock list before delivery.
 
-## Rewrite Modes
+- Every locked fact must retain the same meaning, role, order, and timing.
+- Verbatim-sensitive locks — literal anchors; proper names; quoted or spoken text; narration, lyrics, and on-screen text; numeric duration, aspect, shot-count, and timing values; all stated music, sound-effect, silence, no-music, and no-subtitle requirements; and explicitly retained parameters or format — must keep their exact wording or numeric value.
+- No unsupported content may have appeared.
+- The output must remain within VC ownership and must not imitate final platform formatting.
+- The delivery mode must match the user's request.
 
-VC 的改写不是单一模板，应根据输入主导因素选择最合适的模式：
+If any check fails, correct the candidate before output. If correction would break another lock, return the preserved source or route the task instead of forcing a rewrite.
 
-- **叙事改写**：适用于故事主导、关系主导、事件在推进的输入。可输出一条连续提示词，也可保留 2 至 5 段分幕提示，重点是保留事件顺序和情绪转折。
-- **情绪改写**：适用于氛围、感受、状态主导的输入。集中强化环境、节奏、质感和观看感受，不要为了“像故事”而硬补因果链。
-- **记忆改写**：适用于回忆、闪回、旧时感、消逝感、被重新想起的片段。保留模糊、发白、缺失和脆弱感，强化反复出现的意象与时间流失感。
-- **意识流改写**：适用于联想、碎片、主观感知和非线性表达。允许不完整，但必须让画面仍然可感知，并在意象之间保持内部统一。
-- **多镜头体验改写**：适用于多段、多场景、多切换，但共同服务同一体验的输入。可按自然分段或在用户明确要求时按编号分组，每段 1 至 3 句；保留场景流转、情绪递进和视觉母题，不保留低价值执行术语。
-- **混合提纯**：适用于创意内容与执行语言混杂的输入。尽量保住原结构和有效信息，只移除技术噪声、重复说明和低价值控制语句，不过度重写，也不擅自补充新桥段。
+## Delivery Modes
 
-## Failure Branches
+Deliver the artifact first and use the least visible process.
 
-- If the request is a UI demo, workflow tutorial, industrial procedure, or functional explainer, use `原样保留` or only light cleanup; do not make it atmospheric.
-- If the user asks for final Seedance/Doubao/Dreamina wording, output a VC version only when useful and state that final platform drafting belongs to `aigc-seedance-prompt`.
-- If the input contains exact dialogue, lyrics, narration, music, sound effects, or subtitles, preserve the wording exactly and rewrite only the visual portion.
-- If the input has `@...` anchors, file names, role references, duration, shot count, or action order, preserve them exactly unless the user explicitly changes them.
-- If a multi-shot request has disconnected images with no shared experience, ask what links the shots instead of forcing a mood arc.
-- If a prompt is already strong, compact, and generative, use `直接放行` or `轻度提纯`; do not rewrite for style just to show effort.
+After trigger and artifact ownership are resolved, choose among remaining mixed delivery requests in this order: Question Mode first when the VC side itself is blocked; an explicit A/B comparison second; an explicit prompt-only request third; Default Result-First Mode last. In A/B work, an execution-side blocker never suppresses a complete VC side. A final-platform-only request has already exited through Route Mode.
 
-## Output Rules
+### Direct Draft Mode
 
-Skill 的目标是帮用户更准确地表达，不是替用户改写成另一部作品。
+When the user says 直接、只要提示词、可用于生成、prompt only, or otherwise asks for a ready candidate, output only the VC prompt. Do not prepend 判断、执行动作、输出结果, or internal routing language.
 
-### 长度与形态原则
+### Default Result-First Mode
 
-- 默认不要显著长于原文，也不要把极短输入扩成冗长散文。
-- 没有依据的内容一律不补，尤其不能凭空增加人物关系、剧情反转、场景细节或情绪变化。
-- 单段输出时，尽量收束为一条可直接用于生成的提示词。
-- 保留结构不等于保留编号。只有当用户明确要求保留镜头号、段号、列表格式或交付结构时，才保留编号输出；否则多段内容默认以自然分段呈现。
-- 在信息充分且无额外约束时，单段或单镜头通常控制在 30 至 120 字；如需保留结构、台词或多段体验推进，可适当放宽。
-- 当用户明确要求保留原结构时，优先保留结构，而不是追求更短。
+Return the prompt or preserved text first. Add one short 说明 only when a technical control was translated, a hard-constraint conflict forced a weaker rewrite, the task is low-fit, or another specialist owns the final artifact.
 
-### 用户可见格式
+### Review Or Comparison Mode
 
-默认采用四段式输出，顺序固定：
+When the user asks for judgment, analysis, or reasons, show:
 
-```markdown
-判断：
-[是否适合 VC、原文是否已足够可用、信息是否充分]
+1. concise judgment
+2. chosen handling action
+3. VC result
+4. only necessary constraint or handoff note
 
-执行动作：
-[直接放行 / 轻度提纯 / 直接改写 / 先补问 / 原样保留 / 可选 VC 版]
+For A/B comparison, present both labeled artifacts only when the user requests both in the current turn and the execution specialist is ready to draft. If the user asks for the VC side first, return it plus one handoff sentence unless Direct Draft Mode was requested. If the execution side is blocked, return the VC version plus that specialist's minimum questions; if it is unavailable, return the VC version plus one missing-side sentence.
 
-输出结果：
-[实际改写结果、原样保留文本，或补问内容]
+### Question Mode
 
-补充说明：
-[仅在需要时说明弱化/删除/转译的技术控制，已保留的台词、旁白、音乐、音效等硬约束，或提示用户如何保留参数、结构、节奏点]
-```
+When information is genuinely blocking, output only the 1-3 minimum questions. Do not surround them with a full diagnostic report.
 
-当无需补充说明时，可省略第四段。简单请求可以把“判断”和“执行动作”各压缩成一行，但不要省略动作标签。
+### Route Mode
 
-If the user asks for A/B comparison, provide the VC version and a handoff note: use `aigc-seedance-prompt` for the standard execution version or final platform version.
+When another specialist owns the artifact, state the boundary and route in one concise sentence. Do not expose the VC workflow or provide a second deliverable unless the user explicitly requested both.
 
-## References
+## Failure And Recovery
 
-Load references only when they materially change the answer:
+| Trigger | First action | If that still cannot satisfy the request |
+|---|---|---|
+| No explicit Vibe invocation | do not activate VC; use the proper specialist | ask only if artifact ownership is genuinely ambiguous |
+| Final platform wording or complex execution | route to aigc-seedance-prompt | if unavailable, provide a platform-neutral VC core and mark the missing finalization step |
+| A chosen rewrite lacks a visible anchor or action/state, or a shared-experience multi-shot rewrite lacks its linking relation | ask 1-3 blocking questions | use a bounded placeholder version only when explicitly requested; otherwise preserve the source |
+| Hard constraint conflicts with creative rewriting | preserve the constraint and reduce rewrite strength | return the source or an explicitly optional variant |
+| UI demo, tutorial, procedure, or functional explainer | preserve or lightly clean the instruction | route to the relevant execution workflow; do not add atmosphere |
+| Strict long-dialogue or word-level sync | do not VC-rewrite the synchronized portion | extract only the separable visual portion when the user wants that |
+| Mature prompt already works | pass through unchanged; classify any needed clarity fix as light refinement | explain nothing unless the user asked for a review |
+| A requested shared-experience or continuity rewrite lacks a relation between shots | ask what links the shots | preserve separate segments and their order |
 
-- Read `references/seedance-official-vibe-guide.md` when the user explicitly asks for official Seedance Vibe guidance, wants official-style calibration, asks why Vibe works, compares Vibe vs Seedance outputs, or a Vibe draft needs style correction.
-- Do not load the official guide for ordinary short Vibe prompts. The core workflow above is enough for normal use.
+## Reference
 
-## Quick Reference
-
-| 输入类型 | 优先判断 | 缺什么先问 | 默认动作 | 输出风格 |
-|---|---|---|---|---|
-| 已有明确主体、动作、氛围的单幕提示 | 高概率适合 VC；看是否已足够聚焦 | 缺风格、画面中心或主状态时再问 | 直接改写、轻度提纯，或直接放行 | 直接输出一条可生成提示词 |
-| 多镜头叙事，但共同服务一个统一体验 | 适合 VC；关键看情绪线、主题线、记忆线是否连贯 | 镜头之间关系、递进逻辑不清时再问 | 保留结构改写，必要时分组 | 按分段或保留原结构输出 |
-| 分镜号、参数很多，但底层是情绪或故事场景 | 属于可 VC 转译，不因执行写法拦截 | 主体验、主动作、主关系不清时先问 | 去噪后转译，保留叙事与情绪意图 | 删除参数，转成自然画面表达 |
-| 品牌展示、角色展示、风格化广告 | VC 部分适配，不一定必须转写 | 情绪目标、风格方向不清时先问 | 轻度提纯或可选 VC 版 | 先保留原意，必要时给一版更有体验感表达 |
-| 只有抽象词，如“自由”“高级感”“很有力量” | 信息不足，不应硬写 | 视觉锚点、场景、动作或状态 | 先补问，不直接改写 | 先提 1 至 3 个短问题 |
-| 画面提示中已写清台词、旁白、音乐、音效 | 可部分 VC；声音内容优先级高 | 仅在画面部分信息不足时先问 | 保留声音内容，只改写画面部分 | 先说明“声音保留不改” |
-| 用户明确要求保留镜头编号、参数、交付结构 | 约束优先；不应擅自删除 | 通常不需要补问 | 原样保留或额外提供可选 VC 版 | 说明“先按执行稿保留” |
-| 功能演示、UI 教程、步骤说明 | 低适配；目标不在创意转化 | 通常不进入 VC 补问 | 原样保留，必要时拆分 | 自然说明不建议 VC |
-| 长篇剧情且要求精确对白同步 | 低适配；属于能力或工作流边界 | 通常不进入 VC 补问 | 不做 VC 改写，可拆纯画面部分 | 说明可单独拆纯画面部分 |
-| 中英混合、含少量技术术语的创意输入 | 若底层体验明确，仍适合 VC | 仅在主体、关系、风格不清时先问 | 转译术语，保留核心气质 | 输出中文自然画面表达 |
+Read references/seedance-official-vibe-guide.md only when the user asks for official Seedance Vibe guidance, official-style calibration, why Vibe works, a Vibe-versus-Seedance comparison, or style correction against the official method.
 
 ## Avoid
 
-- Do not make every prompt poetic, dreamy, or memory-like.
-- Do not add backstory, character relationships, symbolic interpretation, or emotional changes not present in the source.
-- Do not erase technical constraints that the user explicitly asked to keep.
-- Do not turn VC output into the final Seedance code block unless the user later routes it to `aigc-seedance-prompt`.
-- Do not expose internal fit labels or explain the full classification process.
+- Do not activate from ordinary atmosphere or emotion language alone.
+- Do not make every prompt poetic, dreamy, nostalgic, or memory-like.
+- Do not add relationships, plot, props, symbols, or emotional changes absent from the source.
+- Do not overwrite hard constraints with creative preferences.
+- Do not turn VC output into final Seedance formatting.
+- Do not ask style questions for low-fit functional work.
+- Do not expose internal fit codes, workflow steps, or mandatory wrapper labels.
+- Do not rearrange sound or dialogue timing under the name of cleanup.

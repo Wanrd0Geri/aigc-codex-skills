@@ -8,11 +8,11 @@ Use these rules when drafting the final Seedance prompt.
 - Common generation settings such as resolution and aspect ratio are selected in the platform UI. Do not write aspect ratio, frame ratio, or canvas ratio in the final prompt unless the user explicitly asks to include it. Use the user's requested segment duration when provided. For long-form work, generate connected segments and split only when the target platform's duration limit requires it.
 - Treat real recognizable human faces, celebrity likeness, trademarked characters, and protected IP cautiously. If the user references such material, keep the prompt generic or ask for rights-safe handling when needed.
 - Do not expose asset IDs as visual subjects. Build a semantic bridge from each reference asset to its visual role.
-- Every final Seedance prompt opening overview must end with `无配乐，无字幕。` This does not mean silence: keep diegetic speech, environment sound, and necessary action sound when they are part of the shot.
+- This production workflow uses `无配乐，无字幕。` as a fixed delivery specification, not as a claim about model capability. New-generation overviews must end with that phrase. Targeted edit commands may begin with a source anchor and time range, but the delivered clip still follows the same policy. Dialogue, environment sound, and necessary action sound remain allowed.
 
 ## Final Prompt Shape
 
-Put the final Seedance prompt in one fenced code block. The code block contains only the executable prompt body, not explanations or internal rules. Short headings such as `参考图使用` or `生成注意` are allowed only when they help parse complex references or high-risk constraints.
+Put the final Seedance prompt in one fenced code block. The code block contains only the executable prompt body, not explanations or internal rules. Use headings such as `参考图使用` only when they help parse complex references. Do not expose an internal failure checklist as a heading or warning tail; an unavoidable hard platform/safety or visible text/logo/watermark warning may appear as one short sentence after the positive staging.
 
 Write the prompt as **natural Chinese prose**, not a parameter list. The shot lead-in (`镜头N：x秒，景别。`) is the only structured marker — everything after it should read as complete sentences a director would say to a crew. See SKILL.md `Shot Line And Execution Body` for the writing-style discipline.
 
@@ -53,17 +53,26 @@ After every reference label, immediately attach a semantic noun or role to preve
 - Avoid: changing `@庠序场景.png` into `庠序场景.png` or `参考图1` without preserving `@`
 - Avoid: bare labels without a character, object, scene, first-frame, or end-frame role.
 
-When multiple references are provided, assign each a clear responsibility. Common roles include character, face, costume, scene, prop, lighting, action, camera movement, edit rhythm, effect behavior, first frame, end frame, style, product appearance, typography, BGM, sound effect, voice tone, or spoken rhythm. Keep the most important 1-3 responsibilities unless the user explicitly needs more.
+When multiple references are provided, assign each a clear responsibility. Common roles include character, face, costume, scene, prop, lighting, action, camera movement, edit rhythm, effect behavior, first frame, end frame, style, product appearance, typography, sound effect, voice tone, spoken rhythm, or beat timing. Keep the most important 1-3 responsibilities unless the user explicitly needs more.
+
+Treat every role as an attribute whitelist. Use only the attributes named after that anchor:
+
+- `只参考轮廓` means shape and proportion only; do not add color, material, surface, text, brand, or function from that asset.
+- `只参考人物身份` does not authorize copying pose, framing, lighting, environment, or action.
+- `只参考环境` does not authorize copying the source camera, composition, or character placement.
+- `只参考构图` does not authorize copying identity, style, material, or object design.
+
+Never fill an unassigned attribute just because it is visible in the reference. When user text and a reference differ, the latest user instruction and the narrower explicit role win.
 
 For video references, name the exact layer being reused:
 
 - Camera: movement path, lens feel, framing, or one-take structure.
 - Action: choreography, gesture timing, performance rhythm, or object motion.
-- Edit rhythm: cuts, pauses, impact beats, or music synchronization.
+- Edit rhythm: cuts, pauses, impact beats, or timing borrowed from an audio/video reference without adding music to the delivered clip.
 - Effects: transformation behavior, particles, destruction, liquid, smoke, light, or transition logic.
-- Sound: environment sound, action sound, voice tone, BGM rhythm, or beat timing.
+- Sound: environment sound, action sound, voice tone, or beat timing. A music-bearing reference may guide timing but must not add BGM under this workflow.
 
-For audio references, define whether they serve as BGM, beat sync, sound effect, voice tone, speech pace, or emotional rhythm reference. Do not add music or voiceover just because audio exists; use it only when the user requests or the reference role requires it.
+For audio references, define whether they serve as beat timing, sound effect, voice tone, speech pace, or emotional-rhythm reference. Do not add BGM, songs, lyrics, subtitles, music-driven montage, or voiceover merely because audio exists.
 
 For long images, collages, or grids, recommend splitting them into single references. If the user proceeds without splitting, clarify which sub-area or visual role each reference should carry.
 
@@ -92,6 +101,8 @@ Use Chinese terms consistently across all shots unless the user explicitly asks 
 
 Use only one main camera movement per shot. Put the shot size, camera position, and movement near the beginning of the shot paragraph, then explain the real movement in natural language.
 
+If a global instruction locks camera position, focal length, foreground ratio, subject position, or composition across the segment, every shot label and camera sentence must preserve that lock. Do not write `中远景` followed by `中近景` when the same fixed framing is supposed to remain unchanged; describe focus or performance changes without implying a new crop.
+
 ## Video Editing
 
 For edits to an existing video, specify:
@@ -100,11 +111,12 @@ For edits to an existing video, specify:
 - Spatial location within the frame.
 - What to add, delete, or change.
 - What must remain continuous: character identity, lighting, camera movement, action rhythm, and background geometry.
+- The delivered clip remains without music and subtitles; preserve requested dialogue, environment sound, and action sound only.
 
 Example pattern:
 
 ```text
-在0-4秒的画面右侧增加一团缓慢扩散的冷色雾气，保持人物朝向、镜头运动、背景光线和动作节奏不变。
+在@视频1（原始镜头参考）的0-4秒画面右侧增加一团缓慢扩散的冷色雾气，保持人物朝向、镜头运动、背景光线、对白、环境声和动作节奏不变。成片无配乐，无字幕。
 ```
 
 ## Video Extension And Shot Bridge
@@ -122,7 +134,7 @@ For shot bridge:
 
 ## Stability Defaults
 
-For ordinary Vibe-first or simple prompts, do not add a separate `稳定边界` section. Place necessary constraints inside the shot body by describing what is present, centered, moving, lit, heard, held, or looked at. Use a short `生成注意` section only for hard safety, visible text/logo/watermark, identity drift, reference-role conflict, or a user-explicit prohibition that cannot be expressed as positive visible staging.
+For ordinary Vibe-first or simple prompts, do not add a separate `稳定边界` section. In complex prompts, keep identity, subject-count, continuity, and reference-role constraints inside the overview, reference map, composition requirements, or shot body. Multiple subjects or references alone never justify a warning tail. Run failure checks silently. Only an unavoidable hard platform/safety issue, visible text/logo/watermark, or user-explicit prohibition that cannot be expressed as positive staging may add one short `生成注意` sentence.
 
 - Subject identity remains clear through clothing, silhouette, position, or prop anchors.
 - Facial features, body structure, and movement stay natural.

@@ -1,27 +1,30 @@
 ---
 name: aigc-image-edit-prompt
-description: Use when the user has an attached image or frame and asks for a Nano Banana/Gemini, ChatGPT/OpenAI, or other image-to-image repair/edit prompt that preserves subject identity, pose, camera, composition, or useful design choices.
+description: Use when the user has an attached image or frame and asks for a Nano Banana/Gemini, ChatGPT/OpenAI, or other image-to-image repair/edit prompt, including cinematic frame repair, conservative cleanup, product-image cleanup, subject integration, reference matching, or prompt-only delivery while preserving protected identity, geometry, text, camera, composition, medium, or design choices.
 ---
 
 # AIGC Image Edit Prompt
 
-This skill turns a flat-looking storyboard or AI-generated still into a cinematic frame by **diagnosing what's wrong**, then **writing a precise image-to-image prompt** that fixes it while preserving the subject the user already likes.
+This skill inspects an existing image, identifies only the changes the user actually wants, and writes a precise image-to-image edit prompt that protects everything outside that edit scope. Cinematic repair is one mode, not the default for every image.
 
-## When to use
+Cross-skill routing in this file assumes the companion AIGC skills are installed. If a named skill is unavailable, apply its core constraint yourself instead of blocking (e.g. without `aigc-visual-diagnose`, run the neutral read and diagnosis inside this skill).
 
-The user has an image (usually a storyboard panel, keyframe, or AI-generated still) that *almost* works but feels uncinematic — washed out, lit wrong, color-polluted, with subjects that look pasted on top of the background. They want a prompt they can paste into **Nano Banana series** or **ChatGPT image editor series** to fix it.
+## Scope and routing
+
+Handle storyboard panels, keyframes, AI-generated stills, illustrations, stylized 3D frames, product images, and other source-faithful repair tasks. The deliverable is a prompt the user can paste into a **Nano Banana/Gemini** or **ChatGPT/OpenAI** image editor; do not call an image-generation tool from this skill.
 
 If the user only wants to understand why an image feels wrong and has not asked for a ready edit prompt, route the task to `aigc-visual-diagnose` first.
 
-The user does NOT want you to redraw the image yourself. They want a **diagnosis report + a ready-to-paste prompt**.
+Default to a concise diagnosis plus a ready-to-paste bilingual prompt. If the user asks for prompt-only output, return only the requested prompt blocks. If the user asks only for diagnosis, route to `aigc-visual-diagnose` and do not append an edit prompt.
 
-## The core philosophy
+## Core contract
 
-A "cinematic" image is not a style — it's a set of disciplined choices a real cinematographer makes about light, color, and atmosphere. Most AI-generated images fail to feel cinematic because they violate one or more of these choices. Your job is to identify *which* choices are being violated, name them in cinematography vocabulary, and write a prompt that corrects them surgically without destroying what already works.
+Treat image editing as a closed change request:
 
-The default output has **two artifacts** unless the user asks for prompt-only output:
-1. **A diagnosis report** — what's wrong, in plain language plus cinematography terms
-2. **A bilingual edit prompt (中文 + English)** — image-to-image instructions in `[Preserve] / [Transform] / [Avoid]` format, tuned for the user's chosen target model
+1. **Protected facts** come from the source image and the user's explicit preserve list.
+2. **Allowed changes** are only the user-named edits plus the minimum visible corrections required to make those edits coherent.
+3. **Unmentioned content stays unchanged.** Do not treat lighting, grading, haze, depth, rim light, material, background, or surface texture as automatically editable.
+4. **Exact text is data.** Quote every protected label, logo, number, or caption exactly and preserve its spelling, count, placement, hierarchy, and legibility unless the user asks to change it.
 
 ## Workflow
 
@@ -60,9 +63,20 @@ If a handoff block conflicts with the visible image, trust the visible image and
 - If the requested fix would change face identity, costume, pose, camera angle, or character count, warn and rewrite the prompt to protect those elements unless the user explicitly wants them changed.
 - If a prior readiness note says redesign first, do not write a repair prompt as if the frame is usable; state the redesign risk before drafting.
 
-### Step 2 — Diagnose the highest-impact cinematic problems
+### Step 1.5 — Select the edit intent
 
-Read `references/diagnostic-dimensions.md` as an internal scan. Check all 8 dimensions, then rank the findings by how much they hurt the image. Do not output a full 8-row matrix unless the user explicitly asks for detailed grading.
+Choose one path before diagnosing:
+
+- **Conservative cleanup**: triggered by `只`, `仅`, `保持`, `不要电影感`, `不要重做`, product cleanup, dust removal, glare control, text preservation, or equivalent narrow wording. Treat the user's named changes as the complete transform whitelist. Keep every other visible fact unchanged.
+- **Cinematic or art-direction repair**: use only when the user asks for cinematic quality, atmosphere, lighting redesign, visual hierarchy, or subject-environment integration. Diagnose the relevant visual system, then change only the selected high-impact items.
+- **Reference matching**: when a second image is a target, transfer only the attributes the user assigns to it; do not copy identity, layout, text, material, or style from the reference unless assigned.
+- **Redesign**: when face, costume, pose, camera, character count, product geometry, or scene structure must change, state which protected facts will be released before drafting.
+
+For product or packaging cleanup, lock the product silhouette and proportions, material and color identity, cap/closure, exact label text and typography layout, camera, crop, scale, background/set, contact shadow, and every unrequested prop. Do not add cinematic grading, shallow depth of field, dramatic relighting, new reflections, or a rebuilt set unless explicitly requested.
+
+### Step 2 — Diagnose the highest-impact visible problems
+
+For cinematic or subject-integration work, read `references/diagnostic-dimensions.md` as an internal scan and rank only the relevant findings. For conservative cleanup, product, illustration, graphic, or text-preservation work, inspect the user's whitelist first and skip irrelevant cinematography dimensions. Do not output a full 8-row matrix unless the user explicitly asks for detailed grading.
 
 In the user-facing diagnosis, name only the decisive findings: usually the top 3 issues, or up to 5 for a complex image. Be specific. "Lighting feels off" is not a diagnosis. "The key light is hard, top-down, and over-saturated cyan, while the subject's fill light disagrees in temperature" is a diagnosis.
 
@@ -79,12 +93,7 @@ Default lock-list (preserve unless user says otherwise):
 - Camera angle and framing
 - Number and identity of characters (no adding/removing)
 
-Default transform-list (these are fair game):
-- Lighting (direction, hardness, color, intensity)
-- Color grade (temperature, saturation, contrast)
-- Atmosphere (fog density, depth gradient)
-- Black point and highlight roll-off
-- Edge light / rim light on subjects (to integrate them with environment)
+Candidate transform areas are not permission to change them. Select only areas authorized by the user or required by the diagnosed edit: lighting, color, atmosphere, contrast, material response, surface cleanup, subject integration, or background clarity.
 
 ### Edit Strength Budget
 
@@ -94,16 +103,16 @@ Choose the smallest edit strength that can fix the image:
 - **Medium repair**: preserve subject identity, pose, camera, and main environment; change lighting system, material hierarchy, integration, or background clarity.
 - **Heavy repair**: use only when the user accepts redesign risk; state what may change before drafting.
 
-Keep the final prompt surgical. Prefer 3-7 transform directives and 1-3 avoid directives. If a fix does not affect the visible problem, leave it out.
+Keep the final prompt surgical. Use the fewest transform and avoid directives that fully express the requested edit. If the request contains many independent changes, separate them into small edit rounds instead of overloading one prompt. If a fix does not affect the visible problem, leave it out.
 
 ### Step 4 — Choose the target model and write the bilingual edit prompt
 
 Use one skill for both models; only the final prompt template changes.
 
-- If the user says **Nano Banana**, **Nano Banana Pro**, **Gemini image**, **Gemini 3 Pro Image**, **Google image editor**, or a later Nano Banana/Gemini image version, use the Nano Banana template.
-- If the user says **ChatGPT Images 2.0**, **GPT image 2.0**, **GPT image**, **OpenAI image**, **ChatGPT image editor**, or a later ChatGPT/OpenAI image editor version, use the ChatGPT Images template.
+- If the user names **Nano Banana**, **Nano Banana Pro**, **Nano Banana 2**, **Gemini image**, **Gemini Image**, or **Google image editor**, use the Gemini-family template without assuming a specific hidden version.
+- If the user names **ChatGPT Images**, **gpt-image-2**, **GPT Image**, **OpenAI image**, or **ChatGPT image editor**, use the OpenAI-family template without translating a product label into an invented model behavior.
 - If the user names a target model, output only that model's prompt.
-- If the user does not name a model, ask once only when the model choice materially changes the edit strategy. If the user asks for compatibility, wants to compare, or has already provided enough image/edit intent to proceed, output both Nano Banana/Gemini and ChatGPT/OpenAI versions.
+- If the user does not name a model and the edit intent is clear, do not block. When both model families can use the same instructions, output one bilingual cross-platform prompt. Split into two provider versions only when the edit strategy, reference indexing, mask instruction, or platform surface genuinely differs.
 
 Read `references/prompt-templates.md` for the current model templates and adaptive surface-cleanliness controls. For later model versions, apply the closest template unless the user provides newer constraints.
 
@@ -116,11 +125,12 @@ Before output, run a natural-description pass on both Chinese and English prompt
 - For general natural-language rewrites or teaching requests, use `aigc-natural-language-prompt`; inside this image-edit skill, apply that standard to the edit directives while preserving `[Preserve] / [Transform] / [Avoid]`.
 - Keep `[Preserve]`, `[Transform]`, and `[Avoid]`, but write each directive as an edit instruction with a visible outcome, not as a stack of labels.
 - Every transform line should say what changes and where it is visible: light direction on the subject, shadow density in the background, haze depth between layers, rim light on edges, color temperature in highlights/shadows.
-- Prefer 3-7 high-leverage transform directives. More directives usually make image editors average the request instead of following it.
+- Prefer the fewest high-leverage transform directives that complete the edit. Split unrelated changes into later passes so each result is easier to inspect and correct.
 - Do not use generic boosters such as `make it cinematic`, `high quality`, `masterpiece`, `ultra detailed`, `高级感`, `大片感`, or `氛围拉满`. Translate them into concrete lighting, grade, contrast, atmosphere, material, or composition changes.
 - Chinese and English versions should be semantic mirrors. Do not let the English become a keyword prompt while the Chinese stays natural, or vice versa.
+- Before delivery, compare the Chinese and English blocks line by line: the preserved objects, transform count, locations, measurements, exact text, and avoid boundaries must match. Neither language may introduce an extra cinematographer, film stock, material, style, or edit.
 
-For ChatGPT Images 2.0 / GPT-image style outputs, explicitly check whether the source or desired edit risks **碎裂感 / fragmented rendering**: noisy micro-texture, visible brush strokes, painterly surface buildup, broken edges, over-detailed ornaments, or patchwork concept-art texture. If present, use the adaptive surface-cleanliness controls in `references/prompt-templates.md`. Add only the level needed for the image:
+For ChatGPT/OpenAI GPT Image outputs, check whether the source or desired edit risks **碎裂感 / fragmented rendering**: noisy micro-texture, visible brush strokes, painterly surface buildup, broken edges, over-detailed ornaments, or patchwork concept-art texture. This is a diagnosed failure heuristic, not a universal provider property. If present, use the adaptive surface-cleanliness controls in `references/prompt-templates.md`. Add only the level needed for the image:
 
 - Clean source, prevention only: a light preserve/transform guard that keeps the source's clean surface quality and clear large shapes.
 - Mild issue: 1-2 positive structure terms in `TRANSFORM`.
@@ -133,17 +143,11 @@ Output **both Chinese and English** versions by default. If the user asks for on
 
 ### Step 5 — Present the result
 
-Use this default structure for the final response:
+Use this compact default structure for the final response:
 
 ```
-## 视觉诊断
-[Step 1 neutral read in 3-4 sentences]
-
-## 核心问题
-[Top 3 issues, ranked by impact. Use up to 5 only when needed.]
-
-## 优化策略
-[What to preserve, what to change, in plain language]
+## 判断
+[1-2 sentences naming the decisive visible problem and edit strength]
 
 ## 中文提示词
 [Full prompt in Chinese, formatted for the chosen model]
@@ -151,28 +155,27 @@ Use this default structure for the final response:
 ## English Prompt
 [Full prompt in English, formatted for the chosen model]
 
-## 使用说明
-[Which model this is tuned for, how to paste it, what to expect]
 ```
 
-If the user asks for a full diagnostic matrix, add `## 八维评估` before `## 核心问题`. Otherwise keep the detailed rubric internal.
+If the user asks for detailed analysis, expand to `视觉观察 -> 核心问题 -> 优化策略 -> prompts`. If the user asks for a full diagnostic matrix, add `八维评估`. Otherwise keep the detailed observation and rubric internal. Add usage instructions only when the paste workflow or provider difference is not obvious.
 
 If outputting both models, keep the diagnosis and strategy shared in Chinese, then provide separate Nano Banana and ChatGPT Images prompt sections.
 
 ## What good looks like
 
-A good output for this skill should make the user think: "Ah, *that's* why my image felt off — I wouldn't have been able to name it, but now I can." The diagnosis should teach them cinematography vocabulary while solving their immediate problem. The prompt should produce an image that looks like a deliberate creative choice, not a "filtered" version of the original.
+A good output names the decisive defect without burying the user in a report, protects every source fact outside the edit scope, and gives the editor visible instructions it can execute. The result should look intentionally repaired rather than regenerated or generically filtered.
 
 ## What to avoid
 
-- **Don't be vague.** "Make it more cinematic" in the output prompt is failure — the prompt itself must be specific enough that another cinematographer could shoot it.
+- **Don't be vague.** `更高级` or `更有质感` without a visible edit target is failure. Translate it into the smallest relevant change in light, color, material, surface, depth, text, or integration.
 - **Don't redraw the user's image yourself.** This skill outputs a prompt; it does not call image generation tools.
 - **Don't change what the user didn't ask to change.** If the diagnosis says "the costume is fine" then the [Preserve] block must explicitly protect the costume.
-- **Don't pile on every possible improvement.** Pick the 3-5 highest-leverage changes. A surgical prompt outperforms a maximalist one — image editors lose precision when given too many transformation directives at once.
+- **Don't pile on every possible improvement.** Keep only the highest-leverage changes for this pass; move unrelated changes into a later pass so drift is easier to detect.
 - **Don't translate Chinese cinematography vocabulary literally into English.** "电影感" is not "movie feeling" — it's "cinematic quality" or, more precisely, named techniques like "low-key lighting", "anamorphic compression", "film stock emulation".
 - **Don't let the final prompt read like a parameter dump.** Keep the block structure, but make the wording describe visible edits a model can apply to the source image.
 - **Don't ignore a prior readiness warning.** If the user carries over a diagnosis that says the frame should be redesigned or repaired first, state that risk before writing an edit prompt.
 - **Don't use text-to-image reverse-prompt language.** This skill edits an existing image, so the prompt must protect source identity, blocking, camera, and useful design choices.
+- **Don't cinematicize a conservative request.** Product cleanup, dust removal, glare control, label repair, and `不要电影感` are closed-scope edits, not invitations to redesign lighting or staging.
 
 ## Reference files
 

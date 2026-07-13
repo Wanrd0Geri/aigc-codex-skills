@@ -59,6 +59,10 @@ Before returning the final prompt, silently scan against the failure checklist b
 - The final shot includes a continuity anchor only when a next segment depends on posture, gaze, object position, movement direction, light state, or camera position.
 - Subject identity anchors are stable (clothing, silhouette, prop, or position) for every important subject.
 - Spatial relationships (left/right, foreground/background, near/far) are stated where they affect the action.
+- Every reference contributes only its assigned attributes; no color, material, text, identity, lighting, style, or composition has leaked from an unrelated role.
+- Global camera, focal-length, framing, foreground-ratio, subject-position, and composition locks agree with every per-shot label.
+- Every style or medium explicitly named by the user is preserved and translated into visible production choices.
+- The user's initiating action remains visible; `回到/进入/抵达/打开/离开/发现/转向` is not silently converted into an already-completed starting state.
 
 If anything is missing, fix it before adding style or atmosphere details.
 
@@ -71,15 +75,19 @@ These are the failure modes most likely to break a Seedance prompt. Use this ext
 - **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
 - **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
 - **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
+- **Reference-role leakage** — a silhouette-only asset must not contribute material, color, text, brand, lighting, identity, or function. Treat every assigned role as a whitelist, not a loose inspiration source.
+- **Global composition drift** — fixed long lens, fixed camera, fixed foreground percentage, fixed subject position, or locked framing must remain consistent across shot labels and descriptions. Do not change shot size merely to create variety.
 - **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking-like following in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
 - **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
 - **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
+- **Unrequested subject inflation** — do not add background staff, crowds, bystanders, vehicles, animals, or decorative business just because the location could contain them. Keep only subjects and objects required by the user's action or continuity.
 - **Inventing style labels not established by the user or references** — e.g. `三渲二`, `UE5风格`, `照片级写实`, `cel shading`, `cinematic`. If style is unspecified, write neutral execution quality only.
-- **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. First describe what is visible and desired: `主体清晰可辨，身体结构自然，动作物理合理`. Use negative wording only for hard safety, visible text/logo/watermark, identity drift, or an explicit user prohibition that cannot be phrased as positive staging.
+- **Deleting an explicit style because no style reference is attached** — a user-named medium or style is already established. Preserve it and translate it into material, silhouette, lighting, and motion behavior.
+- **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. First describe what is visible and desired: `主体清晰可辨，身体结构自然，动作物理合理`. Keep identity, subject-count, continuity, and reference-role controls inside the existing positive staging or reference map. Run this failure check silently; do not turn it into `生成注意` or a negative tail. Only an unavoidable hard platform/safety issue, visible text/logo/watermark, or explicit user prohibition that cannot be phrased as positive staging may add one short warning sentence.
 - **Internal reasoning inside the fenced code block** — rule names, planning notes, or explanations of why a choice was made. The code block contains only the executable prompt body.
 - **Abstract taste words without a visible carrier** — e.g. `氛围感强烈`, `极具张力`. Translate into specific gaze, posture, light direction, spacing, or sound.
 - **Flat performance labels** — e.g. `he looks sad` or `the fox acts funny`. Replace with body part, contact point, gaze path, expression transition, movement direction, and only the anchor needed for the next beat.
-- **Music or subtitles drift** — every final prompt overview ends with `无配乐，无字幕。` Keep diegetic speech, environment sound, and necessary action sound only when the shot needs them.
+- **Music or subtitles drift** — this workflow always delivers `无配乐，无字幕。` New-generation overviews state it directly; targeted edits keep the same policy without forcing a new shot overview. Dialogue, environment sound, and necessary action sound remain allowed.
 - **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
 - **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
 - **Treating reference-image prompts like text-to-video prompts** — when references exist, preserve literal `@...` anchors such as `@图1` or `@庠序场景.png`, name what each reference is used for, and state what the written shot overrides.
