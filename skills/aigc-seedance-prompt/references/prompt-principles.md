@@ -2,6 +2,14 @@
 
 Use this reference when a Seedance request needs creative completion, shot design, style handling, continuity judgment, or translation from abstract intent into visible video instructions. The goal is not to add decoration; it is to make the video legible, emotionally effective, and stable for generation.
 
+## Contents
+
+1. Core judgment and incomplete information
+2. Shot design and execution notes
+3. Abstract-to-visible and natural language
+4. Style and medium handling
+5. Continuity and complex-scene stability
+
 ## Core Judgment
 
 - Identify the segment goal: what the viewer must understand, feel, or see change during the segment.
@@ -36,11 +44,11 @@ Each shot should have:
 
 Write each shot as one practical execution paragraph in natural Chinese prose:
 
-1. Shot lead-in: `镜头N：x秒，景别。` End with a period so the prose body starts cleanly.
+1. Shot lead-in: `镜头N：景别。` End with a period so the prose body starts cleanly. State total duration once in the overview; do not assign exact seconds to every generated shot by default.
 2. Composition sentence: write angle, camera position, main camera movement, and visual focus as one complete Chinese sentence with a verb — not as a chain of bare parameter phrases.
 3. Execution body: practical, flowing sentences covering what appears first, where subjects or objects start, how they move, how the camera relates to them, what frame-space they cross, what exits or lands, and what a later shot needs to inherit. Use connectives (`随后`, `紧接着`, `与此同时`, `此时`) only when they make beats actually link; use `最终` only when a concrete endpoint matters.
 
-Use this style because Seedance responds better when the shot number, duration, and shot size are explicit and the rest reads like executable shooting instructions a director would speak aloud — not a comma-chained parameter dump and not a rigid template.
+Use this style because Seedance benefits from clear shot order and shot size while the rest reads like executable shooting instructions a director would speak aloud — not a comma-chained parameter dump and not a rigid template. The official Seedance 2.0 guide warns that precise time ranges such as `0-3秒` are unstable; express generated timing through event order or `前段 / 中段 / 后段`, except for targeted source-video edits or an explicit timing-critical request.
 
 Keep it efficient. Natural prose should connect the beats and add verbs, not inflate a simple shot with unnecessary atmosphere or repeated stability language.
 
@@ -54,7 +62,7 @@ For action, VFX, object, flight, impact, transformation, or creature/character p
 - environment reaction such as cloud movement, water displacement, debris fall, light bloom, shadow shift, or mist clearing
 - posture, gaze, object position, movement direction, or light state only when the next shot must inherit it
 
-Do not drop composition information, but do not place it on a separate composition-label line. Put the shot size in the structured lead-in (`镜头N：x秒，景别。`), then write the angle, camera position, camera movement, and visual focus as the first complete sentence of the prose body.
+Do not drop composition information, but do not place it on a separate composition-label line. Put the shot size in the structured lead-in (`镜头N：景别。`), then write the angle, camera position, camera movement, and visual focus as the first complete sentence of the prose body.
 
 Avoid camera contradictions: `固定机位` means the camera holds while the subject moves through frame; `跟随拍摄` means the camera follows a subject or path and should specify whether it follows from above, behind, side, front, or near a specific object/body part.
 

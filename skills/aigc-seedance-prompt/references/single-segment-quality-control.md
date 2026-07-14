@@ -2,6 +2,13 @@
 
 Use this reference before finalizing any Seedance prompt. A long-form sequence only works if each segment can generate clearly on its own.
 
+## Contents
+
+1. Quality order and complexity downgrade
+2. Duration budget and positive staging
+3. Final check and failure checklist
+4. Minimal example
+
 ## Quality Order
 
 Check the segment in this order:
@@ -41,6 +48,8 @@ Rough timing:
 
 If the requested duration cannot hold all beats, split shots, reduce actions, or suggest extending the segment. Preserve the visible start state, main action, and necessary continuity anchor instead of squeezing several beats into one unreadable shot.
 
+Use this timing only as an internal feasibility budget. State total duration once in the final prompt, but do not assign exact seconds to every generated shot by default. The official guide warns that precise time ranges are unstable; keep exact ranges for targeted source-video edits or an explicit timing-critical request.
+
 ## Positive Visible Staging
 
 Describe the desired visible staging before considering any negative warning list:
@@ -56,6 +65,8 @@ Before returning the final prompt, silently scan against the failure checklist b
 
 - Each shot has one main action and one main camera movement.
 - The duration can realistically hold the number of action, camera, expression, and handoff beats.
+- Generated shots use event order rather than exact per-shot timestamps unless the task is a targeted edit or explicitly timing-critical.
+- Reference generation uses `参考`; video editing and extension address the source video directly without `参考`.
 - The final shot includes a continuity anchor only when a next segment depends on posture, gaze, object position, movement direction, light state, or camera position.
 - Subject identity anchors are stable (clothing, silhouette, prop, or position) for every important subject.
 - Spatial relationships (left/right, foreground/background, near/far) are stated where they affect the action.
@@ -70,10 +81,12 @@ If anything is missing, fix it before adding style or atmosphere details.
 
 These are the failure modes most likely to break a Seedance prompt. Use this extended scan for complex, reference-heavy, or unstable drafts:
 
-- **Parameter-list writing style** — e.g. `镜头1：5秒，中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：5秒，中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
+- **Parameter-list writing style** — e.g. `镜头1：中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
+- **Exact timing on every generated shot** — e.g. `镜头1：0-3秒`、`镜头2：3-6秒`. Keep total duration and shot order, then express timing as action sequence. Preserve exact time ranges for targeted edits to an existing source video.
 - **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
 - **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
 - **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
+- **Edit or extension miswritten as reference generation** — do not write `参考@视频1` when changing or continuing that clip. Use `严格编辑@视频1`、`向后延长@视频1` or `生成@视频1之后的内容`.
 - **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
 - **Reference-role leakage** — a silhouette-only asset must not contribute material, color, text, brand, lighting, identity, or function. Treat every assigned role as a whitelist, not a loose inspiration source.
 - **Global composition drift** — fixed long lens, fixed camera, fixed foreground percentage, fixed subject position, or locked framing must remain consistent across shot labels and descriptions. Do not change shot size merely to create variety.
@@ -103,7 +116,7 @@ These are the failure modes most likely to break a Seedance prompt. Use this ext
 @图2（环境与地表空间参考）作为地形、云层和光线基准。
 @图3（主人公外观参考）作为人物脸部、服装和体态参考。
 
-镜头1：4秒，远景。低角度固定机位贴近开阔地面拍摄，地面位于前景，云层和UFO位于画面中央上方。@图2（环境参考）的地面压在画面下方，远处云层被冷蓝色光线照亮。@图1（飞行器参考）的UFO从云层下方缓慢下降到画面中央，地面草叶被气流压低，少量尘土向外扩散，UFO的光束落点始终保持在画面中景范围内。
+镜头1：远景。低角度固定机位贴近开阔地面拍摄，地面位于前景，云层和UFO位于画面中央上方。@图2（环境参考）的地面压在画面下方，远处云层被冷蓝色光线照亮。@图1（飞行器参考）的UFO从云层下方缓慢下降到画面中央，地面草叶被气流压低，少量尘土向外扩散，UFO的光束落点始终保持在画面中景范围内。
 
-镜头2：4秒，中近景。机位来到主人公侧前方并缓慢推近，人物站在画面左侧前景，UFO光束落在画面右上方。@图3（主人公参考）保持脸部、服装和体态稳定，身体朝向天空中的UFO，衣摆被风向后带起，右手手指轻轻收紧。冷蓝色光线从上方照到主人公脸侧，他缓慢抬头看向光束，最后停在仰望姿态，身体仍朝向光束，为下一段走向光束的片段保留接点。主体识别稳定，空间关系清晰，动作承接清楚。
+镜头2：中近景。机位来到主人公侧前方并缓慢推近，人物站在画面左侧前景，UFO光束落在画面右上方。@图3（主人公参考）保持脸部、服装和体态稳定，身体朝向天空中的UFO，衣摆被风向后带起，右手手指轻轻收紧。冷蓝色光线从上方照到主人公脸侧，他缓慢抬头看向光束，最后停在仰望姿态，身体仍朝向光束，为下一段走向光束的片段保留接点。主体识别稳定，空间关系清晰，动作承接清楚。
 ```

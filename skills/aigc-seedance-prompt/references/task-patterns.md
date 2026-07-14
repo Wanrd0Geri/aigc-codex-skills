@@ -2,6 +2,13 @@
 
 Use this reference when a request matches a specific video format. These patterns are not mandatory templates; they are compact checks for what each format usually needs.
 
+## Contents
+
+1. Six-dimension scan
+2. Product, UGC, VFX, and dialogue
+3. Visible text and audio rhythm
+4. One-take, educational, and bridge patterns
+
 ## Six-Dimension Scan
 
 For vague or mixed requests, silently scan six dimensions before drafting:
@@ -49,10 +56,21 @@ Prioritize transformation logic and visible stages.
 Prioritize emotional turn, performance carrier, and readable blocking.
 
 - State who speaks, where they are, and what visible reaction follows each line.
+- Put each exact spoken line in braces: `角色说道{台词}`. Keep the dialogue language consistent except for proper nouns.
 - Keep dialogue short enough for the segment duration.
 - Use gaze, pause, breath, hand tension, posture, or object handling as the emotion carrier.
 - Avoid long backstory. Show the emotional beat inside the clip.
 - This workflow does not add subtitles; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
+
+## Visible Text, Subtitle, Or Logo
+
+Use only when the user explicitly requests visible text or overrides the no-subtitle policy.
+
+- Write visible text as: exact content + appearance timing + frame position + appearance method + color/style when needed.
+- Use `【字幕】` for subtitle text and state that it follows the spoken rhythm.
+- Prefer common characters; avoid rare characters and special symbols.
+- For an exact logo, font, or layout, assign a dedicated image reference instead of relying on description alone.
+- Keep visible text separate from dialogue: dialogue uses `{台词}`, discrete sound effects use `<音效>`, and music uses `（音乐）`.
 
 ## Audio Beat And Rhythm Reference
 
@@ -86,6 +104,7 @@ Prioritize clarity, cause-effect, and readable states.
 Prioritize inheritance and transition logic.
 
 - Assign each video a role: source clip, camera reference, action reference, style reference, end frame, or next-state target.
+- For a true bridge/track-completion task, address the sources directly in order: `@视频1，[可见过渡]，接@视频2`; do not describe them as ordinary reference videos.
 - Continue from the previous clip's ending posture, movement direction, light state, and camera momentum.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.

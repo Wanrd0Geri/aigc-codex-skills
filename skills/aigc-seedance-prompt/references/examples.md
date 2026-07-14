@@ -1,89 +1,101 @@
 # Seedance Prompt Examples
 
-Optional calibration examples covering the main task types this skill handles. Do not load this file for routine prompts. Read it only when the output shape is unfamiliar, when checking a diagnostic-mode format, or when a user explicitly asks for examples.
+Optional calibration examples for unfamiliar output shapes or diagnostic checks. Do not load this file for routine prompts.
 
-All examples below follow the natural-prose writing style: structured shot lead-in (`镜头N：x秒，景别。`) followed by complete Chinese sentences with verbs and connectives, not comma-chained parameter lists. See SKILL.md `Shot Line And Execution Body` for the underlying discipline.
+These examples are original adaptations of the task patterns in the [official Seedance 2.0 prompt guide](https://www.volcengine.com/docs/82379/2222480?lang=zh). They demonstrate task wording, not a mandatory house template.
 
-For the image-to-video case with multiple references, see also the UFO example in `single-segment-quality-control.md`.
+## Contents
 
-## Example 1: Pure Text-to-Video (No References)
+1. Pure text-to-video
+2. Video extension
+3. Video editing
+4. Diagnostic optimization
+5. Multimodal reference with subject definition
+6. Dialogue and sound markers
+7. Shot bridge
+8. Explicit visible text
 
-**User input**: 「想要一个雨夜便利店的镜头,女主在自动门外犹豫了一下,然后推门进去。8秒。」
+## 1. Pure Text-To-Video
 
-**Inferred task type**: text-to-video, single segment, two-shot.
-
-**Why two shots**: the emotional beat is the hesitation before entering. One shot would either lose the hesitation or compress it. Two shots let the hesitation read clearly, and let the entry land.
-
-**Final prompt**:
-
-```text
-本视频总时长 8 秒，两个镜头。深夜的城市街道上，一家二十四小时便利店亮着冷白色的灯光，店外正下着小雨，路面反射着店招的颜色，画面重点是女主在自动门外短暂停住后走进店内的犹豫瞬间。无配乐，无字幕。
-
-镜头1：4秒，中景。机位架在便利店玻璃门外，正面固定拍摄，人物站在画面中央偏前的位置，玻璃门与店内的冷白灯光构成背景。一位年轻女性站在自动门前两步开外，她的黑色长款风衣肩部已经被雨水打湿，右手握着一把还没撑开的折叠伞。她抬头看向店内透出的冷白色灯光，脚步在原地停住，肩膀也跟着微微下沉，呼出的白气在冷空气里缓缓消散。与此同时，背景里雨水正从店招边缘一滴一滴落到路面。
-
-镜头2：4秒，中近景。机位翻转到门内向外的反向角度，缓慢向女主推近，货架位于画面深处。女主从画面外侧迈出一步，身体进入自动门的感应范围，玻璃门向两侧滑开。此时店内暖气与门外冷空气在交界处生出一层短暂的雾气，女主的脚踏过店内地垫，左手将湿漉漉的伞收紧到身侧，目光投向画面深处的货架方向。她跨入店内时，身后的自动门正在缓缓关闭，身体朝向画面深处；如果下一段继续拍她挑选商品，这个朝向可以作为接点。整段保持主体识别稳定，动作承接清楚，光线由冷白外光过渡到店内暖光的方向不变。
-```
-
----
-
-## Example 2: Video Extension (Continuation From `@视频1`)
-
-**User input**: 「我有一个3秒的镜头,女主从画面右边走到中央停下来。我想接一段5秒的延续,她应该转过头看向左边窗外。」
-
-**Inferred task type**: video extension. The source clip's final frame provides the new clip's starting posture, light, and camera relationship.
-
-**Inheritance points**: position (画面中央), facing (背对/朝向需明确), light (与原片一致), camera momentum (原片是固定还是有运动需继承或停下).
-
-**Final prompt**:
+**User**: `雨夜便利店，女主在自动门外犹豫一下再进去，8秒。`
 
 ```text
-本视频总时长 5 秒，单镜头。承接@视频1（原始镜头参考）的结尾画面，女主已停在房间画面中央，身体朝向画面深处，房间内的暖色台灯光线、地面材质和墙面陈设都与@视频1保持一致，画面重点是她被窗外动静吸引后缓慢转头的延续动作。无配乐，无字幕。
+本视频总时长 8 秒，两个镜头。深夜街角的小型便利店亮着冷白灯，细雨落在空旷路面上，画面重点是女孩在门外短暂停住后跨进店内的情绪变化。无配乐，无字幕。
 
-镜头1：5秒，中景。保持@视频1结尾的机位与角度固定拍摄，女主停在房间画面中央，窗户位于画面左侧。她从@视频1的停步姿态开始，先有一个短暂的静止停顿，随后头部缓慢向左转动，肩膀略微跟着转动但脚步不动，目光停在画面左侧的窗户方向。此时窗外的冷色环境光照在她的左脸侧，与室内暖色台灯形成对比。整段中服装、发型、光线方向与机位都与@视频1保持连续；如果下一段要走向窗户，保留她侧脸朝向窗户、身体仍朝向画面深处的关系即可。
+镜头1：中景。固定机位从玻璃门外正面拍摄，女孩停在感应区外两步的位置，右手握着收拢的湿伞。她望向店内，肩膀轻轻下沉，手指在伞柄上收紧，门内灯光映在潮湿路面上。
+
+镜头2：中近景。镜头切到店内朝门外的角度并缓慢推近，女孩向前迈步，自动门向两侧滑开。她跨过门槛，把湿伞收在身侧，目光转向店内深处；身后的玻璃门缓缓合拢，冷雨声被室内轻微的电器低鸣取代。
 ```
 
----
+## 2. Video Extension
 
-## Example 3: Video Editing (Add Element To Existing Clip)
-
-**User input**: 「这个10秒的镜头,我想在3-7秒的画面左下角加一只缓慢走过的黑猫,其他都不要变。」
-
-**Inferred task type**: video editing. Need: time range, spatial location, what to add, what to keep continuous.
-
-**Final prompt**:
+**User**: `@视频1结尾是女主走到房间中央停下。向后延长5秒，她转头看左边窗外。`
 
 ```text
-在@视频1（原始镜头参考）的3-7秒区间内，画面左下角增加一只黑色短毛猫。这只猫从画面左侧边缘走入，沿着地面缓慢向画面中央方向移动两步后停下，身体朝向画面右侧，尾巴自然下垂。它的体型与画面中其他物体的近大远小关系保持一致，地面上的投影方向也与原片光线方向匹配。
+向后延长@视频1（原始镜头），生成其后的 5 秒内容。延续原片的固定机位、室内暖色台灯、人物服装和空间关系，女主从结尾的停步姿态自然继续。无配乐，无字幕。
 
-需要保持不变的部分：人物的位置、朝向与动作节奏，镜头的机位与运动，背景的几何结构与陈设，整体光线方向、色温与阴影关系，以及对白、环境音和动作声的原有节奏。整段只新增黑猫本身与它在地面上投下的微弱影子，不引入新的光源，不改变景深，也不调整色调。成片无配乐，无字幕。
+镜头1：中景。女主停在画面中央，身体仍朝向房间深处，左侧窗户保持在原有位置。她先短暂停顿，随后缓慢向左转头，肩膀只跟随转动少许，双脚不移动，目光最终停在窗外；窗外冷色环境光落到她的左脸侧，与室内暖光保持连续。
 ```
 
----
+## 3. Video Editing
 
-## Example 4: Diagnostic Mode (Optimizing A Weak Prompt)
-
-**User input**: 「帮我优化下这个 prompt:『一个很有氛围感的镜头,女孩站在樱花树下,非常唯美,电影感拉满,3D 风格,4K 高清。』」
-
-**Inferred task type**: diagnostic. Apply the fixed three-part output template.
-
-### 当前问题
-
-- `氛围感`、`唯美`、`电影感拉满` 都是抽象品味词,Seedance 无法解析为可见动作或光线状态。
-- `3D 风格` 是用户明确指定的媒介，但还缺少可执行的材质、轮廓、光线和动作表现，需要具体化而不是删除。
-- `4K 高清` 属于平台 UI 参数,放在 prompt 里既无效又占用注意力预算。
-- 缺少时长、镜头组织和主体动作，画面只剩风格愿望，Seedance 很难判断真正要生成什么。
-
-### 改进 prompt
+**User**: `在10秒原片的3-7秒左下角加一只慢慢走过的黑猫，其他不变。`
 
 ```text
-本视频总时长 6 秒，单镜头。全片保持干净克制的风格化三维动画媒介，人物轮廓清楚，材质以柔和哑光为主，动作节奏自然。春日午后，一棵盛开的樱花树立在画面中央，少量花瓣正在缓缓飘落，画面重点是女孩在树下抬头看向花瓣的安静瞬间。无配乐，无字幕。
-
-镜头1：6秒，中景。机位略微仰角，缓慢向女孩推近，她站在樱花树下偏左的位置，树冠与飘落的花瓣占据画面上方。年轻女孩穿着浅色长款连衣裙，裙摆被微风轻轻带起，双手自然垂在身侧，左手指尖轻轻收拢。阳光从画面右上方斜射穿过花瓣，在她的左肩和发丝上落下柔和的光斑。她缓慢抬起头看向飘落的花瓣，嘴角微微放松，呼吸保持自然。整段主体识别稳定，光线方向连贯，动作承接清楚。
+在@视频1（原始镜头）的3-7秒画面左下角增加一只黑色短毛猫。黑猫从左侧边缘走入，沿地面缓慢向右移动两步后停下，体型、接触阴影和近大远小关系与原片一致。人物动作、机位与运镜、背景陈设、光线、对白、环境声和动作声保持不变。成片无配乐，无字幕。
 ```
 
-### 关键修改
+## 4. Diagnostic Optimization
 
-- 把 `氛围感 / 唯美 / 电影感` 翻译成可见载体：仰角 + 慢推 + 斜射阳光 + 风带起裙摆 + 仰望姿态。
-- 保留用户明确指定的 `3D 风格`，并把它落实为风格化三维动画、清楚轮廓、柔和哑光材质与自然动作；只删除属于平台 UI 的 `4K 高清`。
-- 补全时长、镜头编号、单一主动作与单一运镜，让单段有明确的生成重点。
-- 把原来逗号串联的镜头描述改写为带主谓的完整句子，结构标头（`镜头1：6秒，中景。`）之后转入散文式执行说明。
+**Weak prompt**: `一个很有氛围感的镜头，女孩站在樱花树下，非常唯美，电影感拉满，3D风格，4K高清。`
+
+**Problems**:
+
+- `氛围感`、`唯美` and `电影感拉满` have no visible carrier.
+- `3D风格` is a valid medium request but needs material and motion cues.
+- `4K` is normally selected in the platform UI.
+- No duration, action, or camera strategy is defined.
+
+```text
+本视频总时长 6 秒，单镜头。全片保持风格化三维动画媒介，人物轮廓清楚，材质柔和哑光。春日下午，女孩站在盛开的樱花树下，画面重点是她从低头静立到抬头望向花瓣的微小情绪变化。无配乐，无字幕。
+
+镜头1：中景。机位略微仰拍并缓慢向女孩推近，树冠和零星飘落的花瓣占据画面上方。女孩双手自然垂在身侧，裙摆被轻风带起；她先微微低头，随后缓慢抬眼看向花瓣，嘴角逐渐放松。斜射阳光在她的发丝和左肩留下柔和光斑。
+```
+
+## 5. Multimodal Reference With Subject Definition
+
+**User**: `@图1里有两个人，用红裙草帽女孩做主角；动作和运镜参考@视频1。`
+
+```text
+将@图1中穿红色连衣裙、戴草帽的年轻女孩定义为小岚。参考@视频1的人物转身动作和平稳横移运镜，生成小岚在海边木栈道回头看向远处灯塔的 8 秒视频。无配乐，无字幕。
+
+镜头1：中景。镜头从小岚侧后方平稳横向移动，她沿木栈道缓慢向前走，右手轻扶草帽。走到栏杆旁时，她借着停步的惯性转动上身，先转肩再回头，目光越过海面落向远处灯塔，红裙下摆被海风轻轻带向身后。全程只使用@图1中已定义的小岚作为人物主体。
+```
+
+## 6. Dialogue And Sound Markers
+
+**User**: `女孩在便利店窗边告诉朋友“我明天就走”，看得到嘴型，不要配乐字幕。`
+
+```text
+本视频总时长 8 秒，单镜头。夜间便利店窗边，两位朋友隔桌而坐，画面重点是女孩说出决定前的停顿和朋友听见后的克制反应。无配乐，无字幕。
+
+镜头1：中近景。固定机位从桌侧拍摄，女孩的正脸和嘴部清楚可见，朋友保持在画面另一侧。女孩先低头用拇指摩挲纸杯边缘，吸气后抬眼看向朋友，平静地说道{我明天就走}。朋友没有立刻回答，只把握住杯子的手指收紧。<窗外一辆车驶过湿路面的轻响>与店内冰柜低鸣自然保留。
+```
+
+## 7. Shot Bridge
+
+**User**: `用@视频1树叶落下接到@视频2金色粒子出现。`
+
+```text
+@视频1（前段原始镜头）中树叶接近地面时继续下落；树叶触地的一瞬间，从接触点向外扩散细小金色粒子，粒子被一阵横向气流卷起并充满画面，亮度和运动方向自然过渡到@视频2（金色粒子后段镜头），接@视频2。成片无配乐，无字幕。
+```
+
+## 8. Explicit Visible Text
+
+**User**: `结尾要出现广告语“快乐尽在 Seedance”。`
+
+```text
+本视频总时长 8 秒，单镜头。三位朋友围坐分享炸鸡，气氛轻松，结尾明确显示广告语。无配乐。
+
+镜头1：中景。固定机位拍摄三人相互递食物并笑着交谈，动作自然连贯。后段人物与桌面逐渐轻微虚化，画面中央淡入白色手写体广告语“快乐尽在 Seedance”，文字保持清楚、完整、位置稳定直到结束。
+```

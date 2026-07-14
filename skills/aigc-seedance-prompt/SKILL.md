@@ -1,6 +1,6 @@
 ---
 name: aigc-seedance-prompt
-description: Use when the user needs a final platform-ready Seedance, Doubao, or Dreamina video prompt for text-to-video, image-to-video, reference-based generation, video editing, extension, shot bridging, duration compression, lip sync, scene continuity, or optimization of an existing Seedance prompt. Route language-only cleanup or 去 AI 味 requests that do not need final platform structure to aigc-natural-language-prompt.
+description: Use when the user needs a final platform-ready Seedance, Doubao, or Dreamina video prompt for text-to-video, image-to-video, multimodal reference generation, video editing, extension, shot bridging, duration compression, dialogue/lip sync, visible text, scene continuity, or optimization of an existing Seedance prompt. Route language-only cleanup or 去 AI 味 requests that do not need final platform structure to aigc-natural-language-prompt.
 ---
 
 # AIGC Seedance Prompt
@@ -33,16 +33,21 @@ WORKFLOW INVARIANT - Audio And Subtitle Policy:
 - Dialogue, room tone, environment sound, and necessary action sound remain allowed when the shot needs them.
 - Do not add BGM, songs, lyrics, music-driven montage, or subtitles. An audio reference may control speech pace, action rhythm, sound effects, or emotional intensity without adding music.
 - Only a direct instruction that explicitly changes this production policy can override it; an attached audio track or music-bearing reference does not override it by itself.
+- Use the official information markers when the corresponding content is present: dialogue `{台词}`, sound effect `<音效>`, music `（音乐）`, subtitle `【字幕】`. Under this workflow, music and subtitle markers appear only after an explicit user override.
 
 Steps:
 
 1. Identify the task type: new text-to-video, image-to-video, reference-based, prompt optimization, diagnostic review, video edit, video extension, or shot bridge.
+   - **Multimodal reference / new generation**: write `参考@图N中的[主体]` or `参考@视频N的[动作/运镜/风格/音效]` and name the reused dimension.
+   - **Video edit**: address `@视频N` directly with `严格编辑` or a concrete add/delete/change command. Do not write `参考@视频N`, which can turn the request into a reference-generation task.
+   - **Video extension**: address `@视频N` directly with `向前延长`、`向后延长` or `生成@视频N之后的内容`. Do not write `参考@视频N`.
+   - **Shot bridge / track completion**: write the source order and visible transition explicitly: `@视频1，[过渡画面]，接@视频2`.
 2. When using a shot context card or handoff, preserve all fields before drafting; do not reinterpret them unless the user gives a newer instruction. Map them directly: `项目` and `集/场/镜` -> scope and identifiers; `源优先级` -> conflict precedence; `本镜剧情功能` -> shot function; `上一镜承接` -> starting state; `当前画面事实` -> locked visible facts; `人物表演` -> performance; `对白/声音` -> exact dialogue and diegetic audio; `参考图角色` -> reference-role whitelist; `估计时长` -> duration budget; `下一镜交接` -> ending handoff; `禁止偏移` -> risks rewritten as positive visible staging whenever possible.
 3. Identify the medium and style target: live-action photoreal, 2D animation, stylized 3D, illustration, game cinematic, product render, or mixed media. A style explicitly named by the user is a protected production fact even when no style reference image is attached. Do not let live-action cinematography language override non-photoreal targets; if style is unspecified, keep the prompt neutral and execution-focused.
 4. Judge the whole segment first: one-shot or multi-shot, task continuity, reference roles, output mode, per-shot attention load. Treat every assigned reference role as an attribute whitelist: a silhouette-only reference does not authorize color, material, text, identity, lighting, or composition; an environment-only reference does not authorize camera or character changes. Ensure the segment can generate well before optimizing long-form continuity.
 5. Translate abstract intent into visible subject, action, space, camera, light, sound, performance beat, and concrete visual change. Preserve the user's initiating narrative action as an on-screen beat: if the brief says a subject returns, arrives, enters, opens, leaves, discovers, or turns toward something, do not silently begin after that action unless the user describes it as prior setup. For an arrival or entrance, start at a visible threshold or frame edge and show the crossing before the secondary trigger. Do not invent secondary people, props, or events merely to make the scene feel complete. If the intended shot is too complex to generate reliably, simplify the shot organization while preserving the core expression.
-6. Apply the Seedance rules for duration, reference mapping, shot wording, continuity, editing, and stability. Treat `references/seedance-2-rules.md` as the current-version rulebook; follow it unless the user provides newer constraints.
-7. For new generation, extension, and shot bridging, write each shot as one natural execution paragraph starting with `镜头N：X秒，景别。` (see Shot Line rules below). For a targeted edit to an existing video, use the time-range edit form instead of inventing a new shot structure.
+6. Apply the Seedance rules for task wording, subject definition, duration, reference mapping, shot wording, continuity, editing, and stability. Treat `references/seedance-2-rules.md` as the current-version rulebook; follow it unless the user provides newer constraints.
+7. For new generation, extension, and shot bridging, write each shot as one natural execution paragraph starting with `镜头N：景别。` (see Shot Line rules below). State the requested total duration once, but do not allocate exact seconds to every shot by default: the official guide says exact time instructions such as `0-3秒` are unstable. Use event order or `前段 / 中段 / 后段` when timing matters. Keep exact time ranges for targeted source-video edits or when the user explicitly prioritizes a timed event; in the latter case, note the drift risk briefly outside the prompt.
 8. For long-form work, preserve segment function, starting state, and next-segment handoff only when those details affect the next generated clip. Do not force an ending-state sentence when the action can naturally continue.
 9. Before outputting, run an internal AI-flavor and logic scan: remove template voice, abstract boosters, decorative connectors, forced summary endings, unsupported off-screen causes, parameter stacking, and any attribute not authorized by the user or a reference role. If the user locks one camera position, focal length, framing ratio, or composition percentage across shots, keep shot-size labels and camera descriptions consistent with that lock. Route to `aigc-natural-language-prompt` only when language cleanup is the user's main request.
 10. Output the final Seedance prompt in one and only one fenced code block. Put any judgment or recommendation outside that block.
@@ -59,6 +64,7 @@ Steps:
 - The user demands one continuous shot but the action chain requires hard cuts, location changes, or simultaneous reveals: preserve the strongest beat and simplify the rest.
 - A simple request starts accumulating unnecessary reference, camera, and control sections: collapse it back to total duration plus one shot paragraph; write necessary constraints into the body.
 - A simple request gains unrequested background people, props, or business: remove them unless they are physically required for the named action; keep implied production context out of frame when it adds no generation value.
+- A draft assigns exact seconds to every generated shot: remove the per-shot timestamps and preserve only total duration plus shot order, unless this is a targeted edit interval or an explicit timing-critical request.
 - An initiating action becomes off-screen backstory: start early enough to show the named return, arrival, entrance, opening, departure, discovery, or turn, then compress a secondary atmosphere beat instead.
 - Multiple references, strict character counts, foreground occlusion, focal length, or composition percentages present: use the complex structure and map reference roles before writing shots.
 
@@ -78,7 +84,7 @@ Choose the lightest structure that keeps the prompt executable. Do not force a h
 ```text
 本视频总时长 X 秒，单镜头。整体是一段关于[情绪/主题]的[风格/类型]短片，画面重点是[视觉锚点]、[行为/状态]和[情绪变化]。无配乐，无字幕。
 
-镜头1：X秒，景别。
+镜头1：景别。
 [用连续影像描述空间、主体、动作/状态、物件、光线、声音、表情和情绪流动；把必要约束写进正文，不单独列稳定边界]
 ```
 
@@ -99,10 +105,10 @@ Choose the lightest structure that keeps the prompt executable. Do not force a h
 摄影与构图总要求：
 [机位、焦距、景深、前景占比、主体位置、背景层次、运动方式]
 
-镜头1：X秒，景别，机位 / 焦距。
+镜头1：景别。
 [镜头放在哪里，向哪里看，先看到什么，主体如何进入或动作如何发生，最后停在什么状态]
 
-镜头2：X秒，景别，机位 / 焦距。
+镜头2：景别。
 [多镜头时逐镜头写清楚动作衔接]
 ```
 
@@ -126,18 +132,20 @@ Treat every generation attempt as a fresh first run. Seedance and similar models
 
 Use one continuous shot when uninterrupted performance, immersion, POV, or a single action path is the main expression. Use multiple shots when the request needs separate locations, distinct reveals, dialogue coverage, or action beats that would overload one generation.
 
-If the user asks for `一镜到底` with incompatible beats, keep it only when the main action stays in one location and one camera path; otherwise explain the tradeoff briefly and draft the most stable version. For one-shot prompts, use only `镜头1：X秒，景别。` and describe the internal beat order in prose — no hard cuts, montage transitions, or camera resets inside a one-shot prompt.
+If the user asks for `一镜到底` with incompatible beats, keep it only when the main action stays in one location and one camera path; otherwise explain the tradeoff briefly and draft the most stable version. For one-shot prompts, use only `镜头1：景别。` and describe the internal beat order in prose — no hard cuts, montage transitions, or camera resets inside a one-shot prompt.
 
 ## Shot Line And Execution Body
 
 Each shot must read as a director's shooting note in natural Chinese prose, not a slot list.
 
-1. Start with one structured lead-in: `镜头N：X秒，景别。`
+1. Start with one structured lead-in: `镜头N：景别。`
 2. Follow with one complete sentence for camera position, movement, and visual focus. Use verbs instead of comma-chained parameters.
 3. Add only the visible action path needed for generation: where the subject starts, what moves, where it exits/lands/stops, and what state the next shot must inherit.
 4. For action, VFX, object, flight, impact, or transformation shots, include entry/exit, camera relation, path/speed, environmental reaction, and continuity anchor only when relevant.
 5. Break long sentences after 4-5 clauses. Use `随后`, `紧接着`, `此时`, `最终` only when they clarify order or endpoint.
 6. Use Chinese camera terms; keep one main action and one main camera movement per shot, splitting overloaded beats instead of compressing them.
+
+Use `镜头N：景别。` by default. Total duration belongs in the overview; exact per-shot seconds are not a standard control because the official Seedance 2.0 guide warns that precise time ranges can be unstable. In generated footage, express timing through shot order and visible action transitions. Preserve exact time ranges only for targeted edits to an existing clip or an explicit timing-critical request.
 
 Detail budget, camera-movement scaling, performance/blocking cues, and dialogue/lip-sync handling: load `references/shot-craft.md` whenever a shot has a performing subject, camera movement design, or dialogue.
 
@@ -182,7 +190,7 @@ Default to self-judgment and produce the prompt directly. Ask first only when am
 
 Write the final prompt in Chinese by default. No English shot-size abbreviations or camera terms unless the user explicitly asks for bilingual labels.
 
-For new generation, extension, and shot bridging, the final prompt starts with duration and scene overview, and the opening overview paragraph ends with `无配乐，无字幕。` A targeted video-edit command may start with its source anchor and time range instead, but must keep the same workflow invariant. This phrase does not mean silence: dialogue, environment sound, and necessary action sound may still be written when the shot needs them.
+For new generation, extension, and shot bridging, the final prompt starts with total duration and scene overview, and the opening overview paragraph ends with `无配乐，无字幕。` unless the user explicitly overrides either delivery choice; then state the requested music/subtitle configuration instead. A targeted video-edit command may start with its source anchor and time range instead, but must keep the same workflow invariant or explicit override. `无配乐，无字幕` does not mean silence: dialogue, environment sound, and necessary action sound may still be written when the shot needs them.
 
 Keep the prompt visible, executable, and stable: one main action per shot, clear spatial relationships, clear subject identity, clear reference roles, readable performance beats, and no internal reasoning, rule explanations, or `simple/standard/complex` labels inside the final code block. Translate production shorthand and abstract taste words into visible shot, action, light, space, body/contact detail, gaze, expression transition, camera-subject relationship, action path, environmental reaction, and sound.
 

@@ -23,7 +23,7 @@ Use one to two compact Chinese sentences when the shot needs moderate control:
 
 - A clear subject plus atmosphere, space, expression, prop, or reference-image role.
 - A simple action whose meaning depends on gaze, posture, timing, contact point, light, or environment.
-- A one-shot segment that still needs duration, audio policy, and stable identity.
+- A one-shot segment that still needs a total-duration budget, audio policy, and stable identity.
 
 For any performing subject, write the key body part, gaze target, contact point, or expression change that makes the performance readable. Mention only details that reduce ambiguity, improve generation reliability, or make the acting beat visible.
 
@@ -68,6 +68,7 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
 - Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
+- Put spoken dialogue in the official braces syntax: `角色说道{台词}`. Use `<音效>` for a discrete sound effect. Use `（音乐）` and `【字幕】` only when the user explicitly overrides this workflow's no-music/no-subtitle policy.
 - The opening-overview phrase `无配乐，无字幕。` does not mean silence: keep diegetic speech and necessary action/environment sound when the shot needs them, and do not invent voiceover or dubbing unless the user asks.
 - Include subtitles only when the user explicitly asks; otherwise keep them out of the prompt.
 

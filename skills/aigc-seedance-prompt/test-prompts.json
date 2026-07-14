@@ -1,62 +1,87 @@
 [
   {
     "id": "seedance-1-15s-compression-lip-sync",
-    "prompt": "给我一个15秒 Seedance 提示词：威尔史密斯在片场吃意面，一镜到底，有两句台词，要口型同步，最后遮住镜头黑场。",
-    "expected": "Compresses to one main location, one camera path, short dialogue with visible mouth time, no platform settings, and one clear ending beat."
+    "prompt": "给我一个15秒 Seedance 提示词：成年男演员在片场吃意面，一镜到底，有两句台词，要口型同步，最后遮住镜头黑场。",
+    "expected": "Compresses to one location and one camera path, keeps dialogue short with visible mouth time, writes spoken lines in braces, and does not assign exact seconds to every beat."
   },
   {
     "id": "seedance-2-missing-reference-gate",
     "prompt": "用这张图做图生视频，人物慢慢回头看镜头，给 Seedance prompt。",
-    "expected": "Stops and asks for the actual image/frame if it is not present; does not draft from text-only summary."
+    "expected": "Stops and asks for the actual image/frame if it is not present; does not draft from a text-only summary."
   },
   {
     "id": "seedance-3-one-shot-complexity-tradeoff",
     "prompt": "8秒一镜到底：女主从地铁站跑到天台，群演追逐，爆炸，无人机环绕，最后切到特写落泪。",
-    "expected": "Flags the one-shot/duration conflict, preserves the strongest action beat, reduces locations and camera moves, or proposes a stable split."
+    "expected": "Flags the one-shot and duration conflict, preserves the strongest beat, removes compound camera movement, and avoids hard cuts inside the one-take."
   },
   {
     "id": "seedance-4-structured-reference-composition",
-    "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1控制主角身份，@图2控制配角，@图3控制怪物背面，@图4控制冷蓝树林色调。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人，不要新增人物。",
-    "expected": "Uses the complex reference/composition structure: total duration and global constraints first, literal @图N labels with soft reference-role wording such as 作为...参考, camera/composition requirements, and per-shot paragraphs. It preserves character count, foreground wall percentage, long-lens hidden viewpoint, and scoped reference roles by positive visible staging or a short high-risk 生成注意 section, without rewriting @图N as 参考图N or ending with a generic negative tail."
+    "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1是主角身份，@图2是配角，@图3只参考怪物背面轮廓，@图4只参考冷蓝树林环境。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人。",
+    "expected": "Uses the complex structure with literal anchors and role whitelists, preserves global camera/composition locks, writes 镜头N：景别 without per-shot timestamps, and does not import color/material from the silhouette-only reference."
   },
   {
     "id": "seedance-5-preserve-filename-reference-anchors",
     "prompt": "帮我优化一个12秒 Seedance 提示词。@庠序场景.png作为旧学堂环境参考，@裘水镜-磨皮版.png作为人物外貌参考，@111.png作为分镜构图参考。不要用控制这个词，保留这些@文件名引用。",
-    "expected": "Preserves literal file-name anchors @庠序场景.png, @裘水镜-磨皮版.png, and @111.png exactly; uses soft role wording such as 作为...参考; does not rewrite them as 参考图1, 图1, or plain file names."
+    "expected": "Preserves every literal file-name anchor exactly, assigns each a narrow semantic role, and does not rewrite them as 参考图1 or plain file names."
   },
   {
     "id": "seedance-6-project-shot-range-route",
     "prompt": "把我的新短片项目第一集6-22到6-24直接写成 Seedance 提示词。",
-    "expected": "Routes project/script/storyboard/shot-range requests to aigc-script-context first unless the user explicitly asks for a standalone text-to-video prompt; does not skip the shot context card."
+    "expected": "Routes project/script/storyboard/shot-range requests to aigc-script-context first unless the user explicitly asks for a standalone prompt."
   },
   {
     "id": "seedance-7-handoff-locked-facts",
     "prompt": "根据这个镜头任务卡写 Seedance：源优先级=当前分镜高于大纲；当前画面事实=角色只站在门内半步；参考图角色=@图1只做人物身份参考；上一镜承接=右手仍按在门框上；本镜剧情功能=克制反应；禁止偏移=不要新增第二个人，不要改成室外。",
-    "expected": "Preserves source priority, current visual facts, reference role, previous state, shot function, and risk notes from the card; rewrites 禁止偏移 into positive visible staging in the shot body when possible, and does not reinterpret the shot into a different location, character count, or action."
+    "expected": "Preserves source priority, current visible facts, inherited posture, shot function, location, character count, and the identity-only reference boundary."
   },
   {
     "id": "seedance-8-vibe-first-simple",
     "prompt": "写一个 10 秒 Seedance 提示词：成年人回到童年旧院子，风吹起透明塑料袋，他突然想起小时候追着塑料袋跑的感觉。",
-    "expected": "Uses the Vibe-first fast path: first paragraph gives duration, one-shot structure, emotional theme, visual anchors, and ends with 无配乐，无字幕。 The shot body keeps Seedance timing/shot-size syntax but reads as continuous visible imagery, with no separate 稳定边界 section."
+    "expected": "Uses the Vibe-first path, shows the return/threshold action on screen, states total duration once, uses 镜头1：景别 without an exact timestamp, and has no separate stability section."
   },
   {
     "id": "seedance-9-vibe-reference-mapping-only",
     "prompt": "给我一个 8 秒 Seedance 提示词：雨夜老街修伞铺，少女离开前回头。@图1 是少女外貌服装，@图2 是修伞铺和雨夜老街，@图3 是旧红伞。",
-    "expected": "Keeps Vibe-first first paragraph ending with 无配乐，无字幕。 Uses a short 参考图使用 section to map @图1, @图2, and @图3 roles, then writes the shot as visible positive imagery. Does not add a generic stability-boundary or negative-control section."
+    "expected": "Maps the three anchors to identity, environment, and prop roles, keeps the prompt concise, and does not fill the input limit or add unrelated attributes."
   },
   {
     "id": "seedance-10-positive-visible-description",
     "prompt": "优化这个 Seedance 提示词：女孩在废弃剧院里看见一束光照到旧钢琴上，像想起了没人说出口的告别。不要让模型乱加其他人。",
-    "expected": "Turns the user concern into positive visible focus in the body instead of repeating a broad negative such as 不要出现其他人. Describes what is present in the frame, keeps the emotional carrier visible, and ends the opening sentence with 无配乐，无字幕。"
+    "expected": "Turns the concern into positive visible staging, keeps the emotional carrier visible, and uses at most one short uniqueness constraint after the desired scene."
   },
   {
     "id": "seedance-11-dialogue-audio-policy",
-    "prompt": "给我一个 8 秒 Seedance 提示词：女孩坐在便利店窗边对朋友说“我明天就走”，要看得到嘴型，不要配乐和字幕。",
-    "expected": "Keeps the opening overview ending with 无配乐，无字幕。 Does not treat that as silence: preserves the exact spoken line, gives the speaker visible mouth time, and keeps only diegetic speech plus environment/action sound."
+    "prompt": "给我一个 8 秒 Seedance 提示词：女孩坐在便利店窗边对朋友说‘我明天就走’，要看得到嘴型，不要配乐和字幕。",
+    "expected": "Keeps no music/no subtitles, writes the exact line as {我明天就走}, gives the speaker visible mouth time, and uses angle brackets only for discrete sound effects."
   },
   {
     "id": "seedance-12-natural-trigger-token-budget",
     "prompt": "写一个 10 秒 Seedance 视频：成年人站在童年旧院子门口，风里的透明塑料袋让他突然想起小时候。",
-    "expected": "Naturally uses aigc-seedance-prompt and the built-in Vibe-first fast path without loading the full aigc-vibe-creating-prompt official guide. The output is final Seedance structure, starts with duration and overview ending 无配乐，无字幕。, and has no separate stability-boundary section."
+    "expected": "Naturally uses the Seedance skill and its Vibe-first fast path without loading unrelated full guides; the final prompt is compact and has no per-shot seconds."
+  },
+  {
+    "id": "seedance-13-edit-intent-wording",
+    "prompt": "参考@视频1，把桌上的香水换成@图1里的面霜，动作和运镜不变。",
+    "expected": "Corrects the task to editing syntax such as 严格编辑@视频1; does not keep 参考@视频1, and assigns @图1 only as the replacement product reference."
+  },
+  {
+    "id": "seedance-14-extension-intent-wording",
+    "prompt": "参考@视频1继续往后生成5秒，两个迟到的人跑过来和原来的三个人会合。",
+    "expected": "Uses 向后延长@视频1 or 生成@视频1之后的内容, inherits the source ending state, and does not call the source a reference video."
+  },
+  {
+    "id": "seedance-15-multiple-subject-definition",
+    "prompt": "@图1里有两个女孩，用穿红裙戴草帽的那个做主角，她走到海边栏杆回头。",
+    "expected": "Defines the selected subject with two or three stable traits, assigns one consistent name, and uses that name throughout the shot."
+  },
+  {
+    "id": "seedance-16-precise-time-instability",
+    "prompt": "做一个9秒三镜头视频，每个镜头严格3秒：男人起跑、撞翻水果摊、翻墙消失。",
+    "expected": "Warns briefly that exact generated-shot timing may drift; because the user explicitly prioritizes strict timing, it may retain 0-3/3-6/6-9 allocations while keeping one action and one camera movement per shot."
+  },
+  {
+    "id": "seedance-17-visible-text-override",
+    "prompt": "做个8秒炸鸡广告，最后画面中央出现‘快乐尽在 Seedance’，这次可以有广告语但不要字幕。",
+    "expected": "Treats the advertising slogan as an explicit visible-text request, specifies its content/timing/position/appearance, preserves no subtitles, and does not incorrectly apply the blanket no-text rule."
   }
 ]
