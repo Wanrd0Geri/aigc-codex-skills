@@ -1,7 +1,0 @@
-﻿interface:
-  display_name: "AIGC Image Edit Prompt"
-  short_description: "Write source-faithful prompts for precise image repairs."
-  default_prompt: "用 $aigc-image-edit-prompt 检查这张图，锁定我没有要求改变的内容，并写一份中英双语修图 prompt，只执行我点名的修改。"
-
-policy:
-  allow_implicit_invocation: true

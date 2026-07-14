@@ -1,7 +1,0 @@
-﻿interface:
-  display_name: "AIGC Seedance Prompt"
-  short_description: "Generate and refine Seedance series video prompts."
-  default_prompt: "用 $aigc-seedance-prompt 把这个想法改写成 Seedance 可直接使用的视频提示词。"
-
-policy:
-  allow_implicit_invocation: true

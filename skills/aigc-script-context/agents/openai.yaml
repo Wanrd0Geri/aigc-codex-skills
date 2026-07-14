@@ -1,7 +1,0 @@
-interface:
-  display_name: "AIGC Script Context"
-  short_description: "Build shot-level story context from scripts and storyboards."
-  default_prompt: "Use script and storyboard context to prepare shot cards for Seedance prompts."
-
-policy:
-  allow_implicit_invocation: true

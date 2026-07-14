@@ -1,0 +1,202 @@
+[
+  {
+    "id": "video-vibe-01-abstract-needs-anchor",
+    "prompt": "用 $aigc-video 按 Vibe 的方式写一个关于自由、高级感、很有力量的视频提示词。",
+    "expected": "Recognizes that the request lacks a visible anchor and action. States a concise understanding and recommendation, then asks one grouped question for the minimum scene information instead of inventing a complete video."
+  },
+  {
+    "id": "video-vibe-02-anchor-dialogue-duration-preserved",
+    "prompt": "用 $aigc-video 按 Vibe 的方式写最终 Seedance 提示词：@图1作为角色参考，5秒，角色站在雨里说“别回头”，远处有低沉雷声。",
+    "expected": "Produces the final Seedance artifact in the same workflow, preserves @图1 and 5秒 exactly, keeps the dialogue “别回头” unchanged with spoken-dialogue syntax, retains thunder as diegetic sound, and does not invent unseen identity details from the anchor."
+  },
+  {
+    "id": "video-vibe-03-final-platform-owned",
+    "prompt": "用 $aigc-video 按 Vibe 的方式直接写成最终 Seedance 提示词：雨停后的公交站，一个老人把折好的旧车票放回衣袋，8秒。",
+    "expected": "Treats Vibe as an internal expression method and returns one final Seedance prompt rather than a separate platform-neutral draft or a handoff to another skill."
+  },
+  {
+    "id": "video-vibe-04-multishot-experience-order",
+    "prompt": "用 $aigc-video 按 Vibe 的方式提纯并写成最终视频提示词：镜头1女孩推开旧门；镜头2灰尘在阳光里漂；镜头3她看到桌上的旧照片。",
+    "expected": "Keeps exactly three moments in the original order, connects them through one experiential direction, preserves the door-opening initiating action on screen, and adds no flashback, relationship, prop, or plot event not present in the brief."
+  },
+  {
+    "id": "video-vibe-05-low-fit-ui-demo",
+    "prompt": "用 $aigc-video 按 Vibe 的方式优化并写成最终视频提示词：录屏展示 APP 登录、点击设置、打开通知开关。",
+    "expected": "Prioritizes functional clarity, preserves login -> settings -> notification order, uses only light natural-language cleanup, and does not force atmosphere, symbolism, emotional performance, or an invented story."
+  },
+  {
+    "id": "video-vibe-06-mature-minimum-change",
+    "prompt": "用 $aigc-video 看看并写成最终提示词：黄昏的旧码头，一个老人把湿漉漉的红围巾挂回栏杆，海风吹动破旧船帆。",
+    "expected": "Recognizes the scene as already mature, preserves its visual center and action, makes only the minimum platform and execution additions needed, and does not expand it into backstory or decorative prose."
+  },
+  {
+    "id": "video-vibe-07-technical-control-classification",
+    "prompt": "用 $aigc-video 按 Vibe 的方式写最终 Seedance 提示词：35mm镜头，f1.4浅景深，手持推进，拍一个男孩穿过蓝色雾气。",
+    "expected": "Preserves the composition and movement meaning of the 35mm view and handheld push, retains shallow subject separation, and may translate unsupported decorative optical values without dropping their visible effect. It does not remove declared production controls merely to sound natural."
+  },
+  {
+    "id": "video-vibe-08-expression-profile-single-output",
+    "prompt": "用 $aigc-video 按 Vibe 的写法给这个想法出一版最终 Seedance 提示词：一只纸船在城市积水里漂向霓虹灯。",
+    "expected": "Returns one final Seedance prompt from a single coherent scene specification, strengthens image center and experiential continuity, and does not expose internal profiles or create an unsolicited comparison version."
+  },
+  {
+    "id": "video-vibe-09-emotional-scene-keeps-controls",
+    "prompt": "用 $aigc-video 按 Vibe 的方式处理并写成最终 Seedance 提示词：镜头1固定机位，35mm，f1.8，一个女孩在废弃车站等一辆永远不会来的车，广播里反复响起同一句站名。",
+    "expected": "Treats the scene as expression-led while preserving fixed camera, the waiting action, the station setting, and repeated broadcast. It translates emotion into visible performance and space without inventing a train arrival or removing meaningful camera control."
+  },
+  {
+    "id": "video-vibe-10-result-first-no-process-labels",
+    "prompt": "用 $aigc-video 把这个改得更有记忆感并写成最终提示词：老人把旧照片放回抽屉，窗外下着小雨。",
+    "expected": "Leads with the usable final prompt, uses at most one useful note outside it, and does not expose classification codes, workflow labels, ledgers, or a four-part process report."
+  },
+  {
+    "id": "video-vibe-11-explicit-music-overrides-default",
+    "prompt": "用 $aigc-video 按 Vibe 的方式写最终 Seedance 提示词：黑暗房间里，孩子看着门缝里的光，旁白必须保留“我一直在这里”，背景音乐是很轻的八音盒。",
+    "expected": "Preserves the narration text “我一直在这里” exactly and honors the explicit music request instead of applying the personal no-music default. It rewrites only supported visual and performance language."
+  },
+  {
+    "id": "video-vibe-12-product-intent-not-dramatized",
+    "prompt": "用 $aigc-video 按 Vibe 的方式优化并写成最终 Seedance 提示词：一个护肤品广告，展示瓶身、水珠、干净台面和清爽质感。",
+    "expected": "Preserves product-display intent, makes bottle shape, water, material, surface, and camera-product relationship executable, and does not add a character, dramatic plot, symbolic meaning, or unsupported brand claim."
+  },
+  {
+    "id": "video-vibe-13-production-ready-expression",
+    "prompt": "用 $aigc-video 直接给我一版可用于 Seedance 生成的氛围短片提示词：成年人回到童年旧院子，风吹动透明塑料袋，记忆突然涌回来。",
+    "expected": "Produces a ready-to-paste final Seedance prompt, keeps the return action inside the generated window, uses the plastic bag as the visible memory trigger, and expresses recognition through restrained performance rather than an invented childhood flashback."
+  },
+  {
+    "id": "video-seedance-01-dialogue-missing-blocker",
+    "prompt": "给我一个15秒 Seedance 提示词：成年男演员在片场吃意面，一镜到底，有两句台词，要口型同步，最后遮住镜头黑场。",
+    "expected": "Recognizes that exact dialogue is required for lip sync but absent. Asks one grouped question for the two exact lines before drafting, preserves the one-take and black-frame requirements, and does not invent spoken text."
+  },
+  {
+    "id": "video-seedance-02-missing-reference-gate",
+    "prompt": "用这张图做图生视频，人物慢慢回头看镜头，给 Seedance prompt。",
+    "expected": "Stops and asks for the actual image or its required visible identity and starting state when no image or literal anchor is present; it does not invent visual details from the text-only request."
+  },
+  {
+    "id": "video-seedance-03-one-shot-complexity-tradeoff",
+    "prompt": "8秒一镜到底：女主从地铁站跑到天台，群演追逐，爆炸，无人机环绕，最后切到特写落泪。",
+    "expected": "Identifies the conflict among one-take, location change, compound action, drone orbit, hard cut, and 8-second duration. Cites the conflict, recommends a concrete reduced direction, and asks one combined decision question rather than silently changing the requested design."
+  },
+  {
+    "id": "video-seedance-04-structured-reference-composition",
+    "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1是主角身份，@图2是配角，@图3只参考怪物背面轮廓，@图4只参考冷蓝树林环境。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人。",
+    "expected": "Uses literal anchors and narrow role whitelists, preserves fixed long-lens voyeur framing and the 70% foreground lock across all shots, keeps exactly two people, and does not import color, material, identity, or function from the silhouette-only reference."
+  },
+  {
+    "id": "video-seedance-05-filename-anchor-preservation",
+    "prompt": "帮我优化一个12秒 Seedance 提示词。@庠序场景.png作为旧学堂环境参考，@裘水镜-磨皮版.png作为人物外貌参考，@111.png作为分镜构图参考。不要用控制这个词，保留这些@文件名引用。",
+    "expected": "Preserves every literal filename anchor exactly, assigns each only its stated role, avoids the word 控制, and does not normalize the anchors into numbered images or plain filenames."
+  },
+  {
+    "id": "video-seedance-06-project-same-turn-ownership",
+    "prompt": "把我的新短片项目第一集6-22到6-24直接写成 Seedance 提示词。",
+    "expected": "Keeps ownership of the final video artifact, compiles available project context and shot facts internally, and continues to the final prompt in the same task. If the project sources are unavailable, it asks for the required source rather than ending with a user-visible skill handoff."
+  },
+  {
+    "id": "video-seedance-07-handoff-lock-preservation",
+    "prompt": "根据这个镜头任务卡写 Seedance：源优先级=当前分镜高于大纲；当前画面事实=角色只站在门内半步；参考图角色=@图1只做人物身份参考；上一镜承接=右手仍按在门框上；本镜剧情功能=克制反应；禁止偏移=不要新增第二个人，不要改成室外。",
+    "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and identity-only @图1 role. It expresses constraints through positive staging where possible."
+  },
+  {
+    "id": "video-seedance-08-vibe-first-simple",
+    "prompt": "写一个 10 秒 Seedance 提示词：成年人回到童年旧院子，风吹起透明塑料袋，他突然想起小时候追着塑料袋跑的感觉。",
+    "expected": "Uses an expression-led but platform-ready path, shows the return or threshold crossing on screen, keeps total duration once, uses natural shot prose without per-shot timestamps, and does not add a literal flashback unless requested."
+  },
+  {
+    "id": "video-seedance-09-reference-role-mapping",
+    "prompt": "给我一个 8 秒 Seedance 提示词：雨夜老街修伞铺，少女离开前回头。@图1 是少女外貌服装，@图2 是修伞铺和雨夜老街，@图3 是旧红伞。",
+    "expected": "Maps @图1 to identity and costume, @图2 to environment, and @图3 to the prop; keeps the prompt concise and does not import pose, camera, lighting, or other unassigned attributes from those anchors."
+  },
+  {
+    "id": "video-seedance-10-positive-visible-staging",
+    "prompt": "优化这个 Seedance 提示词：女孩在废弃剧院里看见一束光照到旧钢琴上，像想起了没人说出口的告别。不要让模型乱加其他人。",
+    "expected": "Turns the emotional idea and uniqueness concern into visible staging with one clear subject, uses at most one short residual uniqueness constraint, and does not add background people, a farewell scene, or an unsupported relationship."
+  },
+  {
+    "id": "video-seedance-11-dialogue-audio-policy",
+    "prompt": "给我一个 8 秒 Seedance 提示词：女孩坐在便利店窗边对朋友说‘我明天就走’，要看得到嘴型，不要配乐和字幕。",
+    "expected": "Keeps no music and no subtitles, writes the exact line as {我明天就走}, gives the speaking subject stable visible mouth time, preserves the friend as the listener, and uses angle brackets only for discrete sound effects."
+  },
+  {
+    "id": "video-seedance-12-compact-natural-output",
+    "prompt": "写一个 10 秒 Seedance 视频：成年人站在童年旧院子门口，风里的透明塑料袋让他突然想起小时候。",
+    "expected": "Produces a compact final Seedance prompt without loading the output with process explanation, shows the memory response through a restrained visible carrier, states total duration once, and avoids exact per-shot seconds."
+  },
+  {
+    "id": "video-seedance-13-edit-intent-grammar",
+    "prompt": "参考@视频1，把桌上的香水换成@图1里的面霜，动作和运镜不变。",
+    "expected": "Corrects the operation to strict editing grammar addressed directly to @视频1, does not retain 参考@视频1, assigns @图1 only as the replacement product reference, and preserves action and camera movement unchanged."
+  },
+  {
+    "id": "video-seedance-14-extension-needs-ending-state",
+    "prompt": "参考@视频1继续往后生成5秒，两个迟到的人跑过来和原来的三个人会合。",
+    "expected": "Recognizes extension intent and the need to inherit @视频1's ending state. If the source is only an unreadable anchor and its ending pose, positions, light, and camera momentum are not supplied, asks for the source or that exact visible ending state instead of inventing continuity."
+  },
+  {
+    "id": "video-seedance-15-multiple-subject-definition",
+    "prompt": "@图1里有两个女孩，用穿红裙戴草帽的那个做主角，她走到海边栏杆回头。",
+    "expected": "Defines the selected subject with the supplied red-dress and straw-hat traits, uses one consistent semantic name, keeps the other person out of the action unless required, and does not claim additional unseen identity detail."
+  },
+  {
+    "id": "video-seedance-16-explicit-precise-timing",
+    "prompt": "做一个9秒三镜头视频，每个镜头严格3秒：男人起跑、撞翻水果摊、翻墙消失。",
+    "expected": "Briefly warns that exact generated-shot timing can drift but preserves the user's explicit 3-second allocations, keeps one main action and one main camera strategy per shot, and does not silently remove the timing lock."
+  },
+  {
+    "id": "video-seedance-17-visible-text-override",
+    "prompt": "做个8秒炸鸡广告，最后画面中央出现‘快乐尽在 Seedance’，这次可以有广告语但不要字幕。",
+    "expected": "Treats the slogan as requested visible advertising text rather than subtitles, preserves the exact words, specifies late timing, center position, and appearance method, and keeps subtitles disabled."
+  },
+  {
+    "id": "video-collaboration-01-material-performance-ambiguity",
+    "prompt": "写最终 Seedance 提示词：女孩看到失踪父亲留下的信后笑了一下，但我没想好这个笑是释然，还是她在别人面前强装镇定。",
+    "expected": "Cites the supplied ambiguity, explains that the two readings require materially different gaze, breath, posture, and ending beats, recommends one direction with a reason, and asks one grouped decision question before drafting."
+  },
+  {
+    "id": "video-collaboration-02-routine-choice-no-question",
+    "prompt": "写一个9秒 Seedance 提示词：少年推开门走进空教室，把书放到最后一排桌上，窗外正在下雨。",
+    "expected": "Makes routine shot-size, camera, and pacing choices independently, returns the final prompt without asking unnecessary technical questions, and keeps the door opening and entrance visible in the generated window."
+  },
+  {
+    "id": "video-performance-01-restrained-grief",
+    "prompt": "写一个8秒 Seedance 提示词：掌门听到师父死讯，反应要克制，不哭、不跪，不要加其他人，右手一直按在门框上。",
+    "expected": "Preserves one person and continuous right-hand contact, translates restrained grief into one primary carrier plus no more than two supported micro-changes such as gaze, finger pressure, breath, or posture, and does not add tears, kneeling, a messenger, a prop, or melodramatic action."
+  },
+  {
+    "id": "video-performance-02-held-reunion-distance",
+    "prompt": "写一个10秒 Seedance 提示词：女孩久别重逢看见母亲，第一反应不是扑过去，而是停在门口观察她，表演克制。",
+    "expected": "Keeps the doorway stop and spatial distance as the main performance carrier, uses restrained gaze, breath, or hand tension to show recognition, and does not add a hug, crying, dialogue, flashback, or an unrequested emotional reversal."
+  },
+  {
+    "id": "video-language-lock-01-multishot-exact-fields",
+    "prompt": "把这个最终 Seedance prompt 去 AI 味，但不能改任何硬信息：12秒，三镜头，@图1只做人脸身份参考；镜头1裘水镜站在门内；镜头2他说“你看见的不一定是真的”；镜头3少年没有回答，最后遮住镜头黑场。",
+    "expected": "Cleans only mutable prose while preserving 12秒, exactly three shots and their order, @图1 and its identity-only role, the name 裘水镜, the exact dialogue, the silent response, and the final lens-cover black frame."
+  },
+  {
+    "id": "video-language-lock-02-edit-command-not-rewritten",
+    "prompt": "把这条最终 Seedance 编辑命令写自然一点：严格编辑@视频1的3-7秒，把桌上的旧香水瓶换成@图1里的白色面霜罐，人物动作、原有运镜、灯光和环境声保持不变。",
+    "expected": "Keeps strict-edit task grammar, @视频1, the 3-7秒 interval, @图1, the exact replacement, and every unchanged continuity layer. Language cleanup does not turn the command into reference generation or rewrite the entire platform structure."
+  },
+  {
+    "id": "video-extension-01-success-with-ending-state",
+    "prompt": "向后延长@视频1 5秒。@视频1结尾时男人仍倚在墙边，身体姿势不变，镜头固定，门口在画面右侧；延长部分让他缓慢转头看向门口。",
+    "expected": "Treats the production task as extension, starts the final command with 向后延长@视频1 rather than 参考@视频1, preserves 5秒 and the supplied ending posture, fixed camera, door position, and slow head turn, and does not ask for an already supplied ending state."
+  },
+  {
+    "id": "video-extension-02-vibe-is-orthogonal",
+    "prompt": "按 Vibe 的方式将@视频1向后延长5秒：片尾人物保持原姿势，缓慢转头看向门口，像回到多年没住过的老房子，觉得时间停住了。表演克制。",
+    "expected": "Keeps extension as the production task and Vibe only as an expression request; uses 向后延长@视频1 grammar, preserves 5秒, pose, turn, target, restrained direction, and adds at most bounded visible performance cues without inventing a flashback, prop, person, or alternate task type."
+  },
+  {
+    "id": "video-bridge-01-success",
+    "prompt": "把@视频1接到@视频2：@视频1结尾红伞从画面左侧被风吹起，@视频2开头是一块红布从右侧落下。用红色形状掠过镜头完成遮挡转场。",
+    "expected": "Treats this as a bridge and writes the sources in order using @视频1，[visible red-shape occlusion transition]，接@视频2; does not rewrite either source as a reference-generation task or invent another transition subject."
+  },
+  {
+    "id": "video-bridge-02-platform-limit",
+    "prompt": "用 Seedance 轨迹补全把@视频1、@视频2、@视频3、@视频4一次接起来，四段各5秒。",
+    "expected": "Recognizes that four inputs and 20 seconds exceed the current Seedance track-completion limit stated by the platform reference, explains the concrete conflict, recommends a staged bridge plan, and does not output one invalid final bridge command as if it were executable."
+  }
+]

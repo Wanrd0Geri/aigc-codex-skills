@@ -1,0 +1,77 @@
+[
+  {
+    "id": "rewrite-01-light-cleanup",
+    "prompt": "把这个 prompt 改自然点：中景，女孩独自站在雨夜街口，低头看脚边积水，冷色调，电影感，高质量。",
+    "expected": "Returns one compact rewritten prompt using only the supplied subject, solitude, position, action, rain, puddle, framing, and color facts; removes decorative boosters without adding a light source, camera move, sound, prop, or plot."
+  },
+  {
+    "id": "rewrite-02-video-language-only",
+    "prompt": "这段画面描述以后会交给 Seedance，但这一步只改平台中立的自然语言，不做 Seedance 格式：15秒，一镜到底，片场，男演员递意面，电影感拉满，4K，24fps，ARRI，最后黑场。",
+    "expected": "Stays in explicitly platform-neutral language cleanup; preserves literal 15秒, one-take structure, core action, scene, and final black frame; removes decorative platform and quality terms without emitting final Seedance grammar."
+  },
+  {
+    "id": "rewrite-03-incompatible-style-targets",
+    "prompt": "改成自然语言：未来城市，女主角很酷，赛博朋克，又要宫崎骏，又要写实电影感，情绪复杂。",
+    "expected": "Explains that the visual medium is consequentially ambiguous, gives a likely interpretation and recommended dominant target, then asks one focused question instead of silently blending incompatible targets."
+  },
+  {
+    "id": "rewrite-04-numbered-anchor-locks",
+    "prompt": "帮我把这个视频 prompt 改自然点：@图1控制少年外貌和服装，@图2控制老狐狸形象，@图3控制人物站位，镜头从门口方向后拉，所有人听到响声后看向镜头。",
+    "expected": "Preserves literal @图1, @图2, and @图3 exactly; may soften the surrounding role wording; preserves the camera and reaction order; never renames anchors as 图1 or 参考图1."
+  },
+  {
+    "id": "rewrite-05-filename-anchor-locks",
+    "prompt": "帮我改自然点：@庠序场景.png控制旧学堂环境和大门方向，@裘水镜-磨皮版.png控制人物外貌，镜头从门口方向拍，台词不要改。",
+    "expected": "Preserves both filename anchors literally and keeps the no-dialogue-change instruction; does not strip @, rename files, or invent dialogue."
+  },
+  {
+    "id": "rewrite-06-humanizer-boundary",
+    "prompt": "把这个 AIGC prompt 去 AI 味：这不仅是一个画面，更是少年命运感的表达，要写得更有人味、更有作者观点。",
+    "expected": "Does not add first-person opinion, jokes, essay voice, posture, distance, light, sound, or any other missing visual fact. Identifies that the source lacks an executable subject action and setting, then asks one focused question before rewriting."
+  },
+  {
+    "id": "rewrite-07-dialogue-duration-locks",
+    "prompt": "帮我改自然点：12秒，固定中景，裘水镜站在学堂门口，对少年说“你看见的不一定是真的”，说完停顿两秒，少年没有回答。",
+    "expected": "Preserves 12 seconds, fixed medium shot, both identities, the exact quoted dialogue, two-second pause, and the boy's silence while changing only surrounding wording."
+  },
+  {
+    "id": "rewrite-08-shot-preserving-cleanup",
+    "prompt": "三镜头去 AI 味：镜头1少年站在雨里宿命感拉满；镜头2他回头看门口，电影感高级；镜头3手慢慢握住剑，情绪复杂，最后有震撼收束。",
+    "expected": "Keeps exactly three shots in the same order and every supplied action; uses the existing standing, turn, and hand-closing beats as the visible structure, removes unsupported abstract boosters, and adds no camera, lighting, prop, exact timing, or new performance action."
+  },
+  {
+    "id": "rewrite-09-cliche-to-visible-control",
+    "prompt": "改成自然语言：通过光影展现命运感，整体氛围拉满，高级感、电影感、史诗感都要有。",
+    "expected": "Recognizes that no subject or concrete beat is present; does not fabricate a full scene and asks one focused question about the visible subject or event before rebuilding."
+  },
+  {
+    "id": "rewrite-10-cross-media-anchor-locks",
+    "prompt": "帮我把这个 prompt 改自然：@图1控制角色外貌，@图2控制旧学堂场景，@视频1控制动作节奏，画面要有电影感和命运感。",
+    "expected": "Preserves @图1, @图2, and @视频1 exactly and their distinct roles; converts only the abstract taste words into scene-supported visible language or asks about the intended beat if evidence is missing."
+  },
+  {
+    "id": "rewrite-11-final-video-route",
+    "prompt": "帮我直接写最终 Seedance 提示词：10秒，雨夜旧车站，一个女孩听见广播后回头。",
+    "expected": "Routes the whole request to aigc-video, which owns both expressive drafting and final platform formatting; does not return an intermediate cleaned paragraph as the final artifact."
+  },
+  {
+    "id": "rewrite-12-mature-prompt-preserve",
+    "prompt": "这段提示词去 AI 味：中近景固定拍摄门内的男人。他仍保持倚墙的姿势，听见门轴轻响后才慢慢转头，目光停在门口，右手没有离开外套口袋。",
+    "expected": "Recognizes that the source is already natural, visible, and executable; preserves it or makes only obvious copy edits instead of expanding it into a longer director brief."
+  },
+  {
+    "id": "rewrite-13-performance-ambiguity-dialogue",
+    "prompt": "把这句视频提示词改自然：他回到多年没住过的老房子，觉得时间停止了，然后看向门口。",
+    "expected": "Identifies that the feeling can produce materially different performances; states its likely restrained interpretation and one alternative, recommends one, and asks a focused question before adding performance detail."
+  },
+  {
+    "id": "rewrite-14-final-image-edit-route",
+    "prompt": "我有一张图，直接给我最终修图提示词：人物不变，把白天改成暴雨夜。",
+    "expected": "Routes the request to aigc-image because the requested artifact is a final image-edit prompt; does not treat it as generic prose cleanup."
+  },
+  {
+    "id": "rewrite-15-named-image-prompt-cleanup",
+    "prompt": "只把这段 Midjourney 文生图 prompt 改自然，不要重做创意，保留参数：女孩站在雨夜车站，低头看手里的旧车票，冷色调，高级感，高质量 --ar 16:9 --stylize 150",
+    "expected": "Stays in language cleanup because this is an existing named image-generation prompt; preserves every supplied scene fact and the literal --ar 16:9 --stylize 150 suffix, removes only unsupported quality filler, and adds no camera, light source, prop, action, sound, or story."
+  }
+]

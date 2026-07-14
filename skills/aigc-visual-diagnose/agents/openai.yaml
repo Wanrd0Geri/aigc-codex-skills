@@ -1,7 +1,0 @@
-﻿interface:
-  display_name: "AIGC Visual Diagnose"
-  short_description: "Diagnose why an AIGC image or frame feels weak."
-  default_prompt: "用 $aigc-visual-diagnose 看一下这张画面为什么不好，告诉我最应该先修哪里。"
-
-policy:
-  allow_implicit_invocation: true
