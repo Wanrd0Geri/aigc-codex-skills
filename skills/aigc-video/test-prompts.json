@@ -198,5 +198,15 @@
     "id": "video-bridge-02-platform-limit",
     "prompt": "用 Seedance 轨迹补全把@视频1、@视频2、@视频3、@视频4一次接起来，四段各5秒。",
     "expected": "Recognizes that four inputs and 20 seconds exceed the current Seedance track-completion limit stated by the platform reference, explains the concrete conflict, recommends a staged bridge plan, and does not output one invalid final bridge command as if it were executable."
+  },
+  {
+    "id": "video-seedance-18-first-pass-multiref-minimum-sufficient",
+    "prompt": "用 $aigc-video 直接写一版可粘贴的15秒 Seedance 最终提示词，三个镜头。古代山林牌坊前，曲伯在牌坊顶部，裘水镜在下方草地。曲伯起身说“若是不信，大可一试。”，身后出现巨大赤红人形法阵，法阵从掌心向裘水镜发射光束；裘水镜展开蓝色半球屏障化解攻击，最后两人恢复一上一下的静止对峙。@图1参考法阵体量、形态和构图关系；@图2参考牌坊、石阶、草地和山林环境；@图3参考裘水镜；@图4参考曲伯；@图5参考攻击光束；@图6参考防御屏障。参考图分工集中在开头说明一次，镜头正文不要重复@图N，每镜写成完整自然段。保留这句对白本身，但不要写音效、环境声、音乐或其他声音描述。第一次生成，请直接给最终提示词，不要解释过程。",
+    "expected": "Produces one ready-to-paste first-pass Seedance prompt with a single compact reference summary followed by exactly three natural shot paragraphs. It preserves both identities, the above/below spatial relationship, exact dialogue, palm-fired attack, shield defense, action order, and final standoff. Shot bodies do not repeat @图N. It uses positive visible staging and does not externalize reference blacklists or speculative exclusions such as no text, logo, watermark, third person, deformation, or alternate actions. Apart from the required dialogue text, it adds no sound effects, ambience, music, audio labels, or sound-design prose."
+  },
+  {
+    "id": "video-seedance-19-observed-formation-human-local-patch",
+    "prompt": "上一版生成结果只发现一个问题：曲伯身后的法阵被生成成了第二个有实体的真人。需要替换的原句是：“赤红能量在曲伯身后汇聚成巨大的人形法阵，虚影展开双臂，将右手掌对准下方的裘水镜。”请根据这个已经观察到的问题，只给我这句话的替换版本，仍由法阵掌心发射光束；其他镜头、人物站位、运镜和屏障效果都不要改，继续不写声音。",
+    "expected": "Returns only one replacement sentence or equivalently narrow patch. It positively defines the formation as a huge semi-transparent red energy or smoke apparition visibly originating from and unfolding behind Qu Bo, while preserving the palm-fired attack. One sufficient positive material correction replaces the type error; it does not stack synonymous warnings such as 无实体, 仅呈现, and 并非独立人物. It does not rewrite or restate the full prompt, alter positions, camera, shield, action order, or ending, reintroduce audio, expand the observed failure into a broad preventive negative list, or invent runes, array graphics, geometric symbols, an eye-like emitter, or another unsupported design system."
   }
 ]

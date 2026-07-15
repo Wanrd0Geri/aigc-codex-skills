@@ -16,13 +16,13 @@ Make no change when the wording is already clear and executable.
 
 ## Protected spans
 
-Never rewrite or reorder:
+Never change the value or meaning of:
 
-- literal `@...` anchors and assigned roles
+- literal `@...` anchor labels and assigned roles; duplicate mentions may be consolidated into one reference summary without changing either
 - subject count, identity, shot ids/count/order
 - duration, timing, edit interval
 - dialogue, narration, lyrics, visible text
-- explicit silence, music, subtitle, sound, ending, freeze, fade, black frame, or loop cues
+- user/source/project-locked silence, music, subtitle, sound, ending, freeze, fade, black frame, or loop cues
 - task type and Seedance edit/extend/bridge grammar
 - action order, screen direction, inherited state, end handoff
 - user-retained camera or composition controls

@@ -35,7 +35,7 @@ For each literal anchor record:
 - forbidden/unassigned roles
 - exact text or identity locks, if authorized
 
-Unassigned fields stay neutral. Preserve labels exactly through every stage.
+Unassigned fields stay neutral. Preserve labels exactly through every stage. `forbidden/unassigned roles` are internal validation data, not a negative list for the final prompt. For multi-reference generation, render one compact positive reference summary and normally mention each anchor once; use semantic names in the shot body.
 
 ## LockLedger
 
@@ -45,6 +45,10 @@ Unassigned fields stay neutral. Preserve labels exactly through every stage.
 - unresolved: a decision requiring discussion or a bounded assumption
 
 Creative stages can write only mutable fields. Adapter syntax can wrap exact/semantic fields but cannot reinterpret them.
+
+Externalize a control only when it is user-locked, source/project-locked, platform-required, directly conflict-resolving, or supported by an observed generation failure. A speculative failure mode remains internal. On a first attempt, preserve the locked production result while leaving mutable effect detail and secondary physical response open.
+
+Observed failure evidence authorizes a change only to the failed field. Use existing EvidenceLedger and ReferenceMap attributes for the repair; it does not authorize a new visual design axis.
 
 `operation`, `project_scope`, `expression_request`, and `output_mode` are orthogonal to `task_kind`. Never replace `edit`, `extend`, or `bridge` with optimization, project context, Vibe, or A/B.
 
@@ -58,7 +62,7 @@ Creative stages can write only mutable fields. Adapter syntax can wrap exact/sem
 - emotional vector
 - primary performance carrier
 - duration
-- references, audio, dialogue, visible text
+- references and any active source-backed audio, dialogue, or visible text
 - shots:
   - purpose
   - inherited start state
@@ -66,7 +70,7 @@ Creative stages can write only mutable fields. Adapter syntax can wrap exact/sem
   - camera relation and movement
   - action chain
   - performance carrier
-  - space, light, sound
+  - space, light, and source-backed sound only when active
   - visible end state
 
 Mark project-sourced facts separately from bounded interpretation. Never present an interpretation as a locked project fact.

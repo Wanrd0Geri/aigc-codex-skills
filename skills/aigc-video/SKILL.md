@@ -14,7 +14,7 @@ Apply these defaults unless the current user instruction or active project overr
 - respond in Chinese and lead with the result
 - use Seedance as the default platform when none is named
 - deliver one final prompt in one fenced code block
-- use no music and no subtitles; preserve dialogue, room tone, environment sound, and necessary action sound
+- do not add music, subtitles, ambience, or action sound; preserve audio only when the user, active source, or project supplies it, and include spoken dialogue when dialogue or lip sync is requested
 - preserve exact dialogue and request visible lip sync when dialogue is meant to be spoken on screen
 - favor restrained performance and avoid unrequested gestures or automatic melodrama
 - discuss meaningful creative uncertainty with the user instead of silently choosing a different interpretation
@@ -49,7 +49,7 @@ Build an evidence ledger and reference map before drafting:
 
 Pure text-to-video can proceed from the brief. Reference generation, editing, extension, and bridging require the relevant asset or literal anchor. If an unreadable asset's ending state, identity, composition, or motion is necessary and the user has not described it, explain the gap and ask for the asset or the missing visible state.
 
-Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Assign every anchor a semantic role immediately. Each role is an attribute whitelist; unassigned attributes cannot leak into the prompt.
+Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Assign every anchor a semantic role immediately. Treat each role as an internal attribute whitelist: build from assigned attributes and silently omit unassigned ones.
 
 Read `references/video-contracts.md` for the Evidence Ledger, Reference Map, Lock Ledger, and MotionSpec.
 
@@ -63,6 +63,14 @@ Classify fields before creative work:
 - `unresolved`: a choice that would create a materially different performance, action, composition, continuity state, or ending.
 
 Vibe expression and language cleanup may change only `mutable` fields. Platform rendering may change syntax but not exact or semantic meaning.
+
+A field becomes a semantic lock only when the current user, an authorized reference role, or an active source/project makes it necessary. Agent-designed camera, composition, micro-action, atmosphere, effect detail, and connective motion remain mutable until the user approves them or continuity requires them.
+
+Keep internal control stricter than the delivered prompt. A restriction may enter the final prompt only when it is explicitly required by the current user, locked by an active source or project, required by platform grammar, needed to resolve a direct conflict among active references, or supported by an observed generation failure. Keep speculative failure prevention and `forbidden/unassigned` reference fields internal.
+
+An observed failure releases only the field that failed. Repair it with the nearest already-authorized visible attribute; do not introduce a new material system, symbol language, geometry, prop, action, camera choice, or style axis merely to distinguish the corrected result. If the source does not support a necessary design choice and alternatives would materially differ, discuss that choice instead of inventing it.
+
+For an ontology error—an energy effect rendered as a physical person or object—change only material state and agency. Keep the authorized silhouette, scale, position, and action; use one sufficient positive material description and state its source-supported attachment or origin once. If that positive correction resolves the type, do not repeat the same warning as `无实体 / 仅呈现 / 并非独立人物`. Do not solve the error by flattening the design or adding runes, geometric substructure, anatomy, or a new emitter.
 
 ## 4. Collaborate on creative uncertainty
 
@@ -87,6 +95,7 @@ Decide one-shot versus multi-shot, action load, subject load, reference load, di
 - If the user explicitly wants an ambitious integrated version, deliver it; briefly note the risk and optionally include a more stable alternative only when useful.
 - Do not allocate exact seconds to every generated shot by default. Use event order or `前段 / 中段 / 后段`. Preserve exact timing for targeted source-video edits or explicit timing-critical requests.
 - Keep the initiating action inside the generated window: entering, returning, opening, leaving, discovering, or turning must be visible rather than converted into backstory.
+- For a first-generation attempt, use the minimum sufficient controls: identity, assigned reference roles, material spatial relationships, locked action order, exact dialogue, and the required ending. Leave secondary motion, particles, cloth/hair response, effect micro-detail, and connective physics open unless they are source-locked or central to the request.
 
 ## 6. Build one canonical MotionSpec
 
@@ -96,9 +105,9 @@ Before platform wording, silently define:
 - starting state and ending handoff
 - visual anchor and initiating action
 - emotional vector and performance carrier
-- medium/style, space, light, sound, text, duration
+- medium/style, space, light, duration, and only active sound/text constraints
 - reference map
-- shots with purpose, framing, camera, action chain, performance, spatial relation, sound, and end state
+- shots with purpose, framing, camera, action chain, performance, spatial relation, end state, and only source-backed sound when active
 
 Every platform or A/B version must derive from the same MotionSpec.
 
@@ -140,6 +149,10 @@ For Seedance-family output, read `references/seedance-2-rules.md` and apply the 
 
 Use official information markers when present: dialogue `{台词}`, sound `<音效>`, music `（音乐）`, subtitles `【字幕】`. The user's or project's music/subtitle instruction overrides the personal default.
 
+For new or reference generation with multiple assets, bind each literal anchor once in a compact reference paragraph before the shots. Use semantic subject and effect names in the shot paragraphs. Repeat an anchor only when its role changes, a real ambiguity remains, or the platform task grammar requires it. Do not translate the internal reference blacklist into user-visible exclusions.
+
+Include audio wording only when the user requests it, an active source or project locks it, or spoken dialogue/lip sync requires it. If the user asks for no sound description, omit sound, ambience, music, subtitle, and audio-policy wording throughout subsequent revisions. The personal no-music/no-subtitle default prevents additions; it does not require the literal sentence `无配乐，无字幕` in every prompt.
+
 For generated shots, use `镜头N：景别。` followed by natural executable prose. Keep global locks consistent with per-shot wording. Load `references/shot-craft.md` for performance, camera movement, dialogue, or lip sync; load `references/single-segment-quality-control.md` for complex subjects, blocking, occlusion, or continuity; load `references/task-patterns.md` only for a matching specialized pattern.
 
 ## 10. Validate and deliver
@@ -151,7 +164,8 @@ Run these checks in order:
 3. correct task grammar and platform markers
 4. duration and complexity feasibility
 5. language quality
-6. no unauthorized invention or reference leakage
+6. control budget: no speculative negative list, internal blacklist, repeated anchor binding, redundant lock, or nonessential micro-control
+7. no unauthorized invention or reference leakage
 
 If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
 
@@ -167,6 +181,7 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 | Bridge inputs exceed the current platform limit | State the exact input-count or combined-duration conflict. | Recommend staged bridges; do not emit one invalid command as executable. |
 | Creative meaning has two valid readings | Show both readings and your recommendation. | Wait for the user's choice when the result would materially differ. |
 | Platform/version is unspecified | Use the personal default. | Keep platform-specific claims out if no safe default applies. |
+| A generated result shows one concrete failure | Patch only the failed sentence or field using already-authorized attributes. | Discuss a missing design choice when needed; otherwise add one local positive clarification, and use one short negative only when the observed error cannot be resolved positively. |
 
 ## Avoid
 
@@ -175,3 +190,4 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 - Do not rewrite dialogue, anchors, durations, edit intervals, shot order, or platform grammar to sound more natural.
 - Do not add people, props, background business, symbols, or plot events to make a scene feel complete.
 - Do not expose internal mode names, ledgers, or MotionSpec in the final prompt.
+- Do not externalize speculative `must_not`, reference blacklists, or alternative-action inventories merely because the model might fail.

@@ -74,7 +74,7 @@ Keep only fields that change generation behavior. Put the subject and action fir
 - State the total requested duration once. Do not allocate exact seconds to every generated shot by default.
 - The official guide says precise time instructions such as `0-3秒` are unstable and may produce abnormal results. Use action order, shot order, or `前段 / 中段 / 后段` instead.
 - Exact time ranges remain appropriate for a targeted edit to an existing video. Use a precise generated-event timestamp only when the current user instruction or active project explicitly locks it, and note the drift risk briefly outside the prompt.
-- Inside each shot, order the useful controls as: camera or cut -> subject action and expression -> position or spatial change -> audio.
+- Inside each shot, order the useful controls as: camera or cut -> subject action and expression -> position or spatial change -> active source-backed audio when present.
 - Use at most one main camera movement per shot. Standard terms such as `中景`、`特写`、`全景`、`缓慢推近`、`平稳横移` and `固定机位` are sufficient.
 
 ### Action and Emotion
@@ -92,7 +92,7 @@ When an asset contains multiple possible subjects, define the needed one with tw
 
 `将@图1中穿红色连衣裙、戴草帽的女人定义为张红。`
 
-After defining a subject, use the same label every time. In a simple unregistered case, bind the subject to its asset each time, such as `张三@图1`.
+After defining a subject, use the same label every time. In a short single-shot prompt without a separate reference summary, bind the subject once inline, such as `张三@图1`. In a multi-shot or multi-reference prompt, bind assets once before the shots and use semantic names thereafter.
 
 Do not use an Asset ID as the subject name. Asset IDs do not replace `@图N` or `@视频N`; build a semantic bridge from the asset anchor to its visual role.
 
@@ -109,6 +109,8 @@ Attach a semantic role immediately:
 
 Treat every role as an attribute whitelist. A silhouette reference does not authorize color or material; an identity reference does not authorize pose or composition; an environment reference does not authorize camera placement.
 
+Keep the full whitelist and forbidden-role map internal. For multi-reference generation, put one compact positive reference summary before the shots, normally mention each anchor once, and use the defined character, environment, prop, or effect name in shot paragraphs. Repeat an anchor only when its role changes or a direct ambiguity must be resolved.
+
 Place the most important precision reference early in the prompt. For character identity, prefer one clean face close-up plus one full-body image. Avoid multi-view or three-view sheets: the official troubleshooting guide warns that they can increase identity drift or duplicate characters.
 
 Use only the assets that have a clear job. The official guide recommends a typical total of four to five assets: one or two character images, one scene image, one camera-reference video, and one audio reference. Do not fill the input limit; excess sources create priority conflicts.
@@ -124,7 +126,7 @@ Use the official information markers:
 
 Keep dialogue in one language except for proper nouns. For a non-Chinese/non-English line, name the language before the braces, for example `用日语说道{こんにちは}`.
 
-This production workflow defaults to `无配乐，无字幕。`; it is a delivery policy, not a Seedance capability limit. Dialogue, room tone, environment sound, and action sound remain allowed. Use music or subtitle markers when the current user instruction or active project overrides the default.
+This production workflow does not add music or subtitles by default; that is a delivery policy, not a Seedance capability limit. The default does not require writing `无配乐，无字幕。` into every prompt. Include audio wording only when the current user instruction, active source, or project supplies it, or when spoken dialogue/lip sync requires it. If the user asks for no sound description, omit all optional audio wording in the current draft and later revisions.
 
 Seedance 2.0 can generate common visible text. When the current user instruction or active project requests it, write: content + appearance timing + frame position + appearance method + color/style if needed. Prefer common characters and avoid rare characters or special symbols. For subtitles, state that the bottom subtitle follows the spoken rhythm. For logos or exact typography, use a dedicated visual reference when possible.
 
@@ -154,23 +156,27 @@ Write the visible transition rather than `接下一段`. Describe how subject mo
 - **Duplicate / twin characters**: define each character and its source clearly; prefer one person per reference image and avoid multi-view sheets. If strict uniqueness is essential, add one concise global constraint after positive staging.
 - **More than four referenced people**: expect lower stability. Group characters into images with no more than four people per group, then use those grouped images for video generation.
 - **Style drift**: state the target style explicitly. For stronger control, first convert source images to the target style.
-- **Unexpected subtitles, logos, or watermarks**: use short constraints such as `保持无字幕`、`不要生成Logo`、`不要生成水印`; remove unnecessary source text before generation when possible.
+- **Observed unexpected subtitles, logos, or watermarks**: first remove unnecessary source text; if the problem has appeared or the user explicitly prohibits it, add one local constraint such as `保持无字幕`、`不要生成Logo` or `不要生成水印`.
 - **Specific effect logic**: provide a reference video for the effect's shape and motion instead of relying on abstract prose.
+- **Effect mistaken for a physical entity**: preserve its assigned silhouette, scale, position, and action, then use one source-supported positive description of its non-solid medium and attachment to the originating character or object. Do not stack synonymous negatives after the positive correction, or redesign it as a flat plate, rune system, geometric diagram, creature anatomy, or a new emitter unless an active reference supplies that design.
 - **Voice mismatch**: pair the audio anchor with a concise voice description and keep the requested line's tone close to the source audio.
 - **Prompt overload**: do not paste a full screenplay. Keep only the subject, visible action, shot order, camera, audio, and constraints that affect this clip.
+- **Constraint admission**: do not preload every troubleshooting warning. A restriction belongs in the final prompt only when the user or source locks it, platform grammar needs it, active references directly conflict, or the failure has appeared in an actual result. Prefer one local positive correction over a preventive negative list. Repair an observed failure with attributes already supported by the prompt or assigned references; do not invent a new material, symbol system, geometry, prop, or style to make the correction distinct.
 
 ## 7. Final Prompt Shape
 
 Put one executable prompt in one fenced code block. Keep explanations outside it.
 
-Simple new generation when the personal audio defaults apply:
+Simple new generation:
 
 ```text
-本视频总时长 X 秒，单镜头。整体场景、主体、核心动作与视觉重点。无配乐，无字幕。
+本视频总时长 X 秒，单镜头。整体场景、主体、核心动作与视觉重点。
 
-镜头1：景别。用自然中文写清机位或一种运镜、主体动作、空间关系、表演与必要声音。
+镜头1：景别。用自然中文写清机位或一种运镜、主体动作、空间关系、表演，以及用户或源料已经要求的对白或声音。
 ```
 
 Complex reference generation may add a short subject/reference map before the shots. A targeted edit starts directly with `严格编辑@视频N` or `在@视频N的[区间]……`; an extension starts with `向前 / 向后延长@视频N` or `生成@视频N之后的内容`.
 
-Keep aspect ratio, resolution, frame rate, and other platform settings out of the prompt unless the user explicitly asks to include them. Use positive visible staging first; add at most one short negative sentence for visible text/logo/watermark, a safety issue, or a strict uniqueness constraint that cannot be expressed positively.
+Add an audio-policy sentence only when the user or active project explicitly requires it. A multi-reference map should state positive assigned roles once; it should not reproduce internal forbidden roles or repeat anchors inside every shot.
+
+Keep aspect ratio, resolution, frame rate, and other platform settings out of the prompt unless the user explicitly asks to include them. Use positive visible staging first. Add at most one short negative sentence only for an explicit user/source prohibition, an observed generation failure, a direct active-reference conflict, or an unavoidable platform/safety requirement that cannot be expressed positively.
