@@ -96,7 +96,7 @@
   },
   {
     "id": "video-seedance-07-handoff-lock-preservation",
-    "prompt": "根据这个镜头任务卡写 Seedance：源优先级=当前分镜高于大纲；当前画面事实=角色只站在门内半步；参考图角色=@图1只做人物身份参考；上一镜承接=右手仍按在门框上；本镜剧情功能=克制反应；禁止偏移=不要新增第二个人，不要改成室外。",
+    "prompt": "根据这个 VideoContext 写 Seedance：源优先级=当前分镜高于大纲；source_visible_facts=角色只站在门内半步；reference_map=@图1只做人物身份参考；start_boundary=右手仍按在门框上；performance_intent=克制反应；high_cost_locks=单人、室内。",
     "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and identity-only @图1 role. It expresses constraints through positive staging where possible."
   },
   {
@@ -208,5 +208,65 @@
     "id": "video-seedance-19-observed-formation-human-local-patch",
     "prompt": "上一版生成结果只发现一个问题：曲伯身后的法阵被生成成了第二个有实体的真人。需要替换的原句是：“赤红能量在曲伯身后汇聚成巨大的人形法阵，虚影展开双臂，将右手掌对准下方的裘水镜。”请根据这个已经观察到的问题，只给我这句话的替换版本，仍由法阵掌心发射光束；其他镜头、人物站位、运镜和屏障效果都不要改，继续不写声音。",
     "expected": "Returns only one replacement sentence or equivalently narrow patch. It positively defines the formation as a huge semi-transparent red energy or smoke apparition visibly originating from and unfolding behind Qu Bo, while preserving the palm-fired attack. One sufficient positive material correction replaces the type error; it does not stack synonymous warnings such as 无实体, 仅呈现, and 并非独立人物. It does not rewrite or restate the full prompt, alter positions, camera, shield, action order, or ending, reintroduce audio, expand the observed failure into a broad preventive negative list, or invent runes, array graphics, geometric symbols, an eye-like emitter, or another unsupported design system."
+  },
+  {
+    "id": "video-spatial-01-offscreen-attacker-terminal",
+    "prompt": "写15秒三镜头 Seedance 提示词：曲伯在高处让赤红法相向下攻击，裘水镜在草地以蓝色半球屏障破招。最后一镜只拍裘水镜、屏障和被卸向两侧的赤红能量；曲伯和法相仍在原空间，但这一镜不需要再看到他们，也不要写声音。",
+    "expected": "Keeps Qu Bo and the formation as internal offscreen continuity in the final shot rather than naming them to prove they still exist. The final-shot paragraph objectively shows shield impact and deflected energy, using only the minimum necessary clue such as incoming screen direction or Qiu Shuijing's gaze/body axis to preserve offscreen causality. Its final sentence contains only Qiu Shuijing, the shield, and visible residual attack energy. It does not stack redundant spatial clues or append a negative subject list or sound policy."
+  },
+  {
+    "id": "video-spatial-02-explicit-two-subject-terminal",
+    "prompt": "写10秒两镜头 Seedance 提示词。女人站在桥下，男人站在桥面，两人一上一下对视。最后必须用大全景同时看到两个人和桥，保持明确的高低对峙关系。",
+    "expected": "Preserves the explicitly requested two-subject terminal roster and wide composition. It does not apply a universal offscreen-opponent rule, remove either person, or replace the final standoff with a single-subject frame; both subjects remain spatially separated above and below rather than being compressed onto an incorrect foreground/background axis."
+  },
+  {
+    "id": "video-spatial-03-landmark-not-action-waypoint",
+    "prompt": "古代山林里两个人隔着一座显眼牌坊对阵，红色光束从高处角色射向下方草地角色。牌坊只是环境，攻击不与牌坊发生碰撞、穿越、绕行或破坏。给我最终 Seedance 提示词。",
+    "expected": "Describes the beam through origin or screen entry, direction, and target without promoting the gate into a trajectory waypoint. The gate may establish the visible environment where useful but the prompt does not say the beam passes through, across, around, along, or strikes it, and does not add a negative-path list."
+  },
+  {
+    "id": "video-spatial-04-environment-reference-no-composition-leak",
+    "prompt": "@图1只参考山林、草地、石阶和牌坊这些环境资产。镜头从草地上的守方斜前方拍摄，高处攻击从画面左上方进入；不要照搬@图1的原始机位。写最终 Seedance 提示词。",
+    "expected": "Binds @图1 once to environment attributes only. It independently follows the requested defender-side camera and upper-left screen entry, and does not import the reference image's camera placement, framing, action trajectory, subject blocking, or mandatory visibility of every landmark."
+  },
+  {
+    "id": "video-spatial-05-world-screen-coordinate-separation",
+    "prompt": "8秒单镜头，固定机位。女孩从画面左侧前景穿过房间，最后停在右侧门边；摄影机不要跟随。",
+    "expected": "Keeps the camera fixed and gives the subject a visible left-foreground to right-door screen route. It does not simultaneously demand a stable screen position, tracking behavior, or an unchanged world position, and the terminal sentence places her at the right-side doorway."
+  },
+  {
+    "id": "video-extension-03-forward-uses-opening-boundary",
+    "prompt": "向前延长@视频1 5秒。@视频1开头是男人从画面左侧走入中央，镜头正缓慢向右横移，清晨冷光从右侧照来。生成他进入画面之前的内容，并自然接到这个开头。",
+    "expected": "Uses 向前延长 / prepend-before grammar and treats the source opening, not the source ending, as the target boundary. The generated predecessor converges on the supplied left-entry position, rightward camera motion, and right-side cold light so its terminal frame joins the original opening; it does not ask for or invent the source ending state."
+  },
+  {
+    "id": "video-bridge-03-both-boundaries",
+    "prompt": "把@视频1接到@视频2。@视频1结尾时女孩在画面右侧抬起红伞，镜头向她推近；@视频2开头红伞已经占满画面，镜头开始后拉露出雨夜街道。用红伞完成连续过渡。",
+    "expected": "Addresses the sources in bridge order, begins from video 1's right-side raised-umbrella ending and camera push, then converges on video 2's full-frame umbrella opening before the pullback. It protects both boundary states rather than writing only an exit from video 1 or treating either source as a generic reference."
+  },
+  {
+    "id": "video-spatial-06-observed-terminal-recall-local-patch",
+    "prompt": "上一版只有终帧出错：最后一句“曲伯与巨大法相依然悬立在牌坊上方”把他们强行召回了裘水镜身后。只给我这一句的替换版本，终帧只看裘水镜、蓝色屏障和向两侧散开的攻击能量；其他内容不要改。",
+    "expected": "Returns only a local positive terminal-frame replacement sentence. It removes the continuity-only subject and landmark recall, states the requested visible terminal roster and composition, and does not rewrite the full prompt or append prohibitions such as 不要出现曲伯、法相或牌坊."
+  },
+  {
+    "id": "video-spatial-07-paired-result-minimal-diff",
+    "prompt": "这是同一 Seedance 镜头的最近成功版和失败版。成功版结尾是：“赤红能量撞上蓝色屏障后沿弧面卸向两侧，最后停在裘水镜稳定撑住屏障的画面。”失败版只多了一句：“远处牌坊顶部的曲伯和法相仍保持原位。”失败结果里曲伯、法相和牌坊被拉到了裘水镜身后，其他内容与成功版一致。请先判断最小可疑差异，再只给出需要调整的句子；不要重写整段。",
+    "expected": "Compares the paired prompts and observed outcomes, identifies the single added continuity-only sentence as the smallest plausible causal span, and removes it or replaces it with one positive terminal-frame sentence containing only Qiu Shuijing, the blue shield, and visible deflected energy. It does not broaden the diagnosis into universal claims, add a subject blacklist, change the successful action path, or rewrite the full prompt."
+  },
+  {
+    "id": "video-spatial-08-interacting-landmark-preserved",
+    "prompt": "写一版 Seedance 提示词：红色光束必须从高处射出，正面击穿牌坊中央横梁，碎石落下后继续射向下方角色的屏障。牌坊被击穿是这一镜的关键动作，不要省略。",
+    "expected": "Preserves the gate as a required visible interaction waypoint and keeps the ordered path from source to beam impact, broken crossbeam/debris, and defender shield. It does not overgeneralize the scenery-waypoint heuristic by deleting, bypassing, or moving the explicitly required gate interaction, and it adds no unrelated building controls."
+  },
+  {
+    "id": "video-spatial-09-zero-prompt-delta",
+    "prompt": "同一个 Seedance 提示词、参考图和设置连续生成两次，一次终帧正确，一次把画外人物拉进来了；两次 prompt 完全没有任何差异。目前只有这两个结果。请判断要不要改提示词。",
+    "expected": "Treats the failure as unattributed generation variance because prompt delta is zero. It does not release or rewrite any prompt field, invent a causal sentence, or add a subject blacklist; it recommends a controlled rerun or more paired samples before changing the prompt."
+  },
+  {
+    "id": "video-neutral-01-final-from-brief",
+    "prompt": "根据这段描述直接写平台中立的最终视频提示词，不要 Seedance 或其他平台格式：夜雨中，女人在桥下浅水里，男人在桥面，两人不动；镜头最后拉远，同时看见两人和完整石桥。",
+    "expected": "Keeps final-artifact ownership in aigc-video, builds one platform-neutral executable prompt from the brief, preserves both subjects and the terminal wide composition, and omits Seedance anchors, information markers, adapter grammar, and platform claims. It does not route a new final-video request to language-only rewriting."
   }
 ]

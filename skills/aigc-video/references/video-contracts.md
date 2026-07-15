@@ -2,10 +2,16 @@
 
 Use these contracts silently. They prevent creative stages, language cleanup, and platform rendering from changing one another's facts.
 
+## Contents
+
+1. Task, evidence, reference, and lock ledgers
+2. Sparse BoundaryState
+3. MotionSpec and stage status
+
 ## TaskEnvelope
 
-- `terminal_artifact`: final platform video prompt
-- `platform` and `version`
+- `terminal_artifact`: final_video_prompt
+- `platform` and `version`, or explicit `platform_neutral`
 - `task_kind`: new_text | reference | edit | extend | bridge
 - `operation`: draft | optimize
 - `output_mode`: default | prompt_only | diagnostic | ab
@@ -52,11 +58,23 @@ Observed failure evidence authorizes a change only to the failed field. Use exis
 
 `operation`, `project_scope`, `expression_request`, and `output_mode` are orthogonal to `task_kind`. Never replace `edit`, `extend`, or `bridge` with optimization, project context, Vibe, or A/B.
 
+## BoundaryState
+
+Use a BoundaryState for a source opening or ending and for a shot's visible start or terminal frame. It is a sparse boundary delta, not a duplicate shot description. Record only fields that are locked, change at that boundary, or materially affect continuity/composition:
+
+- visible roster: subjects, effects, props, and environment anchors actually in frame
+- offscreen causal sources that continue to exist but should not be rendered at this boundary
+- subject world relationship plus screen position, scale, or occlusion only when materially fixed
+- facing, gaze, pose, contact, and active effect or light state only when the boundary depends on them
+- camera framing, action-axis side, or motion vector only when it changes or must carry across the boundary
+
+World presence never implies membership in the visible roster. A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
+
 ## MotionSpec
 
 - goal and viewer priority
 - medium/style
-- start state and end handoff
+- segment start and terminal BoundaryStates
 - initiating action
 - visual anchor
 - emotional vector
@@ -65,13 +83,17 @@ Observed failure evidence authorizes a change only to the failed field. Use exis
 - references and any active source-backed audio, dialogue, or visible text
 - shots:
   - purpose
-  - inherited start state
-  - focus and framing
-  - camera relation and movement
-  - action chain
+  - sparse visible-start BoundaryState
+  - viewer focus and ongoing framing
+  - any visible entry or exit not already expressed by the boundaries
+  - ongoing camera relation and movement
+  - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, and gaze/body axis
   - performance carrier
   - space, light, and source-backed sound only when active
-  - visible end state
+  - sparse terminal BoundaryState
+  - next handoff: only the subset of the terminal state that a later shot must inherit
+
+Externalize the visible roster, visible action chain, and only the causal clues needed to read them. Keep offscreen world continuity and unused boundary fields internal.
 
 Mark project-sourced facts separately from bounded interpretation. Never present an interpretation as a locked project fact.
 

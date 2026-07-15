@@ -1,6 +1,6 @@
 ---
 name: aigc-prompt-rewrite
-description: Use when the user already has a platform-neutral AIGC image/video prompt, visual core, or an existing named image-generation prompt and explicitly asks only to 改自然、改成导演讲戏、去 AI 味、去模板腔、去参数堆叠, clarify visible subject-action-space logic, or review language executability while preserving production controls and platform syntax. Do not use as a mandatory final pass. Cleanup or optimization of an existing Seedance/Doubao/Dreamina final video prompt belongs to aigc-video; image diagnosis, reverse prompting, and image-edit prompting belong to aigc-image; script or storyboard context compilation belongs to aigc-project-context.
+description: Use when the user already has a platform-neutral AIGC image/video prompt, visual core, or a prompt for a platform without an active specialist and explicitly asks only to 改自然、改成导演讲戏、去 AI 味、去模板腔、去参数堆叠, clarify visible subject-action-space logic, or review language executability while preserving production controls and syntax. Do not use as a mandatory final pass or to create a new final media prompt. GPT Image 2, Nano Banana, and Seedream final image-prompt optimization belongs to aigc-image; Seedance/Doubao/Dreamina and new platform-neutral final video prompts belong to aigc-video; project compilation belongs to aigc-project-context.
 ---
 
 # AIGC Prompt Rewrite
@@ -13,11 +13,11 @@ Use this skill for one finished artifact: a language-cleaned prompt or a languag
 
 Do not treat it as a universal finalizer. In particular:
 
-- If the user asks for a final Seedance, Doubao, or Dreamina prompt—or asks to optimize/clean an existing prompt for one of those platforms—let `aigc-video` own the whole result, including its internal language check.
-- If the user asks only to clean an existing Midjourney, 即梦 image, GPT Image, Gemini image, or another named image-generation prompt, stay here: preserve required platform syntax and parameters exactly while changing only the visual prose.
+- If the user asks for a final Seedance, Doubao, or Dreamina prompt, a new platform-neutral final video prompt, or cleanup of an existing supported-family prompt, let `aigc-video` own the result.
+- If the user asks to generate or optimize a final GPT Image 2, Nano Banana, or Seedream prompt, let `aigc-image` own the result. Language-only cleanup for Midjourney or another image platform without an active specialist may stay here; preserve required syntax and parameters.
 - If the user asks for a platform-specific final video outside the supported Seedance family, do not invent an adapter inside this language skill; use a current platform-specific workflow or official guidance.
 - If the user supplies an image and wants diagnosis, reverse reconstruction, or an edit prompt, use `aigc-image`.
-- If the source is a script, storyboard, or shot list that still needs continuity and performance interpretation, use `aigc-project-context` before final video drafting.
+- If the source is a script, storyboard, or shot list that still needs continuity and performance interpretation, use `aigc-project-context`, then let `aigc-video` own the final platform-specific or platform-neutral video prompt.
 - If the user asks to actually generate or edit media, use the relevant generation capability instead of returning only rewritten text.
 
 When the request combines language cleanup with a specialist final artifact, route to that specialist and complete the request there. Do not force the user through two separate passes.
@@ -125,10 +125,10 @@ If lock safety and smooth prose conflict, preserve the lock.
 
 ## Output
 
-Write Chinese by default. Match another language or bilingual request when the user asks.
+Write Chinese by default. Match another language or bilingual request when the user asks. Use one fenced block per requested language; never concatenate Chinese and English inside one block.
 
-- For `只给提示词`, `直接出稿`, `prompt only`, or equivalent, output exactly one fenced prompt block and nothing else.
-- For a routine cleanup, output one short heading and one fenced prompt block. Do not add a generic diagnosis.
+- For `只给提示词`, `直接出稿`, `prompt only`, or equivalent, output only the requested language label(s) and fenced prompt block(s), one block per language.
+- For a routine cleanup, output one short heading and the requested language block(s). Do not add a generic diagnosis.
 - If a consequential ambiguity remains, discuss it before presenting a supposedly final rewrite.
 - For teaching, review, or comparison requests, explain only the concrete changes and show compact before/after examples.
 - If the prompt is already mature, say so plainly and avoid expanding it to prove that work was done.
@@ -139,4 +139,4 @@ Write Chinese by default. Match another language or bilingual request when the u
 - **Mixed incompatible targets:** explain the conflict, recommend the dominant target, and ask before discarding one.
 - **Broken or ambiguous anchor:** preserve it literally and ask what role it controls.
 - **Final specialist artifact requested:** hand ownership to the appropriate AIGC skill; do not emit an intermediate rewrite as if it were final.
-- **Prompt-only plus unresolved ambiguity:** ask first; once answered, return only the prompt block.
+- **Prompt-only plus unresolved ambiguity:** ask first; once answered, return only the requested language block or blocks.

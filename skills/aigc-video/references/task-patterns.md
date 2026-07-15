@@ -105,6 +105,7 @@ Prioritize inheritance and transition logic.
 
 - Assign each video a role: source clip, camera reference, action reference, style reference, end frame, or next-state target.
 - For a true bridge/track-completion task, address the sources directly in order: `@视频1，[可见过渡]，接@视频2`; do not describe them as ordinary reference videos.
-- Continue from the previous clip's ending posture, movement direction, light state, and camera momentum.
+- Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.
+- Assign a start-frame or end-frame image only to the boundary attributes it is meant to lock, such as composition, pose, identity, light, or all visible pixels; do not assume the role.

@@ -12,7 +12,7 @@
   {
     "id": "project-3-final-video-same-task",
     "prompt": "用《临渊行》的项目上下文和我发的参考图，直接帮我写第一集第五场5-10的最终视频提示词。",
-    "expected": "Builds validated compact cards internally from the available package, maps each readable reference to a narrow semantic role, applies project defaults only to unspecified fields, and continues with aigc-video in the same task. Does not stop at a handoff note or ask the user to invoke another workflow."
+    "expected": "Compiles one lightweight validated VideoContext directly from the available package without first rendering full cards, maps each readable reference to a narrow semantic role, preserves sparse start and terminal boundaries plus only the next-handoff subset, applies project defaults only to unspecified fields, and continues with aigc-video in the same task. Does not rebuild the same ledgers, stop at a handoff note, or ask the user to invoke another workflow."
   },
   {
     "id": "project-4-project-exclusion",
@@ -62,6 +62,11 @@
   {
     "id": "project-13-nonmaterial-details-autonomous",
     "prompt": "剧本、分镜和参考角色都已经对齐。帮我按现有镜头做卡，时长没有写，你自己合理估一下，卡片格式不用问我。",
-    "expected": "Estimates duration from visible complexity, chooses the contract formatting autonomously, validates the supported fields, and does not ask about non-material formatting or ordinary duration-estimation details."
+    "expected": "For this card-only request, records source complexity and a broad planning range without treating it as a platform guarantee or overloaded verdict, chooses the contract formatting autonomously, validates the supported fields, and does not ask about non-material formatting details."
+  },
+  {
+    "id": "project-14-terminal-boundary-not-handoff",
+    "prompt": "把这一镜做成项目卡：攻击者在画外继续施压，终帧只看见守方、蓝色屏障和被卸向两侧的能量；下一镜不承接这组构图。",
+    "expected": "Records the attacker as an offscreen causal source, preserves the defender/shield/deflected-energy terminal visible roster in 本镜终态, and leaves 下一镜交接 empty because no later shot inherits it. It does not force the terminal composition into handoff or omit it merely because no next shot depends on it."
   }
 ]

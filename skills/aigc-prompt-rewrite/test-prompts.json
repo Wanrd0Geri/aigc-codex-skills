@@ -73,5 +73,15 @@
     "id": "rewrite-15-named-image-prompt-cleanup",
     "prompt": "只把这段 Midjourney 文生图 prompt 改自然，不要重做创意，保留参数：女孩站在雨夜车站，低头看手里的旧车票，冷色调，高级感，高质量 --ar 16:9 --stylize 150",
     "expected": "Stays in language cleanup because this is an existing named image-generation prompt; preserves every supplied scene fact and the literal --ar 16:9 --stylize 150 suffix, removes only unsupported quality filler, and adds no camera, light source, prop, action, sound, or story."
+  },
+  {
+    "id": "rewrite-16-bilingual-prompt-only",
+    "prompt": "把这段平台中立提示词改自然，中英文都要，只给提示词：女孩走到门口，在那里停下，回头看向空房间。",
+    "expected": "Returns only a Chinese label and fenced Chinese prompt followed by an English label and separate fenced English semantic mirror. It does not concatenate both languages in one block, add diagnosis, or change the action order and endpoint."
+  },
+  {
+    "id": "rewrite-17-supported-image-owner",
+    "prompt": "把这份 GPT Image 2 产品海报提示词优化成最终可用版本，文字和版式都要更稳定。",
+    "expected": "Routes final supported image-prompt optimization to aigc-image rather than performing a language-only rewrite here, so provider guidance, text locks, layout, output blocks, and settings boundaries are handled by the specialist in the same task."
   }
 ]

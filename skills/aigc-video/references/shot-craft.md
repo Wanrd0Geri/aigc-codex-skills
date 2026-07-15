@@ -51,6 +51,16 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
+## World, Screen, And Camera Coordinates
+
+Write each shot as an objective account of what the camera can observe from its visible start through its terminal frame. Keep world position and screen position distinct:
+
+- With a fixed camera, a moving subject normally changes screen position; state the visible route when it matters.
+- With a tracking camera, the subject may remain at a stable screen position while changing world position; state the camera-subject relationship.
+- With an orbit or side change, preserve the established side of the action axis unless a visible, deliberate axis crossing is required. Translate the same world action into the correct new screen direction after a crossing.
+
+Visibility roster, offscreen causality, effect-path, and terminal-frame checks belong to `references/single-segment-quality-control.md`; do not restate them here.
+
 ## Performance And Blocking Detail
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
@@ -68,7 +78,7 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
 - Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
-- Put spoken dialogue in the official braces syntax: `角色说道{台词}`. Use `<音效>` for a discrete sound effect. Use `（音乐）` and `【字幕】` when the current user instruction or active project overrides this workflow's no-music/no-subtitle default.
+- For Seedance-family output, put spoken dialogue in braces: `角色说道{台词}`; use `<音效>`、`（音乐）` and `【字幕】` only when active. For platform-neutral output, preserve the exact line and ownership in ordinary natural language without platform markers.
 - The personal no-music/no-subtitle default prevents additions but does not require an opening policy phrase. Keep user/source/project-supplied dialogue and sound; otherwise do not invent ambience, action sound, voiceover, or dubbing. If the user asks for no sound description, omit all optional audio wording.
 - Include subtitles only when the current user instruction or active project requires them; otherwise keep them out of the prompt.
 

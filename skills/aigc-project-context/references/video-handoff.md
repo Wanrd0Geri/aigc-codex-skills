@@ -1,71 +1,58 @@
-# Video Handoff Contract
+# VideoContext Handoff
 
-Use this contract only when the user requests a final video prompt after project context is required. The handoff is internal: compile the card, continue with `aigc-video` in the same task, and return the user's requested final artifact rather than an instruction to invoke another workflow.
+Use this contract only when project context is required for a final video prompt. Do not instantiate or display full shot cards first; compile source facts directly into this compact internal envelope and continue with `aigc-video` in the same task.
 
-## Handoff Gate
+## Gate
 
-- `validated`: continue to video production.
-- `overloaded`: pass every locked beat intact and let video production handle compression, splitting, or platform limits. Do not silently choose a materially different structure.
-- `pending`: continue only when the unresolved item cannot change the final production result. Otherwise discuss the uncertainty with the user before finalizing.
+- `validated`: continue.
+- `overloaded`: pass every locked beat and source duration intact; `aigc-video` owns the feasibility decision.
+- `pending`: continue only when the unresolved item cannot change the requested final result. Otherwise discuss it before drafting.
 
-## Handoff Envelope
-
-Pass only the compact production context needed for the requested range:
+## Envelope
 
 ```yaml
 artifact: final_video_prompt
 project: "<project id/title>"
 shot_range: "<exact episode/scene/shot ids>"
-card_schema_version: "1.0"
-card_status: validated
-cards: "<validated compact cards>"
+context_schema_version: "1.0"
+context_status: validated
 source_authority: "<field-scoped winners and unresolved conflicts>"
+shots:
+  - id: "<exact shot id>"
+    start_boundary:
+      visible_roster: []
+      offscreen_causal_sources: []
+      spatial_state: []
+    locked_actions: []
+    source_visible_facts: []
+    performance_intent: "<source-backed intent or 未指定>"
+    visible_performance: []
+    terminal_boundary:
+      state: "<locked or unlocked>"
+      visible_roster: []
+      spatial_state: []
+    next_handoff: []
+    exact_dialogue_sound_text: []
+    duration: "<source value or unspecified>"
 reference_map:
   - anchor: "<literal anchor or asset id>"
     state: available_readable
     role: "<narrow role>"
-    may_control: ["<fields>"]
-    must_not_control: ["<fields>"]
-user_overrides:
-  - "<current explicit instruction>"
-project_defaults:
-  - "<applicable field-scoped default>"
+    may_control: []
+high_cost_locks: []
+user_overrides: []
+project_defaults: []
 open_decisions: []
-requested_platform: "<named platform or unspecified>"
+requested_platform: "<named platform, unspecified, or platform_neutral>"
 output_request: "<prompt only, explanation, variants, etc.>"
 ```
 
-Do not include the full script, outline, project bible, or unrelated neighboring cards.
+Omit empty optional fields. Do not include the full script, complete cards, project bible, `must_not_control` lists, or unrelated neighboring shots.
 
-## Downstream Ownership
+## Downstream ownership
 
-The context layer locks facts and intent. `aigc-video` owns:
+Treat this envelope as already compiled evidence, locks, references, and boundaries. `aigc-video` maps it directly into MotionSpec without rebuilding the source ledger or asking again about resolved fields. It owns platform or platform-neutral rendering, duration feasibility, shot execution, dialogue/lip-sync syntax when applicable, protected language cleanup, and final formatting.
 
-- final platform selection and adapter wording
-- duration compression or shot splitting proposals
-- video generation, editing, extension, bridging, dialogue/lip-sync, and visible-text syntax
-- expression shaping that preserves the card's action, intent, and continuity
-- final language lint and output formatting
+Preserve exact ids, anchors, identity, count, location, locked action order, dialogue, required silence, prop state, start/terminal boundaries, and next handoff. A next handoff is only a subset of terminal state; if the rest of the terminal boundary is unlocked, every non-empty handoff field still remains locked there. Keep bounded performance intent from authorizing new plot, props, symbols, lighting, or action.
 
-Project defaults are fallbacks, not permanent locks. Apply precedence per field:
-
-1. current user instruction
-2. current readable asset within its assigned role
-3. validated shot card/current production source
-4. project default
-5. video workflow default
-
-## Preservation Rules
-
-- Preserve exact shot ids, literal anchors, character identity, subject count, location, locked action order, exact dialogue, required silence, prop state, and ending handoff.
-- Preserve semantic locks such as screen direction, inherited pose, gaze target, contact point, and reference-role boundaries.
-- Treat `performance intent` as motivation, not permission to add backstory, flashbacks, symbols, props, lighting changes, or new actions.
-- Let `visible performance` refine delivery only inside the locked action.
-- Keep `anchor_only` assets literal; never claim to have inspected them.
-- Keep missing or unassigned assets from controlling any field.
-
-## Same-Task Collaboration
-
-If a creative uncertainty remains, present the evidence, current reading, alternatives, and recommendation, then ask 1-3 related questions. Once answered, repair the affected card fields and continue to the final video prompt without asking the user to restart or re-invoke a skill.
-
-If the user requested cards or an audit only, do not create this handoff.
+If uncertainty remains, present the evidence, current reading, alternatives, and recommendation, then ask one combined question. Once answered, repair only the affected envelope fields and continue; do not make the user restart the workflow.

@@ -6,38 +6,45 @@
   },
   {
     "id": "edit-2-preserve-identity",
+    "requires": ["readable_source_image"],
     "prompt": "保留人物脸和姿势，只修光影、色调和背景融入，给 ChatGPT image editor 的中英双语 prompt。",
-    "expected": "Selects edit mode; outputs semantically matched Chinese and English Preserve/Transform/Avoid instructions; locks face identity, pose, camera, composition, and character count; limits Transform to lighting, color, and background integration."
+    "expected": "With a readable source fixture, selects edit mode and outputs compact semantically matched Chinese and English edit instructions in two separately labeled fenced code blocks. It explicitly names the user-locked face and pose plus only an observed high-risk invariant when needed, uses one general unchanged boundary for the rest, changes only lighting, color, and background integration, and does not print an exhaustive lock list or generic negative list."
   },
   {
     "id": "edit-4-unspecified-model",
+    "requires": ["readable_source_image"],
     "prompt": "这张图人物和构图都要保留，只把光影、色彩和背景融合修得更高级，给我中英双语修图 prompt。",
-    "expected": "Does not ask for a model when the edit strategy is already clear; returns one bilingual cross-platform edit prompt unless a provider-specific strategy is materially required."
+    "expected": "Does not ask for a model when the edit strategy is already clear; returns one cross-platform Chinese prompt and one English semantic mirror in separate fenced code blocks unless a provider-specific strategy is materially required."
   },
   {
     "id": "edit-3-redesign-risk",
+    "requires": ["readable_source_image"],
     "prompt": "把这个角色换成完全不同的服装和脸，但又要说是修图 prompt。",
     "expected": "Classifies the request as redesign, explicitly releases face identity and costume locks before drafting, and does not claim those released fields will remain preserved."
   },
   {
     "id": "edit-5-product-light-cleanup",
+    "requires": ["readable_source_image"],
     "prompt": "这是一张产品图，只清理背景灰尘、压住反光、保持瓶身和标签真实，不要电影感，不要重做布景。",
-    "expected": "Selects conservative edit mode; locks product silhouette, proportions, material and color identity, closure geometry, exact label copy and hierarchy, camera, crop, set, contact shadow, and unrequested props; transforms only dust and glare; adds no cinematic relighting, depth of field, grading, or rebuilt set."
+    "expected": "With a readable source fixture, selects conservative edit mode; transforms only dust and glare; explicitly protects the user-named bottle and exact label plus any observed high-risk geometry, then uses one general unchanged boundary for the remaining source. It does not recite every internal product lock or add cinematic relighting, depth of field, grading, or a rebuilt set."
   },
   {
     "id": "reverse-1-bilingual-default",
+    "requires": ["readable_source_image"],
     "prompt": "反推这张图的提示词，要中文和英文。",
-    "expected": "Requires a readable source image, then selects reverse mode and outputs one Chinese prompt and one semantically matched English prompt; keeps platform flags and settings outside both prompt bodies."
+    "expected": "Requires a readable source image, then selects reverse mode and outputs one Chinese prompt and one semantically matched English prompt in two separately labeled fenced code blocks; treats them as alternatives rather than one bilingual model input; keeps platform flags and settings outside both prompt bodies."
   },
   {
     "id": "reverse-2-multiple-image-roles",
+    "requires": ["two_readable_source_images"],
     "prompt": "图1参考人物，图2参考风格，帮我复刻成即梦和 GPT Image 都能用的提示词。",
-    "expected": "Assigns image 1 only to character identity and image 2 only to explicitly described style axes; builds one canonical still specification; returns one shared bilingual pair for both named platforms unless their reference syntax materially differs; imports no unassigned attributes."
+    "expected": "Assigns image 1 only to character identity and image 2 only to explicitly described style axes; builds one canonical still specification; returns one shared Chinese/English pair in separate fenced blocks for both named platforms unless their reference syntax materially differs; does not emit redundant near-identical platform versions or import unassigned attributes."
   },
   {
     "id": "reverse-3-variation",
+    "requires": ["readable_source_image"],
     "prompt": "给我一份反推变体提示词：保持人物关系和构图不变，把天气换成下雨天。",
-    "expected": "Selects reverse variation mode; rewrites the complete bilingual prompt with rain and weather-consistent visible effects; preserves subject count, relationship, pose, camera, composition, and every other locked field; does not return only a patch note."
+    "expected": "Selects reverse variation mode; rewrites a complete but minimum-sufficient Chinese prompt and English semantic mirror in separate fenced blocks with rain and only necessary weather-consistent effects; preserves subject count, relationship, pose, camera, composition, and every other locked field; does not return only a patch note."
   },
   {
     "id": "reverse-4-missing-image-filename-only",
@@ -46,16 +53,19 @@
   },
   {
     "id": "visual-1-standard-diagnosis",
+    "requires": ["readable_source_image"],
     "prompt": "这张 AIGC 图为什么有 AI 味？帮我看最该先修哪里。",
     "expected": "Selects diagnose mode; gives a neutral observation, likely intention, only the diagnostic lenses with visible findings, and up to three ranked fixes with evidence, impact, and smallest practical correction; does not append an unrequested prompt."
   },
   {
     "id": "visual-2-production-gate-route",
+    "requires": ["readable_source_image"],
     "prompt": "这张图能不能进视频？该修图还是重做？",
     "expected": "Diagnoses the readable image and returns exactly one readiness state from can proceed, repair first, or redesign first with one decisive reason; uses no red/yellow/green label; provides only the image facts or handoff context needed by the next video or edit workflow."
   },
   {
     "id": "visual-3-repair-handoff",
+    "requires": ["readable_source_image"],
     "prompt": "分析完后给我修图 prompt 的交接摘要。",
     "expected": "Runs diagnose mode and returns a compact edit handoff containing preserve, ranked fixes, any released locks, and concrete drift risks; does not write a full edit prompt because only a handoff summary was requested."
   },
@@ -66,6 +76,7 @@
   },
   {
     "id": "visual-5-no-final-prompt-overreach",
+    "requires": ["readable_source_image"],
     "prompt": "这张图为什么不好看？顺便直接给我完整 Seedance 提示词和修图 prompt。",
     "expected": "Reads the image once, gives a concise diagnosis, then completes the requested bilingual image-edit prompt through diagnose-to-edit mode; does not write the final Seedance prompt inside aigc-image and provides only concise image facts or readiness context for the video workflow."
   },
@@ -76,18 +87,21 @@
   },
   {
     "id": "image-merge-2-perform-edit-not-prompt",
+    "requires": ["readable_source_image"],
     "prompt": "直接帮我把这张图改得更有电影感，不要给我提示词。",
     "expected": "Treats the request as actual image editing, uses the available image-generation or editing capability, and does not return only Preserve/Transform/Avoid prompt text."
   },
   {
     "id": "image-merge-3-diagnose-only",
+    "requires": ["readable_source_image"],
     "prompt": "只分析这张图为什么显得便宜，不要修图 prompt，也不要反推。",
     "expected": "Selects diagnose mode only, reports evidence-backed findings and ranked fixes, and emits no reverse prompt, edit prompt, Preserve/Transform/Avoid block, or platform advice."
   },
   {
     "id": "image-merge-4-diagnose-then-edit",
+    "requires": ["readable_source_image"],
     "prompt": "先告诉我这张关键帧最严重的两个问题，再直接给我一份保留人物脸、姿势和构图的中英双语修图 prompt。",
-    "expected": "Selects diagnose-to-edit mode, reads the image once, gives exactly two concise ranked findings, and then outputs semantically matched bilingual Preserve/Transform/Avoid edit instructions without repeating the full diagnosis."
+    "expected": "Selects diagnose-to-edit mode, reads the image once, gives exactly two concise ranked findings, and then outputs compact semantically matched Chinese and English edit instructions in separate fenced blocks without repeating the full diagnosis or the entire source image."
   },
   {
     "id": "image-merge-5-reverse-vs-edit-ambiguous",
@@ -96,37 +110,93 @@
   },
   {
     "id": "image-merge-6-ambiguous-multi-image-roles",
+    "requires": ["two_readable_source_images"],
     "prompt": "用这两张图做一版新的图像提示词，尽量都参考。",
     "expected": "Does not merge both images wholesale; states a likely source/reference mapping and asks one focused role question; leaves every unassigned identity, composition, environment, palette, light, material, text, and style field unavailable."
   },
   {
     "id": "image-merge-7-unreadable-region",
+    "requires": ["readable_but_low_resolution_source_image"],
     "prompt": "这张截图很糊，人物脸只剩几个像素，但你还是判断一下是谁、什么表情，再给修图 prompt。",
     "expected": "Names the face and expression as unreadable, does not guess identity or expression, requests a useful crop when those facts are required, and restricts any diagnosis or prompt to verifiable regions."
   },
   {
     "id": "image-merge-8-composition-role-boundary",
+    "requires": ["two_readable_source_images"],
     "prompt": "@图1只参考构图和人物站位，@图2只参考主角外貌。请反推一版新图提示词，保留这些引用名。",
     "expected": "Preserves @图1 and @图2 literally; lets @图1 contribute only geometry, placement, scale, crop, overlap, depth, and negative space; lets @图2 contribute only identity traits; imports no environment, object identity, palette, material, lighting, text, or style from either unassigned role."
   },
   {
     "id": "image-merge-9-text-logo-watermark-gate",
+    "requires": ["readable_source_image"],
     "prompt": "给这张产品图写修图 prompt。标签上只确定看清“ABC 12”，旁边小字看不清，右下角还有水印。",
     "expected": "Quotes and protects the exact text ABC 12, does not complete or invent the unreadable small text, does not guess a brand or watermark wording, and does not reproduce the watermark."
   },
   {
     "id": "image-merge-10-nonphotoreal-language",
+    "requires": ["readable_source_image"],
     "prompt": "诊断这张二维动画分镜为什么主体不突出，并给一个保留平涂风格的修图 prompt。",
     "expected": "Uses diagnose-to-edit mode; evaluates silhouette, color-block hierarchy, spacing, and design consistency; preserves the flat 2D medium; does not introduce film stock, realistic skin, IRE, lens-brand, film grain, or live-action grading language."
   },
   {
     "id": "image-merge-11-prompt-only-output",
+    "requires": ["readable_source_image"],
     "prompt": "只给中英文修图 prompt：保留人物、服装和镜头，只清理背景雾气，让前中后景重新分开。不要判断和解释。",
-    "expected": "Returns only the requested Chinese and English edit prompt blocks; contains the same preserve list and authorized haze-depth transform in both languages; includes no diagnosis, routing note, headings outside the prompt blocks, teaching text, or platform advice."
+    "expected": "Returns only a Chinese label and fenced prompt block followed by an English label and separate fenced prompt block; contains the same critical locks and authorized haze-depth transform in both languages; includes no diagnosis, routing note, teaching text, or platform advice."
   },
   {
     "id": "image-merge-12-video-terminal-owner",
+    "requires": ["readable_source_image"],
     "prompt": "根据这张关键帧直接写最终 Seedance 图生视频提示词，人物只需要慢慢回头。",
     "expected": "Does not author the final video prompt inside aigc-image; passes only verified image facts, protected identity and composition, readable starting state, and any readiness blocker needed by the video workflow."
+  },
+  {
+    "id": "prompt-efficiency-1-surgical-edit",
+    "requires": ["readable_source_image"],
+    "prompt": "给 GPT Image 2 的中英双语修图提示词：删掉男人手里的花，其他都别动。",
+    "expected": "With a readable source fixture containing the stated flower, returns two separate fenced language blocks. Each uses one direct local removal instruction plus only necessary reconstruction and a compact keep-everything-else boundary; it does not list every face, costume, camera, lighting, composition, prop, or defect lock and does not add quality boosters."
+  },
+  {
+    "id": "prompt-efficiency-2-platform-settings-outside",
+    "prompt": "给 GPT Image 2 写一版产品图提示词，比例 4:5、medium、JPEG；瓶身标签原文是“青山”。",
+    "expected": "Writes a minimum-sufficient Chinese prompt and English semantic mirror in separate fenced blocks; keeps the exact visible copy 青山 unchanged in both; puts aspect ratio, quality, and output format outside the visual prompt instead of turning them into aesthetic prose."
+  },
+  {
+    "id": "prompt-efficiency-3-nano-family",
+    "prompt": "给 Nano Banana 写一版人物海报提示词，默认用现在最合适的通用模型。",
+    "expected": "Uses a family-compatible minimum-sufficient prompt and, only if model advice is useful, recommends current Nano Banana 2 / gemini-3.1-flash-image outside the prompt; does not default to legacy Gemini 2.5 Flash Image or interrupt merely to choose a model."
+  },
+  {
+    "id": "prompt-efficiency-4-seedream-pro",
+    "prompt": "给 Seedream 5.0 Pro 写中英文提示词：一个留有标题空间的古风人物概念海报。",
+    "expected": "Returns separate Chinese and English fenced blocks built from deliverable, subject/scene, decisive layout, and only necessary visual treatment; preserves title space without inventing title copy; does not append 8K, masterpiece, ultra-detailed, a long negative list, or unsupported API limits."
+  },
+  {
+    "id": "prompt-efficiency-5-no-bilingual-concatenation",
+    "prompt": "给 Nano Banana 2 写一个雨夜便利店门口的单人电影感海报提示词。中英文都给我，我会选一版复制使用。",
+    "expected": "Returns Chinese and English as separately labeled alternative prompt blocks and does not suggest pasting both languages together into one model input."
+  },
+  {
+    "id": "prompt-efficiency-6-visible-endpoint",
+    "requires": ["readable_source_image"],
+    "prompt": "给我修图提示词，让这张图更高级、更有电影感，但人物不要变。",
+    "expected": "Uses the readable image and user intent to translate abstract quality language into a small set of concrete visible changes such as motivated light, subject-background separation, or coherent color response; does not leave 高级, 电影感, premium, or cinematic as the only executable instruction; asks one focused question if materially different visual interpretations remain."
+  },
+  {
+    "id": "prompt-efficiency-7-integration-only-when-needed",
+    "requires": ["readable_source_image"],
+    "prompt": "给我中英文修图提示词：删除女人耳边的耳环，其他不动。",
+    "expected": "Uses one local removal command, adds only the minimal reconstruction needed for the newly exposed ear, hair, or background pixels, protects identity and the nearest costly invariant, and uses one general everything-else-unchanged boundary; does not paste a full integration checklist."
+  },
+  {
+    "id": "prompt-efficiency-8-no-duplicate-boundary",
+    "requires": ["readable_source_image"],
+    "prompt": "只把红色外套改成深蓝色，人物脸和构图保持不变。只要 prompt。",
+    "expected": "Returns compact separate Chinese and English prompt blocks with one color-change instruction, one concise face/composition lock, and one general unchanged boundary; does not repeat the same protection as both positive Keep lines and negative Do-not-change lines."
+  },
+  {
+    "id": "prompt-efficiency-9-supported-prompt-owner",
+    "prompt": "把这份 GPT Image 2 提示词优化成最终可用版本，中英文分开：premium product poster, green bottle, label 青山, right side empty, 4:5, JPEG, medium。",
+    "expected": "Keeps final supported image-prompt ownership in aigc-image without asking for a source image, preserves the exact copy 青山, produces separate Chinese and English blocks, translates only the visual brief into a minimum-sufficient prompt, and keeps 4:5, JPEG, and medium as settings outside both prompt bodies."
   }
 ]
