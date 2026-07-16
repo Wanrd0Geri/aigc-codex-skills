@@ -268,5 +268,30 @@
     "id": "video-neutral-01-final-from-brief",
     "prompt": "根据这段描述直接写平台中立的最终视频提示词，不要 Seedance 或其他平台格式：夜雨中，女人在桥下浅水里，男人在桥面，两人不动；镜头最后拉远，同时看见两人和完整石桥。",
     "expected": "Keeps final-artifact ownership in aigc-video, builds one platform-neutral executable prompt from the brief, preserves both subjects and the terminal wide composition, and omits Seedance anchors, information markers, adapter grammar, and platform claims. It does not route a new final-video request to language-only rewriting."
+  },
+  {
+    "id": "video-vfx-01-giant-dominance-without-universal-crop",
+    "prompt": "写一个6秒 Seedance 镜头：摄影机贴近召唤者肩后，巨大能量法相在他身后的天空形成。这一镜重点是法相压迫性的巨大体量，召唤者只需保留为比例参照，不需要展示法相全身。",
+    "expected": "Keeps the apparition as the sole viewer priority and uses observable scale cues such as frame overflow, depth, near-field anatomy, occlusion, or a partial summoner at the edge. It does not turn both subjects into equal portraits or invent a numeric screen ratio. It treats this as a shot-specific choice rather than claiming that giant subjects should never receive a complete view."
+  },
+  {
+    "id": "video-vfx-02-full-scale-assembly-not-growth",
+    "prompt": "写一个5秒 Seedance 镜头：一尊巨大的透明水墨守护灵由空气中的彩色粒子汇聚出现。它从一开始就是最终体量，不要表现成小人逐渐放大；形成后立即睁眼并伸手。",
+    "expected": "Establishes the final-size spatial envelope and describes particles resolving across multiple separated regions rather than scaling a small figure up. It connects formation directly to eye activation and hand action so the reveal is not written as a held endpoint, while avoiding unrelated camera complexity."
+  },
+  {
+    "id": "video-vfx-03-reference-appearance-without-pose-freeze",
+    "prompt": "@图1只参考巨型火焰武将的面部和材质，不参考原图姿势与构图。生成结果里它每次形成后都会停住摆造型。只修改召唤形成这一段，让它形成后立刻挥刀；其他镜头不变。",
+    "expected": "Returns a local repair that keeps @图1 limited to face and material, avoids inheriting pose or composition, and chains material formation directly into the sword action with one continuing motion carrier. It does not rewrite the full prompt, add several camera moves, or state that reference images universally cause freezing."
+  },
+  {
+    "id": "video-vfx-04-dismantle-not-redirect",
+    "prompt": "优化这一镜：红色能量弹正面击来，守方用透明水流法术轻松将它从内部破解，使它在自己面前失去结构并消散。我要的是化解，不是把攻击牵引到旁边。",
+    "expected": "Makes dismantling visible through a compact loss-of-structure chain and an in-place terminal state at the interaction point. It preserves the relaxed performance and transparent-water material, and does not replace the requested outcome with deflection, reflection, absorption, evasion, or a long negative list."
+  },
+  {
+    "id": "video-vfx-05-explicit-wide-geography-preserved",
+    "prompt": "写一个8秒镜头：巨型石像从峡谷中站起，必须用大全景完整看到石像全身、两侧峭壁和谷底人物，重点是交代三者的空间地理关系。",
+    "expected": "Preserves the explicit complete wide view because geography and full scale comparison are the shot purpose. It does not mechanically crop the statue, remove the valley figure, or apply the impact-oriented giant-subject heuristic against the user's stated endpoint."
   }
 ]

@@ -8,6 +8,7 @@ Use this reference when a request matches a specific video format. These pattern
 2. Product, UGC, VFX, and dialogue
 3. Visible text and audio rhythm
 4. One-take, educational, and bridge patterns
+5. Large apparition and effect confrontation
 
 ## Six-Dimension Scan
 
@@ -50,6 +51,17 @@ Prioritize transformation logic and visible stages.
 - Keep one main transformation per shot unless the request is explicitly complex.
 - For ambitious effects, split into setup, trigger, transformation, and aftermath.
 - Preserve readable subject identity before and after the effect.
+
+## Large Apparition And Effect Confrontation
+
+Use this pattern only when a shot depends on a large summoned, projected, or assembled figure and a readable attack-response chain. It is not a default fantasy template.
+
+- Decide whether the figure must be fully mapped in space or mainly felt as larger than the frame. Use a complete view for geography or choreography; use partial framing, depth, occlusion, or frame overflow when impact is the priority.
+- If the figure should assemble at full scale, define the final spatial envelope and let material resolve in separated regions. If literal growth is intended, preserve the scale change instead.
+- Connect assembly to one immediate action unless the reveal itself is the intended endpoint. Keep the camera related to one active carrier rather than stacking movements.
+- Give an attack only the route needed to read origin, direction, and target. Add environmental waypoints only when they visibly interact.
+- Distinguish the response by its terminal behavior: stopped, redirected, dismantled, absorbed, reflected, or evaded. Do not substitute a visually adjacent mechanism merely because it is easier to describe.
+- In a short segment, protect the causal chain and final performance beat before decorative effect stages. A fast insert may compress travel, but it should not obscure who initiated the attack or how it ended.
 
 ## Dialogue Drama Or Short Series
 

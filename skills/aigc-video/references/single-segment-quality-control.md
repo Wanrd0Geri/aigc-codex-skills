@@ -46,9 +46,34 @@ Scan each shot silently:
 5. When terminal composition matters, let the final clause or sentence state the visible endpoint. Do not append a world-continuity summary after it.
 6. Preserve every explicitly requested opponent, landmark, group frame, interaction, or final standoff. This audit removes unintended visibility; it never creates a universal one-subject or landmark-free rule.
 
+## Visual dominance, scale, and reveal continuity
+
+Use these checks only when hierarchy, unusual scale, transformation, or a reveal materially affects the shot:
+
+1. Keep one viewer priority. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
+2. Choose scale cues by shot purpose. Frame overflow, near-field perspective, occlusion, parallax, and a limited familiar-size cue can suggest a subject larger than the frame; a wide or complete view remains appropriate when geography, full anatomy, choreography, or the requested endpoint needs it.
+3. Prefer observable framing language to unsupported composition arithmetic. Preserve exact percentages when the user or source locks them; otherwise state what crosses the frame edge, what remains partial, and which depth relationship changes.
+4. If a formation should appear at its final scale rather than grow, establish its final spatial envelope and let material resolve across multiple separated regions. Use small-to-large scaling when growth itself is the intended event.
+5. Treat a reveal as an action boundary, not automatically an endpoint. Unless the held reveal is intentional, state the next immediate change—gaze activation, weight shift, limb action, material discharge, or another authorized beat—and keep one motion carrier continuous across it.
+6. Let the camera follow one meaningful carrier when movement is needed: the forming material, an active limb, a projectile, a moving subject, or an attention shift. Do not add motion solely to prevent a pause.
+
+## Effect-outcome audit
+
+When the difference among blocking, redirecting, dismantling, absorbing, reflecting, or evading matters, define the visible terminal state rather than relying on a broad verb:
+
+- blocking: forward motion stops at a maintained boundary
+- redirecting: the effect remains coherent enough to leave along a changed route
+- dismantling: internal structure or propagation breaks down and the effect loses coherence at the interaction point
+- absorbing: material or energy visibly transfers into another subject or system
+- reflecting: the effect leaves along a return route
+- evading: the original route continues while the target changes position
+
+These are diagnostic distinctions, not mandatory effect designs. Preserve the user's chosen mechanism and material language; add only enough intermediate change to make that outcome visible.
+
 ## Final check
 
 - each shot has one visual priority, one main action, and no contradictory camera instruction
+- any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
 - generated shots use event order; exact ranges remain for targeted edits or explicit timing-critical requests
 - reference generation uses `参考`; edit/extension addresses the source video directly

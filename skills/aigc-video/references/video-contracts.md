@@ -84,10 +84,11 @@ World presence never implies membership in the visible roster. A terminal Bounda
 - shots:
   - purpose
   - sparse visible-start BoundaryState
-  - viewer focus and ongoing framing
+  - viewer focus and ongoing framing; dominance and scale cue only when material
   - any visible entry or exit not already expressed by the boundaries
   - ongoing camera relation and movement
-  - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, and gaze/body axis
+  - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, and the immediate continuation after a reveal when the reveal is not the endpoint
+  - effect outcome when blocking, redirecting, dismantling, absorbing, reflecting, or evading must remain distinct
   - performance carrier
   - space, light, and source-backed sound only when active
   - sparse terminal BoundaryState
