@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Image"
-  short_description: "Diagnose, reconstruct, and edit AIGC images."
-  default_prompt: "用 $aigc-image 诊断这张图，并根据我的目标直接给出反推或修图提示词。"
+  short_description: "Create, diagnose, reconstruct, and edit image prompts."
+  default_prompt: "用 $aigc-image 根据我的文字 brief 或图片，直接生成、反推或编写可使用的修图提示词。"
 policy:
   allow_implicit_invocation: true

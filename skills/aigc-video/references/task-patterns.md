@@ -8,6 +8,7 @@ Use this reference when a request matches a specific video format. These pattern
 2. Product, UGC, VFX, and dialogue
 3. Visible text and audio rhythm
 4. One-take, educational, and bridge patterns
+5. Large apparition and effect confrontation
 
 ## Six-Dimension Scan
 
@@ -34,11 +35,11 @@ Prioritize product identity, material, use case, and final readable product fram
 
 ## UGC Or Smartphone Realism
 
-Prioritize casual framing, natural imperfection, and believable sound.
+Prioritize casual framing, natural imperfection, and source-backed sound.
 
 - Use handheld, eye-level, selfie, or phone-recorded perspective only when it supports the request.
 - Keep actions small and continuous: talking, showing a product, turning the camera, walking, reacting.
-- Use natural room tone, street noise, hand movement, autofocus shifts, or exposure changes when useful.
+- Preserve natural room tone or street noise only when the user, active source, or project supplies or requests it. Use hand movement, autofocus shifts, or exposure changes when they support the requested realism.
 - Avoid overproduced commercial lighting unless the user asks for polished advertising.
 
 ## Creative VFX Or Transformation
@@ -50,6 +51,17 @@ Prioritize transformation logic and visible stages.
 - Keep one main transformation per shot unless the request is explicitly complex.
 - For ambitious effects, split into setup, trigger, transformation, and aftermath.
 - Preserve readable subject identity before and after the effect.
+
+## Large Apparition And Effect Confrontation
+
+Use this pattern only when a shot depends on a large summoned, projected, or assembled figure and a readable attack-response chain. It is not a default fantasy template.
+
+- Decide whether the figure must be fully mapped in space or mainly felt as larger than the frame. Use a complete view for geography or choreography; use partial framing, depth, occlusion, or frame overflow when impact is the priority.
+- If the figure should assemble at full scale, define the final spatial envelope and let material resolve in separated regions. If literal growth is intended, preserve the scale change instead.
+- Connect assembly to one immediate action unless the reveal itself is the intended endpoint. Keep the camera related to one active carrier rather than stacking movements.
+- Give an attack only the route needed to read origin, direction, and target. Add environmental waypoints only when they visibly interact.
+- Distinguish the response by its terminal behavior: stopped, redirected, dismantled, absorbed, reflected, or evaded. Do not substitute a visually adjacent mechanism merely because it is easier to describe.
+- In a short segment, protect the causal chain and final performance beat before decorative effect stages. A fast insert may compress travel, but it should not obscure who initiated the attack or how it ended.
 
 ## Dialogue Drama Or Short Series
 
@@ -105,6 +117,7 @@ Prioritize inheritance and transition logic.
 
 - Assign each video a role: source clip, camera reference, action reference, style reference, end frame, or next-state target.
 - For a true bridge/track-completion task, address the sources directly in order: `@视频1，[可见过渡]，接@视频2`; do not describe them as ordinary reference videos.
-- Continue from the previous clip's ending posture, movement direction, light state, and camera momentum.
+- Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.
+- Assign a start-frame or end-frame image only to the boundary attributes it is meant to lock, such as composition, pose, identity, light, or all visible pixels; do not assume the role.

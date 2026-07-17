@@ -23,7 +23,7 @@ Use one to two compact Chinese sentences when the shot needs moderate control:
 
 - A clear subject plus atmosphere, space, expression, prop, or reference-image role.
 - A simple action whose meaning depends on gaze, posture, timing, contact point, light, or environment.
-- A one-shot segment that still needs a total-duration budget, audio policy, and stable identity.
+- A one-shot segment that still needs a total-duration budget, stable identity, and any active dialogue or audio constraint.
 
 For any performing subject, write the key body part, gaze target, contact point, or expression change that makes the performance readable. Mention only details that reduce ambiguity, improve generation reliability, or make the acting beat visible.
 
@@ -51,6 +51,25 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
+## Framing And Visible Envelope
+
+A shot-size label is not stronger than the geometry implied by the rest of the prompt. Every body part, prop, subject, and landmark requested in the same frame or boundary expands the minimum view the model must satisfy. A permitted camera move may change that envelope over time.
+
+- Establish the viewer priority and intended crop before adding contextual visibility.
+- For a tight shot, use observable boundaries such as what the upper and lower frame edges cut, which body parts dominate, and which environment elements remain partial or out of focus.
+- Keep world-continuity details internal when they do not need to appear in this shot. Do not ask a chest-up frame to also show feet, a floor contact point, and a complete doorway merely to prove where the subject stands.
+- If two locked requirements need incompatible visible envelopes at the same boundary, state the conflict and recommend which framing purpose to protect. Do not repeat `紧近景` or add a negative list as a substitute for resolving it. Do not invent a reframing move when the camera or framing is locked.
+
+## World, Screen, And Camera Coordinates
+
+Write each shot as an objective account of what the camera can observe from its visible start through its terminal frame. Keep world position and screen position distinct:
+
+- With a fixed camera, a moving subject normally changes screen position; state the visible route when it matters.
+- With a tracking camera, the subject may remain at a stable screen position while changing world position; state the camera-subject relationship.
+- With an orbit or side change, preserve the established side of the action axis unless a visible, deliberate axis crossing is required. Translate the same world action into the correct new screen direction after a crossing.
+
+Visibility roster, offscreen causality, effect-path, and terminal-frame checks belong to `references/single-segment-quality-control.md`; do not restate them here.
+
 ## Performance And Blocking Detail
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
@@ -61,6 +80,14 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 
 Priority order: body/contact -> gaze/attention -> expression transition -> movement endpoint -> continuity handoff.
 
+When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
+
+## Cross-Shot Action Phase
+
+When a cut changes the view of one continuing event, carry the terminal action identity and phase into the next shot. Start the new shot from what is already happening and advance it; do not restage the onset merely because the camera angle changed.
+
+Use wording such as `承接上一镜同一次发射动作` only when it resolves a real ambiguity. The inherited visible state is more important than the phrase itself: an already-open door stays open, an already-emitted beam remains connected, and a subject already passing another person does not approach and pass them again.
+
 ## Dialogue And Lip Sync
 
 When the user requests dialogue, speech, lip sync, or visible mouth movement:
@@ -68,8 +95,8 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
 - Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
-- Put spoken dialogue in the official braces syntax: `角色说道{台词}`. Use `<音效>` for a discrete sound effect. Use `（音乐）` and `【字幕】` when the current user instruction or active project overrides this workflow's no-music/no-subtitle default.
-- The opening-overview phrase `无配乐，无字幕。` does not mean silence: keep diegetic speech and necessary action/environment sound when the shot needs them, and do not invent voiceover or dubbing unless the user asks.
+- For Seedance-family output, put spoken dialogue in braces: `角色说道{台词}`; use `<音效>`、`（音乐）` and `【字幕】` only when active. For platform-neutral output, preserve the exact line and ownership in ordinary natural language without platform markers.
+- The personal no-music/no-subtitle default prevents additions but does not require an opening policy phrase. Keep user/source/project-supplied dialogue and sound; otherwise do not invent ambience, action sound, voiceover, or dubbing. If the user asks for no sound description, omit all optional audio wording.
 - Include subtitles only when the current user instruction or active project requires them; otherwise keep them out of the prompt.
 
 If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.

@@ -1,122 +1,94 @@
-# Single Segment Quality Control
+# Single-Segment Quality Control
 
-Use this reference for complex subjects, blocking, occlusion, overloaded action, or continuity-sensitive Seedance prompts. A long-form sequence only works if each segment can generate clearly on its own.
+Use this reference for complex subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family prompts.
 
-## Contents
+## Quality order
 
-1. Quality order and complexity downgrade
-2. Duration budget and positive staging
-3. Final check and failure checklist
-4. Minimal example
+Check only what the shot needs, in this order:
 
-## Quality Order
+1. stable identity and intended visible roster
+2. one readable main action per shot
+3. material spatial relationships
+4. one main camera strategy
+5. one supported performance carrier when active
+6. required terminal image
+7. only the terminal subset a later shot must inherit
 
-Check the segment in this order:
+Fix a missing high-priority field before adding style, atmosphere, or effect detail.
 
-1. Subject: the main subject has stable identity anchors.
-2. Action: each shot has one main visible action.
-3. Space: left/right, near/far, foreground/background, and key object positions are clear.
-4. Camera: each shot has one shot size, one angle, and at most one main camera movement.
-5. Emotion carrier: emotion is shown through gaze, pause, breath, hand movement, posture, light, or sound.
-6. Readability: each shot has a clear visible action or state change when the action would otherwise be ambiguous.
-7. Handoff: if this is part of a longer sequence, preserve only the posture, gaze, object position, movement direction, light state, or camera position the next segment must inherit.
+## Complexity and duration
 
-If one of these is missing, fix it before adding style, atmosphere, or continuity details.
+Simplify only mutable execution fields:
 
-## Complexity Downgrade
+- prefer one camera movement; fixed camera is useful only when it serves the shot
+- define subject positions or routes when multiple people, occlusion, or crossings would otherwise be ambiguous
+- reduce active subjects only when subject count is not locked
+- make one action readable before another begins when overlap would confuse the result
 
-When the requested shot includes multiple people, large action, occlusion, complex position changes, similar-looking subjects, or compound camera movement, simplify only mutable execution fields:
+Use these as internal beat budgets, not exact generated-shot timestamps:
 
-- Propose splitting the action into more than one shot when structure is not locked; obtain approval before changing a locked shot plan.
-- Use fixed camera or one simple camera movement.
-- Reduce the number of active subjects only when they are not locked; otherwise make their roles and positions clearer and flag the stability risk.
-- Keep the main subject's size and screen position stable.
-- Give each important subject a position or prop anchor.
-- Make the action readable before starting the next action; use an endpoint only when overlapping actions would confuse the model.
+- one action beat: about 2-3 seconds
+- one camera move plus one action: about 3-4 seconds
+- one expression/attention change: about 1-2 seconds
+- one contact and reaction: about 2-3 seconds
+- one multi-character handoff: about 3-5 seconds
 
-## Duration Budget
+A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
 
-Before drafting, back-calculate how many readable beats the requested duration can hold. Do not compress too many actions into a short segment.
+If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, reorder, or add exact per-shot timestamps without authorization.
 
-Rough timing:
+## Visibility, path, and terminal audit
 
-- one readable action beat: about 2-3 seconds
-- one camera movement plus one action: about 3-4 seconds
-- one expression or attention transition: about 1-2 seconds on its own
-- one object interaction with contact and reaction: about 2-3 seconds
-- one multi-character handoff or chase beat: about 3-5 seconds
+Scan each shot silently:
 
-If the requested duration cannot hold all beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, or reorder locked actions, subjects, dialogue, or shots without approval. Preserve the visible start state, main action, and necessary continuity anchor instead of squeezing several beats into one unreadable shot.
+1. Separate world existence from intended shot visibility.
+2. At each material start or terminal boundary, compare the intended crop with the minimum visible envelope implied by every body part, prop, subject, and landmark requested in that frame. Remove only mutable visibility details that exceed the crop; preserve any explicitly locked group view, full-body view, interaction point, or landmark. A supported camera move may transition between different envelopes.
+3. In non-quoted visual instruction prose, keep a concrete scene noun only when it is visible, visibly interacting, or needed to establish the visible environment. Exclude protected dialogue, narration, lyrics, visible text, and literal `@...` anchors from this audit.
+4. Describe a moving subject or effect with only the material route: origin or screen entry -> direction -> target. Keep an intermediate building, doorway, vehicle, or prop when the action visibly contacts, crosses, damages, avoids, or deliberately uses it; otherwise do not promote scenery into a waypoint.
+5. Preserve an offscreen cause with the minimum visible clue needed to read the action, such as screen-entry direction, gaze/body axis, directional light, environmental response, or impact point.
+6. When terminal composition matters, let the final clause or sentence state the visible endpoint. Do not append a world-continuity summary after it.
+7. Preserve every explicitly requested opponent, landmark, group frame, interaction, or final standoff. This audit removes unintended visibility; it never creates a universal one-subject or landmark-free rule.
 
-Use this timing only as an internal feasibility budget. State total duration once in the final prompt, but do not assign exact seconds to every generated shot by default. The official guide warns that precise time ranges are unstable; keep exact ranges for targeted source-video edits or an explicit timing-critical request.
+## Visual dominance, scale, and reveal continuity
 
-## Positive Visible Staging
+Use these checks only when hierarchy, unusual scale, transformation, or a reveal materially affects the shot:
 
-Describe the desired visible staging before considering any negative warning list:
+1. Keep one viewer priority. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
+2. Choose scale cues by shot purpose. Frame overflow, near-field perspective, occlusion, parallax, and a limited familiar-size cue can suggest a subject larger than the frame; a wide or complete view remains appropriate when geography, full anatomy, choreography, or the requested endpoint needs it.
+3. Prefer observable framing language to unsupported composition arithmetic. Preserve exact percentages when the user or source locks them; otherwise state what crosses the frame edge, what remains partial, and which depth relationship changes.
+4. If a formation should appear at its final scale rather than grow, establish its final spatial envelope and let material resolve across multiple separated regions. Use small-to-large scaling when growth itself is the intended event.
+5. Treat a reveal as an action boundary, not automatically an endpoint. Unless the held reveal is intentional, state the next immediate change—gaze activation, weight shift, limb action, material discharge, or another authorized beat—and keep one motion carrier continuous across it.
+6. Let the camera follow one meaningful carrier when movement is needed: the forming material, an active limb, a projectile, a moving subject, or an attention shift. Do not add motion solely to prevent a pause.
 
-- `动作限制在画面中景范围内，主角只向前移动两步，主体大小保持稳定。`
-- `镜头保持固定机位，人物从画面左侧前景走到中央，不改变朝向。`
-- `两名角色保持前后关系，前景角色停在桌边，背景角色只抬头看向门口。`
-- `UFO悬停在天空中央，下降幅度缓慢，光束落点保持在主人公前方地面。`
+## Effect-outcome audit
 
-## Final Check
+When the difference among blocking, redirecting, dismantling, absorbing, reflecting, or evading matters, define the visible terminal state rather than relying on a broad verb:
 
-Before returning the final prompt, silently scan against the failure checklist below. In addition, verify these segment-level points:
+- blocking: forward motion stops at a maintained boundary
+- redirecting: the effect remains coherent enough to leave along a changed route
+- dismantling: internal structure or propagation breaks down and the effect loses coherence at the interaction point
+- absorbing: material or energy visibly transfers into another subject or system
+- reflecting: the effect leaves along a return route
+- evading: the original route continues while the target changes position
 
-- Each shot has one main action and one main camera movement.
-- The duration can realistically hold the number of action, camera, expression, and handoff beats.
-- Generated shots use event order rather than exact per-shot timestamps unless the task is a targeted edit or explicitly timing-critical.
-- Reference generation uses `参考`; video editing and extension address the source video directly without `参考`.
-- The final shot includes a continuity anchor only when a next segment depends on posture, gaze, object position, movement direction, light state, or camera position.
-- Subject identity anchors are stable (clothing, silhouette, prop, or position) for every important subject.
-- Spatial relationships (left/right, foreground/background, near/far) are stated where they affect the action.
-- Every reference contributes only its assigned attributes; no color, material, text, identity, lighting, style, or composition has leaked from an unrelated role.
-- Global camera, focal-length, framing, foreground-ratio, subject-position, and composition locks agree with every per-shot label.
-- Every style or medium explicitly named by the user is preserved and translated into visible production choices.
-- The user's initiating action remains visible; `回到/进入/抵达/打开/离开/发现/转向` is not silently converted into an already-completed starting state.
+These are diagnostic distinctions, not mandatory effect designs. Preserve the user's chosen mechanism and material language; add only enough intermediate change to make that outcome visible.
 
-If anything is missing, fix it before adding style or atmosphere details.
+## Final check
 
-## Failure Checklist
+- each shot has one visual priority, one main action, and no contradictory camera instruction
+- intended framing can contain the requested visible envelope without relying on a repeated shot-size label
+- a cut that continues the same event inherits its current action phase rather than restarting it
+- any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
+- duration fits the locked beats without speculative micro-control
+- generated shots use event order; exact ranges remain for targeted edits or explicit timing-critical requests
+- reference generation uses `参考`; edit/extension addresses the source video directly
+- start and terminal BoundaryStates are sparse rather than full shot duplicates
+- terminal visible roster matches the shot purpose even when no next handoff exists
+- next handoff is only a subset of terminal state
+- world position, screen position, camera side, and screen direction agree when material
+- reference roles do not leak; anchors are normally bound once
+- exact dialogue, visible text, required sound/silence, style, and initiating action remain intact
+- every restriction passes the admission test: user/source lock, platform requirement, active-reference conflict, or observed failure
+- deleting any remaining sentence would change the visible result, a costly lock, a necessary role, or platform execution
 
-These are the failure modes most likely to break a Seedance prompt. Use this extended scan for complex, reference-heavy, or unstable drafts:
-
-- **Parameter-list writing style** — e.g. `镜头1：中景，固定机位，主角站在画面中央，背景是雨夜，主角抬头，雨水打湿肩膀`. Comma-chained slots without verbs break the script-like read Seedance handles best. Rewrite as flowing sentences with verbs and connectives, ending the structured lead-in with a period: `镜头1：中景。固定机位从正面拍摄，主角站在画面中央，身后是雨夜的街口。他抬起头，雨水打湿了他的肩膀。`
-- **Exact timing on every generated shot** — e.g. `镜头1：0-3秒`、`镜头2：3-6秒`. Keep total duration and shot order, then express timing as action sequence by default. Preserve exact time ranges for targeted edits and for a user-explicit timing-critical request.
-- **Writing aspect ratio, resolution, or frame rate inside the prompt** — these belong in the platform UI, not the prompt body. Only include if the user explicitly asks.
-- **Bare reference labels** — e.g. `@图1 走向画面中央`. Always attach a semantic role: `@图1（白衣少年角色参考）走向画面中央`.
-- **Unscoped reference intent** — e.g. `参考 @视频1`. State whether the reference serves as camera movement, action, edit rhythm, effect behavior, sound, or character performance reference.
-- **Edit or extension miswritten as reference generation** — do not write `参考@视频1` when changing or continuing that clip. Use `严格编辑@视频1`、`向后延长@视频1` or `生成@视频1之后的内容`.
-- **Environment reference overriding shot design** — if a scene image is only an environment reference, state that it does not set camera angle, framing, or starting image; otherwise the model may copy its composition.
-- **Reference-role leakage** — a silhouette-only asset must not contribute material, color, text, brand, lighting, identity, or function. Treat every assigned role as a whitelist, not a loose inspiration source.
-- **Global composition drift** — fixed long lens, fixed camera, fixed foreground percentage, fixed subject position, or locked framing must remain consistent across shot labels and descriptions. Do not change shot size merely to create variety.
-- **Compound camera movement in one shot** — e.g. mixing push, pan, and tracking-like following in a single shot. Pick one main movement; if multiple are needed, split into multiple shots.
-- **Conflicting camera or edit instructions** — e.g. requesting `固定机位` and `环绕镜头` in the same shot, or `一镜到底` while also listing hard cuts. Resolve the priority before drafting.
-- **Duration-complexity mismatch** — e.g. placing several locations, transformations, dialogue beats, and camera moves inside 4-5 seconds. Reduce actions, split shots, or extend the segment.
-- **Unrequested subject inflation** — do not add background staff, crowds, bystanders, vehicles, animals, or decorative business just because the location could contain them. Keep only subjects and objects required by the user's action or continuity.
-- **Inventing style labels not established by the user or references** — e.g. `三渲二`, `UE5风格`, `照片级写实`, `cel shading`, `cinematic`. If style is unspecified, write neutral execution quality only.
-- **Deleting an explicit style because no style reference is attached** — a user-named medium or style is already established. Preserve it and translate it into material, silhouette, lighting, and motion behavior.
-- **Negative tag lists** — e.g. `不要模糊，不要变形，不要失真`. First describe what is visible and desired: `主体清晰可辨，身体结构自然，动作物理合理`. Keep identity, subject-count, continuity, and reference-role controls inside the existing positive staging or reference map. Run this failure check silently; do not turn it into `生成注意` or a negative tail. Only an unavoidable hard platform/safety issue, visible text/logo/watermark, or explicit user prohibition that cannot be phrased as positive staging may add one short warning sentence.
-- **Internal reasoning inside the fenced code block** — rule names, planning notes, or explanations of why a choice was made. The code block contains only the executable prompt body.
-- **Abstract taste words without a visible carrier** — e.g. `氛围感强烈`, `极具张力`. Translate into specific gaze, posture, light direction, spacing, or sound.
-- **Flat performance labels** — e.g. `he looks sad` or `the fox acts funny`. Replace with body part, contact point, gaze path, expression transition, movement direction, and only the anchor needed for the next beat.
-- **Music or subtitles drift** — this workflow defaults to `无配乐，无字幕。` New-generation overviews state it directly unless the current user instruction or active project overrides the default; targeted edits do not need a new overview. Dialogue, environment sound, and necessary action sound remain allowed.
-- **Plot synopsis** — describing what happens before or after the clip, character backstory, or narrative arcs the camera cannot see. Stay inside what the camera frames during the segment duration.
-- **Identifiable real people, celebrity likenesses, trademarked characters, or protected IP** — keep generic or ask the user for rights-safe handling.
-- **Treating reference-image prompts like text-to-video prompts** — when references exist, preserve literal `@...` anchors such as `@图1` or `@庠序场景.png`, name what each reference is used for, and state what the written shot overrides.
-- **Overusing natural-language cleanup** — do not run a separate cleanup pass unless the user asks or the draft has visible language defects.
-
-## Minimal Example
-
-```text
-本视频总时长 8 秒，两个镜头。夜晚开阔地，巨大的飞行器从云层下方缓慢下降，冷蓝色光束落向地面，画面重点是 UFO 的体量、地表被光束压低的空气感，以及主人公抬头仰望的反应。无配乐，无字幕。
-
-参考图使用：
-@图1（飞行器外形与材质参考）作为 UFO 主体参考。
-@图2（环境与地表空间参考）作为地形、云层和光线基准。
-@图3（主人公外观参考）作为人物脸部、服装和体态参考。
-
-镜头1：远景。低角度固定机位贴近开阔地面拍摄，地面位于前景，云层和UFO位于画面中央上方。@图2（环境参考）的地面压在画面下方，远处云层被冷蓝色光线照亮。@图1（飞行器参考）的UFO从云层下方缓慢下降到画面中央，地面草叶被气流压低，少量尘土向外扩散，UFO的光束落点始终保持在画面中景范围内。
-
-镜头2：中近景。机位来到主人公侧前方并缓慢推近，人物站在画面左侧前景，UFO光束落在画面右上方。@图3（主人公参考）保持脸部、服装和体态稳定，身体朝向天空中的UFO，衣摆被风向后带起，右手手指轻轻收紧。冷蓝色光线从上方照到主人公脸侧，他缓慢抬头看向光束，最后停在仰望姿态，身体仍朝向光束，为下一段走向光束的片段保留接点。主体识别稳定，空间关系清晰，动作承接清楚。
-```
+For an observed bad generation, paired success/failure comparison, ontology error, or unstable prior result, load `references/failure-recovery.md` instead of expanding this checklist.

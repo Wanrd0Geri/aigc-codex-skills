@@ -1,6 +1,6 @@
 ---
 name: aigc-project-context
-description: Use when a script, storyboard, shot list, project package, episode/scene/shot range, or long-form AIGC production must be compiled into validated shot cards, source-backed performance understanding, reference-role mapping, continuity handoffs, missing-asset status, or a continuity audit. This skill owns context artifacts, not the final video-platform prompt; when the user requests the final video prompt, apply this contract internally and let aigc-video deliver the result in the same task.
+description: Use when a script, storyboard, shot list, project package, episode/scene/shot range, or long-form AIGC production must be compiled into validated shot cards, source-backed performance understanding, reference-role mapping, start/terminal boundary state, continuity handoffs, missing-asset status, or a continuity audit. This skill owns context artifacts, not the final video prompt; when the user requests a platform-specific or platform-neutral final video prompt, compile a lightweight VideoContext internally and let aigc-video deliver it in the same task.
 ---
 
 # AIGC Project Context
@@ -12,7 +12,7 @@ Compile production sources into compact, validated shot-level context. Preserve 
 - Own: source extraction, source conflicts, shot cards, performance interpretation, asset/reference mapping, continuity, and audits.
 - Do not own: new shot design or the final platform prompt.
 - When the user asks only for cards or an audit, stop at that artifact.
-- When the user asks for a final video prompt, compile the validated card internally and continue with `aigc-video` in the same task. Do not make the user initiate another workflow.
+- When the user asks for a final video prompt, compile a validated lightweight `VideoContext` internally and continue with `aigc-video` in the same task. Build full cards only when the user requests cards or an audit.
 
 ## 1. Identify the active project
 
@@ -90,23 +90,17 @@ Read `references/shot-card-contract.md` and use its field names. A card must ide
 
 - `validated`: all facts needed for the requested artifact are supported
 - `pending`: a named unresolved item remains
-- `overloaded`: locked beats exceed the current duration budget but have not been redesigned
+- `overloaded`: a user/source-locked duration demonstrably cannot hold the locked beats; no source-free platform estimate may create this status
 
-Estimate duration only when no source duration exists:
+Record source duration when present. For card-only output, when the user asks for an estimate and no duration exists, record a broad planning range plus `simple / standard / complex` source complexity; do not use that estimate as a platform overload verdict. For a final-video request, pass the source duration or `unspecified` and let `aigc-video` make the only execution-feasibility judgment.
 
-- still reaction or one clean action: roughly 4-6 seconds
-- standard acting or dialogue beat: roughly 6-10 seconds
-- complex blocking, multiple subjects, reveal, VFX, or strong camera move: roughly 10-15 seconds
-
-These are planning estimates, not platform timing guarantees. If a locked sequence exceeds the budget, mark it overloaded and pass it intact to video production. Do not delete, split, or redesign beats inside this skill.
-
-Validate exact shot ids, identity, action/dialogue order, prop state, inherited camera/screen relation, performance source, and previous/next continuity.
+Validate exact shot ids, identity, action/dialogue order, prop state, sparse start and terminal boundaries, performance source, and next handoff. The next handoff is only the subset of terminal state a later shot must inherit.
 
 ## Output modes
 
 - `shot cards`: source-backed cards for the requested range.
 - `continuity audit`: compare a prompt or plan against active sources and list mismatches; rewrite only when requested.
-- `final video request`: read `references/video-handoff.md`, compile cards silently, then let `aigc-video` deliver the final platform prompt.
+- `final video request`: read `references/video-handoff.md`, compile a lightweight `VideoContext` without rendering full cards, then let `aigc-video` deliver the requested platform-specific or platform-neutral prompt.
 
 For card-only output, include unresolved items and missing assets without appending a final video prompt.
 
@@ -118,8 +112,9 @@ For card-only output, include unresolved items and missing assets without append
 | Equal-priority sources conflict | Explain both readings and recommend one. | Mark affected fields pending until the user decides. |
 | Reference role unclear | Offer the safest mapping and its consequences. | Keep the reference unassigned. |
 | Scene context missing | Use raw-source fallback. | List missing layers and mark affected facts pending. |
+| Required source exists but is unreadable, corrupt, password-protected, or unsupported | Request a readable export or the relevant excerpt. | Mark affected fields pending; do not infer them from summaries or filenames. |
 | Required production choice absent | Separate facts from interpretation and discuss it. | Route new directing choices to an appropriate directing workflow. |
-| Final video handoff lacks a validated card | Repair only missing card fields. | Deliver the card and name the unresolved final decision. |
+| Final VideoContext lacks required source fields | Repair only the missing envelope fields from active sources. | Name the unresolved production decision; do not fabricate or rebuild unrelated card fields. |
 
 ## Avoid
 
@@ -129,4 +124,4 @@ For card-only output, include unresolved items and missing assets without append
 - Do not create shot ids, camera, lighting, composition, blocking, dialogue, or edit choices absent from the active source.
 - Do not treat white-background character sheets as final scene lighting, color, camera, or environment references.
 - Do not turn every context request into a plot recap.
-- Do not stop at a handoff note when the user requested a final video prompt and the card can be validated.
+- Do not stop at a handoff note when the user requested a final video prompt and the VideoContext can be validated.

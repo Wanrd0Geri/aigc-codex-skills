@@ -1,11 +1,11 @@
 ---
 name: aigc-video
-description: Use when the user wants a final, ready-to-paste Seedance, Doubao, or Dreamina-family video prompt, including text-to-video, image/reference-to-video, video editing, extension, shot bridging, project-bound shots, prompt optimization, duration compression, dialogue and lip sync, visible text, scene continuity, a Vibe/experiential version, or natural-language cleanup of an existing Seedance-family prompt. This skill owns the final supported-platform video artifact and combines expressive direction, performance translation, platform execution, and a protected language-quality pass. Explicitly platform-neutral language-only rewriting without a final video artifact belongs to aigc-prompt-rewrite.
+description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
 ---
 
 # AIGC Video
 
-Own every final Seedance/Doubao/Dreamina-family video prompt. Combine the useful parts of Vibe Creating, Seedance execution, and natural-language quality control inside one workflow. Never make the user move through separate Vibe, language, and platform skills.
+Own every final Seedance/Doubao/Dreamina-family prompt and every explicitly requested platform-neutral final video prompt. Combine expressive direction, production reasoning, platform adaptation when active, and protected language control inside one workflow.
 
 ## Personal defaults
 
@@ -14,7 +14,7 @@ Apply these defaults unless the current user instruction or active project overr
 - respond in Chinese and lead with the result
 - use Seedance as the default platform when none is named
 - deliver one final prompt in one fenced code block
-- use no music and no subtitles; preserve dialogue, room tone, environment sound, and necessary action sound
+- do not add music, subtitles, ambience, or action sound; preserve audio only when the user, active source, or project supplies it, and include spoken dialogue when dialogue or lip sync is requested
 - preserve exact dialogue and request visible lip sync when dialogue is meant to be spoken on screen
 - favor restrained performance and avoid unrequested gestures or automatic melodrama
 - discuss meaningful creative uncertainty with the user instead of silently choosing a different interpretation
@@ -33,11 +33,11 @@ Identify the final artifact, platform/version, output mode, and one base product
 
 Record prompt optimization, project scope, Vibe, and A/B separately; none replaces the base production task. A project-bound extension is still `extension`; optimizing an edit command is still `strict video edit`.
 
-A project-bound final prompt remains owned here. Compile the needed project facts and shot card first using the `aigc-project-context` contract, then continue to the final prompt in the same task. Do not stop at a user-visible handoff when enough information exists.
+A project-bound final prompt remains owned here. Consume the lightweight `VideoContext` from `aigc-project-context` as already compiled evidence, locks, references, and boundaries; map it directly into MotionSpec without rebuilding full cards or asking again about resolved fields.
 
 Record Vibe as an expression request and A/B as an output request; neither replaces the production task kind. `按 Vibe 的方式向后延长@视频1` remains an extension and must use extension grammar.
 
-If the user asks only for explicitly platform-neutral language cleanup and does not want final platform structure, use `aigc-prompt-rewrite` instead. Cleanup or optimization of an existing Seedance/Doubao/Dreamina prompt remains here because the requested result is still a final supported-platform prompt. Do not apply Seedance markers or grammar to Kling, Runway, Pika, or another named platform; this skill does not claim their final adapters.
+If the user asks only to clean an existing platform-neutral prompt and does not want new video-production decisions, use `aigc-prompt-rewrite`. Creating a final platform-neutral prompt from a brief, script, storyboard, or project remains here. Cleanup or optimization of an existing Seedance/Doubao/Dreamina prompt also remains here. Do not apply Seedance markers or grammar to Kling, Runway, Pika, or another named platform; this skill does not claim their final adapters.
 
 ## 2. Gate evidence and assets
 
@@ -47,9 +47,9 @@ Build an evidence ledger and reference map before drafting:
 - `anchor_only`: a literal `@...` anchor and its user-assigned role exist, but the asset is not visually readable here. Preserve the anchor and supplied facts; never claim unseen detail.
 - `missing`: a required source or anchor is absent.
 
-Pure text-to-video can proceed from the brief. Reference generation, editing, extension, and bridging require the relevant asset or literal anchor. If an unreadable asset's ending state, identity, composition, or motion is necessary and the user has not described it, explain the gap and ask for the asset or the missing visible state.
+Pure text-to-video can proceed from the brief. Reference generation, editing, extension, and bridging require the relevant asset or literal anchor. If an unreadable asset's relevant boundary state, identity, composition, or motion is necessary and the user has not described it, explain the gap and ask for the asset or missing visible state. Use the source ending for `向后延长` / append-after and the first bridge input; use the source opening for `向前延长` / prepend-before and the second bridge input.
 
-Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Assign every anchor a semantic role immediately. Each role is an attribute whitelist; unassigned attributes cannot leak into the prompt.
+Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Assign every anchor a semantic role immediately. Treat each role as an internal attribute whitelist: build from assigned attributes and silently omit unassigned ones.
 
 Read `references/video-contracts.md` for the Evidence Ledger, Reference Map, Lock Ledger, and MotionSpec.
 
@@ -63,6 +63,14 @@ Classify fields before creative work:
 - `unresolved`: a choice that would create a materially different performance, action, composition, continuity state, or ending.
 
 Vibe expression and language cleanup may change only `mutable` fields. Platform rendering may change syntax but not exact or semantic meaning.
+
+A field becomes a semantic lock only when the current user, an authorized reference role, or an active source/project makes it necessary. Agent-designed camera, composition, micro-action, atmosphere, effect detail, and connective motion remain mutable until the user approves them or continuity requires them.
+
+Separate world continuity from shot visibility. A subject, object, or place may continue to exist offscreen without being named in the delivered shot. For Seedance-family visual instruction prose, treat each concrete scene noun as a likely request to render or interact with it; keep offscreen continuity facts internal and externalize only their visible influence when causality needs support. Never apply this Seedance noun audit to protected exact spans such as dialogue, narration, lyrics, visible text, or literal `@...` anchors.
+
+Keep internal control stricter than the delivered prompt. A restriction may enter the final prompt only when it is explicitly required by the current user, locked by an active source or project, required by platform grammar, needed to resolve a direct conflict among active references, or supported by an observed generation failure. Keep speculative failure prevention and `forbidden/unassigned` reference fields internal.
+
+For an observed generation failure, read `references/failure-recovery.md`. Release and patch only the smallest evidenced field. If identical prompt text produces mixed results, treat the cause as unassigned generation variance and request a controlled rerun or more paired samples instead of changing the prompt.
 
 ## 4. Collaborate on creative uncertainty
 
@@ -84,23 +92,28 @@ Decide one-shot versus multi-shot, action load, subject load, reference load, di
 
 - Keep one main action and one main camera strategy per generated shot.
 - For clips of 15 seconds or less, favor one location, one action chain, one visual priority, and one ending beat.
+- Treat every body part, prop, subject, and landmark requested in the same frame or boundary as part of its minimum framing envelope. If the requested framing cannot contain them, remove only mutable visibility detail or surface the hard-lock conflict; repeating the shot-size label does not resolve the geometry. A visible reframing may satisfy different envelopes over time when the camera move is allowed.
+- Let a very short fast cut carry one instantaneous beat. Distribute a multi-stage action across cuts instead of making every insert repeat its onset, development, and result.
 - If the user explicitly wants an ambitious integrated version, deliver it; briefly note the risk and optionally include a more stable alternative only when useful.
 - Do not allocate exact seconds to every generated shot by default. Use event order or `前段 / 中段 / 后段`. Preserve exact timing for targeted source-video edits or explicit timing-critical requests.
 - Keep the initiating action inside the generated window: entering, returning, opening, leaving, discovering, or turning must be visible rather than converted into backstory.
+- For a first-generation attempt, use the minimum sufficient controls: identity, assigned reference roles, material spatial relationships, locked action order, exact dialogue, and the required ending. Leave secondary motion, particles, cloth/hair response, effect micro-detail, and connective physics open unless they are source-locked or central to the request.
 
 ## 6. Build one canonical MotionSpec
 
 Before platform wording, silently define:
 
 - segment goal and viewer priority
-- starting state and ending handoff
+- relevant start and terminal boundary states
 - visual anchor and initiating action
 - emotional vector and performance carrier
-- medium/style, space, light, sound, text, duration
+- medium/style, space, light, duration, and only active sound/text constraints
 - reference map
-- shots with purpose, framing, camera, action chain, performance, spatial relation, sound, and end state
+- shots with sparse start/terminal boundaries, shot-level camera and action, inherited action phase when a cut continues the same event, performance, only material spatial causality, next-handoff subset, and only source-backed sound when active
 
 Every platform or A/B version must derive from the same MotionSpec.
+
+Use only the boundary and spatial fields that materially affect the shot. Read `references/video-contracts.md` for the compact BoundaryState structure.
 
 ## 7. Apply the minimum necessary expression work
 
@@ -131,27 +144,37 @@ Read `references/language-lint.md` when the source contains AI-flavored prose, p
 
 ## 9. Render the platform prompt
 
-For Seedance-family output, read `references/seedance-2-rules.md` and apply the task-specific grammar:
+For Seedance-family output, read `references/seedance-2-rules.md`. For strict edit, extension, or bridge tasks also read `references/seedance-2-video-operations.md`. Apply the task-specific grammar:
 
 - new/reference generation: `参考@图N中的[assigned role]` or `参考@视频N的[assigned dimension]`
 - strict edit: address `@视频N` directly with `严格编辑` or the concrete change; do not say `参考@视频N`
 - extension: address `@视频N` directly with `向前延长`、`向后延长` or `生成@视频N之后的内容`
 - bridge: state source order and visible transition: `@视频1，[visible transition]，接@视频2`
 
-Use official information markers when present: dialogue `{台词}`, sound `<音效>`, music `（音乐）`, subtitles `【字幕】`. The user's or project's music/subtitle instruction overrides the personal default.
+For an explicitly platform-neutral final prompt, skip Seedance references, markers, and task grammar. Preserve the same MotionSpec and write only executable natural-language shots or one continuous segment, matching the user's requested structure.
 
-For generated shots, use `镜头N：景别。` followed by natural executable prose. Keep global locks consistent with per-shot wording. Load `references/shot-craft.md` for performance, camera movement, dialogue, or lip sync; load `references/single-segment-quality-control.md` for complex subjects, blocking, occlusion, or continuity; load `references/task-patterns.md` only for a matching specialized pattern.
+For Seedance-family output, use official information markers when active: dialogue `{台词}`, sound `<音效>`, music `（音乐）`, subtitles `【字幕】`. For platform-neutral output, preserve exact dialogue/text and ownership in ordinary natural language without Seedance marker syntax. The user's or project's music/subtitle instruction overrides the personal default.
+
+For new or reference generation with multiple assets, bind each literal anchor once in a compact reference paragraph before the shots. Use semantic subject and effect names in the shot paragraphs. Repeat an anchor only when its role changes, a real ambiguity remains, or the platform task grammar requires it. Do not translate the internal reference blacklist into user-visible exclusions.
+
+Include audio wording only when the user requests it, an active source or project locks it, or spoken dialogue/lip sync requires it. If the user asks for no sound description, omit sound, ambience, music, subtitle, and audio-policy wording throughout subsequent revisions. The personal no-music/no-subtitle default prevents additions; it does not require the literal sentence `无配乐，无字幕` in every prompt.
+
+For generated shots, use `镜头N：景别。` followed by natural executable prose. Write only the visible beats that actually occur and affect understanding. A simple shot may need only `subject -> action` or `subject -> action -> endpoint`; add an explicit start, direction, response, or terminal composition only when it changes or clarifies the shot.
+
+Keep global locks consistent with per-shot wording. Load `references/shot-craft.md` for performance, camera movement, dialogue, or lip sync. For complex Seedance-family subjects, blocking, occlusion, offscreen causality, action paths, terminal composition, or continuity, load `references/single-segment-quality-control.md`. Load `references/failure-recovery.md` only for an observed Seedance-family failure or unstable prior result; load `references/task-patterns.md` only for a matching specialized pattern.
 
 ## 10. Validate and deliver
 
 Run these checks in order:
 
 1. exact-lock preservation
-2. semantic-lock, reference-role, and continuity preservation
-3. correct task grammar and platform markers
-4. duration and complexity feasibility
-5. language quality
-6. no unauthorized invention or reference leakage
+2. semantic-lock and reference-role preservation
+3. per-shot visibility, framing feasibility, spatial causality, inherited action phase, terminal-frame, and handoff preservation
+4. correct active-platform grammar and markers, or their absence in platform-neutral output
+5. duration and complexity feasibility
+6. language quality
+7. control budget: no speculative negative list, internal blacklist, repeated anchor binding, redundant lock, or nonessential micro-control
+8. no unauthorized invention or reference leakage
 
 If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
 
@@ -167,6 +190,7 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 | Bridge inputs exceed the current platform limit | State the exact input-count or combined-duration conflict. | Recommend staged bridges; do not emit one invalid command as executable. |
 | Creative meaning has two valid readings | Show both readings and your recommendation. | Wait for the user's choice when the result would materially differ. |
 | Platform/version is unspecified | Use the personal default. | Keep platform-specific claims out if no safe default applies. |
+| A generated result shows one concrete failure | Load `references/failure-recovery.md` and patch only the smallest evidenced field. | If attribution remains ambiguous or prompt delta is zero, request a controlled rerun or more paired samples; do not globally tighten the prompt. |
 
 ## Avoid
 
@@ -175,3 +199,4 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 - Do not rewrite dialogue, anchors, durations, edit intervals, shot order, or platform grammar to sound more natural.
 - Do not add people, props, background business, symbols, or plot events to make a scene feel complete.
 - Do not expose internal mode names, ledgers, or MotionSpec in the final prompt.
+- Do not externalize speculative `must_not`, reference blacklists, or alternative-action inventories merely because the model might fail.
