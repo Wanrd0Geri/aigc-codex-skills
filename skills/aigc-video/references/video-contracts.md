@@ -66,6 +66,7 @@ Use a BoundaryState for a source opening or ending and for a shot's visible star
 - offscreen causal sources that continue to exist but should not be rendered at this boundary
 - subject world relationship plus screen position, scale, or occlusion only when materially fixed
 - facing, gaze, pose, contact, and active effect or light state only when the boundary depends on them
+- active action identity and phase when the next shot continues the same event rather than starting a new one
 - camera framing, action-axis side, or motion vector only when it changes or must carry across the boundary
 
 World presence never implies membership in the visible roster. A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
@@ -87,7 +88,7 @@ World presence never implies membership in the visible roster. A terminal Bounda
   - viewer focus and ongoing framing; dominance and scale cue only when material
   - any visible entry or exit not already expressed by the boundaries
   - ongoing camera relation and movement
-  - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, and the immediate continuation after a reveal when the reveal is not the endpoint
+  - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, inherited phase when continuing the same event across a cut, and the immediate continuation after a reveal when the reveal is not the endpoint
   - effect outcome when blocking, redirecting, dismantling, absorbing, reflecting, or evading must remain distinct
   - performance carrier
   - space, light, and source-backed sound only when active

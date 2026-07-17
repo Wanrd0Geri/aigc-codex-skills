@@ -51,6 +51,15 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
+## Framing And Visible Envelope
+
+A shot-size label is not stronger than the geometry implied by the rest of the prompt. Every body part, prop, subject, and landmark requested in the same frame or boundary expands the minimum view the model must satisfy. A permitted camera move may change that envelope over time.
+
+- Establish the viewer priority and intended crop before adding contextual visibility.
+- For a tight shot, use observable boundaries such as what the upper and lower frame edges cut, which body parts dominate, and which environment elements remain partial or out of focus.
+- Keep world-continuity details internal when they do not need to appear in this shot. Do not ask a chest-up frame to also show feet, a floor contact point, and a complete doorway merely to prove where the subject stands.
+- If two locked requirements need incompatible visible envelopes at the same boundary, state the conflict and recommend which framing purpose to protect. Do not repeat `紧近景` or add a negative list as a substitute for resolving it. Do not invent a reframing move when the camera or framing is locked.
+
 ## World, Screen, And Camera Coordinates
 
 Write each shot as an objective account of what the camera can observe from its visible start through its terminal frame. Keep world position and screen position distinct:
@@ -70,6 +79,14 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 - **Complex**: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
 Priority order: body/contact -> gaze/attention -> expression transition -> movement endpoint -> continuity handoff.
+
+When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
+
+## Cross-Shot Action Phase
+
+When a cut changes the view of one continuing event, carry the terminal action identity and phase into the next shot. Start the new shot from what is already happening and advance it; do not restage the onset merely because the camera angle changed.
+
+Use wording such as `承接上一镜同一次发射动作` only when it resolves a real ambiguity. The inherited visible state is more important than the phrase itself: an already-open door stays open, an already-emitted beam remains connected, and a subject already passing another person does not approach and pass them again.
 
 ## Dialogue And Lip Sync
 

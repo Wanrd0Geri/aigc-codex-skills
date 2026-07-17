@@ -68,5 +68,15 @@
     "id": "project-14-terminal-boundary-not-handoff",
     "prompt": "把这一镜做成项目卡：攻击者在画外继续施压，终帧只看见守方、蓝色屏障和被卸向两侧的能量；下一镜不承接这组构图。",
     "expected": "Records the attacker as an offscreen causal source, preserves the defender/shield/deflected-energy terminal visible roster in 本镜终态, and leaves 下一镜交接 empty because no later shot inherits it. It does not force the terminal composition into handoff or omit it merely because no next shot depends on it."
+  },
+  {
+    "id": "project-15-unreadable-source-export",
+    "prompt": "项目包里的分镜表已经找到，但文件损坏而且加了密码，现在打不开。先帮我做第三场3-4到3-6的镜头任务卡。",
+    "expected": "Requests a readable export or the relevant rows rather than treating file presence as readable evidence. It keeps storyboard-specific camera, composition, blocking, framing, and boundary fields pending instead of filling them from the filename, an old summary, or a lower-authority source; another source may still supply only the fields it independently owns."
+  },
+  {
+    "id": "project-16-continuity-audit-only",
+    "prompt": "当前项目的剧本和分镜明确：3-8全程固定中景，女孩始终在画面右侧，终帧停在门内。待审视频提示词写的是：镜头横移，女孩从画面左侧走出门外。帮我审计连续性，只列问题，不要改提示词，也不要生成新的最终视频版本。",
+    "expected": "Lists the camera movement, screen-side, and terminal-position mismatches against the stated authoritative source facts, separates any unresolved fields, and stops at the audit. It does not rewrite the prompt, render shot cards, or append a final video artifact."
   }
 ]

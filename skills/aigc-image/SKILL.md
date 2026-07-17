@@ -1,13 +1,13 @@
 ---
 name: aigc-image
-description: Use when the user wants a final ready-to-paste image prompt for GPT Image 2, Nano Banana, Seedream 5.0 Pro, or another image model from a text brief, existing supported-platform prompt, readable image, frame, storyboard panel, product image, or multiple visual references; also use for visual diagnosis, production readiness, reverse prompting, source-faithful image-edit prompts, reference matching, prompt optimization, or diagnose-then-edit. Require the actual readable image only for source-dependent visual claims. Do not use when the user wants Codex to perform the image generation/edit itself or when the requested final artifact is a video prompt.
+description: Use when the user wants a final ready-to-paste image prompt for GPT Image 2, Nano Banana, Seedream 5.0 Pro, or another image model from a text brief, existing supported-platform prompt, readable image, frame, storyboard panel, product image, or multiple visual references; also use for visual diagnosis, production readiness, reverse prompting, source-faithful image-edit prompts, reference matching, prompt optimization, or diagnose-then-edit. Require the actual readable image only for source-dependent visual claims. Do not use when the user wants the image generated or edited directly or when the requested final artifact is a video prompt.
 ---
 
 # AIGC Image
 
 Own four image artifacts: `diagnose`, `generate`, `reverse`, and `edit`. Share one neutral source read and one evidence ledger whenever a readable image is involved. Keep internal control complete, but expose only the constraints the target model needs. Do not make the user route between separate image-prompt skills.
 
-This skill analyzes images and writes prompts. If the user asks Codex to actually generate or modify an image, use the available image-generation/editing capability instead of returning only a prompt.
+This skill analyzes images and writes prompts. If the user asks for an image to be generated or modified directly, use the available image-generation/editing capability instead of returning only a prompt.
 
 ## 1. Gate the source
 
@@ -171,7 +171,7 @@ Before delivery, verify:
 ## Avoid
 
 - Do not call an image-generation tool when the user asked only for a prompt.
-- Do not return only a prompt when the user asked Codex to perform the edit.
+- Do not return only a prompt when the user asked for the edit to be performed.
 - Do not diagnose from filenames, memory, or handoff prose.
 - Do not import the whole content of a reference assigned to one narrow role.
 - Do not turn every image into live-action cinema.

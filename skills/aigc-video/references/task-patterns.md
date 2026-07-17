@@ -35,11 +35,11 @@ Prioritize product identity, material, use case, and final readable product fram
 
 ## UGC Or Smartphone Realism
 
-Prioritize casual framing, natural imperfection, and believable sound.
+Prioritize casual framing, natural imperfection, and source-backed sound.
 
 - Use handheld, eye-level, selfie, or phone-recorded perspective only when it supports the request.
 - Keep actions small and continuous: talking, showing a product, turning the camera, walking, reacting.
-- Use natural room tone, street noise, hand movement, autofocus shifts, or exposure changes when useful.
+- Preserve natural room tone or street noise only when the user, active source, or project supplies or requests it. Use hand movement, autofocus shifts, or exposure changes when they support the requested realism.
 - Avoid overproduced commercial lighting unless the user asks for polished advertising.
 
 ## Creative VFX Or Transformation

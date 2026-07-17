@@ -33,6 +33,8 @@ Use these as internal beat budgets, not exact generated-shot timestamps:
 - one contact and reaction: about 2-3 seconds
 - one multi-character handoff: about 3-5 seconds
 
+A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
+
 If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, reorder, or add exact per-shot timestamps without authorization.
 
 ## Visibility, path, and terminal audit
@@ -40,11 +42,12 @@ If the duration cannot hold locked beats, simplify mutable camera and descriptio
 Scan each shot silently:
 
 1. Separate world existence from intended shot visibility.
-2. In non-quoted visual instruction prose, keep a concrete scene noun only when it is visible, visibly interacting, or needed to establish the visible environment. Exclude protected dialogue, narration, lyrics, visible text, and literal `@...` anchors from this audit.
-3. Describe a moving subject or effect with only the material route: origin or screen entry -> direction -> target. Keep an intermediate building, doorway, vehicle, or prop when the action visibly contacts, crosses, damages, avoids, or deliberately uses it; otherwise do not promote scenery into a waypoint.
-4. Preserve an offscreen cause with the minimum visible clue needed to read the action, such as screen-entry direction, gaze/body axis, directional light, environmental response, or impact point.
-5. When terminal composition matters, let the final clause or sentence state the visible endpoint. Do not append a world-continuity summary after it.
-6. Preserve every explicitly requested opponent, landmark, group frame, interaction, or final standoff. This audit removes unintended visibility; it never creates a universal one-subject or landmark-free rule.
+2. At each material start or terminal boundary, compare the intended crop with the minimum visible envelope implied by every body part, prop, subject, and landmark requested in that frame. Remove only mutable visibility details that exceed the crop; preserve any explicitly locked group view, full-body view, interaction point, or landmark. A supported camera move may transition between different envelopes.
+3. In non-quoted visual instruction prose, keep a concrete scene noun only when it is visible, visibly interacting, or needed to establish the visible environment. Exclude protected dialogue, narration, lyrics, visible text, and literal `@...` anchors from this audit.
+4. Describe a moving subject or effect with only the material route: origin or screen entry -> direction -> target. Keep an intermediate building, doorway, vehicle, or prop when the action visibly contacts, crosses, damages, avoids, or deliberately uses it; otherwise do not promote scenery into a waypoint.
+5. Preserve an offscreen cause with the minimum visible clue needed to read the action, such as screen-entry direction, gaze/body axis, directional light, environmental response, or impact point.
+6. When terminal composition matters, let the final clause or sentence state the visible endpoint. Do not append a world-continuity summary after it.
+7. Preserve every explicitly requested opponent, landmark, group frame, interaction, or final standoff. This audit removes unintended visibility; it never creates a universal one-subject or landmark-free rule.
 
 ## Visual dominance, scale, and reveal continuity
 
@@ -73,6 +76,8 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 ## Final check
 
 - each shot has one visual priority, one main action, and no contradictory camera instruction
+- intended framing can contain the requested visible envelope without relying on a repeated shot-size label
+- a cut that continues the same event inherits its current action phase rather than restarting it
 - any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
 - generated shots use event order; exact ranges remain for targeted edits or explicit timing-critical requests

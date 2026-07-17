@@ -15,7 +15,7 @@ Do not treat it as a universal finalizer. In particular:
 
 - If the user asks for a final Seedance, Doubao, or Dreamina prompt, a new platform-neutral final video prompt, or cleanup of an existing supported-family prompt, let `aigc-video` own the result.
 - If the user asks to generate or optimize a final GPT Image 2, Nano Banana, or Seedream prompt, let `aigc-image` own the result. Language-only cleanup for Midjourney or another image platform without an active specialist may stay here; preserve required syntax and parameters.
-- If the user asks for a platform-specific final video outside the supported Seedance family, do not invent an adapter inside this language skill; use a current platform-specific workflow or official guidance.
+- If the user asks for a platform-specific final video outside the supported Seedance family, do not invent an adapter inside this language skill; use a current platform-specific workflow or official guidance. If neither is available, ask for the platform's current syntax or source, or offer to let `aigc-video` create a clearly labeled platform-neutral final prompt if the user accepts the artifact change. Never author that new prompt here or present neutral wording as a verified platform-ready prompt.
 - If the user supplies an image and wants diagnosis, reverse reconstruction, or an edit prompt, use `aigc-image`.
 - If the source is a script, storyboard, or shot list that still needs continuity and performance interpretation, use `aigc-project-context`, then let `aigc-video` own the final platform-specific or platform-neutral video prompt.
 - If the user asks to actually generate or edit media, use the relevant generation capability instead of returning only rewritten text.

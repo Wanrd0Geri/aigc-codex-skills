@@ -92,6 +92,8 @@ Decide one-shot versus multi-shot, action load, subject load, reference load, di
 
 - Keep one main action and one main camera strategy per generated shot.
 - For clips of 15 seconds or less, favor one location, one action chain, one visual priority, and one ending beat.
+- Treat every body part, prop, subject, and landmark requested in the same frame or boundary as part of its minimum framing envelope. If the requested framing cannot contain them, remove only mutable visibility detail or surface the hard-lock conflict; repeating the shot-size label does not resolve the geometry. A visible reframing may satisfy different envelopes over time when the camera move is allowed.
+- Let a very short fast cut carry one instantaneous beat. Distribute a multi-stage action across cuts instead of making every insert repeat its onset, development, and result.
 - If the user explicitly wants an ambitious integrated version, deliver it; briefly note the risk and optionally include a more stable alternative only when useful.
 - Do not allocate exact seconds to every generated shot by default. Use event order or `前段 / 中段 / 后段`. Preserve exact timing for targeted source-video edits or explicit timing-critical requests.
 - Keep the initiating action inside the generated window: entering, returning, opening, leaving, discovering, or turning must be visible rather than converted into backstory.
@@ -107,7 +109,7 @@ Before platform wording, silently define:
 - emotional vector and performance carrier
 - medium/style, space, light, duration, and only active sound/text constraints
 - reference map
-- shots with sparse start/terminal boundaries, shot-level camera and action, performance, only material spatial causality, next-handoff subset, and only source-backed sound when active
+- shots with sparse start/terminal boundaries, shot-level camera and action, inherited action phase when a cut continues the same event, performance, only material spatial causality, next-handoff subset, and only source-backed sound when active
 
 Every platform or A/B version must derive from the same MotionSpec.
 
@@ -167,7 +169,7 @@ Run these checks in order:
 
 1. exact-lock preservation
 2. semantic-lock and reference-role preservation
-3. per-shot visibility, spatial causality, terminal-frame, and handoff preservation
+3. per-shot visibility, framing feasibility, spatial causality, inherited action phase, terminal-frame, and handoff preservation
 4. correct active-platform grammar and markers, or their absence in platform-neutral output
 5. duration and complexity feasibility
 6. language quality

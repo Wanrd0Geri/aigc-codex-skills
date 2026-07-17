@@ -293,5 +293,35 @@
     "id": "video-vfx-05-explicit-wide-geography-preserved",
     "prompt": "写一个8秒镜头：巨型石像从峡谷中站起，必须用大全景完整看到石像全身、两侧峭壁和谷底人物，重点是交代三者的空间地理关系。",
     "expected": "Preserves the explicit complete wide view because geography and full scale comparison are the shot purpose. It does not mechanically crop the statue, remove the valley figure, or apply the impact-oriented giant-subject heuristic against the user's stated endpoint."
+  },
+  {
+    "id": "video-framing-01-tight-crop-visible-envelope",
+    "prompt": "上一版人物胸部以上紧近景总被拉远。近景是最高优先级；人物仍站在门内，但双脚、衣摆、门槛和完整门窗只是空间连续性信息，这一镜不需要看见。只修这一镜，其他内容不改。",
+    "expected": "Returns a local framing repair that keeps the standing-inside relationship as world continuity while removing its unnecessary lower-body and complete-architecture visibility demands. It uses one observable chest-up crop and only partial local background context; it does not merely repeat 紧近景, append a broad negative list, or rewrite unrelated content."
+  },
+  {
+    "id": "video-performance-03-off-axis-gaze-target",
+    "prompt": "写一个近景：女人身体侧立不动，男孩在她左前方经过。叙事重点是她确实看着男孩的眼睛，而不是直视正前方；表演保持克制。",
+    "expected": "Makes the off-axis gaze visible with the minimum sufficient head or face turn, eye direction, and target relationship while keeping the torso restrained. It does not rely on 看向 alone, turn the entire body, add exaggerated expression, or over-script eye micro-movements."
+  },
+  {
+    "id": "video-framing-02-incompatible-hard-locks",
+    "prompt": "同一个画面必须同时既是胸部以上紧近景，又完整看见人物双脚、脚下门槛和整扇门；摄影机、焦段和景别全程不变，这两组要求都不能删。直接给我最终 Seedance 提示词。",
+    "expected": "Recognizes that the locked tight crop and locked full lower-body plus complete-door visibility require incompatible visible envelopes in the same unchanged frame. It explains the concrete conflict, recommends which framing purpose to protect, and asks one decision question instead of silently deleting a lock, inventing a reframing move, pretending repetition can solve it, or emitting a contradictory final prompt."
+  },
+  {
+    "id": "video-continuity-01-same-action-across-cut",
+    "prompt": "写两个连续镜头。镜头1里巨像已经从掌心开始发射一道持续光束；镜头2切到光束侧面近景，继续表现同一道光束压向目标。不要生成第二次蓄力或第二次发射。",
+    "expected": "Treats shot 2 as a new view of the same ongoing emission, inherits the already-active connected beam, and advances its travel toward the target. It does not restage charging, hand opening, or launch merely because the camera angle changes, and it adds no unrelated camera move."
+  },
+  {
+    "id": "video-duration-01-fast-cut-beat-budget",
+    "prompt": "优化一个10秒十镜头的快切动作段：召唤、睁眼、抬手、蓄力、发射、飞行、撞击、僵持、破解、爆炸。我要保留十个镜头和动作顺序，但现在每一镜都写了从蓄力到命中的完整过程。",
+    "expected": "Preserves exactly ten shots and the locked action order, but redistributes the causal chain so each very short insert carries one readable beat instead of repeating a full setup-development-result cycle. It keeps one main camera idea per insert, does not delete locked beats, and does not invent exact per-shot timestamps."
+  },
+  {
+    "id": "video-audio-01-ugc-default-no-invented-sound",
+    "prompt": "写一个8秒 Seedance UGC 视频：手持手机拍女孩在便利店门口展示一瓶饮料，动作自然随意。没有提供任何声音要求。",
+    "expected": "Uses visual UGC cues such as casual handheld framing and small continuous actions, but adds no room tone, street noise, ambience, action sound, music, dialogue, or audio-policy sentence. It leaves unspecified audio absent by omission."
   }
 ]
