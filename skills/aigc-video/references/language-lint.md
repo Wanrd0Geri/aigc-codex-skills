@@ -18,7 +18,7 @@ Make no change when the wording is already clear and executable.
 
 Never change the value or meaning of:
 
-- literal `@...` anchor labels and assigned roles; duplicate mentions may be consolidated into one reference summary without changing either
+- literal `@...` anchor labels, operational roles, boundary scopes, and borrowed dimensions; duplicate reference-input mentions may be consolidated into one reference summary without changing them
 - subject count, identity, shot ids/count/order
 - duration, timing, edit interval
 - dialogue, narration, lyrics, visible text

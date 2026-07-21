@@ -35,4 +35,4 @@ Do not add subjects, props, relationships, backstory, symbols, plot turns, emoti
 
 When a user explicitly requests a Vibe version of a low-fit UI, procedure, strict edit, or synchronized-dialogue task, improve only clarity and natural phrasing. Do not add atmosphere to demonstrate Vibe.
 
-For A/B, derive both variants from one MotionSpec and run a delta audit. Only viewing priority, supported performance carrier, atmosphere phrasing, and rhythm may differ.
+For A/B, keep one shared fact-and-lock core in the MotionSpec and attach two expression overlays, then run a delta audit. Only an unlocked or explicitly variant-scoped viewer priority, supported performance carrier, atmosphere phrasing, or rhythm may differ; preserve every shared user/source/project lock in both variants.

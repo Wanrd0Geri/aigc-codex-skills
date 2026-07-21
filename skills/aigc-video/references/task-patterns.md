@@ -14,12 +14,12 @@ Use this reference when a request matches a specific video format. These pattern
 
 For vague or mixed requests, silently scan six dimensions before drafting:
 
-1. Input: image, video, audio, or text references and their roles.
+1. Input: image, video, audio, or text assets; record each operational role first, then any borrowed dimensions for a `reference_input`.
 2. Content: subject, environment, action, emotion carrier, and visible change or continuity anchor when needed.
 3. Style: only user-provided or reference-established style, plus visible light, color, texture, or material behavior.
 4. Camera: shot size, angle, one main movement, and camera rule such as one-take or fixed frame.
 5. Structure: timing, shot order, transition, and only the segment handoff details that matter.
-6. Edit: what changes, what stays unchanged, and which reference guides the edit.
+6. Edit: what changes, what stays unchanged, which asset is the `edit_target`, and whether a separate `reference_input` supplies a replacement dimension.
 
 Use only dimensions that reduce ambiguity. Do not force all six into a simple prompt.
 
@@ -27,7 +27,7 @@ Use only dimensions that reduce ambiguity. Do not force all six into a simple pr
 
 Prioritize product identity, material, use case, and final readable product frame.
 
-- Assign references: product appearance, logo, packaging, use scene, hand interaction, or edit rhythm.
+- Assign each product reference input only the needed canonical borrowed dimension: product `appearance`; logo or packaging `graphic` / `text` / `layout`; use scene `environment`; hand interaction `action`; edit rhythm `timing`.
 - Keep the product size and silhouette stable before adding motion.
 - Use macro detail only when material or function matters.
 - End on a clean product state: assembled, held, used, opened, poured, placed, or hero-framed.
@@ -81,17 +81,17 @@ Use only when the current user instruction or active project requests visible te
 - Write visible text as: exact content + appearance timing + frame position + appearance method + color/style when needed.
 - Use `【字幕】` for subtitle text and state that it follows the spoken rhythm.
 - Prefer common characters; avoid rare characters and special symbols.
-- For an exact logo, font, or layout, assign a dedicated image reference instead of relying on description alone.
+- For an exact logo, font, or layout, assign a dedicated image reference with the narrow `graphic`, `text`, or `layout` borrowed dimension instead of relying on description alone.
 - Keep visible text separate from dialogue: dialogue uses `{台词}`, discrete sound effects use `<音效>`, and music uses `（音乐）`.
 
 ## Audio Beat And Rhythm Reference
 
 Prioritize beat ownership and action timing.
 
-- Assign `@音频1` or `@视频1` as rhythm, beat, speech-pace, sound-effect, or edit-reference role.
+- When `@音频1` or `@视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Keep an edit target's operational role separate and use direct edit grammar.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
 - Keep the number of beat events realistic for the duration.
-- When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly assigns it as music, preserve that role and the exact requested audio constraints.
+- When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
 
 ## One-Take
 
@@ -115,9 +115,9 @@ Prioritize clarity, cause-effect, and readable states.
 
 Prioritize inheritance and transition logic.
 
-- Assign each video a role: source clip, camera reference, action reference, style reference, end frame, or next-state target.
+- Record each video's operational role first. A true bridge uses `bridge_predecessor` and `bridge_successor`; a non-bridge video that supplies `camera`, `action` / `motion`, `look`, or `timing` is a `reference_input` with that separate borrowed dimension. Never use a borrowed dimension as an operational-role name.
 - For a true bridge/track-completion task, address the sources directly in order: `@视频1，[可见过渡]，接@视频2`; do not describe them as ordinary reference videos.
 - Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.
-- Assign a start-frame or end-frame image only to the boundary attributes it is meant to lock, such as composition, pose, identity, light, or all visible pixels; do not assume the role.
+- Record a start-frame image as `start_frame_source` and an end-frame image as `end_frame_target`. Assign only the authorized boundary lock scope—selected composition, pose, identity, light, material, or visible-roster attributes, or `full_frame` when the whole frame is explicitly authoritative. These are boundary roles, not borrowed dimensions; do not recast either image as `reference_input` unless the user explicitly assigns that additional role.

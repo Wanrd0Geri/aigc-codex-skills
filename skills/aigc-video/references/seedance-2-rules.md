@@ -2,7 +2,7 @@
 
 Use this file for every Seedance 2.0 / 2.0 Fast final prompt. Load `seedance-2-video-operations.md` additionally only for edit, extension, or bridge tasks, and `failure-recovery.md` only after an observed failure.
 
-Source basis: [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-15. Re-check version-specific limits when the provider or model changes.
+Source basis: [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21 against the provider page updated 2026-07-20. Re-check version-specific limits when the provider or model changes.
 
 ## New and reference generation
 
@@ -16,20 +16,43 @@ Never use a bare `参考@视频1`; name the borrowed dimension.
 
 ## Prompt construction
 
-Treat the provider's advanced formula as a selection checklist, not a template to fill. Put the subject and action first, then only the space, atmosphere, camera, style, audio, text, or constraint that changes this clip.
+Treat the provider's advanced formula as a selection checklist, not a template to fill. Follow the viewer-priority clause order in `SKILL.md`; do not interpret formula order as guaranteed numeric model weighting.
 
 - State total duration once. For generated shots, use event order or `前段 / 中段 / 后段` rather than exact per-shot ranges by default.
 - Keep one main camera movement per shot. Use standard terms such as `中景`、`特写`、`全景`、`缓慢推近`、`平稳横移` or `固定机位` only when useful.
 - Express performance through one supported body/contact, gaze, pause/breath, expression, distance, object, light, or sound carrier.
 - Leave particles, cloth/hair response, effect microphysics, and secondary decoration open unless locked or central.
 
-## Subjects and reference roles
+## Reference-input binding
 
-When an asset contains several possible subjects, define the needed one with two or three stable static traits. Keep the same semantic label thereafter.
+Apply this section only to anchors whose operational role is `reference_input`. Start-frame sources and end-frame targets use their boundary assignment; strict-edit targets, extension sources, and bridge inputs use the direct grammar in `seedance-2-video-operations.md`. None belongs in the ordinary reference summary unless the user explicitly assigns the same anchor a separate `reference_input` role.
 
-Preserve literal anchors such as `@图1`、`@视频1`、`@音频1` and filename anchors. Attach a narrow role immediately. A silhouette reference does not authorize color/material; identity does not authorize pose/composition; environment does not authorize camera, action trajectory, or mandatory landmark visibility.
+Give every identity/appearance reference subject one semantic name. When the asset has one unambiguous subject, use:
 
-For multi-reference generation, bind each anchor once in one compact positive reference summary, then use semantic names in the shots. Repeat an anchor only when its role changes, ambiguity remains, or task grammar requires it. Use only assets with a clear job; do not fill the input limit.
+`参考@图1中主体的[已授权身份/外貌属性]，并将其定义为[角色名]。`
+
+When a readable asset or user/source description contains several possible subjects, select the needed one with two or three supplied stable static traits:
+
+`参考@图1中[两三个稳定静态特征]的[主体]的[已授权身份/外貌属性]，并将其定义为[角色名]。`
+
+Either sentence is the explicit `identity`, `appearance`, or combined binding; replace the bracket with only the authorized attribute wording and do not add a second redundant identity-reference sentence. Keep the same semantic label thereafter. Define the visible subject, not the whole image, when the image also contains scenery or unrelated people. For `anchor_only`, use the user-assigned semantic label or subject name without inventing traits; if the intended subject remains ambiguous, ask for the missing visible state.
+
+Borrow only the authorized dimension. A silhouette reference does not authorize color/material; identity does not authorize pose/composition; environment does not authorize camera, action trajectory, or mandatory landmark visibility.
+
+When a group image and a dedicated subject image both contain the same person, resolve the overlap per field. Keep the group input for the user-named roster and any explicitly assigned attributes of the other subjects; let the dedicated input replace only the named subject attributes the user assigns to it. Do not inherit contact-sheet layout, text labels, display poses, white background, or group composition unless the user separately authorizes those dimensions.
+
+Example: `参考@图1中女学子、男学子和杨胜的外貌与服装，并分别定义为女学子、男学子、杨胜；参考@图2中主体的外貌与服装，并将其定义为裘水镜；以@图3作为鬼市场景环境参考。` Here the user instruction supplies the four-person roster, `@图2` owns 裘水镜's appearance/wardrobe fields, and `@图3` supplies environment only.
+
+Bind non-identity references by the exact atomic dimensions they are allowed to supply. Slash-separated items below are alternatives to select explicitly, not package authorization:
+
+- environment: `以@图2作为[场景环境/空间布局/光影色调]参考。`
+- wardrobe or prop: `参考@图3中的[服装/道具]，用于[角色名/可见用途]。`
+- motion or camera: `参考@视频1的[动作/运镜/节奏]。`
+- effect: `参考@视频2的[特效形态/生成轨迹/运动逻辑]。`
+- audio: `参考@音频1中的[音色/说话节奏]。`
+- text or graphic: `参考@图4中的[标识图形/字形/版式]，用于[可见文字或图形用途]。`
+
+For multi-reference generation, place these bindings in one compact positive reference summary and normally mention each reference-input anchor once, then use semantic names in the shots. Every binding phrase must name its borrowed dimension; the identity-definition sentence above satisfies this requirement by naming the selected identity and/or appearance attributes. Do not write a bare `以@图2作为参考` or `参考@视频1`. Repeat an anchor only when its borrowed dimension changes, ambiguity remains, or task grammar requires it. Use only assets with a clear job; do not fill the input limit.
 
 ## Audio and visible text
 

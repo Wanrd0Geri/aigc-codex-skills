@@ -2,6 +2,13 @@
 
 Load this reference when a shot needs performance direction, camera movement design, dialogue/lip-sync handling, or when deciding how much detail a shot paragraph deserves.
 
+## Contents
+
+1. Shot detail levels
+2. Camera movement and framing
+3. World, screen, and camera coordinates
+4. Performance, cross-shot action, and dialogue
+
 ## Shot Detail Levels
 
 Length is decided per shot or action unit, not per whole video. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
@@ -12,7 +19,7 @@ Use one short Chinese sentence when the subject, action, and continuity are obvi
 
 - One clear subject or one clear edit.
 - One main action with no layered blocking.
-- Little risk of confusing reference roles, spatial relationships, or emotional intent.
+- Little risk of confusing asset operational roles, borrowed-dimension assignments, spatial relationships, or emotional intent.
 - Atmosphere, light, sound, and camera do not change the user's meaning.
 
 Write only the needed subject, action, and essential continuity. Do not add extra camera, lighting, mood, material, sound, or stability language just to make the shot look professional.
@@ -21,7 +28,7 @@ Write only the needed subject, action, and essential continuity. Do not add extr
 
 Use one to two compact Chinese sentences when the shot needs moderate control:
 
-- A clear subject plus atmosphere, space, expression, prop, or reference-image role.
+- A clear subject plus atmosphere, space, expression, prop, or one active reference-input borrowed dimension.
 - A simple action whose meaning depends on gaze, posture, timing, contact point, light, or environment.
 - A one-shot segment that still needs a total-duration budget, stable identity, and any active dialogue or audio constraint.
 
@@ -34,7 +41,7 @@ Expand only when detail prevents likely misunderstanding:
 - Multiple subjects, layered actions, or action handoffs.
 - Foreground/midground/background relationships, occlusion, entrances/exits, or position changes.
 - Camera movement, reveal order, transition logic, or continuity across shots matters.
-- Reference assets have overlapping roles or could be mapped incorrectly.
+- Reference assets have overlapping assignments or could be mapped incorrectly.
 - The user is choosing between a conservative stable result and a more ambitious visual effect.
 
 Write clear subject, space, action order, camera behavior, and the continuity anchor that prevents likely misunderstanding. Keep the detail purposeful; do not pad with generic quality terms.
@@ -50,6 +57,8 @@ Camera movement detail scales by shot complexity:
 Do not stack multiple major camera moves in one shot unless the user explicitly asks for that complexity. Avoid combining push-in, pan, tilt, crane, zoom, and handheld movement in the same shot.
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
+
+Place the camera clause according to viewer priority. In an ordinary subject-led shot, make the first clause after `镜头N：` name the subject or visual anchor and its core action; do not begin with shot size, angle, camera position, lens, or movement. Let geography or camera movement lead only for an establishing shot, a reveal whose subject appears later, or a camera-led effect. This ordering guides salience; it does not override a user-locked camera or imply a measurable attention weight.
 
 ## Framing And Visible Envelope
 
@@ -78,7 +87,7 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 - **Standard**: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
 - **Complex**: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
-Priority order: body/contact -> gaze/attention -> expression transition -> movement endpoint -> continuity handoff.
+Choose the primary performance carrier using `SKILL.md`. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff. This is a detail-order rule, not a second carrier-priority list.
 
 When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
 

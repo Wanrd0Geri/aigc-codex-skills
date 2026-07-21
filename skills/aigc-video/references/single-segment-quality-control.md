@@ -86,7 +86,7 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - terminal visible roster matches the shot purpose even when no next handoff exists
 - next handoff is only a subset of terminal state
 - world position, screen position, camera side, and screen direction agree when material
-- reference roles do not leak; anchors are normally bound once
+- asset operational roles, boundary scopes, and borrowed dimensions do not leak; reference-input anchors are normally bound once
 - exact dialogue, visible text, required sound/silence, style, and initiating action remain intact
 - every restriction passes the admission test: user/source lock, platform requirement, active-reference conflict, or observed failure
 - deleting any remaining sentence would change the visible result, a costly lock, a necessary role, or platform execution

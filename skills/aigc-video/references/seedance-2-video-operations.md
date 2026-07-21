@@ -4,7 +4,7 @@ Load this file only for strict video editing, extension, or shot bridging. The s
 
 ## Strict edit
 
-Address the source directly; do not introduce the edit target with `参考`.
+Record the source anchor as `edit_target`. Address it directly; do not give it borrowed dimensions or introduce it with `参考`.
 
 - add: name the new element, interval when needed, frame position, and visible action
 - modify: `严格编辑@视频1，将[原特征]修改为[新特征]。`
@@ -14,7 +14,7 @@ Unmentioned content remains unchanged. Externalize only continuity layers the ed
 
 ## Extension
 
-Use direct source grammar:
+Record the source anchor as `extension_source`. Use direct source grammar:
 
 - `向后延长@视频1，生成……`
 - `向前延长@视频1，生成……`
@@ -26,7 +26,7 @@ The provider automatically takes the needed connection portion from the input; t
 
 ## Bridge / track completion
 
-Write sources in order and describe the visible bridge:
+Record the first source as `bridge_predecessor` and the second as `bridge_successor`. Write sources in order and describe the visible bridge:
 
 `@视频1，[可见过渡]，接@视频2。`
 
@@ -39,3 +39,5 @@ The checked official guide states at most three input videos with combined durat
 When one asset supplies a reference dimension and another is the edit target, keep both roles explicit:
 
 `参考@图1的[参考维度]，严格编辑@视频1，[具体编辑内容]。`
+
+Record `@图1` as `reference_input` with the named borrowed dimension and `@视频1` as `edit_target`. Do not assign a borrowed dimension to the edit target.

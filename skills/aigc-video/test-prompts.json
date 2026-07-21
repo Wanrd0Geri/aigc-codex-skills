@@ -82,12 +82,12 @@
   {
     "id": "video-seedance-04-structured-reference-composition",
     "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1是主角身份，@图2是配角，@图3只参考怪物背面轮廓，@图4只参考冷蓝树林环境。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人。",
-    "expected": "Uses literal anchors and narrow role whitelists, preserves fixed long-lens voyeur framing and the 70% foreground lock across all shots, keeps exactly two people, and does not import color, material, identity, or function from the silhouette-only reference."
+    "expected": "Uses literal anchors and narrow borrowed-dimension whitelists, preserves fixed long-lens voyeur framing and the 70% foreground lock across all shots, keeps exactly two people, and does not import color, material, identity, or function from the silhouette-only reference."
   },
   {
     "id": "video-seedance-05-filename-anchor-preservation",
     "prompt": "帮我优化一个12秒 Seedance 提示词。@庠序场景.png作为旧学堂环境参考，@裘水镜-磨皮版.png作为人物外貌参考，@111.png作为分镜构图参考。不要用控制这个词，保留这些@文件名引用。",
-    "expected": "Preserves every literal filename anchor exactly, assigns each only its stated role, avoids the word 控制, and does not normalize the anchors into numbered images or plain filenames."
+    "expected": "Preserves every literal filename anchor exactly, records each as a reference input with only its stated borrowed dimension, avoids the word 控制, and does not normalize the anchors into numbered images or plain filenames."
   },
   {
     "id": "video-seedance-06-project-same-turn-ownership",
@@ -97,7 +97,7 @@
   {
     "id": "video-seedance-07-handoff-lock-preservation",
     "prompt": "根据这个 VideoContext 写 Seedance：源优先级=当前分镜高于大纲；source_visible_facts=角色只站在门内半步；reference_map=@图1只做人物身份参考；start_boundary=右手仍按在门框上；performance_intent=克制反应；high_cost_locks=单人、室内。",
-    "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and identity-only @图1 role. It expresses constraints through positive staging where possible."
+    "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and @图1's identity-only borrowed dimension. It expresses constraints through positive staging where possible."
   },
   {
     "id": "video-seedance-08-vibe-first-simple",
@@ -105,9 +105,9 @@
     "expected": "Uses an expression-led but platform-ready path, shows the return or threshold crossing on screen, keeps total duration once, uses natural shot prose without per-shot timestamps, and does not add a literal flashback unless requested."
   },
   {
-    "id": "video-seedance-09-reference-role-mapping",
-    "prompt": "给我一个 8 秒 Seedance 提示词：雨夜老街修伞铺，少女离开前回头。@图1 是少女外貌服装，@图2 是修伞铺和雨夜老街，@图3 是旧红伞。",
-    "expected": "Maps @图1 to identity and costume, @图2 to environment, and @图3 to the prop; keeps the prompt concise and does not import pose, camera, lighting, or other unassigned attributes from those anchors."
+    "id": "video-seedance-09-reference-dimension-mapping",
+    "prompt": "给我一个8秒 Seedance 提示词：裘水镜带女学子、男学子和杨胜在鬼市中缓慢前行。@图1是裘水镜一行人，定义女学子、裘水镜、男学子、杨胜四人；@图2单独参考裘水镜的外貌与服装，并在这些字段上优先于@图1；@图3只参考鬼市环境。",
+    "expected": "Uses the user instruction to define the four-person roster and four semantic names. Uses @图1 for the appearance/wardrobe of 女学子, 男学子, and 杨胜; uses @图2 as the dedicated appearance/wardrobe source for 裘水镜 only; and uses @图3 only for the ghost-market environment. It does not import narrative identity, contact-sheet layout, text labels, white background, display poses, camera, or action from @图1/@图2, and it does not import composition, camera, or action trajectory from @图3."
   },
   {
     "id": "video-seedance-10-positive-visible-staging",
@@ -137,7 +137,7 @@
   {
     "id": "video-seedance-15-multiple-subject-definition",
     "prompt": "@图1里有两个女孩，用穿红裙戴草帽的那个做主角，她走到海边栏杆回头。",
-    "expected": "Defines the selected subject with the supplied red-dress and straw-hat traits, uses one consistent semantic name, keeps the other person out of the action unless required, and does not claim additional unseen identity detail."
+    "expected": "Defines the selected subject with the supplied red-dress and straw-hat traits, explicitly binds identity/appearance in that definition sentence, uses one consistent semantic name, keeps the other person out of the action unless required, and does not claim additional unseen identity detail."
   },
   {
     "id": "video-seedance-16-explicit-precise-timing",
@@ -172,7 +172,7 @@
   {
     "id": "video-language-lock-01-multishot-exact-fields",
     "prompt": "把这个最终 Seedance prompt 去 AI 味，但不能改任何硬信息：12秒，三镜头，@图1只做人脸身份参考；镜头1裘水镜站在门内；镜头2他说“你看见的不一定是真的”；镜头3少年没有回答，最后遮住镜头黑场。",
-    "expected": "Cleans only mutable prose while preserving 12秒, exactly three shots and their order, @图1 and its identity-only role, the name 裘水镜, the exact dialogue, the silent response, and the final lens-cover black frame."
+    "expected": "Cleans only mutable prose while preserving 12秒, exactly three shots and their order, @图1 and its identity-only borrowed dimension, the name 裘水镜, the exact dialogue, the silent response, and the final lens-cover black frame."
   },
   {
     "id": "video-language-lock-02-edit-command-not-rewritten",
@@ -323,5 +323,30 @@
     "id": "video-audio-01-ugc-default-no-invented-sound",
     "prompt": "写一个8秒 Seedance UGC 视频：手持手机拍女孩在便利店门口展示一瓶饮料，动作自然随意。没有提供任何声音要求。",
     "expected": "Uses visual UGC cues such as casual handheld framing and small continuous actions, but adds no room tone, street noise, ambience, action sound, music, dialogue, or audio-policy sentence. It leaves unspecified audio absent by omission."
+  },
+  {
+    "id": "video-order-01-subject-action-before-camera",
+    "prompt": "写一个8秒两镜头 Seedance 提示词：镜头1女孩把旧钥匙放到桌上，镜头2她抬眼看向门口。使用缓慢推近，但镜头的重点是人物动作，不是展示运镜。",
+    "expected": "Makes the first clause after each 镜头N： label name the girl or her visible action rather than a shot-size, angle, position, lens, or camera-movement fragment. It places the slow push after the subject/action because camera movement is not the shot purpose, while preserving the action order and avoiding a claim of numeric prompt weighting."
+  },
+  {
+    "id": "video-boundary-01-start-end-role-separation",
+    "prompt": "用@图1作为完整首帧，用@图2作为完整尾帧，生成两者之间的6秒视频；@视频1只参考中间段的运镜节奏。",
+    "expected": "Records @图1 as start_frame_source with full_frame scope, @图2 as end_frame_target with full_frame scope, and @视频1 separately as reference_input with only camera/timing borrowed dimensions. It does not place @图1 or @图2 in the ordinary reference summary or treat their full-frame boundary locks as borrowed dimensions."
+  },
+  {
+    "id": "video-bridge-04-operation-and-dimension-separation",
+    "prompt": "把@视频1自然接到@视频2，过渡期间的运镜节奏参考@视频3。",
+    "expected": "Records @视频1 as bridge_predecessor, @视频2 as bridge_successor, and @视频3 as reference_input with only the camera/timing borrowed dimension. It uses direct bridge grammar for the first two sources and does not recast them as ordinary reference videos."
+  },
+  {
+    "id": "video-vibe-14-ab-shared-core-overlays",
+    "prompt": "给我A/B两版8秒 Seedance：女人把信放到桌上，最后信留在桌面。A版注意她松开的手，B版注意她抬起的目光；其他动作、场景和终帧都相同。",
+    "expected": "Builds one shared fact-and-lock core for action, scene, duration, and terminal letter state, then records the explicitly variant-scoped hand-versus-gaze viewer priorities in two expression overlays. It does not treat the variants as unrelated MotionSpecs or change any shared action, environment, or ending lock."
+  },
+  {
+    "id": "video-text-02-subtitle-without-sound-prose",
+    "prompt": "写一个6秒 Seedance 提示词：女孩站在车站，最后出现字幕【明天见】。不要写音效、环境声、音乐或其他声音描述。",
+    "expected": "Preserves the explicitly requested visible subtitle 【明天见】 while omitting sound effects, ambience, music, and audio-policy prose. It does not misclassify the subtitle as sound description or remove it under the no-audio request."
   }
 ]
