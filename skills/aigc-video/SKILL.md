@@ -70,7 +70,7 @@ Separate world continuity from shot visibility. A subject, object, or place may 
 
 Keep internal control stricter than the delivered prompt. A restriction may enter the final prompt only when it is explicitly required by the current user, locked by an active source or project, required by platform grammar, needed to resolve a direct conflict among active references, or supported by an observed generation failure. Keep speculative failure prevention and `forbidden/unassigned` reference fields internal.
 
-For an observed generation failure, read `references/failure-recovery.md`. Treat provider-documented troubleshooting as candidate checks for a controlled comparison, never as first-attempt defaults or universal model rules. Release and patch only the smallest evidenced field. If identical prompt text produces mixed results, treat the cause as unassigned generation variance and request a controlled rerun or more paired samples instead of changing the prompt.
+When the user supplies an observed failed/unstable result, paired results, or another concrete prior-result error, read `references/failure-recovery.md`. Treat provider-documented troubleshooting as candidate checks for a controlled comparison, never as first-attempt defaults or universal model rules. Release and patch only the smallest evidenced field. If identical prompt text produces mixed results, treat the cause as unassigned generation variance and request a controlled rerun or more paired samples instead of changing the prompt.
 
 ## 4. Collaborate on creative uncertainty
 
@@ -111,7 +111,7 @@ Before platform wording, silently define:
 - reference map
 - shots with sparse start/terminal boundaries, shot-level camera and action, inherited action phase when a cut continues the same event, performance, only material spatial causality, next-handoff subset, and only source-backed sound when active
 
-Every platform render must derive from the same MotionSpec. For explicit A/B output, keep one shared fact-and-lock core inside the MotionSpec and attach two expression overlays. Only an unlocked field or an explicitly variant-scoped user instruction may differ in viewer priority, supported performance carrier, atmosphere phrasing, or rhythm; every shared user/source/project lock stays identical.
+Every platform render must derive from the same MotionSpec. For explicit A/B output, keep one shared fact-and-lock core and attach two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere phrasing, or rhythm. A current-user instruction may deliberately place another named field in the A/B overlays; every unscoped user/source/project lock stays identical.
 
 Use only the boundary and spatial fields that materially affect the shot. Read `references/video-contracts.md` for the compact BoundaryState structure.
 
@@ -162,7 +162,7 @@ Include audio wording only when the user requests it, an active source or projec
 
 For generated multi-shot prompts, start each segment with `镜头N：` followed by natural executable prose; do not force a separate shot-size fragment when framing is not material. In an ordinary subject-led shot, the first clause after `镜头N：` must name the subject or visual anchor and its core action/change; do not open that clause with shot size, angle, camera position, lens, or movement. Then add material space and camera presentation only when useful. Let space or camera lead only when establishing geography, delaying the subject reveal, or executing a camera-led effect is the shot's actual purpose. Treat clause order as a salience heuristic, not a guaranteed numeric model weight. Write only the visible beats that actually occur and affect understanding. A simple shot may need only `subject -> action` or `subject -> action -> endpoint`; add a shot size, main camera move, explicit start, direction, response, or terminal composition only when it changes or clarifies the shot.
 
-Keep global locks consistent with per-shot wording. Load `references/shot-craft.md` for performance, camera movement, dialogue, or lip sync. For complex Seedance-family subjects, blocking, occlusion, offscreen causality, action paths, terminal composition, or continuity, load `references/single-segment-quality-control.md`. Load `references/failure-recovery.md` only for an observed Seedance-family failure or unstable prior result; load `references/task-patterns.md` only for a matching specialized pattern.
+Keep global locks consistent with per-shot wording. Load `references/shot-craft.md` for performance, camera movement, dialogue, or lip sync. For complex Seedance-family subjects, blocking, occlusion, offscreen causality, action paths, terminal composition, or continuity, load `references/single-segment-quality-control.md`. Load `references/failure-recovery.md` only when the user supplies an observed failed/unstable Seedance-family result, paired results, or another concrete prior-result error; load `references/task-patterns.md` only for a matching specialized pattern.
 
 ## 10. Validate and deliver
 
@@ -179,7 +179,7 @@ Run these checks in order:
 
 If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
 
-Default delivery: at most one useful judgment or risk sentence, then one Chinese final prompt in one fenced code block. `prompt only` removes the wrapper but never skips internal validation. An explicit A/B request may return two labeled prompts from one shared lock core and two expression overlays in the same MotionSpec; only permitted unlocked or explicitly variant-scoped expression fields may differ.
+Default delivery: at most one useful judgment or risk sentence, then one Chinese final prompt in one fenced code block. `prompt only` removes the wrapper but never skips internal validation. An explicit A/B request may return two labeled prompts from one shared lock core and two variant overlays in the same MotionSpec; only permitted unlocked expression fields or fields the current user explicitly scopes to A/B may differ.
 
 ## Failure recovery
 

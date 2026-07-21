@@ -1,6 +1,6 @@
 # Observed Video Failure Recovery
 
-Load this file only when a Seedance-family result has failed, the user supplies paired results, or an existing supported-family prompt is known to be unstable. Do not preload these controls on a first attempt or generalize its heuristics to other video models. Provider guidance in this file follows the source and version recorded in `seedance-2-rules.md`.
+Load this file only when the user supplies an observed failed/unstable Seedance-family result, paired results, or another concrete prior-result error. Do not preload these controls on a first attempt or generalize its heuristics to other video models. Provider guidance in this file follows the source and version recorded in `seedance-2-rules.md`.
 
 ## Attribution before editing
 

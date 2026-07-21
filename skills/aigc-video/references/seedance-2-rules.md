@@ -1,6 +1,6 @@
 # Seedance 2.0 Core Prompt Rules
 
-Use this file for every Seedance 2.0 / 2.0 Fast final prompt. Load `seedance-2-video-operations.md` additionally only for edit, extension, or bridge tasks, and `failure-recovery.md` only after an observed failure.
+Use this file for every Seedance 2.0 / 2.0 Fast final prompt. Load `seedance-2-video-operations.md` additionally only for edit, extension, or bridge tasks. Load `failure-recovery.md` only when the user supplies an observed failed/unstable result, paired results, or another concrete prior-result error; never load it as a first-attempt checklist.
 
 Source basis: [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21 against the provider page updated 2026-07-20. Re-check version-specific limits when the provider or model changes.
 
@@ -39,9 +39,7 @@ Either sentence is the explicit `identity`, `appearance`, or combined binding; r
 
 Borrow only the authorized dimension. A silhouette reference does not authorize color/material; identity does not authorize pose/composition; environment does not authorize camera, action trajectory, or mandatory landmark visibility.
 
-When a group image and a dedicated subject image both contain the same person, resolve the overlap per field. Treat the user-named roster and semantic labels as user locks, not as identity or relationship borrowed from the group image. Use the group input only for the explicitly assigned attributes of the other subjects; assign the named subject's authorized attributes directly to the dedicated input. In the rendered reference summary, bind each overlapping field only to its final owning anchor—do not first bind it to the group image and then write an override chain. Do not inherit contact-sheet layout, text labels, display poses, white background, group composition, or blocking unless the user separately authorizes those dimensions.
-
-Example: `参考@图1中女学子、男学子和杨胜的外貌与服装，并分别定义为女学子、男学子、杨胜；参考@图2中主体的外貌与服装，并将其定义为裘水镜；以@图3作为鬼市场景环境参考。四人共同组成裘水镜一行人。` Here the final sentence records the user-supplied roster without attributing it to an image; `@图2` owns 裘水镜's appearance/wardrobe fields, and `@图3` supplies environment only.
+When a group image and a dedicated subject image both contain the same person, resolve the overlap independently for every authorized field. Treat the user-named roster and semantic labels as user locks, not as identity or relationship borrowed from the group image. A group input may still own one named-subject field such as wardrobe while a dedicated input owns another such as face/appearance; never route all fields merely by subject or asset type. In the rendered reference summary, bind each overlapping field only to its final owning anchor—do not first bind it to one image and then write an override chain. Do not inherit contact-sheet layout, text labels, display poses, white background, group composition, or blocking unless the user separately authorizes those dimensions.
 
 Bind non-identity references by the exact atomic dimensions they are allowed to supply. Slash-separated items below are alternatives to select explicitly, not package authorization:
 

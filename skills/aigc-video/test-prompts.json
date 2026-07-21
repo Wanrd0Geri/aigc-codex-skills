@@ -106,8 +106,8 @@
   },
   {
     "id": "video-seedance-09-reference-dimension-mapping",
-    "prompt": "给我一个8秒 Seedance 提示词：四人是裘水镜、女学子、男学子和杨胜，他们在鬼市中缓慢前行。@图1是裘水镜一行人，其中只参考女学子、男学子和杨胜的外貌与服装；@图2单独参考裘水镜的外貌与服装；@图3只参考鬼市环境。",
-    "expected": "Uses the user instruction—not @图1—to define the four-person roster and semantic names. Mentions each anchor once in the compact reference summary: @图1 supplies appearance/wardrobe for 女学子, 男学子, and 杨胜; @图2 directly and exclusively supplies appearance/wardrobe for 裘水镜; @图3 supplies the ghost-market environment only. It does not first bind 裘水镜 to @图1 and then write an override chain. It does not import narrative identity, relationship, blocking, contact-sheet layout, text labels, white background, display poses, camera, or action from @图1/@图2, and it does not import composition, camera, or action trajectory from @图3."
+    "prompt": "给我一个 8 秒 Seedance 提示词：雨夜老街修伞铺，少女离开前回头。@图1 是少女外貌服装，@图2 是修伞铺和雨夜老街，@图3 是旧红伞。",
+    "expected": "Maps @图1 to appearance and wardrobe and gives the girl one semantic name without importing narrative identity, maps @图2 to environment, and maps @图3 to the prop. It keeps the prompt concise and does not import pose, camera, lighting, composition, or other unassigned attributes from those anchors."
   },
   {
     "id": "video-seedance-10-positive-visible-staging",
@@ -342,7 +342,12 @@
   {
     "id": "video-vibe-14-ab-shared-core-overlays",
     "prompt": "给我A/B两版8秒 Seedance：女人把信放到桌上，最后信留在桌面。A版注意她松开的手，B版注意她抬起的目光；其他动作、场景和终帧都相同。",
-    "expected": "Builds one shared fact-and-lock core for action, scene, duration, and terminal letter state, then records the explicitly variant-scoped hand-versus-gaze viewer priorities in two expression overlays. It does not treat the variants as unrelated MotionSpecs or change any shared action, environment, or ending lock."
+    "expected": "Builds one shared fact-and-lock core for action, scene, duration, and terminal letter state, then records the explicitly variant-scoped hand-versus-gaze viewer priorities in two variant overlays. It does not treat the variants as unrelated MotionSpecs or change any shared action, environment, or ending lock."
+  },
+  {
+    "id": "video-ab-02-explicit-camera-variant",
+    "prompt": "给同一段8秒动作做A/B：女人把信放到桌上，最后信留在桌面。A版固定机位，B版缓慢推近；除此以外人物动作、场景和终帧完全相同。",
+    "expected": "Keeps action, scene, duration, and terminal letter state in one shared core, while placing only the explicitly different fixed-versus-push camera field in the two variant overlays. It does not reject the user-scoped camera difference or allow any unscoped semantic field to drift."
   },
   {
     "id": "video-text-02-subtitle-without-sound-prose",
