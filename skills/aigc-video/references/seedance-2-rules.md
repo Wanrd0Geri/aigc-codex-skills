@@ -31,17 +31,17 @@ Give every identity/appearance reference subject one semantic name. When the ass
 
 `参考@图1中主体的[已授权身份/外貌属性]，并将其定义为[角色名]。`
 
-When a readable asset or user/source description contains several possible subjects, select the needed one with two or three supplied stable static traits:
+When a readable asset or user/source description contains several possible subjects and the supplied names or visible labels do not already resolve selection, select the needed one with two or three supplied stable static traits:
 
 `参考@图1中[两三个稳定静态特征]的[主体]的[已授权身份/外貌属性]，并将其定义为[角色名]。`
 
-Either sentence is the explicit `identity`, `appearance`, or combined binding; replace the bracket with only the authorized attribute wording and do not add a second redundant identity-reference sentence. Keep the same semantic label thereafter. Define the visible subject, not the whole image, when the image also contains scenery or unrelated people. For `anchor_only`, use the user-assigned semantic label or subject name without inventing traits; if the intended subject remains ambiguous, ask for the missing visible state.
+Either sentence is the explicit `identity`, `appearance`, or combined binding; replace the bracket with only the authorized attribute wording and do not add a second redundant identity-reference sentence. Keep the same semantic label thereafter. A supplied name or readable in-image label may resolve subject selection, but it is selection evidence rather than authorized visible text in the output. Define the visible subject, not the whole image, when the image also contains scenery or unrelated people. For `anchor_only`, use the user-assigned semantic label or subject name without inventing traits; if the intended subject remains ambiguous, ask for the missing visible state.
 
 Borrow only the authorized dimension. A silhouette reference does not authorize color/material; identity does not authorize pose/composition; environment does not authorize camera, action trajectory, or mandatory landmark visibility.
 
-When a group image and a dedicated subject image both contain the same person, resolve the overlap per field. Keep the group input for the user-named roster and any explicitly assigned attributes of the other subjects; let the dedicated input replace only the named subject attributes the user assigns to it. Do not inherit contact-sheet layout, text labels, display poses, white background, or group composition unless the user separately authorizes those dimensions.
+When a group image and a dedicated subject image both contain the same person, resolve the overlap per field. Treat the user-named roster and semantic labels as user locks, not as identity or relationship borrowed from the group image. Use the group input only for the explicitly assigned attributes of the other subjects; assign the named subject's authorized attributes directly to the dedicated input. In the rendered reference summary, bind each overlapping field only to its final owning anchor—do not first bind it to the group image and then write an override chain. Do not inherit contact-sheet layout, text labels, display poses, white background, group composition, or blocking unless the user separately authorizes those dimensions.
 
-Example: `参考@图1中女学子、男学子和杨胜的外貌与服装，并分别定义为女学子、男学子、杨胜；参考@图2中主体的外貌与服装，并将其定义为裘水镜；以@图3作为鬼市场景环境参考。` Here the user instruction supplies the four-person roster, `@图2` owns 裘水镜's appearance/wardrobe fields, and `@图3` supplies environment only.
+Example: `参考@图1中女学子、男学子和杨胜的外貌与服装，并分别定义为女学子、男学子、杨胜；参考@图2中主体的外貌与服装，并将其定义为裘水镜；以@图3作为鬼市场景环境参考。四人共同组成裘水镜一行人。` Here the final sentence records the user-supplied roster without attributing it to an image; `@图2` owns 裘水镜's appearance/wardrobe fields, and `@图3` supplies environment only.
 
 Bind non-identity references by the exact atomic dimensions they are allowed to supply. Slash-separated items below are alternatives to select explicitly, not package authorization:
 
@@ -52,7 +52,7 @@ Bind non-identity references by the exact atomic dimensions they are allowed to 
 - audio: `参考@音频1中的[音色/说话节奏]。`
 - text or graphic: `参考@图4中的[标识图形/字形/版式]，用于[可见文字或图形用途]。`
 
-For multi-reference generation, place these bindings in one compact positive reference summary and normally mention each reference-input anchor once, then use semantic names in the shots. Every binding phrase must name its borrowed dimension; the identity-definition sentence above satisfies this requirement by naming the selected identity and/or appearance attributes. Do not write a bare `以@图2作为参考` or `参考@视频1`. Repeat an anchor only when its borrowed dimension changes, ambiguity remains, or task grammar requires it. Use only assets with a clear job; do not fill the input limit.
+For multi-reference generation, place these bindings in one compact positive reference summary and normally mention each reference-input anchor once, then use semantic names in the shots. Consolidate multiple authorized dimensions from the same anchor into one binding when possible. Every binding phrase must name its borrowed dimension; the identity-definition sentence above satisfies this requirement by naming the selected identity and/or appearance attributes. Do not write a bare `以@图2作为参考` or `参考@视频1`. Repeat an anchor only when a later assignment materially changes its borrowed dimension, ambiguity remains, or task grammar requires it. Use only assets with a clear job; do not fill the input limit.
 
 ## Audio and visible text
 

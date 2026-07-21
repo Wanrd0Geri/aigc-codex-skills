@@ -106,8 +106,8 @@
   },
   {
     "id": "video-seedance-09-reference-dimension-mapping",
-    "prompt": "给我一个8秒 Seedance 提示词：裘水镜带女学子、男学子和杨胜在鬼市中缓慢前行。@图1是裘水镜一行人，定义女学子、裘水镜、男学子、杨胜四人；@图2单独参考裘水镜的外貌与服装，并在这些字段上优先于@图1；@图3只参考鬼市环境。",
-    "expected": "Uses the user instruction to define the four-person roster and four semantic names. Uses @图1 for the appearance/wardrobe of 女学子, 男学子, and 杨胜; uses @图2 as the dedicated appearance/wardrobe source for 裘水镜 only; and uses @图3 only for the ghost-market environment. It does not import narrative identity, contact-sheet layout, text labels, white background, display poses, camera, or action from @图1/@图2, and it does not import composition, camera, or action trajectory from @图3."
+    "prompt": "给我一个8秒 Seedance 提示词：四人是裘水镜、女学子、男学子和杨胜，他们在鬼市中缓慢前行。@图1是裘水镜一行人，其中只参考女学子、男学子和杨胜的外貌与服装；@图2单独参考裘水镜的外貌与服装；@图3只参考鬼市环境。",
+    "expected": "Uses the user instruction—not @图1—to define the four-person roster and semantic names. Mentions each anchor once in the compact reference summary: @图1 supplies appearance/wardrobe for 女学子, 男学子, and 杨胜; @图2 directly and exclusively supplies appearance/wardrobe for 裘水镜; @图3 supplies the ghost-market environment only. It does not first bind 裘水镜 to @图1 and then write an override chain. It does not import narrative identity, relationship, blocking, contact-sheet layout, text labels, white background, display poses, camera, or action from @图1/@图2, and it does not import composition, camera, or action trajectory from @图3."
   },
   {
     "id": "video-seedance-10-positive-visible-staging",
