@@ -198,5 +198,10 @@
     "id": "prompt-efficiency-9-supported-prompt-owner",
     "prompt": "把这份 GPT Image 2 提示词优化成最终可用版本，中英文分开：premium product poster, green bottle, label 青山, right side empty, 4:5, JPEG, medium。",
     "expected": "Keeps final supported image-prompt ownership in aigc-image without asking for a source image, preserves the exact copy 青山, produces separate Chinese and English blocks, translates only the visual brief into a minimum-sufficient prompt, and keeps 4:5, JPEG, and medium as settings outside both prompt bodies."
+  },
+  {
+    "id": "prompt-efficiency-10-midjourney-owner-and-settings",
+    "prompt": "把这份 Midjourney prompt 优化成最终可用版本，并把画幅改成16:9，保留 stylize 150：女孩站在雨夜车站，低头看旧车票，高级感，高质量 --ar 1:1 --stylize 150",
+    "expected": "Keeps final Midjourney optimization and parameter changes in aigc-image, removes unsupported quality filler, preserves the scene and stylize value, returns a concise prompt plus one copy-ready suffix ending in --ar 16:9 --stylize 150, and does not ask for a source image."
   }
 ]

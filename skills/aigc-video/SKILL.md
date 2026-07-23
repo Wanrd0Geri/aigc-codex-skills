@@ -49,7 +49,7 @@ Build an evidence ledger and reference map before drafting:
 
 Pure text-to-video can proceed from the brief. Reference generation, editing, extension, and bridging require the relevant asset or literal anchor. If an unreadable asset's relevant boundary state, identity, composition, or motion is necessary and the user has not described it, explain the gap and ask for the asset or missing visible state. Use the source ending for `向后延长` / append-after and the first bridge input; use the source opening for `向前延长` / prepend-before and the second bridge input.
 
-Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Record each anchor's operational role before assigning transfer meaning: reference input, start-frame source, end-frame target, strict-edit target, extension source, or first/second bridge input. Only a reference input receives borrowed dimensions. A start/end-frame input receives a boundary lock scope; an edit target, extension source, or bridge input carries preservation, inherited state, or boundary obligations. These are not borrowed dimensions, and none of these anchors may be recast as a reference merely because it is an asset anchor. Give every identity/appearance reference subject one semantic label. Treat a user-supplied character name or group roster as a semantic lock, not as an identity dimension borrowed from the image unless the user explicitly authorizes that transfer. Add two or three stable identifying traits only when subject selection is ambiguous and those traits come from a readable asset or the user/source. For `anchor_only`, preserve the supplied label and facts without inventing identifying traits.
+Preserve literal anchors such as `@图1`, `@视频1`, `@音频1`, and filename anchors exactly. Assign each anchor an operational role before any transfer meaning. Only a `reference_input` receives borrowed dimensions; boundary, edit, extension, and bridge inputs carry their own lock or inheritance obligations and must not be recast as references merely because they are assets. Treat a user-supplied character name or roster as a semantic lock, not a borrowed identity dimension. For `anchor_only`, preserve the supplied label and facts without inventing identifying traits. Apply the complete role, dimension, semantic-label, and trait contract from `references/video-contracts.md`.
 
 Read `references/video-contracts.md` for the Evidence Ledger, Reference Map, Lock Ledger, and MotionSpec.
 
@@ -111,7 +111,7 @@ Before platform wording, silently define:
 - reference map
 - shots with sparse start/terminal boundaries, shot-level camera and action, inherited action phase when a cut continues the same event, performance, only material spatial causality, next-handoff subset, and only source-backed sound when active
 
-Every platform render must derive from the same MotionSpec. For explicit A/B output, keep one shared fact-and-lock core and attach two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere phrasing, or rhythm. A current-user instruction may deliberately place another named field in the A/B overlays; every unscoped user/source/project lock stays identical.
+Every platform render must derive from the same MotionSpec. For explicit A/B output, apply the shared-core and variant-overlay contract from `references/video-contracts.md`.
 
 Use only the boundary and spatial fields that materially affect the shot. Read `references/video-contracts.md` for the compact BoundaryState structure.
 
@@ -156,7 +156,7 @@ For an explicitly platform-neutral final prompt, skip Seedance references, marke
 
 For Seedance-family output, use official information markers when active: dialogue `{台词}`, sound `<音效>`, music `（音乐）`, subtitles `【字幕】`. For platform-neutral output, preserve exact dialogue/text and ownership in ordinary natural language without Seedance marker syntax. The user's or project's music/subtitle instruction overrides the personal default.
 
-For new or reference generation with multiple assets, bind each reference-input anchor once in a compact paragraph before the shots. Give every identity/appearance reference subject a semantic name; add identifying traits only from readable or supplied evidence when subject selection is ambiguous. Render the dimension-specific Seedance wording from `references/seedance-2-rules.md`, then use semantic subject and effect names in the shot paragraphs. Repeat an anchor only when its borrowed dimension changes, a real ambiguity remains, or platform grammar requires it. Do not include start-frame sources, end-frame targets, edit targets, extension sources, or bridge inputs in this reference paragraph unless the user explicitly gives the same anchor a separate reference-input role. Do not translate the internal reference blacklist into user-visible exclusions.
+For new or reference generation with multiple assets, render the compact reference summary and semantic bindings defined in `references/video-contracts.md` using the platform wording in `references/seedance-2-rules.md`. Keep boundary, edit, extension, and bridge anchors out of that summary unless the user explicitly assigns the same anchor a separate `reference_input` role. Never expose the internal reference blacklist.
 
 Include audio wording only when the user requests it, an active source or project locks it, or spoken dialogue/lip sync requires it. If the user asks for no sound description, omit sound effects, ambience, music, and audio-policy wording throughout subsequent revisions; preserve any separately requested dialogue, lip sync, subtitles, or other visible text. The personal no-music/no-subtitle default prevents additions; it does not require the literal sentence `无配乐，无字幕` in every prompt.
 
@@ -179,7 +179,7 @@ Run these checks in order:
 
 If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
 
-Default delivery: at most one useful judgment or risk sentence, then one Chinese final prompt in one fenced code block. `prompt only` removes the wrapper but never skips internal validation. An explicit A/B request may return two labeled prompts from one shared lock core and two variant overlays in the same MotionSpec; only permitted unlocked expression fields or fields the current user explicitly scopes to A/B may differ.
+Default delivery: at most one useful judgment or risk sentence, then one Chinese final prompt in one fenced code block. `prompt only` removes the wrapper but never skips internal validation. An explicit A/B request may return two labeled prompts produced from the shared core and variant overlays defined in `references/video-contracts.md`.
 
 ## Failure recovery
 

@@ -12,9 +12,9 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 
 - `terminal_artifact`: final_video_prompt
 - `platform` and `version`, or explicit `platform_neutral`
-- `task_kind`: new_text | reference | edit | extend | bridge
+- `task_kind`: new_text | reference | edit | extend | bridge. Use `reference` whenever an actual start-frame or end-frame asset/anchor is supplied. Use `new_text` only when start or terminal conditions are described in text with no boundary asset; record those conditions in BoundaryState without inventing an asset role.
 - `operation`: draft | optimize
-- `output_mode`: default | prompt_only | diagnostic | ab
+- `output_mode`: default | prompt_only | ab
 - `expression_request`: default | explicit_vibe
 - `project_scope`: optional project/episode/scene/shot ids
 - `requested_duration`

@@ -58,11 +58,11 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
-Place the camera clause according to viewer priority. In an ordinary subject-led shot, make the first clause after `镜头N：` name the subject or visual anchor and its core action; do not begin with shot size, angle, camera position, lens, or movement. Let geography or camera movement lead only for an establishing shot, a reveal whose subject appears later, or a camera-led effect. This ordering guides salience; it does not override a user-locked camera or imply a measurable attention weight.
+Apply the clause-order rule from `SKILL.md` §9; this reference does not redefine it. Use the camera guidance below only to express a camera choice that survived that rule.
 
 ## Framing And Visible Envelope
 
-A shot-size label is not stronger than the geometry implied by the rest of the prompt. Every body part, prop, subject, and landmark requested in the same frame or boundary expands the minimum view the model must satisfy. A permitted camera move may change that envelope over time.
+Apply the minimum framing-envelope rule from `SKILL.md` §5; use the checks below only to make the resulting crop and visibility executable.
 
 - Establish the viewer priority and intended crop before adding contextual visibility.
 - For a tight shot, use observable boundaries such as what the upper and lower frame edges cut, which body parts dominate, and which environment elements remain partial or out of focus.
@@ -105,7 +105,7 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - Keep dialogue short enough for the duration. For 15 seconds or less, prefer one or two short lines.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
 - For Seedance-family output, put spoken dialogue in braces: `角色说道{台词}`; use `<音效>`、`（音乐）` and `【字幕】` only when active. For platform-neutral output, preserve the exact line and ownership in ordinary natural language without platform markers.
-- The personal no-music/no-subtitle default prevents additions but does not require an opening policy phrase. Keep user/source/project-supplied dialogue and sound; otherwise do not invent ambience, action sound, voiceover, or dubbing. If the user asks for no sound description, omit all optional audio wording.
+- Apply the audio inclusion and omission rule from `SKILL.md` §9; do not restate the default as an opening policy phrase.
 - Include subtitles only when the current user instruction or active project requires them; otherwise keep them out of the prompt.
 
 If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.

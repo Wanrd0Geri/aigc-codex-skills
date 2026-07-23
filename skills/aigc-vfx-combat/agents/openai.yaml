@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIGC VFX & Combat Design"
+  short_description: "为国漫、仙侠与武侠战斗设计可执行的高质感专业特效结构"
+  default_prompt: "Use $aigc-vfx-combat to turn this combat or spell idea into a concise production-ready visual design card."

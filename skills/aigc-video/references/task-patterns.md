@@ -72,7 +72,7 @@ Prioritize emotional turn, performance carrier, and readable blocking.
 - Keep dialogue short enough for the segment duration.
 - Use gaze, pause, breath, hand tension, posture, or object handling as the emotion carrier.
 - Avoid long backstory. Show the emotional beat inside the clip.
-- This workflow does not add subtitles unless the current user instruction or active project requires them; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
+- Apply the subtitle rule from `SKILL.md` §9; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
 
 ## Visible Text, Subtitle, Or Logo
 

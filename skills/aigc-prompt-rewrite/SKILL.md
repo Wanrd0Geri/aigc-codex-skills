@@ -1,6 +1,6 @@
 ---
 name: aigc-prompt-rewrite
-description: Use when the user already has a platform-neutral AIGC image/video prompt, visual core, or a prompt for a platform without an active specialist and explicitly asks only to 改自然、改成导演讲戏、去 AI 味、去模板腔、去参数堆叠, clarify visible subject-action-space logic, or review language executability while preserving production controls and syntax. Do not use as a mandatory final pass or to create a new final media prompt. GPT Image 2, Nano Banana, and Seedream final image-prompt optimization belongs to aigc-image; Seedance/Doubao/Dreamina and new platform-neutral final video prompts belong to aigc-video; project compilation belongs to aigc-project-context.
+description: Use when the user already has a platform-neutral AIGC image/video prompt, visual core, or named-platform prompt and explicitly asks only to 改自然、改成导演讲戏、去 AI 味、去模板腔、去关键词或形容词堆叠, clarify visible subject-action-space logic, or review language executability while preserving production controls and syntax in place. Do not use as a mandatory final pass or to create or optimize a final media prompt. Final image-prompt generation, platform adaptation, settings changes, or optimization belongs to aigc-image; Seedance/Doubao/Dreamina and new platform-neutral final video prompts belong to aigc-video; project compilation belongs to aigc-project-context.
 ---
 
 # AIGC Prompt Rewrite
@@ -14,7 +14,7 @@ Use this skill for one finished artifact: a language-cleaned prompt or a languag
 Do not treat it as a universal finalizer. In particular:
 
 - If the user asks for a final Seedance, Doubao, or Dreamina prompt, a new platform-neutral final video prompt, or cleanup of an existing supported-family prompt, let `aigc-video` own the result.
-- If the user asks to generate or optimize a final GPT Image 2, Nano Banana, or Seedream prompt, let `aigc-image` own the result. Language-only cleanup for Midjourney or another image platform without an active specialist may stay here; preserve required syntax and parameters.
+- If the user asks to generate, adapt, configure, or optimize a final image prompt for GPT Image 2, Nano Banana, Seedream, Midjourney, an unknown image platform, or multiple platforms, let `aigc-image` own the result. An existing image prompt stays here only when the user explicitly asks for language-only cleanup; preserve required syntax and inline parameters such as `--ar` and `--stylize` exactly where they appear. Any request to add, remove, reorder, or change those parameters belongs to `aigc-image`.
 - If the user asks for a platform-specific final video outside the supported Seedance family, do not invent an adapter inside this language skill; use a current platform-specific workflow or official guidance. If neither is available, ask for the platform's current syntax or source, or offer to let `aigc-video` create a clearly labeled platform-neutral final prompt if the user accepts the artifact change. Never author that new prompt here or present neutral wording as a verified platform-ready prompt.
 - If the user supplies an image and wants diagnosis, reverse reconstruction, or an edit prompt, use `aigc-image`.
 - If the source is a script, storyboard, or shot list that still needs continuity and performance interpretation, use `aigc-project-context`, then let `aigc-video` own the final platform-specific or platform-neutral video prompt.

@@ -61,7 +61,7 @@ Use official information markers when active:
 - music: `（音乐）`
 - subtitle: `【字幕】`
 
-This workflow does not add optional audio, music, or subtitles by default. That is a production preference, not a Seedance capability limit, and does not require an `无配乐/无字幕` policy sentence.
+Apply the audio and subtitle inclusion rules from `SKILL.md` §9. Treat them as production defaults, not Seedance capability limits, and do not add an `无配乐/无字幕` policy sentence merely to state the default.
 
 For requested visible text, state exact content, timing when material, frame position, appearance method, and only necessary visual character. Preserve common legible characters and use a visual reference for exact logo/typography when possible.
 
