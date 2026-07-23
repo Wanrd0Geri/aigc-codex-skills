@@ -159,10 +159,10 @@ When the user says... reach for these techniques:
 | User says | Cinematography translation |
 |---|---|
 | "More cinematic" / "电影感" | A motivated key, controlled shadow hierarchy, deliberate framing, readable depth, and a medium-appropriate finish |
-| "More moody" / "氛围感" | Lifted contrast, atmospheric haze with depth, single warm or cool source, large negative space |
-| "Less flat" / "不要这么平" | Increase lighting ratio, add black point, add atmospheric depth gradient, add rim light to subjects |
+| "More moody" / "氛围感" | Choose a source-supported low-key or softened-contrast treatment, control the shadow hierarchy, and use haze, negative space, or restrained color separation only when they fit the visible scene |
+| "Less flat" / "不要这么平" | Strengthen motivated light direction, tonal hierarchy, contact shadow, depth separation, or material response; use rim light only when a visible source justifies it |
 | "Lights are messy" / "光太乱" | Reduce to one motivated key, demote others to fill, unify color temperature |
-| "Subject doesn't fit" / "人物没融入" | Add matching rim/edge light from environment key, shift subject shadow tone toward environment ambient |
+| "Subject doesn't fit" / "人物没融入" | Match the environment's light direction, shadow density, color spill, contact shadow, edge softness, and depth cues; add rim/edge light only when the environment visibly motivates it |
 | "Too bright" / "太亮了" | Lower overall brightness, anchor dark regions, protect highlights, reduce glowing haze |
 | "Wrong era feel" / "时代感不对" | Correct costume, props, materials, palette, lighting behavior, and only then add an appropriate medium finish |
 

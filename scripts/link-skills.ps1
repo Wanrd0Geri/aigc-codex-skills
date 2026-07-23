@@ -12,6 +12,7 @@ $SkillsRoot = Join-Path $RepoRoot "skills"
 $ActiveSkills = @(
     "aigc-image",
     "aigc-video",
+    "aigc-vfx-combat",
     "aigc-project-context",
     "aigc-prompt-rewrite"
 )
@@ -217,7 +218,7 @@ if ($NeedsBackup) {
 
 $TempLinks = @()
 try {
-    # Prove that all four junctions can be created before retiring anything.
+    # Prove that all five junctions can be created before retiring anything.
     foreach ($Name in $ActiveSkills) {
         $Source = Join-Path $SkillsRoot $Name
         $TempName = ".aigc-migration-$MigrationId-$Name"
@@ -333,7 +334,7 @@ try {
         }
     }
 
-    Write-Host "Done. Four replacement skills are linked and known retired entries are absent. Restart Codex to reload them."
+    Write-Host "Done. Five replacement skills are linked and known retired entries are absent. Restart Codex to reload them."
 } finally {
     foreach ($TempPath in $TempLinks) {
         $TempName = Split-Path -Leaf $TempPath

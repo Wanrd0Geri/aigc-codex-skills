@@ -55,4 +55,14 @@ Treat this envelope as already compiled evidence, locks, references, and boundar
 
 Preserve exact ids, anchors, identity, count, location, locked action order, dialogue, required silence, prop state, start/terminal boundaries, and next handoff. A next handoff is only a subset of terminal state; if the rest of the terminal boundary is unlocked, every non-empty handoff field still remains locked there. Keep bounded performance intent from authorizing new plot, props, symbols, lighting, or action.
 
+## Role crosswalk
+
+Normalize card `role` or package `roles` without renaming anchors. Collapse attribute-donor roles into one `reference_input`; map `start_frame` / `end_frame` to `start_frame_source` / `end_frame_target`; preserve edit, extension, and bridge roles. Record combined roles only when explicitly assigned. A role never expands `may_control`.
+
+For `reference_input`, copy values already in the borrowed-dimension enum in `../aigc-video/references/video-contracts.md`; normalize only the card-specific aliases `face -> identity`, `age -> appearance`, `clothing -> wardrobe`, and `scene_light -> lighting`.
+
+For boundary roles, copy an existing boundary-scope value; normalize `face -> identity`, `scene_light -> light`, and `age|clothing -> visible_roster_attributes`. Boundary roles receive no borrowed dimensions.
+
+Leave absent, contradictory, or unrecognized values unresolved. Omit `must_not_control` only after every authorized value maps successfully; unlisted dimensions remain unassigned by whitelist semantics.
+
 If uncertainty remains, present the evidence, current reading, alternatives, and recommendation, then ask one combined question. Once answered, repair only the affected envelope fields and continue; do not make the user restart the workflow.

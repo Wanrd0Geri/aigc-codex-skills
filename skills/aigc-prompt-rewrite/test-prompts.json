@@ -88,5 +88,10 @@
     "id": "rewrite-18-unsupported-video-platform-fallback",
     "prompt": "直接给我写一版最终 Kling 提示词：雨夜车站里，一个女孩听见广播后回头。现在没有 Kling 专用 skill，也没有提供最新官方语法。",
     "expected": "Does not author a new final prompt inside aigc-prompt-rewrite or invent a verified Kling adapter. It routes to a current platform-specific workflow or official guidance when available; otherwise it asks for the current syntax or source, or offers to let aigc-video create a clearly labeled platform-neutral final prompt if the user accepts that artifact change. It never presents neutral prose as platform-ready."
+  },
+  {
+    "id": "rewrite-19-midjourney-parameter-change-route",
+    "prompt": "把这段 Midjourney prompt 改自然，并把 --ar 1:1 换成 --ar 16:9、删掉 --stylize 500：女孩站在雨夜车站 --ar 1:1 --stylize 500",
+    "expected": "Routes the request to aigc-image because it changes Midjourney settings rather than performing language-only cleanup. It preserves the scene facts, applies only the requested parameter delta, and does not silently treat parameter editing as prose rewriting."
   }
 ]

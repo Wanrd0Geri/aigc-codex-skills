@@ -22,6 +22,7 @@ SKILLS_ROOT="$REPO_ROOT/skills"
 ACTIVE_SKILLS=(
   "aigc-image"
   "aigc-video"
+  "aigc-vfx-combat"
   "aigc-project-context"
   "aigc-prompt-rewrite"
 )
@@ -158,7 +159,7 @@ if [[ "$needs_backup" -eq 1 ]]; then
   fi
 fi
 
-# Prove that all four links can be created in the target directory before retiring anything.
+# Prove that all five links can be created in the target directory before retiring anything.
 TEMP_LINKS=()
 cleanup_temp_links() {
   local temp
@@ -247,7 +248,7 @@ for name in "${RETIRED_SKILLS[@]}"; do
   fi
 done
 
-# Postflight: four correct active links and no known retired entries.
+# Postflight: five correct active links and no known retired entries.
 for name in "${ACTIVE_SKILLS[@]}"; do
   source="$SKILLS_ROOT/$name"
   destination="$CODEX_SKILLS_DIR/$name"
@@ -266,4 +267,4 @@ for name in "${RETIRED_SKILLS[@]}"; do
 done
 
 trap - EXIT
-echo "Done. Four replacement skills are linked and known retired entries are absent. Restart Codex to reload them."
+echo "Done. Five replacement skills are linked and known retired entries are absent. Restart Codex to reload them."

@@ -113,7 +113,7 @@ For card-only output, include unresolved items and missing assets without append
 | Reference role unclear | Offer the safest mapping and its consequences. | Keep the reference unassigned. |
 | Scene context missing | Use raw-source fallback. | List missing layers and mark affected facts pending. |
 | Required source exists but is unreadable, corrupt, password-protected, or unsupported | Request a readable export or the relevant excerpt. | Mark affected fields pending; do not infer them from summaries or filenames. |
-| Required production choice absent | Separate facts from interpretation and discuss it. | Route new directing choices to an appropriate directing workflow. |
+| Required production choice absent | Separate facts from interpretation and discuss it. | Leave the decision with the user and mark affected fields pending; do not design it inside the context layer. |
 | Final VideoContext lacks required source fields | Repair only the missing envelope fields from active sources. | Name the unresolved production decision; do not fabricate or rebuild unrelated card fields. |
 
 ## Avoid

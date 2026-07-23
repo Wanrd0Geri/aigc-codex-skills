@@ -78,5 +78,15 @@
     "id": "project-16-continuity-audit-only",
     "prompt": "当前项目的剧本和分镜明确：3-8全程固定中景，女孩始终在画面右侧，终帧停在门内。待审视频提示词写的是：镜头横移，女孩从画面左侧走出门外。帮我审计连续性，只列问题，不要改提示词，也不要生成新的最终视频版本。",
     "expected": "Lists the camera movement, screen-side, and terminal-position mismatches against the stated authoritative source facts, separates any unresolved fields, and stops at the audit. It does not rewrite the prompt, render shot cards, or append a final video artifact."
+  },
+  {
+    "id": "project-17-video-handoff-role-crosswalk",
+    "prompt": "把这个已验证的 VideoContext 直接交给 aigc-video，不要先展示卡片：@图1 roles=[character_identity, clothing], may_control=[face, age, clothing]；@图2 role=start_frame, may_control=[composition, scene_light]；@视频1 role=extension_source。锚点都要保留。",
+    "expected": "Preserves all anchors; collapses @图1's donor roles into one reference_input with identity, appearance, and wardrobe borrowed dimensions; maps @图2 to start_frame_source with composition and light boundary scope and no borrowed dimensions; and keeps @视频1 as extension_source with preservation obligations and no borrowed dimensions. It does not infer permissions from role labels beyond may_control or emit must_not_control as a final negative list."
+  },
+  {
+    "id": "project-18-video-handoff-unrecognized-control",
+    "prompt": "VideoContext 里 @图1 role=character_identity，may_control=[face, aura_signature]。直接接视频提示词流程。",
+    "expected": "Maps face to the identity borrowed dimension but leaves aura_signature unresolved because it is not a known alias or downstream atomic dimension. It does not guess effect, look, lighting, or identity for that value, and it asks one focused question only if resolving it can materially change the final prompt."
   }
 ]

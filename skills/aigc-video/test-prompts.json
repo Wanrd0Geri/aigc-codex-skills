@@ -332,7 +332,7 @@
   {
     "id": "video-boundary-01-start-end-role-separation",
     "prompt": "用@图1作为完整首帧，用@图2作为完整尾帧，生成两者之间的6秒视频；@视频1只参考中间段的运镜节奏。",
-    "expected": "Records @图1 as start_frame_source with full_frame scope, @图2 as end_frame_target with full_frame scope, and @视频1 separately as reference_input with only camera/timing borrowed dimensions. It does not place @图1 or @图2 in the ordinary reference summary or treat their full-frame boundary locks as borrowed dimensions."
+    "expected": "Classifies the base task as reference because actual boundary assets are supplied. Records @图1 as start_frame_source with full_frame scope, @图2 as end_frame_target with full_frame scope, and @视频1 separately as reference_input with only camera/timing borrowed dimensions. It does not place @图1 or @图2 in the ordinary reference summary or treat their full-frame boundary locks as borrowed dimensions."
   },
   {
     "id": "video-bridge-04-operation-and-dimension-separation",
@@ -353,5 +353,10 @@
     "id": "video-text-02-subtitle-without-sound-prose",
     "prompt": "写一个6秒 Seedance 提示词：女孩站在车站，最后出现字幕【明天见】。不要写音效、环境声、音乐或其他声音描述。",
     "expected": "Preserves the explicitly requested visible subtitle 【明天见】 while omitting sound effects, ambience, music, and audio-policy prose. It does not misclassify the subtitle as sound description or remove it under the no-audio request."
+  },
+  {
+    "id": "video-boundary-02-text-only-boundaries",
+    "prompt": "没有首尾帧图片。写一个6秒文生视频：开头女孩双手按住关着的门，结尾门打开，她仍站在门内。",
+    "expected": "Classifies the base task as new_text because no boundary asset or anchor exists. Records the supplied opening and ending conditions as BoundaryStates, preserves the terminal inside-door state, and does not invent start_frame_source, end_frame_target, or any literal asset anchor."
   }
 ]

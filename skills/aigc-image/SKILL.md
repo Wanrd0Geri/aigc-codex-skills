@@ -1,6 +1,6 @@
 ---
 name: aigc-image
-description: Use when the user wants a final ready-to-paste image prompt for GPT Image 2, Nano Banana, Seedream 5.0 Pro, or another image model from a text brief, existing supported-platform prompt, readable image, frame, storyboard panel, product image, or multiple visual references; also use for visual diagnosis, production readiness, reverse prompting, source-faithful image-edit prompts, reference matching, prompt optimization, or diagnose-then-edit. Require the actual readable image only for source-dependent visual claims. Do not use when the user wants the image generated or edited directly or when the requested final artifact is a video prompt.
+description: Use when the user wants a final ready-to-paste image prompt for GPT Image 2, Nano Banana, Seedream 5.0 Pro, Midjourney, or another image model from a text brief, existing prompt, readable image, frame, storyboard panel, product image, or multiple visual references; also use for visual diagnosis, production readiness, reverse prompting, source-faithful image-edit prompts, reference matching, platform adaptation, settings changes, prompt optimization, or diagnose-then-edit. Require the actual readable image only for source-dependent visual claims. Do not use when the user wants only direct generation or editing with no prompt or diagnosis artifact, or when the requested final artifact is a video prompt.
 ---
 
 # AIGC Image
@@ -24,12 +24,12 @@ Pure text-to-image generation and optimization of a text-only prompt can proceed
 Choose internally from:
 
 - `diagnose`: explain why the frame works or fails, rank fixes, or judge `can proceed / repair first / redesign first`.
-- `generate`: turn a text brief or an existing supported-platform image prompt into a final text-to-image prompt without claiming an unseen source image.
+- `generate`: turn a text brief or an existing image prompt into a final text-to-image prompt without claiming an unseen source image.
 - `reverse`: reconstruct or adapt the visible image as a text-to-image prompt.
 - `edit`: write a closed-scope image-to-image repair or transformation prompt.
 - `diagnose -> edit`: when the user explicitly asks both, inspect once, diagnose briefly, then deliver the edit prompt in the same response.
 
-Record optimization of an existing supported-platform prompt as an operation, not a fifth artifact. Preserve whether the base prompt is generation or editing. A text-only optimization may proceed without the source image when it makes no new source-dependent visual claim.
+Record platform adaptation, settings changes, or optimization of an existing image prompt as operations, not additional artifacts. Preserve whether the base prompt is generation or editing. A text-only operation may proceed without the source image when it makes no new source-dependent visual claim.
 
 If the request says only `处理一下`, `优化一下`, or otherwise leaves the final artifact unclear, state your current interpretation and ask what they want to receive. Do not guess between actual generation/editing, diagnosis, a new text-to-image prompt, reverse prompting, and an edit prompt.
 
@@ -85,7 +85,7 @@ Read `references/reference-roles-and-text.md` whenever multiple references, visi
 | --- | --- | --- |
 | diagnose | `references/mode-diagnose.md` | `references/diagnostic-dimensions.md`, `references/production-design-dimensions.md` |
 | generate | none | one named provider file; for unknown, Midjourney, or genuine multi-platform delivery, `references/generation-platform-adapters.md` |
-| reverse | `references/mode-reverse.md` | for one supported provider, its matching file below; for multi-platform delivery, `references/generation-platform-adapters.md` plus only the files for supported providers the user named |
+| reverse | `references/mode-reverse.md` | for one supported provider, its matching file below; for unknown, Midjourney, or genuine multi-platform delivery, `references/generation-platform-adapters.md` plus only the files for supported providers the user named |
 | edit | `references/mode-edit.md` | `references/edit-platform-templates.md` only for `controlled` or `specification`; one named provider file; for multi-platform delivery, `references/generation-platform-adapters.md`; `references/cinematic-language.md` only for applicable cinematic repair |
 | diagnose -> edit | diagnose references, then edit references | read the image only once |
 
