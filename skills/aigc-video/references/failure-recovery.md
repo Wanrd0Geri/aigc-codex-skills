@@ -2,6 +2,12 @@
 
 Load this file only when the user supplies an observed failed/unstable Seedance-family result, paired results, or another concrete prior-result error. Do not preload these controls on a first attempt or generalize its heuristics to other video models. Provider guidance in this file follows the source and version recorded in `seedance-2-rules.md`.
 
+## Generated-result review order
+
+1. Compare requested and actual shot count, order, and cut points. Treat automated scene detection as an aid and manually verify cuts with similar color or lighting before concluding that a shot is missing.
+2. Sample representative opening, action, and terminal frames for each shot. Compare framing and crop, visible roster and occlusion, camera and screen direction, action endpoint, cross-shot performance invariants, and any active exact dialogue or text.
+3. Pass the observed mismatches to the attribution rules below. Recommend regenerating and replacing only one shot only when the user's workflow supports shot-level replacement; otherwise use a controlled rerun.
+
 ## Attribution before editing
 
 1. Compare the nearest successful and failed prompts, assets, settings, and visible outcomes.

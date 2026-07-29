@@ -37,6 +37,10 @@ A roughly one-second fast insert can carry one instantaneous beat, such as an ey
 
 If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, reorder, or add exact per-shot timestamps without authorization.
 
+## Persistent scene topology
+
+Use this only when multiple shots share a location and depend on persistent blocking, separation, occlusion, or a repeated camera setup. Establish the source-backed regions, separators, relative distance, eyeline height, and any locked screen side or camera relation before drafting. Externalize each cross-shot spatial invariant once; shot paragraphs carry only material changes and any local fact needed to preserve the intended visible roster or occlusion. Do not infer permanent left/right placement or distance from fixed camera or shot count alone.
+
 ## Visibility, path, and terminal audit
 
 Scan each shot silently:

@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Video"
-  short_description: "Create final Seedance or platform-neutral video prompts."
-  default_prompt: "用 $aigc-video 根据 brief、素材或项目上下文写出可直接使用的最终视频提示词；如果创作理解存在会明显改变结果的歧义，先给出你的判断和建议再问我。"
+  short_description: "Create or review Seedance and platform-neutral video prompts."
+  default_prompt: "用 $aigc-video 根据 brief、素材、项目上下文或已生成成片，写出、优化或回检可直接使用的视频提示词；如果创作理解存在会明显改变结果的歧义，先给出你的判断和建议再问我。"
 policy:
   allow_implicit_invocation: true

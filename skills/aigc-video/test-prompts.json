@@ -358,5 +358,25 @@
     "id": "video-boundary-02-text-only-boundaries",
     "prompt": "没有首尾帧图片。写一个6秒文生视频：开头女孩双手按住关着的门，结尾门打开，她仍站在门内。",
     "expected": "Classifies the base task as new_text because no boundary asset or anchor exists. Records the supplied opening and ending conditions as BoundaryStates, preserves the terminal inside-door state, and does not invent start_frame_source, end_frame_target, or any literal asset anchor."
+  },
+  {
+    "id": "video-multishot-01-all-assets-accounted",
+    "prompt": "写一条八镜 Seedance 最终提示词。我给你六份素材：前五张会在 Seedance 中依次作为@图1分镜故事板、@图2女主角色资产、@图3男主角色资产、@图4眼睛特写、@图5光影参考；第六张是分镜表，只供你读取人物坐姿、景别和动作，不在 Seedance 中上传。不要因为分镜故事板是线稿就删掉它。",
+    "expected": "Accounts for all six user-supplied assets. It preserves @图1 through @图5 exactly with narrow borrowed dimensions, keeps the sixth storyboard table as evidence only without inventing an @ anchor for it, and uses its authorized sitting, framing, and action facts. It does not silently drop or merge an asset because of line-art style-transfer concerns; it narrows @图1 to storyboard dimensions instead."
+  },
+  {
+    "id": "video-multishot-02-source-overlap-before-new-shot",
+    "prompt": "现有分镜表严格编号1到8，第8镜已经写着“罗大娘把黄纸药包扔向苏云”。请在最后再加一镜，把药包扔给苏云，然后给我完整提示词。",
+    "expected": "Detects that the requested new beat already exists in locked shot 8 and treats whether to split or duplicate it as a material unresolved choice. It reports the overlap and offers the two concrete options—split the existing pickup/throw chain while keeping eight shots, or add a genuinely distinct ninth shot—before drafting. It does not silently create a duplicate ninth throw or change the locked shot count without a decision."
+  },
+  {
+    "id": "video-multishot-03-cross-shot-performance-invariant",
+    "prompt": "写八镜 Seedance 提示词。罗大娘从头到尾都稍微凶巴巴、带责备感，眉头压着，嘴角不扬，不微笑；镜头1到3一直低头忙手里的草药，不看苏云，直到镜头4说“还想躲着我？”时才停手并第一次抬头看他。关心只能藏在责备语气里，不能变成笑容。",
+    "expected": "States the source-locked cross-shot performance baseline once before the shot list, then makes shot paragraphs describe only the relevant triggers and changes. Shots 1-3 preserve the busy downward attention without premature eye contact; shot 4 contains the first stop-and-look transition. It does not translate familiarity or concealed care into a smile, repeat the full baseline in every shot, or add melodramatic anger."
+  },
+  {
+    "id": "video-multishot-04-repeated-camera-invariant",
+    "prompt": "写八镜 Seedance 提示词。镜头4、6、8必须是完全相同的越肩机位和小全景构图：苏云背影与竹背篓始终在画面右侧近前景，罗大娘始终坐在院内中远处；三镜只改变罗大娘的动作，不能改景别、左右位置、遮挡和人物可见数量。参考图只在开头绑定一次。",
+    "expected": "Establishes the shared camera, framing, visible roster, right-foreground basket occlusion, seated background subject, and left/right relationship as one cross-shot spatial invariant. Shots 4, 6, and 8 change only their authorized actions while preserving the same composition. It does not repeat literal reference anchors in each shot, drift to a single-person close-up, remove the basket, or infer additional permanent geography beyond the supplied locks."
   }
 ]

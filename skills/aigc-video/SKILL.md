@@ -1,6 +1,6 @@
 ---
 name: aigc-video
-description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
+description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, generated-result shot/framing/composition review and failure recovery, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
 ---
 
 # AIGC Video
@@ -46,6 +46,8 @@ Build an evidence ledger and reference map before drafting:
 - `available_readable`: the image/frame/video is present and can support visual claims.
 - `anchor_only`: a literal `@...` anchor and its user-assigned operational role exist, but the asset is not visually readable here; a `reference_input` may also have supplied borrowed dimensions, and a boundary input may have a supplied boundary scope. Preserve the anchor and supplied facts; never claim unseen detail.
 - `missing`: a required source or anchor is absent.
+
+Account for every user-supplied asset before drafting: assign it an active operational role, retain it as evidence only, or surface an explicit exclusion. Never silently drop or merge an asset because of a speculative transfer risk; narrow its borrowed dimensions or discuss the exclusion instead.
 
 Pure text-to-video can proceed from the brief. Reference generation, editing, extension, and bridging require the relevant asset or literal anchor. If an unreadable asset's relevant boundary state, identity, composition, or motion is necessary and the user has not described it, explain the gap and ask for the asset or missing visible state. Use the source ending for `向后延长` / append-after and the first bridge input; use the source opening for `向前延长` / prepend-before and the second bridge input.
 
