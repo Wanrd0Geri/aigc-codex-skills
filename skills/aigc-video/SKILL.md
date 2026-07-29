@@ -1,11 +1,28 @@
 ---
 name: aigc-video
-description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, generated-result shot/framing/composition review and failure recovery, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
+description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, generated-result shot/framing/composition review and failure recovery, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Chinese triggers include 写提示词, 即梦, 首尾帧, 向前延长, 向后延长, 对口型, 转场衔接, 一镜到底, 分镜/多镜, and 回检/看看生成的哪里错了. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
 ---
 
 # AIGC Video
 
 Own every final Seedance/Doubao/Dreamina-family prompt and every explicitly requested platform-neutral final video prompt. Combine expressive direction, production reasoning, platform adaptation when active, and protected language control inside one workflow.
+
+## Task routing
+
+Load exactly the reference rows that match the current task; do not preload the rest.
+
+| Condition | Read |
+| --- | --- |
+| Any Seedance-family output | `references/seedance-2-rules.md` |
+| Strict edit, extension, or bridge | + `references/seedance-2-video-operations.md` |
+| Multiple assets, anchors, boundaries, or A/B output | + `references/video-contracts.md` |
+| Performance, camera movement, dialogue, or lip sync | + `references/shot-craft.md` |
+| Complex blocking, occlusion, offscreen causality, terminal composition, or multi-shot continuity | + `references/single-segment-quality-control.md` |
+| Emotional, memory, subjective, or experiential intent | + `references/vibe-expression.md` |
+| Performance intent absent, project-inferred, or ambiguous | + `references/collaboration-and-performance.md` |
+| AI-flavored prose or an explicit natural-wording request | + `references/language-lint.md` |
+| User supplies an observed failed/unstable generated result | + `references/failure-recovery.md` |
+| A matching specialized pattern (UI/tutorial, product, etc.) | + `references/task-patterns.md` |
 
 ## Personal defaults
 
@@ -84,7 +101,16 @@ Use proactive director-style communication when evidence is insufficient and two
 4. recommend one direction and explain why
 5. ask 1-3 related questions together
 
-Do not manufacture alternatives merely because an emotional scene contains nuance. When the user gives a clear direction such as restrained recognition on returning to an old home, translate it and proceed; a concise statement of understanding may be useful, but it does not require confirmation. Stop only for missing required assets, missing required exact dialogue/text, mutually incompatible hard locks, or an unanswered choice with near-equal readings that would create a materially different result. For a non-blocking gap, use the lowest-risk assumption and mention it only when it helps the user evaluate the result. Decide routine platform formatting and non-material technical details yourself.
+Do not manufacture alternatives merely because an emotional scene contains nuance. When the user gives a clear direction such as restrained recognition on returning to an old home, translate it and proceed; a concise statement of understanding may be useful, but it does not require confirmation. For a non-blocking gap, use the lowest-risk assumption and mention it only when it helps the user evaluate the result. Decide routine platform formatting and non-material technical details yourself.
+
+🔴 STOP — ask the user and wait only when one of these holds:
+
+- a required asset or its needed visible state is missing
+- required exact dialogue, narration, or visible text is missing
+- two hard locks are mutually incompatible
+- near-equal well-supported readings would produce materially different results
+
+Everything else proceeds on the lowest-risk assumption without interrupting the user.
 
 Read `references/collaboration-and-performance.md` whenever performance intent is absent, inferred from project sources, or open to more than one meaningful interpretation.
 
@@ -172,12 +198,13 @@ Run these checks in order:
 
 1. exact-lock preservation
 2. semantic-lock, asset-operational-role, boundary-scope, and borrowed-dimension preservation
-3. per-shot visibility, framing feasibility, spatial causality, inherited action phase, terminal-frame, and handoff preservation
+3. per-shot visibility, initiating-action on-screen presence, framing feasibility, spatial causality, inherited action phase, terminal-frame, and handoff preservation
 4. correct active-platform grammar and markers, or their absence in platform-neutral output
 5. duration and complexity feasibility
 6. language quality
 7. control budget: no speculative negative list, internal blacklist, repeated anchor binding, redundant lock, or nonessential micro-control
 8. no unauthorized invention or reference leakage
+9. delivery budget: at most one judgment or risk sentence before the code block; compress extra assumptions into that sentence or move them to one line after the prompt
 
 If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
 
@@ -204,3 +231,4 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 - Do not add people, props, background business, symbols, or plot events to make a scene feel complete.
 - Do not expose internal mode names, ledgers, or MotionSpec in the final prompt.
 - Do not externalize speculative `must_not`, reference blacklists, or alternative-action inventories merely because the model might fail.
+- Do not convert a requested initiating action such as entering, returning, opening, discovering, or turning into an already-completed state; the transition itself must be visible inside the generated window.
