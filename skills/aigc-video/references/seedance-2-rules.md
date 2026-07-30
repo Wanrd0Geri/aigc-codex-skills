@@ -18,7 +18,7 @@ Never use a bare `参考@视频1`; name the borrowed dimension.
 
 Treat the provider's advanced formula as a selection checklist, not a template to fill. Follow the viewer-priority clause order in `SKILL.md`; do not interpret formula order as guaranteed numeric model weighting.
 
-- State total duration once. For generated shots, use event order or `前段 / 中段 / 后段` rather than exact per-shot ranges by default.
+- State total duration once only when it is active user/source/project information. For `预演` whose duration the user leaves to the Seedance interface, omit total and per-shot duration. For generated shots, use event order or `前段 / 中段 / 后段` rather than exact per-shot ranges by default.
 - Keep one main camera movement per shot. Use standard terms such as `中景`、`特写`、`全景`、`缓慢推近`、`平稳横移` or `固定机位` only when useful.
 - Express performance through one supported body/contact, gaze, pause/breath, expression, distance, object, light, or sound carrier.
 - Leave particles, cloth/hair response, effect microphysics, and secondary decoration open unless locked or central.
