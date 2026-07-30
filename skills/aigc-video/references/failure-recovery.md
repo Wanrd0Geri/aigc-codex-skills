@@ -18,6 +18,8 @@ Load this file only when the user supplies an observed failed/unstable Seedance-
 
 Use only attributes already authorized by the user, source, project, or borrowed reference dimension. Do not introduce a new material system, symbol language, geometry, prop, action, camera choice, or style axis to make a correction distinct.
 
+Treat the observed error and correction discussion as diagnosis evidence, not as content for Seedance. After identifying the smallest repair, rewrite that field as a standalone current visible state, action, spatial relationship, or endpoint that remains intelligible without the prior prompt or failed result. Do not automatically carry phrases such as `上一版`、`这次`、`不要再`、`重新生成` or the unwanted failed object/action into the delivered prompt; retain a short local negative only when the target cannot be resolved positively and the active rules authorize it.
+
 ## Provider-documented checks are hypotheses
 
 Use provider guidance only to form the next diagnostic hypothesis after a matching visible failure. It is neither a first-attempt checklist nor a universal Seedance rule, and it does not authorize a prompt change when the attribution rules above do not.
@@ -51,4 +53,4 @@ Use provider guidance only to form the next diagnostic hypothesis after a matchi
 | A requested tight shot repeatedly widens to include lower body or complete scenery | Remove only mutable visible-body or landmark requirements that exceed the intended crop, then state one observable crop boundary | Repeat `紧近景`, add a generic exclusion tail, or remove a locked interaction or group endpoint |
 | An important off-axis gaze reads as looking straight ahead | Replace the abstract gaze phrase with the smallest sufficient head/face/eye orientation and a visible target | Freeze the whole body, prescribe unnecessary eye micro-motion, or rewrite unrelated performance |
 
-Return a local replacement sentence or field when the user requests a local repair. Never solve a local failure with a full rewrite.
+Return a clean standalone local replacement sentence or field when the user requests a local repair. Never solve a local failure with a full rewrite.
