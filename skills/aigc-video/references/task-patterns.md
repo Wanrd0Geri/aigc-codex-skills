@@ -9,6 +9,7 @@ Use this reference when a request matches a specific video format. These pattern
 3. Visible text and audio rhythm
 4. One-take, educational, and bridge patterns
 5. Large apparition and effect confrontation
+6. 预演
 
 ## Six-Dimension Scan
 
@@ -92,6 +93,18 @@ Prioritize beat ownership and action timing.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
 - Keep the number of beat events realistic for the duration.
 - When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
+
+## 预演
+
+Use this pattern when the user wants a low-cost multi-shot generation to inspect composition, camera position or direction, framing, blocking, crop, screen direction, foreground/background placement, or occlusion rather than to judge the complete performance.
+
+- Preserve any user-supplied shot count and order, reference roles, camera relationships, framing, visible roster, subject positions, foreground/background layers, and occlusion needed for the inspection. Do not assume five shots, cap a larger shot list, or merge shots merely to fit a default preview template.
+- When the user leaves preview duration to the Seedance interface, omit total and per-shot duration from the delivered prompt. Do not invent seconds, divide an assumed duration across shots, or let an unstated duration delete or combine locked shots.
+- Select one representative settled or mid-action state for each shot. Establish that state at cut-in instead of spending the short shot entering, starting, stopping, turning, or completing a full dialogue/action cycle, unless that transition is itself the inspection target.
+- Let each shot carry one readable state and only the minimum natural motion needed to keep it alive. When hard cuts show the same ongoing event, inherit its current phase rather than restarting it from a new angle.
+- Downscope dialogue, lip sync, travel phases, environmental motion, secondary effects, and connective performance when they do not affect the requested inspection; preserve any field the user explicitly keeps.
+- Treat `预演` as the conversation-level production intent. In the delivered platform prompt, describe only the current visible states and inspection-critical relationships; do not explain that the clip is a preview, test, debug pass, or correction of a previous result.
+- If `预演` could mean composition inspection or motion/timing inspection and that choice would materially change the selected states, ask one grouped clarification question before drafting.
 
 ## One-Take
 
