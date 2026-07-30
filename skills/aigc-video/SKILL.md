@@ -1,6 +1,6 @@
 ---
 name: aigc-video
-description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, generated-result shot/framing/composition review and failure recovery, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Chinese triggers include 写提示词, 即梦, 首尾帧, 向前延长, 向后延长, 对口型, 转场衔接, 一镜到底, 分镜/多镜, and 回检/看看生成的哪里错了. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
+description: Use when the user wants a final ready-to-paste Seedance, Doubao, Dreamina-family, or explicitly platform-neutral video prompt from a brief, image/video references, script, storyboard, or project context; including text/reference-to-video, editing, extension, bridging, prompt optimization, generated-result shot/framing/composition review and failure recovery, previsualization for composition/camera/blocking checks, duration compression, dialogue/lip sync, visible text, continuity, and Vibe/experiential direction. This skill owns the final video artifact and its protected language pass. Chinese triggers include 写提示词, 即梦, 首尾帧, 向前延长, 向后延长, 对口型, 转场衔接, 一镜到底, 分镜/多镜, 预演/构图检查/机位检查, and 回检/看看生成的哪里错了. Language-only cleanup of an existing platform-neutral prompt without new video production belongs to aigc-prompt-rewrite.
 ---
 
 # AIGC Video
@@ -22,7 +22,7 @@ Load exactly the reference rows that match the current task; do not preload the 
 | Performance intent absent, project-inferred, or ambiguous | + `references/collaboration-and-performance.md` |
 | AI-flavored prose or an explicit natural-wording request | + `references/language-lint.md` |
 | User supplies an observed failed/unstable generated result | + `references/failure-recovery.md` |
-| A matching specialized pattern (UI/tutorial, product, etc.) | + `references/task-patterns.md` |
+| A matching specialized pattern (预演/composition check, UI/tutorial, product, etc.) | + `references/task-patterns.md` |
 
 ## Personal defaults
 
@@ -48,7 +48,7 @@ Identify the final artifact, platform/version, output mode, and one base product
 - video extension
 - shot bridge or track completion
 
-Record prompt optimization, project scope, Vibe, and A/B separately; none replaces the base production task. A project-bound extension is still `extension`; optimizing an edit command is still `strict video edit`.
+Record prompt optimization, project scope, Vibe, A/B, and `预演` separately; none replaces the base production task. Treat `预演` as an output intent for checking specified visual fields, not as a new production task kind or a phrase that must appear in the platform prompt. A project-bound extension is still `extension`; optimizing an edit command is still `strict video edit`.
 
 A project-bound final prompt remains owned here. Consume the lightweight `VideoContext` from `aigc-project-context` as already compiled evidence, locks, references, and boundaries; map it directly into MotionSpec without rebuilding full cards or asking again about resolved fields.
 
@@ -124,7 +124,8 @@ Decide one-shot versus multi-shot, action load, subject load, reference load, di
 - Let a very short fast cut carry one instantaneous beat. Distribute a multi-stage action across cuts instead of making every insert repeat its onset, development, and result.
 - If the user explicitly wants an ambitious integrated version, deliver it; briefly note the risk and optionally include a more stable alternative only when useful.
 - Do not allocate exact seconds to every generated shot by default. Use event order or `前段 / 中段 / 后段`. Preserve exact timing for targeted source-video edits or explicit timing-critical requests.
-- Keep the initiating action inside the generated window: entering, returning, opening, leaving, discovering, or turning must be visible rather than converted into backstory.
+- For final-performance generation, keep the initiating action inside the generated window: entering, returning, opening, leaving, discovering, or turning must be visible rather than converted into backstory.
+- For a user-requested `预演` whose purpose is to inspect composition, camera, blocking, crop, screen direction, or occlusion, preserve any user-supplied shot count and order instead of assuming a fixed preview template. Do not compress and replay the full performance; select one representative settled or mid-action state per shot and establish it at cut-in. If the user leaves duration to the Seedance interface, do not infer a total or per-shot duration; load `references/task-patterns.md`.
 - For a first-generation attempt, use the minimum sufficient controls: identity, asset operational roles, active boundary scopes, authorized borrowed dimensions, material spatial relationships, locked action order, exact dialogue, and the required ending. Leave secondary motion, particles, cloth/hair response, effect micro-detail, and connective physics open unless they are source-locked or central to the request.
 
 ## 6. Build one canonical MotionSpec
@@ -202,11 +203,11 @@ Run these checks in order:
 4. correct active-platform grammar and markers, or their absence in platform-neutral output
 5. duration and complexity feasibility
 6. language quality
-7. control budget: no speculative negative list, internal blacklist, repeated anchor binding, redundant lock, or nonessential micro-control
+7. control budget and current-prompt independence: no speculative negative list, internal blacklist, repeated anchor binding, redundant lock, nonessential micro-control, or wording that requires Seedance to know a prior prompt, failed result, correction discussion, test purpose, or revision history
 8. no unauthorized invention or reference leakage
 9. delivery budget: at most one judgment or risk sentence before the code block; compress extra assumptions into that sentence or move them to one line after the prompt
 
-If a check fails, patch only the failed field and run the checks again. Never solve a local failure with a full rewrite.
+If a check fails, patch only the failed field and run the checks again. Canonicalize the repaired field as a standalone current instruction; do not narrate the prior error or correction process. Never solve a local failure with a full rewrite.
 
 Default delivery: at most one useful judgment or risk sentence, then one Chinese final prompt in one fenced code block. `prompt only` removes the wrapper but never skips internal validation. An explicit A/B request may return two labeled prompts produced from the shared core and variant overlays defined in `references/video-contracts.md`.
 
@@ -231,4 +232,4 @@ Default delivery: at most one useful judgment or risk sentence, then one Chinese
 - Do not add people, props, background business, symbols, or plot events to make a scene feel complete.
 - Do not expose internal mode names, ledgers, or MotionSpec in the final prompt.
 - Do not externalize speculative `must_not`, reference blacklists, or alternative-action inventories merely because the model might fail.
-- Do not convert a requested initiating action such as entering, returning, opening, discovering, or turning into an already-completed state; the transition itself must be visible inside the generated window.
+- Outside a user-requested `预演` that checks an already-established representative state, do not convert a requested initiating action such as entering, returning, opening, discovering, or turning into an already-completed state; the transition itself must be visible inside the generated window.
