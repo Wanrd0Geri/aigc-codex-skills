@@ -25,7 +25,7 @@ Simplify only mutable execution fields:
 - reduce active subjects only when subject count is not locked
 - make one action readable before another begins when overlap would confuse the result
 
-Use these as internal beat budgets, not exact generated-shot timestamps:
+Use these as internal feasibility estimates before allocating the required timeline:
 
 - one action beat: about 2-3 seconds
 - one camera move plus one action: about 3-4 seconds
@@ -35,7 +35,7 @@ Use these as internal beat budgets, not exact generated-shot timestamps:
 
 A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
 
-If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, reorder, or add exact per-shot timestamps without authorization.
+If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, or reorder locked beats. For Seedance 2.5 new/reference generation with a known total duration, allocate exact continuous ranges; if total duration is unknown, ask rather than inventing it.
 
 ## Persistent scene topology
 
@@ -57,7 +57,7 @@ Scan each shot silently:
 
 Use these checks only when hierarchy, unusual scale, transformation, or a reveal materially affects the shot:
 
-1. Keep one viewer priority. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
+1. Keep one viewer priority. Render it as `画面重心` only when several visible elements compete. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
 2. Choose scale cues by shot purpose. Frame overflow, near-field perspective, occlusion, parallax, and a limited familiar-size cue can suggest a subject larger than the frame; a wide or complete view remains appropriate when geography, full anatomy, choreography, or the requested endpoint needs it.
 3. Prefer observable framing language to unsupported composition arithmetic. Preserve exact percentages when the user or source locks them; otherwise state what crosses the frame edge, what remains partial, and which depth relationship changes.
 4. If a formation should appear at its final scale rather than grow, establish its final spatial envelope and let material resolve across multiple separated regions. Use small-to-large scaling when growth itself is the intended event.
@@ -84,7 +84,7 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - a cut that continues the same event inherits its current action phase rather than restarting it
 - any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
-- generated shots use event order; exact ranges remain for targeted edits or explicit timing-critical requests
+- Seedance 2.5 new/reference shots use continuous exact ranges whenever total duration is known; edit intervals remain local to the requested operation
 - reference generation uses `参考`; edit/extension addresses the source video directly
 - start and terminal BoundaryStates are sparse rather than full shot duplicates
 - terminal visible roster matches the shot purpose even when no next handoff exists

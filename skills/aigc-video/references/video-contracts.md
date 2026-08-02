@@ -33,9 +33,9 @@ Apply precedence per field, not to a whole document. A newer composition instruc
 
 ## ReferenceMap
 
-For each literal anchor record:
+For each material record:
 
-- exact label
+- material label: preserve a literal platform handle or filename exactly when supplied; otherwise assign a plain upload-order label such as `图片1`, `视频1`, or `音频1`
 - asset state
 - operational role: reference_input | start_frame_source | end_frame_target | edit_target | extension_source | bridge_predecessor | bridge_successor; record more than one only when the user explicitly combines roles
 - for `reference_input` only, one primary borrowed dimension composed from explicitly authorized atomic attributes: identity | appearance | wardrobe | prop | environment | layout | look | lighting | material | silhouette | scale | action | motion | pose | blocking | composition | camera | timing | effect | audio | voice | text | graphic
@@ -46,7 +46,7 @@ For each literal anchor record:
 - forbidden/unassigned dimensions
 - exact text or identity locks, if authorized
 
-An operational role controls task grammar. A boundary scope controls the source opening or requested terminal frame. Borrowed dimensions control which attributes may transfer from a `reference_input`; slash-separated or neighboring taxonomy terms never authorize a whole group. An attribute such as pose, composition, or material may be a borrowed dimension for `reference_input` or a boundary lock for `start_frame_source` / `end_frame_target`; the operational role determines its meaning. Preservation and inherited-state obligations from edit, extension, and bridge sources are not borrowed dimensions. Never assign borrowed dimensions to a boundary input, edit target, extension source, or bridge input merely because the anchor is present. Unassigned fields stay neutral. Preserve labels exactly through every stage. `forbidden/unassigned dimensions` are internal validation data, not a negative list for the final prompt. For multi-reference generation, render one compact positive reference summary that gives every identity/appearance subject a semantic name, adds identifying traits only when evidence is available and selection is ambiguous, and names the borrowed dimension of every reference input. The identity-definition sentence itself counts as the selected `identity`, `appearance`, or combined binding only when it explicitly names those authorized attributes; a user-supplied name alone does not. Consolidate all borrowed dimensions from the same reference-input anchor into one binding whenever possible, then use semantic names in the shot body.
+An operational role controls task grammar. A boundary scope controls the source opening or requested terminal frame. Borrowed dimensions control which attributes may transfer from a `reference_input`; slash-separated or neighboring taxonomy terms never authorize a whole group. An attribute such as pose, composition, or material may be a borrowed dimension for `reference_input` or a boundary lock for `start_frame_source` / `end_frame_target`; the operational role determines its meaning. Preservation and inherited-state obligations from edit, extension, and bridge sources are not borrowed dimensions. Never assign borrowed dimensions to a boundary input, edit target, extension source, or bridge input merely because the material is present. Unassigned fields stay neutral. Preserve supplied literal labels exactly through every stage; keep generated upload-order labels consistent. `forbidden/unassigned dimensions` are internal validation data, not a negative list for the final prompt. For multi-reference generation, render one compact colon-map summary that names the specific responsibility of every reference input, then use semantic subject and scene names in the shot body. Use `图片1中[稳定特征]的主体作为[角色名]` only when choosing among multiple visible subjects or combining sources for one identity. Consolidate all borrowed dimensions from the same reference input into one line whenever possible.
 
 ## LockLedger
 
@@ -78,21 +78,24 @@ World presence never implies membership in the visible roster. A terminal Bounda
 
 ## MotionSpec
 
-- goal and viewer priority
+- goal and one viewer priority, rendered as `画面重心` only when the prompt needs it
 - medium/style
 - segment start and terminal BoundaryStates
 - initiating action
 - visual anchor
 - emotional vector
 - primary performance carrier
-- duration
+- total duration and continuous, non-overlapping time ranges that start at zero and end exactly at total duration
 - references and any active source-backed audio, dialogue, or visible text
 - shots:
   - purpose
   - sparse visible-start BoundaryState
-  - viewer focus and ongoing framing; dominance and scale cue only when material
+  - shot size, angle, and camera mode
+  - current visible state and material spatial relationship
   - any visible entry or exit not already expressed by the boundaries
-  - ongoing camera relation and movement
+  - action, performance, exact dialogue, and causal response
+  - main camera movement and its visible result
+  - viewer focus / `画面重心` only when several visible elements compete; dominance and scale cue only when material
   - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, inherited phase when continuing the same event across a cut, and the immediate continuation after a reveal when the reveal is not the endpoint
   - effect outcome when blocking, redirecting, dismantling, absorbing, reflecting, or evading must remain distinct
   - performance carrier

@@ -73,7 +73,7 @@ Prioritize emotional turn, performance carrier, and readable blocking.
 - Keep dialogue short enough for the segment duration.
 - Use gaze, pause, breath, hand tension, posture, or object handling as the emotion carrier.
 - Avoid long backstory. Show the emotional beat inside the clip.
-- Apply the subtitle rule from `SKILL.md` §9; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
+- Apply the subtitle rule from `SKILL.md` §5; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
 
 ## Visible Text, Subtitle, Or Logo
 
@@ -89,7 +89,7 @@ Use only when the current user instruction or active project requests visible te
 
 Prioritize beat ownership and action timing.
 
-- When `@音频1` or `@视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Keep an edit target's operational role separate and use direct edit grammar.
+- When `音频1` or `视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Preserve a literal `@...` handle only when supplied. Keep an edit target's operational role separate and use direct edit grammar.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
 - Keep the number of beat events realistic for the duration.
 - When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
@@ -99,7 +99,7 @@ Prioritize beat ownership and action timing.
 Use this pattern when the user wants a low-cost multi-shot generation to inspect composition, camera position or direction, framing, blocking, crop, screen direction, foreground/background placement, or occlusion rather than to judge the complete performance.
 
 - Preserve any user-supplied shot count and order, reference roles, camera relationships, framing, visible roster, subject positions, foreground/background layers, and occlusion needed for the inspection. Do not assume five shots, cap a larger shot list, or merge shots merely to fit a default preview template.
-- When the user leaves preview duration to the Seedance interface, omit total and per-shot duration from the delivered prompt. Do not invent seconds, divide an assumed duration across shots, or let an unstated duration delete or combine locked shots.
+- A final Seedance 2.5 previsualization prompt uses the same unified timeline as other generation tasks. If total duration is missing, ask for it; once supplied, allocate continuous ranges without deleting or combining locked shots.
 - Select one representative settled or mid-action state for each shot. Establish that state at cut-in instead of spending the short shot entering, starting, stopping, turning, or completing a full dialogue/action cycle, unless that transition is itself the inspection target.
 - Let each shot carry one readable state and only the minimum natural motion needed to keep it alive. When hard cuts show the same ongoing event, inherit its current phase rather than restarting it from a new angle.
 - Downscope dialogue, lip sync, travel phases, environmental motion, secondary effects, and connective performance when they do not affect the requested inspection; preserve any field the user explicitly keeps.
@@ -129,7 +129,7 @@ Prioritize clarity, cause-effect, and readable states.
 Prioritize inheritance and transition logic.
 
 - Record each video's operational role first. A true bridge uses `bridge_predecessor` and `bridge_successor`; a non-bridge video that supplies `camera`, `action` / `motion`, `look`, or `timing` is a `reference_input` with that separate borrowed dimension. Never use a borrowed dimension as an operational-role name.
-- For a true bridge/track-completion task, address the sources directly in order: `@视频1，[可见过渡]，接@视频2`; do not describe them as ordinary reference videos.
+- For a true bridge/track-completion task, address the two sources directly in order: `视频1，[可见过渡]，接视频2`; preserve literal `@...` handles when supplied, and do not describe either source as an ordinary reference video.
 - Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.

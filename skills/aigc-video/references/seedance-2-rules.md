@@ -1,72 +1,115 @@
-# Seedance 2.0 Core Prompt Rules
+# Seedance 2.5 Prompt Adapter
 
-Use this file for every Seedance 2.0 / 2.0 Fast final prompt. Load `seedance-2-video-operations.md` additionally only for edit, extension, or bridge tasks. Load `failure-recovery.md` only when the user supplies an observed failed/unstable result, paired results, or another concrete prior-result error; never load it as a first-attempt checklist.
+Use this file for every default Seedance-family final prompt. Default to 即梦 Seedance 2.5. Use the legacy note at the end only when the user explicitly selects Seedance 2.0 or 2.0 Fast.
 
-Source basis: [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21 against the provider page updated 2026-07-20. Re-check version-specific limits when the provider or model changes.
+Source basis:
 
-## New and reference generation
+- [【即梦】Seedance 2.5 使用手册](https://bytedance.larkoffice.com/wiki/RXh5ww6EqighMdkVTMccm2d4n7e), document updated 2026-07-31 and checked 2026-08-02.
+- [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21.
 
-Use `参考` only when borrowing a dimension for new generation:
+Re-check version-specific limits after a provider update. Read `seedance-capability-matrix.md` for dated limits and recommendations.
 
-- `参考@图1中的[主体/环境/效果]，生成……`
-- `参考@视频1的[动作/运镜/风格/音效]，生成……`
-- `参考@音频1中的[音色/说话节奏]，生成……`
+## Material responsibilities
 
-Never use a bare `参考@视频1`; name the borrowed dimension.
+The official 2.5 formula is `素材编号（按上传顺序） + 具体用途`. Render it as a compact colon map.
 
-## Prompt construction
+When the user or platform supplies a literal handle, preserve it exactly:
 
-Treat the provider's advanced formula as a selection checklist, not a template to fill. Follow the viewer-priority clause order in `SKILL.md`; do not interpret formula order as guaranteed numeric model weighting.
+```text
+@c6e53a11-75de-416e-ace9-3f96093fab0c：罗大娘的外貌与服装。
+```
 
-- State total duration once only when it is active user/source/project information. For `预演` whose duration the user leaves to the Seedance interface, omit total and per-shot duration. For generated shots, use event order or `前段 / 中段 / 后段` rather than exact per-shot ranges by default.
-- Keep one main camera movement per shot. Use standard terms such as `中景`、`特写`、`全景`、`缓慢推近`、`平稳横移` or `固定机位` only when useful.
-- Express performance through one supported body/contact, gaze, pause/breath, expression, distance, object, light, or sound carrier.
-- Leave particles, cloth/hair response, effect microphysics, and secondary decoration open unless locked or central.
+When only upload order exists, do not invent an `@` handle:
 
-## Reference-input binding
+```text
+图片1：罗大娘的外貌与服装。
+图片2：苏云的外貌、服装与竹背篓。
+图片3：仅补充苏云的浅白色瞳孔。
+视频1：动作节奏、人物动线和镜头移动。
+音频1：说话音色与语速。
+```
 
-Apply this section only to anchors whose operational role is `reference_input`. Start-frame sources and end-frame targets use their boundary assignment; strict-edit targets, extension sources, and bridge inputs use the direct grammar in `seedance-2-video-operations.md`. None belongs in the ordinary reference summary unless the user explicitly assigns the same anchor a separate `reference_input` role.
+- Give every material a specific job: identity/appearance, wardrobe, prop, environment, layout, light, material, action, motion, camera, timing, effect, audio, voice, text, or graphic.
+- Consolidate all authorized jobs from the same material into one line.
+- Bind materials once, then use semantic names in the timeline.
+- Use `作为[角色名]` only when selecting one subject among several or combining several sources for one character. Do not add routine `定义为` wording.
+- A storyboard or multi-panel sheet must name its authorized dimensions such as shot order, framing, blocking, screen direction, and occlusion. Do not treat it as a generic style reference.
+- If one material applies only to a time interval, write that interval in the responsibility line.
 
-Give every identity/appearance reference subject one semantic name. When the asset has one unambiguous subject, use:
+## Unified generation structure
 
-`参考@图1中主体的[已授权身份/外貌属性]，并将其定义为[角色名]。`
+Use the same structure for every known-duration Seedance 2.5 new/reference generation:
 
-When a readable asset or user/source description contains several possible subjects and the supplied names or visible labels do not already resolve selection, select the needed one with two or three supplied stable static traits:
+```text
+【素材职责】
+[only when materials exist]
 
-`参考@图1中[两三个稳定静态特征]的[主体]的[已授权身份/外貌属性]，并将其定义为[角色名]。`
+【全局设定】
+[overall goal, scene, style, relationships, global camera principle, and active sound/text]
 
-Either sentence is the explicit `identity`, `appearance`, or combined binding; replace the bracket with only the authorized attribute wording and do not add a second redundant identity-reference sentence. Keep the same semantic label thereafter. A supplied name or readable in-image label may resolve subject selection, but it is selection evidence rather than authorized visible text in the output. Define the visible subject, not the whole image, when the image also contains scenery or unrelated people. For `anchor_only`, use the user-assigned semantic label or subject name without inventing traits; if the intended subject remains ambiguous, ask for the missing visible state.
+【时间轴分镜】
+镜头1（0–5秒）：[framing/camera]；[current visible state and space]；[action/performance/dialogue]；[camera's visible result]；[visual focus when needed]；[ending or handoff].
 
-Borrow only the authorized dimension. A silhouette reference does not authorize color/material; identity does not authorize pose/composition; environment does not authorize camera, action trajectory, or mandatory landmark visibility.
+【全局锁定】
+[only when cross-shot locks or necessary targeted exclusions exist]
+```
 
-When a group image and a dedicated subject image both contain the same person, resolve the overlap independently for every authorized field. Treat the user-named roster and semantic labels as user locks, not as identity or relationship borrowed from the group image. A group input may still own one named-subject field such as wardrobe while a dedicated input owns another such as face/appearance; never route all fields merely by subject or asset type. In the rendered reference summary, bind each overlapping field only to its final owning anchor—do not first bind it to one image and then write an override chain. Do not inherit contact-sheet layout, text labels, display poses, white background, group composition, or blocking unless the user separately authorizes those dimensions.
+Do not open with `生成一段N秒的……`. Duration belongs in the time ranges and remains an exact production fact.
 
-Bind non-identity references by the exact atomic dimensions they are allowed to supply. Slash-separated items below are alternatives to select explicitly, not package authorization:
+## Timeline rules
 
-- environment: `以@图2作为[场景环境/空间布局/光影色调]参考。`
-- wardrobe or prop: `参考@图3中的[服装/道具]，用于[角色名/可见用途]。`
-- motion or camera: `参考@视频1的[动作/运镜/节奏]。`
-- effect: `参考@视频2的[特效形态/生成轨迹/运动逻辑]。`
-- audio: `参考@音频1中的[音色/说话节奏]。`
-- text or graphic: `参考@图4中的[标识图形/字形/版式]，用于[可见文字或图形用途]。`
+- Use `镜头N（开始–结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike.
+- Start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
+- Use decimals only when sub-second control is materially required.
+- Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
+- Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase.
+- When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
+- For previsualization, use the same timeline formula once total duration is known; establish the selected representative state at cut-in.
 
-For multi-reference generation, place these bindings in one compact positive reference summary and normally mention each reference-input anchor once, then use semantic names in the shots. Consolidate multiple authorized dimensions from the same anchor into one binding when possible. Every binding phrase must name its borrowed dimension; the identity-definition sentence above satisfies this requirement by naming the selected identity and/or appearance attributes. Do not write a bare `以@图2作为参考` or `参考@视频1`. Repeat an anchor only when a later assignment materially changes its borrowed dimension, ambiguity remains, or task grammar requires it. Use only assets with a clear job; do not fill the input limit.
+## Shot sentence order
+
+Use this stable order:
+
+1. shot size, angle, and camera mode
+2. subject's current visible state and material spatial relationship
+3. action, performance, dialogue, and causal response
+4. main camera movement and the visible result it creates
+5. visual focus only when several visible elements compete
+6. ending state or next-shot handoff
+
+Omit an irrelevant field instead of inserting filler. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, or repositioned.
 
 ## Audio and visible text
 
-Use official information markers when active:
+Use official information markers only when active:
 
 - dialogue: `{台词}`
 - sound effect: `<音效>`
 - music: `（音乐）`
 - subtitle: `【字幕】`
 
-Apply the audio and subtitle inclusion rules from `SKILL.md` §9. Treat them as production defaults, not Seedance capability limits, and do not add an `无配乐/无字幕` policy sentence merely to state the default.
+Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Do not write an `无音乐、无字幕` policy sentence merely to state a default; put a targeted instruction in `【全局锁定】` only when the user/source requires it or a real result failed.
 
-For requested visible text, state exact content, timing when material, frame position, appearance method, and only necessary visual character. Preserve common legible characters and use a visual reference for exact logo/typography when possible.
+For visible text, state exact content, timing, frame position, appearance method, and only necessary style. Use a dedicated material responsibility for exact logo, typography, or layout.
 
-## Final prompt shape
+## Control and repetition
 
-Return one executable prompt in one fenced code block. A simple new generation normally needs one setup sentence and one natural shot paragraph. A complex reference generation may add one compact reference map before its shots.
+- Put appearance, environment, and material jobs in the global sections once.
+- Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
+- Treat internal viewer priority and rendered `画面重心` as one field.
+- Put necessary negative instructions in `【全局锁定】` once.
+- Do not repeat a material label, global scene description, character appearance, camera rule, or negative instruction in every shot.
+- A longer prompt is acceptable when it adds distinct executable information. Different wording of the same fact is redundancy, not stronger control.
 
-Keep aspect ratio, resolution, frame rate, and other UI/API settings outside the prompt unless the user explicitly asks to embed a value and the target surface has no separate control. Use positive visible staging first; admit one short negative only for an explicit lock, platform requirement, direct reference conflict, or observed failure that cannot be resolved positively.
+## UI parameters
+
+Keep resolution, frame rate, and aspect-ratio settings outside the prompt when the UI exposes them. If the user requires an aspect ratio inside an ultra-long prompt, place it in `【全局设定】` without adding a duration-specific section. Never infer it.
+
+## Seedance 2.0 legacy note
+
+When the user explicitly selects 2.0 or 2.0 Fast:
+
+- keep the same protected facts and material-responsibility map
+- preserve user-supplied timing, but do not promise 2.5-level second accuracy
+- apply the 2.0 limits from `seedance-capability-matrix.md`
+- do not expose 2.5-only modes such as ultra-long generation or advanced editing as available
