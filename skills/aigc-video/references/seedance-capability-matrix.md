@@ -40,7 +40,7 @@ When the user's request is accepted by a hard limit but exceeds a recommendation
 
 - Seedance 2.5 accepts second-based time ranges and uses them in official multi-shot examples.
 - The provider reports improved negative control for subtitles and background music. Treat this as a targeted capability, not proof that long generic negative lists are universally reliable.
-- Upload-order labels are sufficient for responsibility binding. A literal `@...` handle is needed only when the user or interface actually supplies one.
+- Upload-order labels are sufficient for responsibility binding and are the default final form. Do not output a supplied `@` handle or UUID unless the current user explicitly requests it.
 
 ## Seedance 2.0 legacy boundaries
 

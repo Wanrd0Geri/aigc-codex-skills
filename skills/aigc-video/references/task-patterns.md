@@ -69,27 +69,27 @@ Use this pattern only when a shot depends on a large summoned, projected, or ass
 Prioritize emotional turn, performance carrier, and readable blocking.
 
 - State who speaks, where they are, and what visible reaction follows each line.
-- Put each exact spoken line in braces: `角色说道{台词}`. Keep the dialogue language consistent except for proper nouns.
+- Preserve each exact spoken line and use the active platform adapter for its final punctuation. Keep the dialogue language consistent except for proper nouns.
 - Keep dialogue short enough for the segment duration.
 - Use gaze, pause, breath, hand tension, posture, or object handling as the emotion carrier.
 - Avoid long backstory. Show the emotional beat inside the clip.
-- Apply the subtitle rule from `SKILL.md` §5; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
+- Apply the active platform adapter's subtitle rule; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
 
 ## Visible Text, Subtitle, Or Logo
 
 Use only when the current user instruction or active project requests visible text or overrides the no-subtitle default.
 
 - Write visible text as: exact content + appearance timing + frame position + appearance method + color/style when needed.
-- Use `【字幕】` for subtitle text and state that it follows the spoken rhythm.
+- Label requested subtitle text in ordinary Chinese and state that it follows the spoken rhythm.
 - Prefer common characters; avoid rare characters and special symbols.
 - For an exact logo, font, or layout, assign a dedicated image reference with the narrow `graphic`, `text`, or `layout` borrowed dimension instead of relying on description alone.
-- Keep visible text separate from dialogue: dialogue uses `{台词}`, discrete sound effects use `<音效>`, and music uses `（音乐）`.
+- Keep visible text separate from dialogue. Use ordinary quotation marks for dialogue; write discrete sound effects, music, and subtitles in natural Chinese only when active.
 
 ## Audio Beat And Rhythm Reference
 
 Prioritize beat ownership and action timing.
 
-- When `音频1` or `视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Preserve a literal `@...` handle only when supplied. Keep an edit target's operational role separate and use direct edit grammar.
+- When `音频1` or `视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Use the final material label chosen by the active adapter. Keep an edit target's operational role separate and use direct edit grammar.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
 - Keep the number of beat events realistic for the duration.
 - When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
@@ -129,7 +129,7 @@ Prioritize clarity, cause-effect, and readable states.
 Prioritize inheritance and transition logic.
 
 - Record each video's operational role first. A true bridge uses `bridge_predecessor` and `bridge_successor`; a non-bridge video that supplies `camera`, `action` / `motion`, `look`, or `timing` is a `reference_input` with that separate borrowed dimension. Never use a borrowed dimension as an operational-role name.
-- For a true bridge/track-completion task, address the two sources directly in order: `视频1，[可见过渡]，接视频2`; preserve literal `@...` handles when supplied, and do not describe either source as an ordinary reference video.
+- For a true bridge/track-completion task, address the two sources directly in order: `视频1，[可见过渡]，接视频2`; use plain upload-order labels by default and do not describe either source as an ordinary reference video.
 - Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.

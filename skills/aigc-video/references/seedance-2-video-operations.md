@@ -2,7 +2,7 @@
 
 Load only for strict editing, extension, or seamless transition. Keep these operational commands separate from the new-generation timeline formula.
 
-Preserve a literal `@...` handle when supplied. When only upload order is known, write `视频1`, `图片1`, or `音频1` without inventing `@`.
+Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by default. Keep supplied handles or UUIDs only in the internal mapping; render one literally only when the current user explicitly requests it for the current output.
 
 ## Strict edit
 

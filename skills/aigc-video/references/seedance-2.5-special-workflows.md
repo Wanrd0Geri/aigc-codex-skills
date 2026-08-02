@@ -15,21 +15,7 @@ Load only for ultra-long generation, white-model workflows, green screen, multi-
 
 ## Ultra-long generation
 
-Use the same generation formula as an ordinary 5–30 second prompt:
-
-```text
-【素材职责】
-[only when materials exist]
-
-【全局设定】
-[scene, style, relationships, continuity principle, active audio/text, and explicitly supplied aspect ratio when it must be stated]
-
-【时间轴分镜】
-镜头1（0–N秒）：...
-
-【全局锁定】
-[only when needed]
-```
+Reuse the canonical ordered generation structure and optional-heading rules from `seedance-2-rules.md`. Ultra-long mode changes timeline density and continuity load, not the formula.
 
 - Do not infer duration or aspect ratio. Express total duration through the final time range; keep aspect ratio in the UI unless the user requires it in the prompt.
 - Keep all ranges continuous and end exactly at total duration.
@@ -44,7 +30,7 @@ Use the same generation formula as an ordinary 5–30 second prompt:
 Use when layout, blocking, shot order, and camera path matter more than detailed geometry. The provider currently reports better overall usability for coarse white-model guidance than fine white-model guidance.
 
 ```text
-【素材职责】
+参考素材：
 视频1：粗白模的人物动线、空间站位、动作节奏与运镜路径。
 图片1：角色外貌与服装。
 图片2：场景材质、光线与最终画面风格。

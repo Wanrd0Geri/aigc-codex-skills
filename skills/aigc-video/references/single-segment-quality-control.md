@@ -47,7 +47,7 @@ Scan each shot silently:
 
 1. Separate world existence from intended shot visibility.
 2. At each material start or terminal boundary, compare the intended crop with the minimum visible envelope implied by every body part, prop, subject, and landmark requested in that frame. Remove only mutable visibility details that exceed the crop; preserve any explicitly locked group view, full-body view, interaction point, or landmark. A supported camera move may transition between different envelopes.
-3. In non-quoted visual instruction prose, keep a concrete scene noun only when it is visible, visibly interacting, or needed to establish the visible environment. Exclude protected dialogue, narration, lyrics, visible text, and literal `@...` anchors from this audit.
+3. In non-quoted visual instruction prose, keep a concrete scene noun only when it is visible, visibly interacting, or needed to establish the visible environment. Exclude protected dialogue, narration, lyrics, visible text, and material labels from this audit.
 4. Describe a moving subject or effect with only the material route: origin or screen entry -> direction -> target. Keep an intermediate building, doorway, vehicle, or prop when the action visibly contacts, crosses, damages, avoids, or deliberately uses it; otherwise do not promote scenery into a waypoint.
 5. Preserve an offscreen cause with the minimum visible clue needed to read the action, such as screen-entry direction, gaze/body axis, directional light, environmental response, or impact point.
 6. When terminal composition matters, let the final clause or sentence state the visible endpoint. Do not append a world-continuity summary after it.

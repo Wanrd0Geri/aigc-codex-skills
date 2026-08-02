@@ -5,21 +5,16 @@ Use this file for every default Seedance-family final prompt. Default to 即梦 
 Source basis:
 
 - [【即梦】Seedance 2.5 使用手册](https://bytedance.larkoffice.com/wiki/RXh5ww6EqighMdkVTMccm2d4n7e), document updated 2026-07-31 and checked 2026-08-02.
+- A user-supplied observed output from 即梦官网提示词优化助手, archived in `seedance-2.5-optimizer-example.md` on 2026-08-03. It demonstrates plain colon headings, integer timestamp ranges, ordinary quotation marks for dialogue, and inline environmental/action sound. Treat it as one observed optimizer pattern, not universal mandatory grammar.
 - [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21.
 
 Re-check version-specific limits after a provider update. Read `seedance-capability-matrix.md` for dated limits and recommendations.
 
 ## Material responsibilities
 
-The official 2.5 formula is `素材编号（按上传顺序） + 具体用途`. Render it as a compact colon map.
+Use `素材编号（按上传顺序） + 具体用途`. Build this map internally. Render a compact `参考素材：` block only when an asset is label-only, several references contribute different dimensions, or the mapping would otherwise be ambiguous. If readable references can be summarized faithfully under the normal final fields, omit the block.
 
-When the user or platform supplies a literal handle, preserve it exactly:
-
-```text
-@c6e53a11-75de-416e-ace9-3f96093fab0c：罗大娘的外貌与服装。
-```
-
-When only upload order exists, do not invent an `@` handle:
+Default final labels are plain upload-order labels. Treat a supplied `@` handle, UUID, or filename as internal mapping evidence and normalize it to `图片1`、`视频1` or `音频1`. Preserve a literal handle only when the current user explicitly requests it for the current output. If upload order is unknown and the map matters, ask instead of guessing.
 
 ```text
 图片1：罗大娘的外貌与服装。
@@ -38,29 +33,37 @@ When only upload order exists, do not invent an `@` handle:
 
 ## Unified generation structure
 
-Use the same structure for every known-duration Seedance 2.5 new/reference generation:
+Use the same ordered structure for every known-duration Seedance 2.5 new/reference generation. Omit an optional heading when it has no material information; never leave it empty or fill it with invented prose.
 
 ```text
-【素材职责】
-[only when materials exist]
+参考素材：
+[optional: only when material mapping must be explicit]
 
-【全局设定】
-[overall goal, scene, style, relationships, global camera principle, and active sound/text]
+主体：
+[optional: stable subject appearance, wardrobe, and relationships]
 
-【时间轴分镜】
-镜头1（0–5秒）：[framing/camera]；[current visible state and space]；[action/performance/dialogue]；[camera's visible result]；[visual focus when needed]；[ending or handoff].
+场景：
+[optional: time, location, topology, light, atmosphere, and persistent ambience]
 
-【全局锁定】
-[only when cross-shot locks or necessary targeted exclusions exist]
+风格：
+[optional: medium, palette, material, and texture]
+
+情节：
+[required]
+镜头1（0-5秒）：[framing/camera]；[current visible state and space]；[action/performance/dialogue/local sound]；[camera's visible result]；[visual focus when needed]；[ending or handoff].
+
+全局补充：
+[optional: only when cross-shot locks or necessary targeted exclusions exist and are not already clear]
 ```
 
 Do not open with `生成一段N秒的……`. Duration belongs in the time ranges and remains an exact production fact.
 
 ## Timeline rules
 
-- Use `镜头N（开始–结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike.
+- Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike.
 - Start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
-- Use decimals only when sub-second control is materially required.
+- Use integer-second boundaries by default. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
+- If locked shot count and duration cannot give every shot a positive integer range, ask for a longer duration or restructuring permission instead of using decimals.
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
 - Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase.
 - When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
@@ -81,29 +84,29 @@ Omit an irrelevant field instead of inserting filler. A self-explanatory `固定
 
 ## Audio and visible text
 
-Use official information markers only when active:
+Use the natural-language pattern demonstrated by the observed optimizer example:
 
-- dialogue: `{台词}`
-- sound effect: `<音效>`
-- music: `（音乐）`
-- subtitle: `【字幕】`
+- dialogue: `角色说道：“台词。”`
+- persistent ambience: write it inside `场景：`
+- local sound effect: write it inside the relevant shot
+- music or subtitle: label it in ordinary Chinese only when active
 
-Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Do not write an `无音乐、无字幕` policy sentence merely to state a default; put a targeted instruction in `【全局锁定】` only when the user/source requires it or a real result failed.
+Do not create a standalone sound section. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Do not write an `无音乐、无字幕` policy sentence merely to state a default; put a targeted instruction in `全局补充：` only when the user/source requires it or a real result failed.
 
 For visible text, state exact content, timing, frame position, appearance method, and only necessary style. Use a dedicated material responsibility for exact logo, typography, or layout.
 
 ## Control and repetition
 
-- Put appearance, environment, and material jobs in the global sections once.
+- Put appearance in `主体：`, environment in `场景：`, and style in `风格：` once.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Treat internal viewer priority and rendered `画面重心` as one field.
-- Put necessary negative instructions in `【全局锁定】` once.
+- Put necessary negative instructions in `全局补充：` once.
 - Do not repeat a material label, global scene description, character appearance, camera rule, or negative instruction in every shot.
 - A longer prompt is acceptable when it adds distinct executable information. Different wording of the same fact is redundancy, not stronger control.
 
 ## UI parameters
 
-Keep resolution, frame rate, and aspect-ratio settings outside the prompt when the UI exposes them. If the user requires an aspect ratio inside an ultra-long prompt, place it in `【全局设定】` without adding a duration-specific section. Never infer it.
+Keep resolution, frame rate, and aspect-ratio settings outside the prompt when the UI exposes them. If the user requires an aspect ratio inside an ultra-long prompt, place it in `场景：` without adding a duration-specific section. Never infer it.
 
 ## Seedance 2.0 legacy note
 

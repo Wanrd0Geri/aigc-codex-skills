@@ -7,7 +7,7 @@
   {
     "id": "video-vibe-02-anchor-dialogue-duration-preserved",
     "prompt": "用 $aigc-video 按 Vibe 的方式写最终 Seedance 提示词：@图1作为角色参考，5秒，角色站在雨里说“别回头”，远处有低沉雷声。",
-    "expected": "Produces the final Seedance artifact in the same workflow, preserves @图1 and 5秒 exactly, keeps the dialogue “别回头” unchanged with spoken-dialogue syntax, retains thunder as diegetic sound, and does not invent unseen identity details from the anchor."
+    "expected": "Produces the final Seedance artifact in the same workflow, maps the supplied character reference to plain label 图片1 without outputting @ or a UUID, preserves 5秒 exactly, keeps the dialogue “别回头” unchanged with spoken-dialogue syntax, retains thunder as diegetic sound, and does not invent unseen identity details."
   },
   {
     "id": "video-vibe-03-final-platform-owned",
@@ -82,7 +82,7 @@
   {
     "id": "video-seedance-04-structured-reference-composition",
     "prompt": "给我一个15秒 Seedance 提示词，5个镜头。@图1是主角身份，@图2是配角，@图3只参考怪物背面轮廓，@图4只参考冷蓝树林环境。要求固定长焦、偷窥视角、前景破墙占画面70%以上，只能有两个人。",
-    "expected": "Uses literal anchors and narrow borrowed-dimension whitelists, preserves fixed long-lens voyeur framing and the 70% foreground lock across all shots, keeps exactly two people, and does not import color, material, identity, or function from the silhouette-only reference."
+    "expected": "Maps the four supplied sources internally and renders plain labels 图片1 through 图片4 without @, uses narrow borrowed-dimension whitelists, preserves fixed long-lens voyeur framing and the 70% foreground lock across all shots, keeps exactly two people, and does not import color, material, identity, or function from the silhouette-only reference."
   },
   {
     "id": "video-seedance-05-filename-anchor-preservation",
@@ -97,7 +97,7 @@
   {
     "id": "video-seedance-07-handoff-lock-preservation",
     "prompt": "根据这个 VideoContext 写8秒 Seedance：源优先级=当前分镜高于大纲；source_visible_facts=角色只站在门内半步；reference_map=@图1只做人物身份参考；start_boundary=右手仍按在门框上；performance_intent=克制反应；high_cost_locks=单人、室内。",
-    "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and @图1's identity-only borrowed dimension. It expresses constraints through positive staging where possible."
+    "expected": "Preserves field-specific source priority, the half-step indoor position, the inherited right-hand contact, restrained performance intent, one-person count, indoor location, and the first image's identity-only borrowed dimension. It renders 图片1 rather than @图1 and expresses constraints through positive staging where possible."
   },
   {
     "id": "video-seedance-08-vibe-first-simple",
@@ -107,7 +107,7 @@
   {
     "id": "video-seedance-09-reference-dimension-mapping",
     "prompt": "给我一个 8 秒 Seedance 提示词：雨夜老街修伞铺，少女离开前回头。@图1 是少女外貌服装，@图2 是修伞铺和雨夜老街，@图3 是旧红伞。",
-    "expected": "Maps @图1 to appearance and wardrobe and gives the girl one semantic name without importing narrative identity, maps @图2 to environment, and maps @图3 to the prop. It keeps the prompt concise and does not import pose, camera, lighting, composition, or other unassigned attributes from those anchors."
+    "expected": "Maps 图片1 to appearance and wardrobe and gives the girl one semantic name without importing narrative identity, maps 图片2 to environment, and maps 图片3 to the prop. It outputs no @ handle or UUID, stays concise, and does not import pose, camera, lighting, composition, or other unassigned attributes."
   },
   {
     "id": "video-seedance-10-positive-visible-staging",
@@ -127,17 +127,17 @@
   {
     "id": "video-seedance-13-edit-intent-grammar",
     "prompt": "参考@视频1，把桌上的香水换成@图1里的面霜，动作和运镜不变。",
-    "expected": "Corrects the operation to strict editing grammar addressed directly to @视频1, does not retain 参考@视频1, assigns @图1 only as the replacement product reference, and preserves action and camera movement unchanged."
+    "expected": "Corrects the operation to strict editing grammar addressed directly to 视频1, normalizes the replacement source to 图片1, outputs no @ handle or UUID, and preserves action and camera movement unchanged."
   },
   {
     "id": "video-seedance-14-extension-needs-ending-state",
     "prompt": "参考@视频1继续往后生成5秒，两个迟到的人跑过来和原来的三个人会合。",
-    "expected": "Recognizes extension intent and the need to inherit @视频1's ending state. If the source is only an unreadable anchor and its ending pose, positions, light, and camera momentum are not supplied, asks for the source or that exact visible ending state instead of inventing continuity."
+    "expected": "Recognizes extension intent and the need to inherit 视频1's ending state, using the supplied handle only for internal mapping and outputting no @ or UUID. If its ending pose, positions, light, and camera momentum are unreadable and unsupplied, asks for the source or that exact visible ending state instead of inventing continuity."
   },
   {
     "id": "video-seedance-15-multiple-subject-definition",
     "prompt": "@图1里有两个女孩，用穿红裙戴草帽的那个做主角，她走到海边栏杆回头。",
-    "expected": "Uses the supplied red-dress and straw-hat traits only to select the intended subject from @图1, binds that subject once with a semantic name using natural 作为 wording rather than routine 定义为 boilerplate, keeps the other person out of the action unless required, and does not claim additional unseen identity detail."
+    "expected": "Uses the supplied red-dress and straw-hat traits only to select the intended subject from 图片1, outputs no @ or UUID, binds that subject once with a semantic name using natural 作为 wording rather than routine 定义为 boilerplate, keeps the other person out of the action unless required, and does not claim additional unseen identity detail."
   },
   {
     "id": "video-seedance-16-explicit-precise-timing",
@@ -172,27 +172,27 @@
   {
     "id": "video-language-lock-01-multishot-exact-fields",
     "prompt": "把这个最终 Seedance prompt 去 AI 味，但不能改任何硬信息：12秒，三镜头，@图1只做人脸身份参考；镜头1裘水镜站在门内；镜头2他说“你看见的不一定是真的”；镜头3少年没有回答，最后遮住镜头黑场。",
-    "expected": "Cleans only mutable prose while preserving 12秒, exactly three shots and their order, @图1 and its identity-only borrowed dimension, the name 裘水镜, the exact dialogue, the silent response, and the final lens-cover black frame."
+    "expected": "Cleans only mutable prose while preserving 12秒, exactly three shots and their order, the first image's identity-only borrowed dimension, the name 裘水镜, the exact dialogue, the silent response, and the final lens-cover black frame. It normalizes @图1 to 图片1 without changing the asset mapping."
   },
   {
     "id": "video-language-lock-02-edit-command-not-rewritten",
     "prompt": "把这条最终 Seedance 编辑命令写自然一点：严格编辑@视频1的3-7秒，把桌上的旧香水瓶换成@图1里的白色面霜罐，人物动作、原有运镜、灯光和环境声保持不变。",
-    "expected": "Keeps strict-edit task grammar, @视频1, the 3-7秒 interval, @图1, the exact replacement, and every unchanged continuity layer. Language cleanup does not turn the command into reference generation or rewrite the entire platform structure."
+    "expected": "Keeps strict-edit task grammar, normalizes the targets to 视频1 and 图片1, preserves the 3-7秒 interval, exact replacement, and every unchanged continuity layer, and outputs no @ or UUID. Language cleanup does not turn the command into reference generation or rewrite the entire platform structure."
   },
   {
     "id": "video-extension-01-success-with-ending-state",
     "prompt": "向后延长@视频1 5秒。@视频1结尾时男人仍倚在墙边，身体姿势不变，镜头固定，门口在画面右侧；延长部分让他缓慢转头看向门口。",
-    "expected": "Treats the production task as extension, starts the final command with 向后延长@视频1 rather than 参考@视频1, preserves 5秒 and the supplied ending posture, fixed camera, door position, and slow head turn, and does not ask for an already supplied ending state."
+    "expected": "Treats the production task as extension, starts the final command with 向后延长视频1, outputs no @ or UUID, preserves 5秒 and the supplied ending posture, fixed camera, door position, and slow head turn, and does not ask for an already supplied ending state."
   },
   {
     "id": "video-extension-02-vibe-is-orthogonal",
     "prompt": "按 Vibe 的方式将@视频1向后延长5秒：片尾人物保持原姿势，缓慢转头看向门口，像回到多年没住过的老房子，觉得时间停住了。表演克制。",
-    "expected": "Keeps extension as the production task and Vibe only as an expression request; uses 向后延长@视频1 grammar, preserves 5秒, pose, turn, target, restrained direction, and adds at most bounded visible performance cues without inventing a flashback, prop, person, or alternate task type."
+    "expected": "Keeps extension as the production task and Vibe only as an expression request; uses 向后延长视频1 grammar with no @ or UUID, preserves 5秒, pose, turn, target, restrained direction, and adds at most bounded visible performance cues without inventing a flashback, prop, person, or alternate task type."
   },
   {
     "id": "video-bridge-01-success",
     "prompt": "把@视频1接到@视频2：@视频1结尾红伞从画面左侧被风吹起，@视频2开头是一块红布从右侧落下。用红色形状掠过镜头完成遮挡转场。",
-    "expected": "Treats this as a bridge and writes the sources in order using @视频1，[visible red-shape occlusion transition]，接@视频2; does not rewrite either source as a reference-generation task or invent another transition subject."
+    "expected": "Treats this as a bridge and writes the sources in order using 视频1，[visible red-shape occlusion transition]，接视频2; outputs no @ or UUID and does not rewrite either source as a reference-generation task or invent another transition subject."
   },
   {
     "id": "video-bridge-02-platform-limit",
@@ -202,7 +202,7 @@
   {
     "id": "video-seedance-18-first-pass-multiref-minimum-sufficient",
     "prompt": "用 $aigc-video 直接写一版可粘贴的15秒 Seedance 最终提示词，三个镜头。古代山林牌坊前，曲伯在牌坊顶部，裘水镜在下方草地。曲伯起身说“若是不信，大可一试。”，身后出现巨大赤红人形法阵，法阵从掌心向裘水镜发射光束；裘水镜展开蓝色半球屏障化解攻击，最后两人恢复一上一下的静止对峙。@图1参考法阵体量、形态和构图关系；@图2参考牌坊、石阶、草地和山林环境；@图3参考裘水镜；@图4参考曲伯；@图5参考攻击光束；@图6参考防御屏障。参考图分工集中在开头说明一次，镜头正文不要重复@图N，每镜写成完整自然段。保留这句对白本身，但不要写音效、环境声、音乐或其他声音描述。第一次生成，请直接给最终提示词，不要解释过程。",
-    "expected": "Produces one ready-to-paste first-pass Seedance prompt with a single compact reference summary followed by exactly three natural shot paragraphs. It preserves both identities, the above/below spatial relationship, exact dialogue, palm-fired attack, shield defense, action order, and final standoff. Shot bodies do not repeat @图N. It uses positive visible staging and does not externalize reference blacklists or speculative exclusions such as no text, logo, watermark, third person, deformation, or alternate actions. Apart from the required dialogue text, it adds no sound effects, ambience, music, audio labels, or sound-design prose."
+    "expected": "Produces one ready-to-paste first-pass Seedance prompt with a single compact reference summary using 图片1 through 图片6 and no @ or UUID, followed by exactly three natural shot paragraphs. It preserves both identities, the above/below spatial relationship, exact dialogue, palm-fired attack, shield defense, action order, and final standoff. Shot bodies do not repeat material labels. It uses positive visible staging and does not externalize speculative reference blacklists. Apart from the required dialogue text, it adds no sound effects, ambience, music, audio labels, or sound-design prose."
   },
   {
     "id": "video-seedance-19-observed-formation-human-local-patch",
@@ -227,7 +227,7 @@
   {
     "id": "video-spatial-04-environment-reference-no-composition-leak",
     "prompt": "@图1只参考山林、草地、石阶和牌坊这些环境资产。镜头从草地上的守方斜前方拍摄，高处攻击从画面左上方进入；不要照搬@图1的原始机位。写8秒最终 Seedance 提示词。",
-    "expected": "Binds @图1 once to environment attributes only. It independently follows the requested defender-side camera and upper-left screen entry, and does not import the reference image's camera placement, framing, action trajectory, subject blocking, or mandatory visibility of every landmark."
+    "expected": "Binds 图片1 once to environment attributes only, outputs no @ or UUID, independently follows the requested defender-side camera and upper-left screen entry, and does not import the reference image's camera placement, framing, action trajectory, subject blocking, or mandatory visibility of every landmark."
   },
   {
     "id": "video-spatial-05-world-screen-coordinate-separation",
@@ -237,12 +237,12 @@
   {
     "id": "video-extension-03-forward-uses-opening-boundary",
     "prompt": "向前延长@视频1 5秒。@视频1开头是男人从画面左侧走入中央，镜头正缓慢向右横移，清晨冷光从右侧照来。生成他进入画面之前的内容，并自然接到这个开头。",
-    "expected": "Uses 向前延长 / prepend-before grammar and treats the source opening, not the source ending, as the target boundary. The generated predecessor converges on the supplied left-entry position, rightward camera motion, and right-side cold light so its terminal frame joins the original opening; it does not ask for or invent the source ending state."
+    "expected": "Uses 向前延长视频1 / prepend-before grammar with no @ or UUID and treats the source opening, not the source ending, as the target boundary. The generated predecessor converges on the supplied left-entry position, rightward camera motion, and right-side cold light so its terminal frame joins the original opening; it does not ask for or invent the source ending state."
   },
   {
     "id": "video-bridge-03-both-boundaries",
     "prompt": "把@视频1接到@视频2。@视频1结尾时女孩在画面右侧抬起红伞，镜头向她推近；@视频2开头红伞已经占满画面，镜头开始后拉露出雨夜街道。用红伞完成连续过渡。",
-    "expected": "Addresses the sources in bridge order, begins from video 1's right-side raised-umbrella ending and camera push, then converges on video 2's full-frame umbrella opening before the pullback. It protects both boundary states rather than writing only an exit from video 1 or treating either source as a generic reference."
+    "expected": "Addresses the sources as 视频1 and 视频2 in bridge order with no @ or UUID, begins from video 1's right-side raised-umbrella ending and camera push, then converges on video 2's full-frame umbrella opening before the pullback. It protects both boundary states rather than writing only an exit from video 1 or treating either source as a generic reference."
   },
   {
     "id": "video-spatial-06-observed-terminal-recall-local-patch",
@@ -282,7 +282,7 @@
   {
     "id": "video-vfx-03-reference-appearance-without-pose-freeze",
     "prompt": "@图1只参考巨型火焰武将的面部和材质，不参考原图姿势与构图。生成结果里它每次形成后都会停住摆造型。只修改召唤形成这一段，让它形成后立刻挥刀；其他镜头不变。",
-    "expected": "Returns a local repair that keeps @图1 limited to face and material, avoids inheriting pose or composition, and chains material formation directly into the sword action with one continuing motion carrier. It does not rewrite the full prompt, add several camera moves, or state that reference images universally cause freezing."
+    "expected": "Returns a local repair that keeps 图片1 limited to face and material, outputs no @ or UUID, avoids inheriting pose or composition, and chains material formation directly into the sword action with one continuing motion carrier. It does not rewrite the full prompt, add several camera moves, or state that reference images universally cause freezing."
   },
   {
     "id": "video-vfx-04-dismantle-not-redirect",
@@ -332,12 +332,12 @@
   {
     "id": "video-boundary-01-start-end-role-separation",
     "prompt": "用@图1作为完整首帧，用@图2作为完整尾帧，生成两者之间的6秒视频；@视频1只参考中间段的运镜节奏。",
-    "expected": "Classifies the base task as reference because actual boundary assets are supplied. Records @图1 as start_frame_source with full_frame scope, @图2 as end_frame_target with full_frame scope, and @视频1 separately as reference_input with only camera/timing borrowed dimensions. It does not place @图1 or @图2 in the ordinary reference summary or treat their full-frame boundary locks as borrowed dimensions."
+    "expected": "Classifies the base task as reference because actual boundary assets are supplied. Records 图片1 as start_frame_source with full_frame scope, 图片2 as end_frame_target with full_frame scope, and 视频1 separately as reference_input with only camera/timing borrowed dimensions. It outputs no @ or UUID, does not place the boundary images in the ordinary reference summary, and does not treat their full-frame locks as borrowed dimensions."
   },
   {
     "id": "video-bridge-04-operation-and-dimension-separation",
     "prompt": "把@视频1自然接到@视频2，过渡期间的运镜节奏参考@视频3。",
-    "expected": "Records @视频1 as bridge_predecessor, @视频2 as bridge_successor, and @视频3 as reference_input with only the camera/timing borrowed dimension. It uses direct bridge grammar for the first two sources and does not recast them as ordinary reference videos."
+    "expected": "Records 视频1 as bridge_predecessor, 视频2 as bridge_successor, and 视频3 as reference_input with only the camera/timing borrowed dimension. It outputs no @ or UUID, uses direct bridge grammar for the first two sources, and does not recast them as ordinary reference videos."
   },
   {
     "id": "video-vibe-14-ab-shared-core-overlays",
@@ -362,7 +362,7 @@
   {
     "id": "video-multishot-01-all-assets-accounted",
     "prompt": "写一条16秒八镜 Seedance 最终提示词。我给你六份素材：前五张会在 Seedance 中依次作为@图1分镜故事板、@图2女主角色资产、@图3男主角色资产、@图4眼睛特写、@图5光影参考；第六张是分镜表，只供你读取人物坐姿、景别和动作，不在 Seedance 中上传。不要因为分镜故事板是线稿就删掉它。",
-    "expected": "Accounts for all six user-supplied assets. It preserves @图1 through @图5 exactly with narrow borrowed dimensions, keeps the sixth storyboard table as evidence only without inventing an @ anchor for it, and uses its authorized sitting, framing, and action facts. It does not silently drop or merge an asset because of line-art style-transfer concerns; it narrows @图1 to storyboard dimensions instead."
+    "expected": "Accounts for all six user-supplied assets. It renders the five uploaded images as 图片1 through 图片5 with narrow borrowed dimensions and no @ or UUID, keeps the sixth storyboard table as evidence only without inventing an upload label for it, and uses its authorized sitting, framing, and action facts. It does not silently drop or merge an asset because of line-art style-transfer concerns; it narrows 图片1 to storyboard dimensions instead."
   },
   {
     "id": "video-multishot-02-source-overlap-before-new-shot",
@@ -385,24 +385,24 @@
     "expected": "Recognizes 预演 as a composition-check intent and preserves exactly nine shots, their order, and all inspection-critical camera, framing, blocking, and occlusion locks. Because the final Seedance 2.5 formula requires a known total duration and the user explicitly withholds it, asks only for total duration before rendering; it does not invent seconds, merge shots, or expose preview/debug intent inside the eventual platform prompt."
   },
   {
-    "id": "video-seedance-20-five-second-unified-timeline",
+    "id": "video-seedance-20-five-second-ordered-timeline",
     "prompt": "写一个5秒 Seedance 2.5 视频：女孩从桌上拿起钥匙，转身看向门口。",
-    "expected": "Uses the same global-setting plus timestamped-shot structure used for longer generation, starts at 0, ends at 5 seconds, keeps one readable action chain, and does not drop timestamps merely because the clip is short."
+    "expected": "Uses the same ordered optional-field formula and required 情节 timeline used for longer generation, omits unsupported headings instead of filling them, starts at 0, ends at 5 seconds with integer boundaries, keeps one readable action chain, and does not drop timestamps merely because the clip is short."
   },
   {
     "id": "video-seedance-21-thirty-second-unified-timeline",
     "prompt": "写一个30秒 Seedance 2.5 多镜头短片，人物从清晨出门到车站告别，镜头顺序按我提供的故事板。",
-    "expected": "Uses the same generation formula as the five-second case, allocates beat-based continuous ranges from 0–30 seconds, preserves storyboard order, and changes only segment count and density rather than switching to a different long-video grammar."
+    "expected": "Uses the same ordered optional-field formula and required 情节 timeline as the five-second case, allocates beat-based continuous ranges from 0–30 seconds, preserves storyboard order, and changes only segment count and density rather than switching to a different long-video grammar."
   },
   {
     "id": "video-material-01-upload-order-without-at",
     "prompt": "我会按顺序上传三张图：第一张是罗大娘，第二张是苏云，第三张只参考苏云的白色瞳孔。写15秒 Seedance 2.5 提示词。",
-    "expected": "Writes one responsibility map as 图片1：罗大娘的外貌与服装, 图片2：苏云的外貌与服装, 图片3：仅补充苏云的白色瞳孔, invents no @ prefix, and uses semantic names rather than repeating material labels in the shot timeline."
+    "expected": "Because the assets are label-only and contribute different dimensions, renders one 参考素材 colon map as 图片1：罗大娘的外貌与服装, 图片2：苏云的外貌与服装, 图片3：仅补充苏云的白色瞳孔, invents no @ prefix, and uses semantic names rather than repeating material labels in 情节."
   },
   {
-    "id": "video-material-02-literal-at-preserved",
+    "id": "video-material-02-supplied-at-normalized",
     "prompt": "参考@c6e53a11-75de-416e-ace9-3f96093fab0c的罗大娘和@图2的院子，写10秒 Seedance 2.5 提示词。",
-    "expected": "Preserves both supplied literal handles exactly in the one-time responsibility map, does not replace them with generated plain labels, and uses 罗大娘 and 院子 semantically in the timeline without repeating the handles."
+    "expected": "Uses the supplied handles only to preserve source mapping, renders a one-time 参考素材 map as 图片1 for 罗大娘 and 图片2 for the courtyard, outputs no @ or UUID, and uses 罗大娘 and 院子 semantically in 情节 without repeating material labels."
   },
   {
     "id": "video-duration-02-missing-total-asks",
@@ -412,11 +412,31 @@
   {
     "id": "video-material-03-bind-once-no-repetition",
     "prompt": "图片1参考女主外貌，图片2参考服装，图片3参考咖啡馆场景。写12秒三镜头 Seedance 2.5 提示词，素材只在开头说明一次。",
-    "expected": "Consolidates each material into one specific colon-map responsibility line, then uses semantic names and visible changes in three continuous timestamped shots. It does not repeat 图片1, 图片2, or 图片3 in shot bodies or restate unchanged appearance and scene details per shot."
+    "expected": "Consolidates each material into one specific 参考素材 colon-map line, then uses semantic names and visible changes in three continuous integer-timestamped shots under 情节. It does not repeat 图片1, 图片2, or 图片3 in shot bodies or restate unchanged appearance and scene details per shot."
   },
   {
     "id": "video-recovery-01-current-prompt-independence",
     "prompt": "上一版把秋水镜化水生成成了挡在人物面前的完整水墙。帮我只改这一句：我要秋水镜在拳头接触前原位失去完整人形，变成无定形水滴和薄雾，拳头穿过空位。给我可以直接替换的 Seedance 句子。",
     "expected": "Returns one clean standalone replacement sentence that describes the current visible material transition, timing, and terminal empty interaction point. It does not narrate the prior result or correction process, does not reintroduce the failed water-wall concept, does not use revision-dependent wording such as 上一版、这次、不要再、重新生成, and does not rewrite unrelated prompt fields."
+  },
+  {
+    "id": "video-seedance-25-official-optimizer-fields",
+    "prompt": "按即梦官网提示词优化助手的常用格式，写15秒八镜短片。要有主体、场景、风格和带时间戳的情节。",
+    "expected": "Uses plain colon headings 主体：、场景：、风格：、情节： in that order. It does not default to bracketed headings such as 【全局设定】 or 【时间轴分镜】, and adds 参考素材 or 全局补充 only when the actual facts require them."
+  },
+  {
+    "id": "video-seedance-26-integer-timeline-no-decimals",
+    "prompt": "写15秒八镜 Seedance 2.5，所有时间必须是整数，不要零点几秒。",
+    "expected": "Allocates eight positive, continuous, non-overlapping integer-second ranges that start at 0 and end at 15. It introduces no decimal boundary. If the locked duration and shot count could not support positive integer ranges, it would ask for a longer duration or restructuring permission instead of using decimals."
+  },
+  {
+    "id": "video-seedance-27-natural-dialogue-and-inline-sound",
+    "prompt": "写8秒两镜 Seedance 2.5：清晨院子里一直有鸟鸣，镜头1女孩听见脚步声，镜头2她说‘你回来了？’。不要单独写声音栏目。",
+    "expected": "Places persistent bird ambience in 场景, the footstep cue in its relevant shot, and dialogue in ordinary Chinese quotation marks as 女孩说道：“你回来了？”. It creates no standalone sound section and does not use {台词}, <音效>, （音乐）, or 【字幕】 as default control markers."
+  },
+  {
+    "id": "video-seedance-28-optimizer-example-no-content-leak",
+    "prompt": "参考即梦官网提示词优化助手的表达习惯，写5秒纯产品转台视频。只给了一张产品图，没有人物、环境和声音信息。",
+    "expected": "Uses plain colon headings only when supported, keeps 情节 with an integer 0-5秒 range, maps the product as 图片1 without @ or UUID, and does not copy 罗大娘、苏云、院子、鸟鸣、eight-shot structure, or other content from the observed optimizer example."
   }
 ]

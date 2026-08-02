@@ -18,7 +18,7 @@ Make no change when the wording is already clear and executable.
 
 Never change the value or meaning of:
 
-- supplied literal `@...` handles or filenames, generated upload-order labels, operational roles, boundary scopes, and borrowed dimensions; duplicate reference-input mentions may be consolidated into one responsibility line without changing them
+- source-to-upload-order mapping, final material labels, operational roles, boundary scopes, and borrowed dimensions; duplicate reference-input mentions may be consolidated into one responsibility line without changing them
 - subject count, identity, shot ids/count/order
 - duration, timing, edit interval
 - dialogue, narration, lyrics, visible text
@@ -27,7 +27,7 @@ Never change the value or meaning of:
 - action order, screen direction, inherited state, end handoff
 - user-retained camera or composition controls
 
-Do not turn `严格编辑视频1` or `向后延长视频1` into `参考视频1` merely because the latter reads more smoothly. If the source came with a literal `@视频1`, preserve that exact handle in the same grammar.
+Do not turn `严格编辑视频1` or `向后延长视频1` into `参考视频1` merely because the latter reads more smoothly. Normalizing a supplied handle or UUID to `视频1` must not change which asset the command targets.
 
 ## Post-adapter audit
 

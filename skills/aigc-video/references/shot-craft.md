@@ -58,11 +58,11 @@ Do not stack multiple major camera moves in one shot unless the user explicitly 
 
 Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
 
-Apply the shot sentence order from `SKILL.md` §5; this reference does not redefine it. Use the camera guidance below only to express a camera choice that survived that order.
+Apply the shot sentence order from the active platform adapter; this reference does not redefine it. Use the camera guidance below only to express a camera choice that survived that order.
 
 ## Framing And Visible Envelope
 
-Apply the minimum framing-envelope rule from `SKILL.md` §5; use the checks below only to make the resulting crop and visibility executable.
+Before choosing a shot size, treat every body part, prop, subject, and landmark required in the same frame as one minimum visible envelope. The framing must contain that envelope. If it cannot, remove only mutable visibility detail, use a visible reframing when camera movement is allowed, or surface the hard-lock conflict.
 
 - Establish one viewer priority and intended crop before adding contextual visibility. Render it as `画面重心` only when several visible elements would otherwise compete.
 - For a tight shot, use observable boundaries such as what the upper and lower frame edges cut, which body parts dominate, and which environment elements remain partial or out of focus.
@@ -87,7 +87,7 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 - **Standard**: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
 - **Complex**: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
-Choose the primary performance carrier using `SKILL.md`. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff. This is a detail-order rule, not a second carrier-priority list.
+Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling -> environmental or sound response. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
 When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
 
@@ -104,8 +104,8 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
 - Fit dialogue to the actual speaking time, natural delivery speed, pauses, reactions, and stable visible-mouth time. A short clip may contain several brief lines when the timeline genuinely gives them room; a long sentence may already overload one short shot.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
-- For Seedance-family output, put spoken dialogue in braces: `角色说道{台词}`; use `<音效>`、`（音乐）` and `【字幕】` only when active. For platform-neutral output, preserve the exact line and ownership in ordinary natural language without platform markers.
-- Apply the audio inclusion and omission rule from `SKILL.md` §5; do not restate the default as an opening policy phrase.
+- For Seedance-family output, use the active Seedance adapter for dialogue and sound placement. For platform-neutral output, preserve the exact line and ownership in ordinary natural language.
+- Apply the audio inclusion and omission defaults from `SKILL.md`; do not restate them as an opening policy phrase.
 - Include subtitles only when the current user instruction or active project requires them; otherwise keep them out of the prompt.
 
 If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.
