@@ -1,0 +1,79 @@
+schema_version: "1.0"
+project:
+  id: "linyuanxing"
+  title: "临渊行"
+  aliases: ["临渊行", "linyuanxing", "LYX"]
+  medium: "3D 国漫 / 修仙题材连续剧集"
+  status: "在产 — 第一集分镜完成，第二集分镜进行中"
+
+sources:
+  - id: ep01-storyboard
+    type: storyboard
+    path: "sources/EP01-分镜总表-0708.xlsx"
+    readable_context: "contexts/EP01-storyboard.md"
+    version: "0708"
+    scope: "第一集　第一场–第十四场　411 个分镜行（1-1 至 14-64）"
+    status: current
+    original_filename: "临渊行第一集分镜_第一集分镜总表0708.xlsx"
+    sheet: "第一集分镜总表0708"
+    data_range: "A1:I412"
+    raw_dimension: "A1:AE412"
+    sha256: "F00AA47DA4F43DB5339A5563BDA8EA2BA646FFC89194B4D1BFDD9D90B3704B4E"
+  - id: ep02-storyboard
+    type: storyboard
+    path: "sources/EP02-分镜表.xlsx"
+    readable_context: "contexts/EP02-storyboard.md"
+    version: "收录于 2026-07-30"
+    scope: "第二集　第一场–第三场　92 个分镜行（1-1 至 3-27，未完成）"
+    status: current_partial
+    original_filename: "临渊行第一集分镜_第二集分镜表.xlsx"
+    sheet: "第二集分镜表"
+    data_range: "A1:G95"
+    raw_dimension: "A1:Q95"
+    sha256: "718F4CE46C5EA4EF85C289CFCB198824189C7C5A479C9218B5AB6674C4C1738C"
+    note: >-
+      原始文件名保留「临渊行第一集」字样，但工作表名与用户说明都明确其为第二集最新分镜，
+      必须按第二集使用。收录进包时已重命名为 EP02-分镜表.xlsx。
+      95 行中 92 行为分镜行，另有 2 个空白分隔行只表示场次间隔，不得据此生成虚构镜号。
+  - id: series-bible
+    type: derived_reference
+    path: "contexts/series-bible.md"
+    version: "derived from ep01-storyboard + ep02-storyboard"
+    scope: "角色 / 世界观 / 能力 / 连续性 / 源文件异常"
+    status: current
+    note: >-
+      派生参考，不是原始源。与分镜表冲突时，以分镜表为准。
+
+source_precedence:
+  composition: [current_user, assigned_current_asset, ep02-storyboard, ep01-storyboard]
+  action:      [current_user, ep02-storyboard, ep01-storyboard, series-bible]
+  dialogue:    [current_user, ep02-storyboard, ep01-storyboard]
+  identity:    [current_user, assigned_current_asset, ep01-storyboard, ep02-storyboard, series-bible]
+  worldbuilding: [current_user, ep01-storyboard, ep02-storyboard, series-bible]
+
+assets: []
+# 目前包内没有角色设定图、场景概念图或参考帧。
+# 收到可读的角色/场景图后，在此登记 state 与 roles，未登记的资产不控制任何字段。
+
+defaults:
+  medium: "3D 国漫电影质感"
+  audio: "无配乐、无旁白、无字幕，仅环境声与角色现场对白"
+  visible_text: "画面内无文字"
+# audio 默认取自 EP01 6-1 场景氛围描述栏中唯一一条完整写明的氛围设定；
+# 它是该行的原文，作为项目默认沿用，被任何单镜的明确指定覆盖。
+
+exclusions: []
+
+context:
+  prepared: "contexts"
+  raw_storyboard: "sources"
+  bible: "contexts/series-bible.md"
+
+conventions:
+  shot_id: "<场次序号>-<镜序号>，例：14-42；同一镜的拆分用字母后缀，例：6-19A / 8-1B / 12-15B"
+  columns_ep01: [场次, 镜号, 场景, 场景副本, 场景氛围描述, 景别/角度, 运镜, 画面描述, 对白]
+  columns_ep02: [场次, 镜号, 场景, 景别/角度, 运镜, 画面描述, 对白]
+  notes: >-
+    EP01 的「场景 副本」列与「场景」列内容完全相同，转换时已丢弃。
+    EP01 的「场景氛围描述」列同时承载氛围设定和制作备注（如「注意灯笼光源」），
+    转换后合并为「场景氛围描述/备注」列，原文未改。
