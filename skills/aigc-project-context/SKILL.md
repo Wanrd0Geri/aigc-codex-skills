@@ -22,6 +22,8 @@ If the project is ambiguous, show the likely candidates and ask the user to choo
 
 Load a project profile only when the user names the project or the current controlled workspace clearly contains that project. Do not scan project files for an unrelated standalone image or video request.
 
+When the active project is `临渊行`, read `references/linyuanxing.md` before extracting any episode or shot range. Use the active episode workbook routed there as the storyboard authority unless the current user supplies a newer source.
+
 Read `references/project-package-contract.md` when a project package or `project.yaml` is available.
 
 ## 2. Resolve source authority per field
