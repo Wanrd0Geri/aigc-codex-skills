@@ -5,14 +5,14 @@ Use this file for every default Seedance-family final prompt. Default to 即梦 
 Source basis:
 
 - [【即梦】Seedance 2.5 使用手册](https://bytedance.larkoffice.com/wiki/RXh5ww6EqighMdkVTMccm2d4n7e), document updated 2026-07-31 and checked 2026-08-02.
-- A user-supplied observed output from 即梦官网提示词优化助手, archived in `seedance-2.5-optimizer-example.md` on 2026-08-03. It demonstrates plain colon headings, integer timestamp ranges, ordinary quotation marks for dialogue, and inline environmental/action sound. Treat it as one observed optimizer pattern, not universal mandatory grammar.
+- Reusable observations from a user-supplied 即梦官网提示词优化助手 output, recorded in `seedance-2.5-optimizer-example.md` on 2026-08-03. They support plain colon headings, integer timestamp ranges, ordinary quotation marks for dialogue, and inline environmental/action sound. Treat them as one observed optimizer pattern, not universal mandatory grammar.
 - [Volcengine, Doubao Seedance 2.0 系列提示词指南](https://www.volcengine.com/docs/82379/2222480?lang=zh), checked 2026-07-21.
 
 Re-check version-specific limits after a provider update. Read `seedance-capability-matrix.md` for dated limits and recommendations.
 
 ## Material responsibilities
 
-Use `素材编号（按上传顺序） + 具体用途`. Build this map internally. Render a compact `参考素材：` block only when an asset is label-only, several references contribute different dimensions, or the mapping would otherwise be ambiguous. If readable references can be summarized faithfully under the normal final fields, omit the block.
+Use `素材编号（按上传顺序） + 具体用途`. Build this map internally. Render a compact `参考素材：` block only when an asset is label-only, several references contribute different dimensions, or the mapping would otherwise be ambiguous. If readable references can be summarized faithfully under the normal final fields, omit the block and bind the source once in the field that owns the resulting fact.
 
 Default final labels are plain upload-order labels. Treat a supplied `@` handle, UUID, or filename as internal mapping evidence and normalize it to `图片1`、`视频1` or `音频1`. Preserve a literal handle only when the current user explicitly requests it for the current output. If upload order is unknown and the map matters, ask instead of guessing.
 
@@ -27,6 +27,7 @@ Default final labels are plain upload-order labels. Treat a supplied `@` handle,
 - Give every material a specific job: identity/appearance, wardrobe, prop, environment, layout, light, material, action, motion, camera, timing, effect, audio, voice, text, or graphic.
 - Consolidate all authorized jobs from the same material into one line.
 - Bind materials once, then use semantic names in the timeline.
+- Give one rendered owner to each fact. If `参考素材：` already carries a source-derived identity, appearance, wardrobe, prop, or relationship, `主体：` may contain only distinct target-native stable facts; omit `主体：` when nothing remains. If `参考素材：` stays internal, place the necessary source binding once in `主体：`、`场景：` or `风格：` according to the resulting fact. Never ask the user which equivalent layout to use.
 - Use `作为[角色名]` only when selecting one subject among several or combining several sources for one character. Do not add routine `定义为` wording.
 - A storyboard or multi-panel sheet must name its authorized dimensions such as shot order, framing, blocking, screen direction, and occlusion. Do not treat it as a generic style reference.
 - If one material applies only to a time interval, write that interval in the responsibility line.
@@ -53,7 +54,7 @@ Use the same ordered structure for every known-duration Seedance 2.5 new/referen
 镜头1（0-5秒）：[framing/camera]；[current visible state and space]；[action/performance/dialogue/local sound]；[camera's visible result]；[visual focus when needed]；[ending or handoff].
 
 全局补充：
-[optional: only when cross-shot locks or necessary targeted exclusions exist and are not already clear]
+[default for new/reference generation: 无字幕、无音乐。 Remove either phrase only when that field is explicitly active; append only non-duplicate cross-shot locks or necessary targeted exclusions]
 ```
 
 Do not open with `生成一段N秒的……`. Duration belongs in the time ranges and remains an exact production fact.
@@ -91,16 +92,18 @@ Use the natural-language pattern demonstrated by the observed optimizer example:
 - local sound effect: write it inside the relevant shot
 - music or subtitle: label it in ordinary Chinese only when active
 
-Do not create a standalone sound section. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Do not write an `无音乐、无字幕` policy sentence merely to state a default; put a targeted instruction in `全局补充：` only when the user/source requires it or a real result failed.
+Do not create a standalone sound section. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters.
+
+For Seedance 2.5 new/reference generation, render `全局补充：无字幕、无音乐。` as the standing personal default. A music or subtitle field becomes active only through the current user, an active project/source requirement, or a reference input explicitly assigned the `audio` or `text` borrowed dimension. The mere presence of music or subtitles in a readable asset does not activate that field. Apply precedence separately: active music removes only `无音乐`; active subtitles remove only `无字幕`; when both are active, omit the heading unless another valid cross-shot control remains. Edit, extension, and bridge preserve source-backed audio/text under their operation rules and never receive this standing generation default automatically. `无字幕` bans subtitle overlays, not source-backed signs, logos, titles, or other diegetic visible text. `无音乐` does not suppress active dialogue, ambience, or action sound. A current instruction to omit all sound-policy prose overrides rendering `无音乐` for that output.
 
 For visible text, state exact content, timing, frame position, appearance method, and only necessary style. Use a dedicated material responsibility for exact logo, typography, or layout.
 
 ## Control and repetition
 
-- Put appearance in `主体：`, environment in `场景：`, and style in `风格：` once.
+- Put source responsibility in `参考素材：` only when the map must render; put target-native stable appearance or relationships in `主体：` once. Never restate the same source-derived appearance in both.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Treat internal viewer priority and rendered `画面重心` as one field.
-- Put necessary negative instructions in `全局补充：` once.
+- Put every active cross-shot control in its adapter-owned heading once.
 - Do not repeat a material label, global scene description, character appearance, camera rule, or negative instruction in every shot.
 - A longer prompt is acceptable when it adds distinct executable information. Different wording of the same fact is redundancy, not stronger control.
 

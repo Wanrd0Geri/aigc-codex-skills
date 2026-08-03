@@ -18,7 +18,7 @@ Load only for ultra-long generation, white-model workflows, green screen, multi-
 Reuse the canonical ordered generation structure and optional-heading rules from `seedance-2-rules.md`. Ultra-long mode changes timeline density and continuity load, not the formula.
 
 - Do not infer duration or aspect ratio. Express total duration through the final time range; keep aspect ratio in the UI unless the user requires it in the prompt.
-- Keep all ranges continuous and end exactly at total duration.
+- Apply the adapter's canonical timeline rules without creating an ultra-long variant.
 - Divide by story or action beats, not equal mathematical chunks.
 - Re-state only genuine cross-segment locks globally. Do not copy the full character appearance into every segment.
 - If action density is too high, simplify mutable camera/detail before deleting locked beats.
@@ -70,7 +70,7 @@ Treat the sheet as structured shot evidence, not a generic style image:
 ```
 
 - Preserve the supplied panel order and count unless the user asks to restructure it.
-- Translate each panel into a continuous time range.
+- Translate each panel through the adapter's canonical timeline without changing panel order.
 - Use separate assets for identity, style, or environment unless the storyboard is explicitly authoritative for those dimensions.
 
 ## Voice and audio reference

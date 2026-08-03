@@ -105,7 +105,7 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - Fit dialogue to the actual speaking time, natural delivery speed, pauses, reactions, and stable visible-mouth time. A short clip may contain several brief lines when the timeline genuinely gives them room; a long sentence may already overload one short shot.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
 - For Seedance-family output, use the active Seedance adapter for dialogue and sound placement. For platform-neutral output, preserve the exact line and ownership in ordinary natural language.
-- Apply the audio inclusion and omission defaults from `SKILL.md`; do not restate them as an opening policy phrase.
-- Include subtitles only when the current user instruction or active project requires them; otherwise keep them out of the prompt.
+- Apply audio and visible-text rendering rules from the active platform adapter; this craft reference does not redefine them.
+- Write subtitle content only when the current user, active project/source, or an explicitly authorized text reference requires it. An adapter's compact standing `无字幕` control is a negative default, not subtitle content.
 
 If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.

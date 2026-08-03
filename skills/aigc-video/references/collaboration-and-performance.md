@@ -19,6 +19,7 @@ When discussing, use this shape:
 5. Ask 1-3 related questions together.
 
 Do not ask `这里是什么情绪？` without first doing the interpretive work. Do not invent a competing interpretation merely to create a question.
+Do not present synonymous wording, equivalent heading placement, duplicate material binding, or another presentation-only difference as alternatives. Resolve those mechanically from field ownership and ask only when the choice changes the produced performance, action, composition, continuity, or ending.
 
 ## Authority for performance intent
 

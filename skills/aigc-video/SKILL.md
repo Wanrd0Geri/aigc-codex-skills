@@ -33,9 +33,9 @@ Load only the references required by the request.
 - Default to 即梦 Seedance 2.5 when the request is not explicitly platform-neutral and names no platform or version. Use the 2.0 legacy rules only when the user explicitly selects 2.0 or 2.0 Fast.
 - Deliver one final prompt in one fenced code block.
 - In final prompts, default to plain upload-order labels such as `图片1`、`视频1`、`音频1`; do not output `@` handles or UUIDs unless the current user explicitly requests them for that output.
-- Do not invent music, subtitles, ambience, or action sound. Preserve source-backed audio and exact spoken dialogue when active.
+- For Seedance 2.5 new/reference generation, apply the standing audio/text personal default from `references/seedance-2-rules.md`. It does not apply to edit, extension, or bridge preservation.
 - Favor restrained performance and do not add unsupported people, props, gestures, emotions, or events.
-- Apply authority per field: current user > readable asset > active project/source > personal default > platform default.
+- Apply authority per field: current user > active project/source > explicitly authorized readable-asset dimension > personal default > platform default.
 
 ## 1. Classify the task
 
@@ -58,10 +58,11 @@ Keep supplied filenames, platform handles, UUIDs, and upload order internally so
 For new or reference generation, compile one material-responsibility map internally using `素材标签：具体用途`. Use the active platform adapter to decide whether that map must appear in the final prompt.
 
 - When the map must be rendered, bind each material once, then use semantic character, prop, and scene names in the timeline.
+- Assign every fact to one rendered owner and let the active platform adapter decide its placement. Resolve equivalent layouts internally; never ask the user to choose among them.
 - Name the exact borrowed dimensions; never write a bare `图片2：参考图`.
 - Do not write `定义为` when one unambiguous subject already has a supplied name. Use `图片1中[稳定特征]的主体作为[角色名]` only when selecting among multiple subjects or merging several sources for one identity.
 - If a material applies only to one interval, state that interval in its responsibility line rather than repeating the label in every shot.
-- Keep unassigned dimensions internal. Externalize a targeted exclusion only for a user/source lock, a direct material conflict, a platform requirement, or an observed failure.
+- Keep unassigned dimensions internal. Externalize a targeted exclusion only for a user/source lock, an active personal default, a direct material conflict, a platform requirement, or an observed failure.
 
 Classify facts as exact, semantic, mutable, or unresolved. Exact dialogue, visible text, material order and roles, durations, edit intervals, shot order, and explicit ending cues must not drift. Read `references/video-contracts.md` for the complete internal contracts.
 
@@ -94,20 +95,14 @@ When a cut continues the same event, inherit the current phase, contact point, d
 
 ### New and reference generation
 
-Use the same ordered formula for 5-second, 15-second, 30-second, and ultra-long generation: `[参考素材：按需] -> [主体：按需] -> [场景：按需] -> [风格：按需] -> 情节：必需 -> [全局补充：按需]`. Duration changes the number and density of timeline segments, not this order or the timestamp grammar. Use `references/seedance-2-rules.md` as the single source of truth for exact Seedance headings and shot syntax.
+Render through the unified generation structure in `references/seedance-2-rules.md`. That adapter is the single source of truth for Seedance heading order, timeline syntax, dialogue, sound, visible text, and the standing subtitle/music default. Duration changes timeline density, not the grammar.
 
 Rules:
 
-- Time ranges must start at zero, use integer-second boundaries, remain continuous without gaps or overlaps, and end exactly at the requested duration. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
-- If locked shot count and duration cannot give every shot a positive integer range, report the conflict and ask for a longer duration or permission to restructure; do not solve it with decimal boundaries.
-- Keep the field order above, but omit an optional heading when it has no material information. Never leave an empty heading or invent prose to fill it. `情节：` and its continuous timeline are required.
 - Treat `画面重心` as the rendered form of internal viewer priority; do not create a second explanation of the same idea.
 - For a main camera movement, pair the term with its visible result. A self-explanatory fixed camera or shot size needs no redundant explanation.
 - Keep character appearance and material roles global. Repeat in a shot only a visible change or a continuity-critical state.
 - Do not repeat material labels in the timeline after a rendered `参考素材：` map unless the user supplies an exact time-scoped handle requirement.
-- Put all necessary negative instructions in `全局补充：` once; never scatter a generic negative list across shots.
-
-Use `references/seedance-2-rules.md` for Seedance dialogue, sound, visible-text, and heading syntax. Keep only active, source-backed sound or text.
 
 ### Edit, extension, and bridge
 
@@ -133,8 +128,8 @@ Check in this order:
 
 1. exact dialogue, text, duration, interval, shot order, material order and role; preserve a literal handle only when the current user explicitly requests it
 2. every supplied material accounted for and bound once with a specific responsibility
-3. optional headings appear only when material, remain in the fixed order, and `情节：` uses the same timestamp formula for every known duration
-4. timeline starts at zero, has no gap/overlap, and ends at total duration
+3. every rendered fact has one owner and no equivalent field-layout choice is exposed
+4. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-default rules all pass
 5. framing, visible roster, spatial relationship, action phase, endpoint, and handoff continuity
 6. correct task grammar for edit, extension, bridge, or platform-neutral output
 7. no duplicate subject/scene/style fact, material binding, visual-priority explanation, negative rule, or appearance description
@@ -160,5 +155,6 @@ Ask one grouped question and wait only when:
 - Do not use `定义为` as routine boilerplate.
 - Do not repeat material responsibilities inside every shot.
 - Do not write the same camera, appearance, visual priority, or prohibition globally and per shot.
+- Do not expose choices between synonymous wording, equivalent field layouts, or duplicate placements. Resolve them by field ownership and ask only when different outcomes or hard locks materially conflict.
 - Do not expose EvidenceLedger, ReferenceMap, LockLedger, or MotionSpec names in the final prompt.
 - Do not narrate previous failures, revisions, tests, or debugging intent inside the current executable prompt.

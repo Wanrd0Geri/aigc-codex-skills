@@ -35,7 +35,7 @@ Use these as internal feasibility estimates before allocating the required timel
 
 A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
 
-If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, or reorder locked beats. For Seedance 2.5 new/reference generation with a known total duration, allocate exact continuous ranges; if total duration is unknown, ask rather than inventing it.
+If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, or reorder locked beats. Let the active adapter own timeline allocation and missing-duration behavior.
 
 ## Persistent scene topology
 
@@ -84,15 +84,14 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - a cut that continues the same event inherits its current action phase rather than restarting it
 - any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
-- Seedance 2.5 new/reference shots use continuous exact ranges whenever total duration is known; edit intervals remain local to the requested operation
-- reference generation uses `参考`; edit/extension addresses the source video directly
+- the active adapter or operation grammar passes its own timeline and source-addressing checks
 - start and terminal BoundaryStates are sparse rather than full shot duplicates
 - terminal visible roster matches the shot purpose even when no next handoff exists
 - next handoff is only a subset of terminal state
 - world position, screen position, camera side, and screen direction agree when material
 - asset operational roles, boundary scopes, and borrowed dimensions do not leak; reference-input anchors are normally bound once
 - exact dialogue, visible text, required sound/silence, style, and initiating action remain intact
-- every restriction passes the admission test: user/source lock, platform requirement, active-reference conflict, or observed failure
+- every restriction passes the admission test: user/source lock, active personal default, platform requirement, active-reference conflict, or observed failure
 - deleting any remaining sentence would change the visible result, a costly lock, a necessary role, or platform execution
 
 For an observed bad generation, paired success/failure comparison, ontology error, or unstable prior result, load `references/failure-recovery.md` instead of expanding this checklist.

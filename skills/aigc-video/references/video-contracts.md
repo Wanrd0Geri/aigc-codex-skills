@@ -49,6 +49,8 @@ For each material record:
 
 An operational role controls task grammar. A boundary scope controls the source opening or requested terminal frame. Borrowed dimensions control which attributes may transfer from a `reference_input`; slash-separated or neighboring taxonomy terms never authorize a whole group. An attribute such as pose, composition, or material may be a borrowed dimension for `reference_input` or a boundary lock for `start_frame_source` / `end_frame_target`; the operational role determines its meaning. Preservation and inherited-state obligations from edit, extension, and bridge sources are not borrowed dimensions. Never assign borrowed dimensions to a boundary input, edit target, extension source, or bridge input merely because the material is present. Unassigned fields stay neutral. Keep the source identifier and final material label distinct so normalization never changes asset identity or order. `forbidden/unassigned dimensions` are internal validation data, not a negative list for the final prompt. For multi-reference generation, always build the responsibility map internally; let the active platform adapter decide whether and how to render it. Use `图片1中[稳定特征]的主体作为[角色名]` only when choosing among multiple visible subjects or combining sources for one identity. Consolidate all borrowed dimensions from the same reference input into one line whenever possible.
 
+Record one intended rendered owner for each fact. The active platform adapter decides the exact heading and omission behavior; this internal contract only prevents duplicate ownership or presentation-only choices.
+
 ## LockLedger
 
 - exact: literals and numbers that must not change
@@ -58,7 +60,7 @@ An operational role controls task grammar. A boundary scope controls the source 
 
 Creative stages can write only mutable fields. Adapter syntax can wrap exact/semantic fields but cannot reinterpret them.
 
-Externalize a control only when it is user-locked, source/project-locked, platform-required, directly conflict-resolving, or supported by an observed generation failure. A speculative failure mode remains internal. On a first attempt, preserve the locked production result while leaving mutable effect detail and secondary physical response open.
+Externalize a control only when it is user-locked, source/project-locked, an active personal default, platform-required, directly conflict-resolving, or supported by an observed generation failure. A speculative failure mode remains internal. On a first attempt, preserve the locked production result while leaving mutable effect detail and secondary physical response open.
 
 Observed failure evidence authorizes a change only to the failed field. Use existing EvidenceLedger and ReferenceMap attributes for the repair; it does not authorize a new visual design axis.
 
