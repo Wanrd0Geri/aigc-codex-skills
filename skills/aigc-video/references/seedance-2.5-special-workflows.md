@@ -27,35 +27,33 @@ Reuse the canonical ordered generation structure and optional-heading rules from
 
 ### Coarse white model
 
-Use when layout, blocking, shot order, and camera path matter more than detailed geometry. The provider currently reports better overall usability for coarse white-model guidance than fine white-model guidance.
+Use when layout, blocking, shot order, and camera path matter more than detailed geometry. Render one natural unheaded reference sentence before `主体：`. Name only what is actually borrowed, such as movement, blocking, camera, or cuts; include light only when the user explicitly assigns it.
 
 ```text
-参考素材：
-视频1：粗白模的人物动线、空间站位、动作节奏与运镜路径。
-图片1：角色外貌与服装。
-图片2：场景材质、光线与最终画面风格。
+参考视频1的人物动作、站位、移动路线、运镜和切镜。
+
+主体：
+视频1中的黄色粗模对应图片1中的苏云，蓝色粗模对应图片2中的罗大娘。
+
+场景：
+参考图片3中的竹林山路。
 ```
 
-Then use the unified time-axis formula. Preserve the white model's layout and movement, while applying only the appearance/style dimensions assigned to the other assets.
+Put color/shape-to-character or prop correspondence at the start of `主体：`. Use a supplied scene reference in `场景：`, or write the requested scene directly from text. When neither exists, do not discuss the coarse model's missing scene or pre-emptively list viewport elements to exclude.
 
-### Fine white model
+Inherit the source video's duration, shot order, and cuts. Do not ask for or separately write total duration. Reuse exact shot ranges only when they are readable; otherwise preserve the source order without inventing seconds. If the model has articulated limbs, wings, or a tail, describe the complete action process through preparation, movement, contact, and endpoint instead of naming only the result.
 
-Use only when the source explicitly provides detailed limb poses or action paths worth following.
-
-- Describe the complete limb sequence, contact points, directions, and endpoints that must survive rendering.
-- Remove rig tracks, motion-path lines, camera cones, labels, and other planning overlays from the final image.
-- Do not assume every fine-control marker will transfer reliably; mention the stability tradeoff when it matters.
-
-```text
-视频1：精细白模的完整肢体动作、接触点、运动方向和镜头路径；不继承轨迹线、辅助标记与相机锥体。
-```
+If a detailed white-model animation is supplied in the future, require planning overlays to be cleaned before use, then follow the provider's basic instruction to render the white-model animation into the final finished video. Do not create prompt-side exclusions for tracks, axes, camera cones, labels, or controls.
 
 ## Green screen
 
 Assign the green-screen source to subject motion, timing, or performance only. Assign the replacement environment separately.
 
 ```text
+主体：
 视频1：主体表演、动作节奏和身体轮廓。
+
+场景：
 图片1：替换后的场景、光线方向与环境色。
 ```
 

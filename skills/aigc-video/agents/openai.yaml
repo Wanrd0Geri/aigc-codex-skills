@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Video"
   short_description: "Create or review Seedance 2.5 and platform-neutral video prompts."
-  default_prompt: "用 $aigc-video 根据 brief、素材、项目上下文或已生成成片，写出、优化或回检可直接使用的视频提示词；Seedance 2.5 使用精简栏目、必备情节和连续整数时间轴，素材默认写作图片1、视频1等普通标签，新生成默认无字幕、无音乐。"
+  default_prompt: "用 $aigc-video 根据 brief、素材、项目上下文或已生成成片，写出、优化或回检可直接使用的视频提示词；Seedance 2.5 只要成片出现角色或关键道具就写主体，纯环境空镜才省略，用场景写场景图与环境，末尾默认写不添加字幕、不添加背景音乐。"
 policy:
   allow_implicit_invocation: true

@@ -33,7 +33,7 @@ Load only the references required by the request.
 - Default to 即梦 Seedance 2.5 when the request is not explicitly platform-neutral and names no platform or version. Use the 2.0 legacy rules only when the user explicitly selects 2.0 or 2.0 Fast.
 - Deliver one final prompt in one fenced code block.
 - In final prompts, default to plain upload-order labels such as `图片1`、`视频1`、`音频1`; do not output `@` handles or UUIDs unless the current user explicitly requests them for that output.
-- For Seedance 2.5 new/reference generation, apply the standing audio/text personal default from `references/seedance-2-rules.md`. It does not apply to edit, extension, or bridge preservation.
+- For Seedance 2.5 new/reference generation, apply the adapter's standing final sentence `不添加字幕，不添加背景音乐。` outside any heading. It does not apply to edit, extension, or bridge preservation.
 - Favor restrained performance and do not add unsupported people, props, gestures, emotions, or events.
 - Apply authority per field: current user > active project/source > explicitly authorized readable-asset dimension > personal default > platform default.
 
@@ -57,8 +57,9 @@ Keep supplied filenames, platform handles, UUIDs, and upload order internally so
 
 For new or reference generation, compile one material-responsibility map internally using `素材标签：具体用途`. Use the active platform adapter to decide whether that map must appear in the final prompt.
 
-- When the map must be rendered, bind each material once, then use semantic character, prop, and scene names in the timeline.
-- Assign every fact to one rendered owner and let the active platform adapter decide its placement. Resolve equivalent layouts internally; never ask the user to choose among them.
+- When material responsibilities must be rendered, bind each material once under its owning field, then use semantic character, prop, and scene names in the timeline.
+- Assign every fact to one rendered owner and let the active platform adapter decide its placement. For Seedance new/reference output, render `主体：` whenever any character, animal, product, vehicle, or key prop appears at any point in the finished clip; place every explicit character or prop reference and the subject's stable source-backed facts there. An empty opening frame does not remove `主体：` when a subject appears later. Omit `主体：` only when the entire clip remains a pure environment or empty shot with no subject at any time. Render `场景：` for scene-reference materials together with location, topology, light, atmosphere, and persistent ambience. Put a look/style reference in `风格：`, and ordinarily put motion, camera, storyboard, or time-scoped material roles in the relevant `情节` shot. Do not render a generic `参考素材：` heading. Resolve equivalent layouts internally; never ask the user to choose among them.
+- When one coarse white-model video governs the whole clip, render one unheaded opening sentence before `主体：` that names only the motion, blocking, camera, cut, or explicitly requested light dimensions actually borrowed. Put color/shape-to-character or prop correspondence at the start of `主体：`, then use semantic names without repeating the video label in every shot.
 - Name the exact borrowed dimensions; never write a bare `图片2：参考图`.
 - Do not write `定义为` when one unambiguous subject already has a supplied name. Use `图片1中[稳定特征]的主体作为[角色名]` only when selecting among multiple subjects or merging several sources for one identity.
 - If a material applies only to one interval, state that interval in its responsibility line rather than repeating the label in every shot.
@@ -68,7 +69,7 @@ Classify facts as exact, semantic, mutable, or unresolved. Exact dialogue, visib
 
 ## 3. Resolve duration and feasibility
 
-For every Seedance 2.5 new or reference generation, obtain the intended total duration before final rendering. If it is missing, ask for it; do not invent it. This includes previsualization when the final prompt is expected to use the unified timeline formula.
+For every Seedance 2.5 new or reference generation, obtain the intended total duration before final rendering. If it is missing, ask for it; do not invent it. This includes previsualization when the final prompt is expected to use the unified timeline formula. Exception: when a coarse white-model video supplies the whole clip's timing and cuts, inherit them without asking for or separately writing total duration. Reuse readable source ranges; otherwise preserve shot order and cuts without inventing seconds.
 
 Judge action load, subject load, reference load, dialogue occupancy, framing feasibility, and continuity before drafting.
 
@@ -84,8 +85,8 @@ Silently define:
 
 - overall goal and visual priority
 - internal material-responsibility map and whether it must be rendered
-- subject, scene, style, light, and only active sound/text
-- total duration and continuous, non-overlapping time ranges
+- subject facts, scene, style, light, and only active sound/text
+- the active duration rule and, when required, continuous non-overlapping time ranges
 - each shot's framing/camera, visible subjects and spatial relationship, current action phase, action/dialogue, camera's visible result, visual focus, ending state, and next handoff
 - global locks and only evidence-backed targeted exclusions
 
@@ -95,14 +96,14 @@ When a cut continues the same event, inherit the current phase, contact point, d
 
 ### New and reference generation
 
-Render through the unified generation structure in `references/seedance-2-rules.md`. That adapter is the single source of truth for Seedance heading order, timeline syntax, dialogue, sound, visible text, and the standing subtitle/music default. Duration changes timeline density, not the grammar.
+Render through the unified generation structure in `references/seedance-2-rules.md`. That adapter is the single source of truth for Seedance heading order, timeline syntax, dialogue, sound, visible text, subject-presence placement, and the standing final subtitle/music sentence. Duration changes timeline density, not the grammar, except for the explicit coarse-white-model source-timing route in `references/seedance-2.5-special-workflows.md`.
 
 Rules:
 
 - Treat `画面重心` as the rendered form of internal viewer priority; do not create a second explanation of the same idea.
 - For a main camera movement, pair the term with its visible result. A self-explanatory fixed camera or shot size needs no redundant explanation.
-- Keep character appearance and material roles global. Repeat in a shot only a visible change or a continuity-critical state.
-- Do not repeat material labels in the timeline after a rendered `参考素材：` map unless the user supplies an exact time-scoped handle requirement.
+- Keep stable subject details and subject-material roles in `主体：`; keep scene materials and persistent environment in `场景：`. Repeat in a shot only a visible change or a continuity-critical state.
+- Do not repeat material labels in the timeline after they have appeared in `主体：`, `场景：`, or `风格：`, unless the user supplies an exact time-scoped handle requirement.
 
 ### Edit, extension, and bridge
 
@@ -128,8 +129,8 @@ Check in this order:
 
 1. exact dialogue, text, duration, interval, shot order, material order and role; preserve a literal handle only when the current user explicitly requests it
 2. every supplied material accounted for and bound once with a specific responsibility
-3. every rendered fact has one owner and no equivalent field-layout choice is exposed
-4. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-default rules all pass
+3. every visible character, animal, product, vehicle, or key prop has a rendered `主体：` owner, including when the opening frame is empty; only a clip that remains a pure environment or empty shot throughout may omit it
+4. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-final-sentence rules all pass
 5. framing, visible roster, spatial relationship, action phase, endpoint, and handoff continuity
 6. correct task grammar for edit, extension, bridge, or platform-neutral output
 7. no duplicate subject/scene/style fact, material binding, visual-priority explanation, negative rule, or appearance description
@@ -143,7 +144,7 @@ If a check fails, repair only the failed field and run the checks again. Default
 Ask one grouped question and wait only when:
 
 - a required asset or boundary state is missing
-- a final Seedance 2.5 new/reference prompt lacks total duration
+- a final Seedance 2.5 new/reference prompt lacks total duration and no coarse-white-model source-timing exception applies
 - required exact dialogue, narration, or visible text is missing
 - hard locks conflict
 - two well-supported creative readings would materially change the result
@@ -154,6 +155,9 @@ Ask one grouped question and wait only when:
 - Do not keep both timestamped and non-timestamped generation defaults.
 - Do not use `定义为` as routine boilerplate.
 - Do not repeat material responsibilities inside every shot.
+- For Seedance new/reference output, do not render a generic `参考素材：` heading. Put subject-reference material in `主体：`, scene-reference material and environment in `场景：`, and other material only in its owning field.
+- Do not render a `全局补充：` heading. Put an owned whole-clip fact in its normal field; when a genuine cross-shot control has no better owner, append one natural unheaded sentence without duplicating earlier content.
+- Do not omit `主体：` merely because the opening frame is empty or a subject reference is absent; if a subject appears anywhere, render the field using only available source-backed facts.
 - Do not write the same camera, appearance, visual priority, or prohibition globally and per shot.
 - Do not expose choices between synonymous wording, equivalent field layouts, or duplicate placements. Resolve them by field ownership and ask only when different outcomes or hard locks materially conflict.
 - Do not expose EvidenceLedger, ReferenceMap, LockLedger, or MotionSpec names in the final prompt.
