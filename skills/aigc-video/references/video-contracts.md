@@ -18,6 +18,9 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 - `expression_request`: default | explicit_vibe
 - `project_scope`: optional project/episode/scene/shot ids
 - `requested_duration`
+- `structure_review`: not_required | pending | confirmed — task level, aggregated from the per-shot `structure_gate: none | echo | blocking` defined in `SKILL.md`; any blocking shot makes the task `pending`
+
+For optimization of an existing accepted prompt, strict edit, extension, bridge, observed-result review, and local repair, inherit a source-backed or previously accepted structure as `confirmed` while composition remains preserved. Reopen only the affected shot rows when the operation changes a material structural field; each reopened shot re-enters at the gate its new structure source implies (`echo` for text-specified changes, `blocking` for visual reads).
 
 ## EvidenceLedger
 
@@ -30,6 +33,8 @@ For each fact record:
 - asset state: available_readable | anchor_only | missing
 
 Apply precedence per field, not to a whole document. A newer composition instruction does not erase unrelated current dialogue or identity facts.
+
+When the current user replaces a video, layout, storyboard, image, or other asset, invalidate only facts sourced from the replaced asset whose fields fall within that asset's operational role, boundary scope, or borrowed dimensions. Preserve unrelated current-user and project locks such as identity, exact dialogue, and duration. Mark directly dependent shot fields unresolved until they are rebuilt from the replacement asset. If same-named, similarly named, older, and newer files could be confused, verify the full source identifier or path before reading or reviewing one; a matching base filename is not evidence that it is the intended asset.
 
 ## ReferenceMap
 
@@ -106,7 +111,7 @@ World presence never implies membership in the visible roster. A terminal Bounda
   - sparse terminal BoundaryState
   - next handoff: only the subset of the terminal state that a later shot must inherit
 
-For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared.
+For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared. For A/B structure review, deliver one table built from the shared core; only a field deliberately placed in a variant overlay carries two labeled A/B values in its row — never two full parallel tables.
 
 Externalize the visible roster, visible action chain, and only the causal clues needed to read them. Keep offscreen world continuity and unused boundary fields internal.
 

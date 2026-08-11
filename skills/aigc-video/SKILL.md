@@ -31,7 +31,7 @@ Load only the references required by the request.
 
 - Respond in Chinese and lead with the result.
 - Default to 即梦 Seedance 2.5 when the request is not explicitly platform-neutral and names no platform or version. Use the 2.0 legacy rules only when the user explicitly selects 2.0 or 2.0 Fast.
-- Deliver one final prompt in one fenced code block.
+- Deliver one final prompt in one fenced code block only after any required structure confirmation is complete. While structure confirmation is pending, deliver only the compact structure table and wait.
 - In final prompts, default to plain upload-order labels such as `图片1`、`视频1`、`音频1`; do not output `@` handles or UUIDs unless the current user explicitly requests them for that output.
 - For Seedance 2.5 new/reference generation, apply the adapter's standing final sentence `不添加字幕，不添加背景音乐。` outside any heading. It does not apply to edit, extension, or bridge preservation.
 - Favor restrained performance and do not add unsupported people, props, gestures, emotions, or events.
@@ -49,6 +49,18 @@ Record the platform/version, output mode, and one base task kind:
 
 Record optimization, project scope, Vibe, A/B, previsualization, and ultra-long mode separately. They do not replace the base task kind. Platform-neutral final prompts remain owned here but receive no Seedance-specific syntax.
 
+Record a per-shot `structure_gate` and aggregate it into the task-level `structure_review` (`not_required | pending | confirmed`). Structure fields are: visible roster, screen-left-to-right order, foreground/midground/background placement, occlusion, and dialogue ownership. Judge per shot, not per task:
+
+- `none`: a pure single-character shot whose structure fields are all given in the current user's text. No table for this shot.
+- `echo`: multiple characters or shared composition, but every structure field is explicitly given in the current user's text. This shot's structure row is delivered as a non-blocking `镜头结构回显` in the same turn as the final prompt, placed before the prompt so the user can check the transcription.
+- `blocking`: any structure field must be read from a visual asset (coarse model, layout, storyboard frame, or generated result) — regardless of character count. This shot's row goes into a `镜头结构确认` table and the task waits.
+
+Aggregation: any `blocking` shot makes the task `pending`; no final prompt renders. Otherwise the task is `not_required`; echo rows, when present, accompany the final prompt in the same turn. User confirmation turns the blocking shots `confirmed`. When blocking and echo shots coexist, deliver one combined table this turn, marking each row `待确认` or `同轮回显`; after confirmation, do not repeat the echo rows — render the final prompt directly.
+
+Explicit requests: 「先按结构确认流程处理」 upgrades every shot to `blocking`. 「不用结构表」 or 「跳过结构确认」 skips the table entirely; the structure fields are still resolved internally. A speed request such as 「直接给我提示词」 or 「尽快输出」 is a delivery preference and does not downgrade `blocking`.
+
+For optimization of an existing accepted prompt, strict edit, extension, bridge, observed-result review, or local repair, inherit the source or previously accepted structure as `confirmed` when the operation preserves composition. When the requested change alters character identity, visible roster, framing, camera side, screen order, depth placement, occlusion, dialogue ownership, or a structure-bearing asset, return only the affected shots to the gate their new structure source implies: `echo` when the change is fully specified in the current user's text, `blocking` when it must be read from a visual asset. A later user correction to identity, framing, blocking, dialogue ownership, or asset version re-gates the affected shots the same way.
+
 ## 2. Build evidence, material roles, and locks
 
 Classify each asset as readable, label-only, or missing. Assign every supplied asset one operational role or retain it as evidence only. Never silently drop or merge an asset.
@@ -58,8 +70,7 @@ Keep supplied filenames, platform handles, UUIDs, and upload order internally so
 For new or reference generation, compile one material-responsibility map internally using `素材标签：具体用途`. Use the active platform adapter to decide whether that map must appear in the final prompt.
 
 - When material responsibilities must be rendered, bind each material once under its owning field, then use semantic character, prop, and scene names in the timeline.
-- Assign every fact to one rendered owner and let the active platform adapter decide its placement. For Seedance new/reference output, render `主体：` whenever any character, animal, product, vehicle, or key prop appears at any point in the finished clip; place every explicit character or prop reference and the subject's stable source-backed facts there. An empty opening frame does not remove `主体：` when a subject appears later. Omit `主体：` only when the entire clip remains a pure environment or empty shot with no subject at any time. Render `场景：` for scene-reference materials together with location, topology, light, atmosphere, and persistent ambience. Put a look/style reference in `风格：`, and ordinarily put motion, camera, storyboard, or time-scoped material roles in the relevant `情节` shot. Do not render a generic `参考素材：` heading. Resolve equivalent layouts internally; never ask the user to choose among them.
-- When one coarse white-model video governs the whole clip, render one unheaded opening sentence before `主体：` that names only the motion, blocking, camera, cut, or explicitly requested light dimensions actually borrowed. Put color/shape-to-character or prop correspondence at the start of `主体：`, then use semantic names without repeating the video label in every shot.
+- Assign every fact to one rendered owner and bind each material once. The active platform adapter owns heading placement: for Seedance output, `references/seedance-2-rules.md` is the single source of truth for `主体：`/`场景：`/`风格：` ownership, subject-presence rules, and the coarse white-model opening sentence. Resolve equivalent layouts internally; never ask the user to choose among them.
 - Name the exact borrowed dimensions; never write a bare `图片2：参考图`.
 - Do not write `定义为` when one unambiguous subject already has a supplied name. Use `图片1中[稳定特征]的主体作为[角色名]` only when selecting among multiple subjects or merging several sources for one identity.
 - If a material applies only to one interval, state that interval in its responsibility line rather than repeating the label in every shot.
@@ -67,9 +78,11 @@ For new or reference generation, compile one material-responsibility map interna
 
 Classify facts as exact, semantic, mutable, or unresolved. Exact dialogue, visible text, material order and roles, durations, edit intervals, shot order, and explicit ending cues must not drift. Read `references/video-contracts.md` for the complete internal contracts.
 
+Treat character identity, visible roster, screen order, foreground/background placement, occlusion, dialogue ownership, and source version as material production facts. When readable evidence does not resolve one of them, mark it unresolved and ask the user; never convert it into a bounded assumption.
+
 ## 3. Resolve duration and feasibility
 
-For every Seedance 2.5 new or reference generation, obtain the intended total duration before final rendering. If it is missing, ask for it; do not invent it. This includes previsualization when the final prompt is expected to use the unified timeline formula. Exception: when a coarse white-model video supplies the whole clip's timing and cuts, inherit them without asking for or separately writing total duration. Reuse readable source ranges; otherwise preserve shot order and cuts without inventing seconds.
+For every Seedance 2.5 new or reference generation, obtain the intended total duration before final rendering. If it is missing, ask for it — grouped into the same round as the structure table when one is pending; do not invent it. This includes previsualization when the final prompt is expected to use the unified timeline formula. Exception: when a coarse white-model video supplies the whole clip's timing and cuts, inherit them without asking for or separately writing total duration. Reuse readable source ranges; otherwise preserve shot order and cuts without inventing seconds.
 
 Judge action load, subject load, reference load, dialogue occupancy, framing feasibility, and continuity before drafting.
 
@@ -79,9 +92,24 @@ Judge action load, subject load, reference load, dialogue occupancy, framing fea
 - Do not delete or reorder locked beats to make timing fit. Compress mutable description and camera complexity first.
 - Treat provider stability ranges as recommendations, not hard rejection limits. Read `references/seedance-capability-matrix.md` for exact hard limits and dated recommendations.
 
-## 4. Build one canonical MotionSpec
+## 4. Confirm structure, then build one canonical MotionSpec
 
-Silently define:
+When `structure_review` is `pending`, first compare every source-backed row directly with the readable source frame or interval, then deliver a compact `镜头结构确认` table with:
+
+- project shot id and local shot number when both matter
+- shot size, angle, and camera mode
+- visible character roster only
+- screen-left to screen-right order when material
+- foreground, midground, background, occlusion, and partial visibility
+- exact dialogue owner and line when active
+- locked action and visible endpoint
+- one concise locked performance intention such as restrained argument, mild intoxication, doubt, or reluctance; do not yet expand it into micro performance
+
+Use this table as a review view of the MotionSpec, not as a second fact system. If a source frame is unreadable or supports more than one materially different mapping, label the field unresolved and ask rather than filling it. Return only the structure table plus one grouped confirmation request — fold any missing total duration, exact dialogue, or asset question into the same round. When echo shots coexist with blocking shots, include their rows in this table marked `同轮回显`; blocking rows are marked `待确认`. Do not render the platform prompt or enrich performance until the user confirms the blocking rows; after confirmation, do not repeat the echo rows.
+
+When the task has no blocking shot but contains echo shots, render a compact `镜头结构回显` table immediately before the final prompt in the same turn. It is a transcription check, not a question; do not wait for confirmation.
+
+When `structure_review` is `confirmed` or `not_required`, define:
 
 - overall goal and visual priority
 - internal material-responsibility map and whether it must be rendered
@@ -93,6 +121,8 @@ Silently define:
 When a cut continues the same event, inherit the current phase, contact point, direction, and active effect state; advance the event instead of restarting it.
 
 ## 5. Render the final prompt
+
+Enter this stage only when `structure_review` is `confirmed` or `not_required`. Never treat silence after a pending structure table as confirmation.
 
 ### New and reference generation
 
@@ -119,7 +149,7 @@ Preserve the same MotionSpec and requested structure, but omit Seedance handles,
 
 ## 6. Expression and language
 
-Preserve a mature prompt when its production meaning is already complete. Otherwise translate emotional intent into visible body/contact, gaze, breath/pause, expression, distance, object handling, light, or sound response. Do not add flashbacks, symbols, people, or plot events merely to display emotion.
+Preserve a mature prompt when its production meaning is already complete. Otherwise, after required structure confirmation, translate emotional intent into visible body/contact, gaze, breath/pause, expression, distance, object handling, light, or sound response. Do not add flashbacks, symbols, people, or plot events merely to display emotion.
 
 Use complete natural Chinese sentences inside the stable structure. Remove repeated boosters, background explanations that cannot be seen, and different wordings of the same lock. `结构固定` does not mean `每个字段必须写满`.
 
@@ -127,22 +157,26 @@ Use complete natural Chinese sentences inside the stable structure. Remove repea
 
 Check in this order:
 
-1. exact dialogue, text, duration, interval, shot order, material order and role; preserve a literal handle only when the current user explicitly requests it
-2. every supplied material accounted for and bound once with a specific responsibility
-3. every visible character, animal, product, vehicle, or key prop has a rendered `主体：` owner, including when the opening frame is empty; only a clip that remains a pure environment or empty shot throughout may omit it
-4. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-final-sentence rules all pass
-5. framing, visible roster, spatial relationship, action phase, endpoint, and handoff continuity
-6. correct task grammar for edit, extension, bridge, or platform-neutral output
-7. no duplicate subject/scene/style fact, material binding, visual-priority explanation, negative rule, or appearance description
-8. no unsupported invention or reference leakage
-9. `agents/openai.yaml`, reference routing, and regression cases remain consistent with this file after maintenance
+1. `structure_review` is `confirmed` or `not_required`; a pending task cannot render a final prompt
+2. every source-backed structure row has been compared directly with its readable source frame or interval; material ambiguity remains unresolved rather than guessed
+3. exact dialogue, text, duration, interval, shot order, material order and role; preserve a literal handle only when the current user explicitly requests it
+4. every supplied material accounted for and bound once with a specific responsibility
+5. every visible character, animal, product, vehicle, or key prop has a rendered `主体：` owner, including when the opening frame is empty; only a clip that remains a pure environment or empty shot throughout may omit it
+6. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-final-sentence rules all pass
+7. framing, visible roster, screen order, depth relationship, occlusion, action phase, endpoint, and handoff continuity
+8. every visible prop-handling action inside the crop defines the active hand, contact point, necessary support or body counterbalance, transition, and visible endpoint
+9. correct task grammar for edit, extension, bridge, or platform-neutral output
+10. no duplicate subject/scene/style fact, material binding, visual-priority explanation, negative rule, or appearance description
+11. no unsupported invention, stale replaced-asset fact, or reference leakage
+12. `agents/openai.yaml`, reference routing, and regression cases remain consistent with this file after maintenance
 
-If a check fails, repair only the failed field and run the checks again. Default delivery is at most one useful judgment or risk sentence followed by one Chinese final prompt in one fenced code block.
+If a check fails, repair only the failed field and run the checks again. While structure confirmation is pending, deliver only the compact table and one confirmation request. Otherwise, default delivery is at most one useful judgment or risk sentence followed by one Chinese final prompt in one fenced code block.
 
 ## Stop conditions
 
 Ask one grouped question and wait only when:
 
+- required structure confirmation is pending
 - a required asset or boundary state is missing
 - a final Seedance 2.5 new/reference prompt lacks total duration and no coarse-white-model source-timing exception applies
 - required exact dialogue, narration, or visible text is missing
@@ -161,4 +195,5 @@ Ask one grouped question and wait only when:
 - Do not write the same camera, appearance, visual priority, or prohibition globally and per shot.
 - Do not expose choices between synonymous wording, equivalent field layouts, or duplicate placements. Resolve them by field ownership and ask only when different outcomes or hard locks materially conflict.
 - Do not expose EvidenceLedger, ReferenceMap, LockLedger, or MotionSpec names in the final prompt.
+- Do not infer character identity, visible roster, screen order, occlusion, dialogue ownership, or which similarly named asset is current when the evidence is insufficient.
 - Do not narrate previous failures, revisions, tests, or debugging intent inside the current executable prompt.

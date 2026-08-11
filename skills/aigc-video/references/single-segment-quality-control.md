@@ -2,6 +2,8 @@
 
 Use this reference for complex subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family prompts.
 
+These checks assume the structure gate in `SKILL.md` has already run: a shot whose visible roster, screen order, depth placement, occlusion, or dialogue ownership must be read from a visual asset needs its `镜头结构确认` row confirmed before a final prompt is audited here.
+
 ## Quality order
 
 Check only what the shot needs, in this order:

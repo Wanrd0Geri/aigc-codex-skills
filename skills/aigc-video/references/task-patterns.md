@@ -98,8 +98,10 @@ Prioritize beat ownership and action timing.
 
 Use this pattern when the user wants a low-cost multi-shot generation to inspect composition, camera position or direction, framing, blocking, crop, screen direction, foreground/background placement, or occlusion rather than to judge the complete performance.
 
+预演 does not bypass the structure gate: a shot whose structure fields must be read from a visual asset still requires `镜头结构确认` per `SKILL.md` before the previsualization prompt renders. The structure table verifies the reading; the previsualization verifies execution.
+
 - Preserve any user-supplied shot count and order, reference roles, camera relationships, framing, visible roster, subject positions, foreground/background layers, and occlusion needed for the inspection. Do not assume five shots, cap a larger shot list, or merge shots merely to fit a default preview template.
-- A final Seedance 2.5 previsualization prompt uses the active adapter's canonical timeline. If total duration is missing, ask for it; once supplied, do not delete or combine locked shots to make the allocation easier.
+- A final Seedance 2.5 previsualization prompt uses the active adapter's canonical timeline. If total duration is missing, ask for it — except when a coarse white-model video supplies the whole clip's timing and cuts; then inherit them per the duration rule in `SKILL.md` without asking. Once supplied or inherited, do not delete or combine locked shots to make the allocation easier.
 - Select one representative settled or mid-action state for each shot. Establish that state at cut-in instead of spending the short shot entering, starting, stopping, turning, or completing a full dialogue/action cycle, unless that transition is itself the inspection target.
 - Let each shot carry one readable state and only the minimum natural motion needed to keep it alive. When hard cuts show the same ongoing event, inherit its current phase rather than restarting it from a new angle.
 - Downscope dialogue, lip sync, travel phases, environmental motion, secondary effects, and connective performance when they do not affect the requested inspection; preserve any field the user explicitly keeps.

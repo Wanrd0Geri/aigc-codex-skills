@@ -89,6 +89,8 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 
 Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling -> environmental or sound response. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
+When prop handling is the main action, define the visible active hand, contact, necessary support or counterbalance, transition, and endpoint. Mention the supporting hand only when it is inside the crop and leaving it undefined would make the pose or action materially ambiguous.
+
 When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
 
 ## Cross-Shot Action Phase
@@ -102,6 +104,7 @@ Use wording such as `承接上一镜同一次发射动作` only when it resolves
 When the user requests dialogue, speech, lip sync, or visible mouth movement:
 
 - State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
+- For visible multi-character dialogue, establish the attention handoff: speaker -> addressed listener -> only the materially affected visible reaction. Use at most one necessary listener response per main dialogue beat unless the source locks more. Do not make every visible character react at once or stare toward the same direction throughout unless the source explicitly requires it.
 - Fit dialogue to the actual speaking time, natural delivery speed, pauses, reactions, and stable visible-mouth time. A short clip may contain several brief lines when the timeline genuinely gives them room; a long sentence may already overload one short shot.
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
 - For Seedance-family output, use the active Seedance adapter for dialogue and sound placement. For platform-neutral output, preserve the exact line and ownership in ordinary natural language.
