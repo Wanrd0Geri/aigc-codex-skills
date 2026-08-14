@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Video"
-  short_description: "分阶段锁定结构并生成或审查视频提示词。"
-  default_prompt: "用 $aigc-video 根据 brief、素材、项目上下文或已生成成片写出、优化或回检视频提示词；需要从素材读取站位、遮挡或可见名单的镜头，先输出镜头结构确认表等我确认再出提示词；多人站位已用文字写清的，结构回显表随最终提示词同轮给出；纯单人且文字写清的直接出最终提示词。"
+  short_description: "分阶段锁定镜头结构并生成具有连续动态世界联动的视频提示词。"
+  default_prompt: "用 $aigc-video 根据 brief、素材或成片写出、优化或回检视频提示词，先处理必要的结构确认，再把人物、服装、道具、环境介质、光影和背景组织成连续且有因果反馈的动态世界。"
 policy:
   allow_implicit_invocation: true
