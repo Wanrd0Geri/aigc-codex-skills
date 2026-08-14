@@ -18,7 +18,8 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 - `expression_request`: default | explicit_vibe
 - `project_scope`: optional project/episode/scene/shot ids
 - `requested_duration`
-- `structure_review`: not_required | pending | confirmed — task level, aggregated from the per-shot `structure_gate: none | echo | blocking` defined in `SKILL.md`; any blocking shot makes the task `pending`
+- `world_activity`: active | inherited | intentionally_still — resolve on every task; default new/reference generation to active and source operations to inherited
+- `structure_review`: not_required | pending | confirmed — task level, aggregated from the per-shot `structure_gate: none | echo | blocking` defined in `SKILL.md`; any blocking shot or materially required unresolved source dynamic makes the task `pending`
 
 For optimization of an existing accepted prompt, strict edit, extension, bridge, observed-result review, and local repair, inherit a source-backed or previously accepted structure as `confirmed` while composition remains preserved. Reopen only the affected shot rows when the operation changes a material structural field; each reopened shot re-enters at the gate its new structure source implies (`echo` for text-specified changes, `blocking` for visual reads).
 
@@ -80,6 +81,7 @@ Use a BoundaryState for a source opening or ending and for a shot's visible star
 - subject world relationship plus screen position, scale, or occlusion only when materially fixed
 - facing, gaze, pose, contact, and active effect or light state only when the boundary depends on them
 - active action identity and phase when the next shot continues the same event rather than starting a new one
+- active world driver, direction, contact disturbance, and residual phase only when the boundary depends on them
 - camera framing, action-axis side, or motion vector only when it changes or must carry across the boundary
 
 World presence never implies membership in the visible roster. A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
@@ -93,10 +95,12 @@ World presence never implies membership in the visible roster. A terminal Bounda
 - visual anchor
 - emotional vector
 - primary performance carrier
-- total duration and continuous, non-overlapping time ranges that start at zero and end exactly at total duration
+- dynamic-world layer: `world_activity`, primary physical driver, visible receivers, subject-to-world and world-to-subject coupling, material-specific delay/amplitude/damping, depth propagation, and only the residual states that must persist
+- total duration and continuous, non-overlapping time ranges that start at zero and end exactly at total duration; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
 - references and any active source-backed audio, dialogue, or visible text
 - shots:
   - purpose
+  - `world_dynamics_review`: planned | source_backed | inherited | intentionally_still | unresolved — use this only to decide the content and blocking state of `环境动态确认`; never render the enum value or a Chinese status prefix
   - sparse visible-start BoundaryState
   - shot size, angle, and camera mode
   - current visible state and material spatial relationship
@@ -107,13 +111,14 @@ World presence never implies membership in the visible roster. A terminal Bounda
   - action chain and spatial causality: world axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, inherited phase when continuing the same event across a cut, and the immediate continuation after a reveal when the reveal is not the endpoint
   - effect outcome when blocking, redirecting, dismantling, absorbing, reflecting, or evading must remain distinct
   - performance carrier
+  - local living-world chain: inherited or current driver -> visible body/attached/contact/ambient/surface/background response -> residual state, only when active and supported
   - space, light, and source-backed sound only when active
   - sparse terminal BoundaryState
   - next handoff: only the subset of the terminal state that a later shot must inherit
 
-For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared. For A/B structure review, deliver one table built from the shared core; only a field deliberately placed in a variant overlay carries two labeled A/B values in its row — never two full parallel tables.
+For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. Keep the established world driver, direction, and material system shared unless the user explicitly makes world behavior the comparison variable. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared. For A/B structure review, deliver one table built from the shared core; only a field deliberately placed in a variant overlay carries two labeled A/B values in its row — never two full parallel tables.
 
-Externalize the visible roster, visible action chain, and only the causal clues needed to read them. Keep offscreen world continuity and unused boundary fields internal.
+Externalize the visible roster, visible action chain, and the minimum dynamic-world clues needed to make the shot physically continuous. When a structure table is active, expose the governing driver/direction, selected visible response or contact, and residual/handoff state once under `环境动态确认`; do not duplicate the full shot paragraph there. Keep offscreen world continuity, unused receivers, and unused boundary fields internal.
 
 Mark project-sourced facts separately from bounded interpretation. Never present an interpretation as a locked project fact.
 

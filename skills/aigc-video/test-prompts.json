@@ -487,7 +487,7 @@
   {
     "id": "video-white-model-01-opening-reference-and-subject-map",
     "prompt": "粗模逐镜结构已经确认，直接输出最终提示词。视频1是黄色、蓝色、绿色三个人形粗模，只参考人物动作、站位、移动路线、运镜和切镜；图片1、图片2、图片3依次是三个最终角色。场景参考图片4。沿用视频1的时长和切镜，不要问总时长。",
-    "expected": "Starts with one natural unheaded sentence that names only 视频1的人物动作、站位、移动路线、运镜和切镜, places the yellow/blue/green correspondence to 图片1/图片2/图片3 at the start of 主体, puts 图片4 in 场景, preserves source duration and cuts without asking for or separately writing total duration, and does not invent light reference, missing-scene prose, viewport exclusions, a 参考素材 heading, or a 全局补充 heading."
+    "expected": "Starts with one natural unheaded sentence that names only 视频1的人物动作、站位、移动路线、运镜和切镜, places the yellow/blue/green correspondence to 图片1/图片2/图片3 at the start of 主体, and puts 图片4 in 场景. It preserves source duration and cuts without asking for or separately writing total duration; when exact cut ranges are unreadable, it renders ordered 镜头N entries without time ranges and never invents seconds. It does not invent light reference, missing-scene prose, viewport exclusions, a 参考素材 heading, or a 全局补充 heading."
   },
   {
     "id": "video-white-model-02-text-scene-and-no-pink-elephant",
@@ -507,7 +507,7 @@
   {
     "id": "video-structure-review-01-multicharacter-blocking-pending",
     "prompt": "视频1是五个人形粗模，图片1到图片5是五名正式角色。六个镜头里有人物同框、前后景遮挡和横移揭示顺序，结构还没有确认。罗大娘要克制地据理力争，徐大叔有些微醺。请写最终 Seedance 提示词。",
-    "expected": "Does not render a final platform prompt. It first outputs only a compact 镜头结构确认 table covering each shot's local/source id when material, framing and angle, visible roster, screen order, depth and occlusion, dialogue owner, locked action, endpoint, and the concise locked intentions 克制地据理力争 and 微醺 without expanding micro performance. It ends with one concise confirmation request and treats any unreadable mapping as unresolved rather than guessing."
+    "expected": "Does not render a final platform prompt. It first outputs only a compact 镜头结构确认 table covering each shot's local/source id when material, framing and angle, visible roster, screen order, depth and occlusion, dialogue owner, locked action, endpoint, concise locked intentions, and one 环境动态确认 cell. The cell directly states the moving world elements and causal relationship in one natural sentence or no more than three semicolon-separated groups, without exposing planned, source-backed, inherited, intentionally-still, 规划, 素材承接, or other status labels and without copying the full shot prompt. It ends with one concise confirmation request and treats any unreadable mapping or materially required source dynamic as unresolved rather than guessing."
   },
   {
     "id": "video-structure-review-02-all-single-character-direct-final",
@@ -527,7 +527,7 @@
   {
     "id": "video-structure-review-05-replacement-asset-field-scope",
     "prompt": "上一轮六镜结构已经确认。现在用视频2替换视频1，只更新镜头3和镜头4的人物站位、遮挡和运镜；角色身份、15秒总时长、镜头数量、顺序和全部台词不变。",
-    "expected": "Invalidates and rebuilds only shots 3 and 4 fields sourced from the replaced layout dimensions, preserves identity, total duration, shot count and order, and exact dialogue, then returns only the affected structure rows for confirmation. It does not clear the whole MotionSpec, silently keep stale video1 blocking, or render the final prompt before reconfirmation."
+    "expected": "Invalidates and rebuilds only shots 3 and 4 fields sourced from the replaced layout dimensions, preserves identity, total duration, shot count and order, exact dialogue, and any unaffected world dynamics, then returns only the affected structure rows for confirmation with one 环境动态确认 cell per row. It does not clear the whole MotionSpec, silently keep stale video1 blocking, or render the final prompt before reconfirmation."
   },
   {
     "id": "video-dialogue-02-group-attention-handoff",
@@ -557,21 +557,96 @@
   {
     "id": "video-structure-gate-01-single-character-visual-read-blocking",
     "prompt": "视频1是单人粗模。两镜共10秒：镜头1她沿巷子走近，站位随便；镜头2她停在门框边，站在门框哪一侧、被门帘遮住多少，都按视频1里的来。写最终 Seedance 提示词。",
-    "expected": "Marks shot 2 as blocking because its placement and occlusion must be read from the video even though only one character is visible, so the task is pending. It returns the 镜头结构确认 row for shot 2 stating the placement and occlusion values read from video1, does not render the final prompt, and does not treat the single-character roster as grounds to skip confirmation."
+    "expected": "Marks shot 2 as blocking because its placement and occlusion must be read from the video even though only one character is visible, so the task is pending. It returns the 镜头结构确认 row for shot 2 stating the placement and occlusion values read from video1 plus one concise 环境动态确认 cell, does not render the final prompt, and does not treat the single-character roster as grounds to skip confirmation."
   },
   {
     "id": "video-structure-gate-02-multicharacter-text-given-echo",
     "prompt": "8秒单镜最终 Seedance 提示词：正面中景固定机位，画面左边是乐奶奶，右边是罗大娘，两人同排站立无遮挡，罗大娘对镜头外说道：\u201c走吧。\u201d",
-    "expected": "Classifies the shot as echo because the composition is shared by two characters but every structure field is explicitly given in text and nothing requires reading a visual asset. It delivers a compact 镜头结构回显 row covering roster, screen order, and dialogue owner immediately before one final prompt in the same turn, and does not wait for confirmation or ask a structure question."
+    "expected": "Classifies the shot as echo because the composition is shared by two characters but every structure field is explicitly given in text and nothing requires reading a visual asset. It delivers a compact 镜头结构回显 row covering roster, screen order, dialogue owner, and one 环境动态确认 cell immediately before one final prompt in the same turn. The dynamic cell may use low-risk planned restrained responses from existing visible materials, does not invent weather or scene objects, and does not wait for confirmation."
   },
   {
     "id": "video-recovery-04-text-specified-repair-echo-not-blocking",
     "prompt": "生成结果里镜头5构图不对。我现在要求把曲伯放到画面左侧近前景虚化过肩，罗大娘保持右侧主体；其他五镜和全部台词不变。给我镜头5的替换提示词。",
-    "expected": "Re-gates only shot 5 at echo because the new structure is fully specified in the current user's text for a shared composition and no visual asset must be read. It returns the 镜头结构回显 row for shot 5 together with the complete anchored shot-5 replacement in the same turn, does not block on confirmation, and does not reopen or rewrite other shots or dialogue."
+    "expected": "Re-gates only shot 5 at echo because the new structure is fully specified in the current user's text for a shared composition and no visual asset must be read. It returns the 镜头结构回显 row for shot 5 with one 环境动态确认 cell together with the complete anchored shot-5 replacement in the same turn, does not block on confirmation, and does not reopen or rewrite other shots or dialogue."
   },
   {
     "id": "video-structure-gate-03-explicit-skip-overrides-table",
     "prompt": "视频1是三人粗模，站位、遮挡都按视频里的来。不用结构表，直接写12秒最终 Seedance 提示词。",
-    "expected": "Treats 不用结构表 as an explicit skip of the structure table: it resolves roster, screen order, and occlusion from video1 internally and renders one final prompt directly without a confirmation or echo table. It still keeps the internally read structure consistent across shots, and does not treat a mere speed request as equivalent to this explicit skip."
+    "expected": "Treats 不用结构表 as an explicit skip of the structure table: it resolves roster, screen order, occlusion, and environment dynamics from video1 internally and renders one final prompt directly without a confirmation table, echo table, or 环境动态确认 column. It still keeps the internally read structure and dynamic state consistent across shots, and does not treat a mere speed request as equivalent to this explicit skip."
+  },
+  {
+    "id": "video-world-dynamics-01-shared-driver-material-response",
+    "prompt": "写一个8秒 Seedance 参考图生视频。图片1里女孩站在竹林小路，长发、宽袖和腰间小饰物清晰可见，前中后景都有竹叶。山风从画面左后方吹来，她缓慢回头。让画面像一个真实流动的世界，不要只是人物动。",
+    "expected": "Resolves world_activity as active, binds 图片1 without inventing new scene elements, places the persistent left-rear wind and background response baseline in 场景, and writes one causal 情节 chain in which the turn propagates through hair, wide sleeves, and the waist accessory while bamboo at different depths responds to the same wind with different delay and amplitude. It keeps the turn primary, avoids synchronized whole-frame swaying, and adds no falling leaves, rain, water, animals, or unrelated event."
+  },
+  {
+    "id": "video-world-dynamics-02-two-way-contact-and-residual",
+    "prompt": "写一个6秒 Seedance 镜头：雨已经停了，男人从石阶走进现有的浅水，裤脚和外套下摆都是湿的，最后停下。重点是人物和水真的处在同一个世界里。",
+    "expected": "Uses the already-wet scene without restarting rain. It connects the step to water displacement, broken reflections or ripples, wet cloth inertia, and a residual wave that continues after the man stops. The response is local and causal, does not turn the water into a splash effect, and does not make every motion stop with the body."
+  },
+  {
+    "id": "video-world-dynamics-03-bounded-physics-no-invention",
+    "prompt": "图片1是室内半身人像：女人穿宽松丝质衬衫站在窗边，画面里只有她、窗帘、桌面和暖阳。写5秒 Seedance 提示词，让静态图片自然活起来。",
+    "expected": "Infers only low-risk motion from existing visible materials: breathing or weight settling, silk following the body with slight lag, restrained curtain movement if a gentle existing air current is selected, and corresponding light/shadow change where visible. It adds no water, rain, leaves, smoke, dust, pet, passerby, new prop, or story event, and it does not use a generic motion suffix."
+  },
+  {
+    "id": "video-world-dynamics-04-camera-motion-does-not-count",
+    "prompt": "写一个7秒 Seedance 纯环境空镜：清晨废弃站台，固定存在的薄雾、远处信号灯和潮湿地面；镜头缓慢向前推进。不要让它像一张被推近的照片。",
+    "expected": "Keeps the push-in as camera behavior but does not count it as world activity. It uses the existing fog, signal light occlusion, wet reflections, or another supported receiver as a restrained persistent system with depth propagation and continuation, while adding no person, vehicle, rain, animal, or key prop. It omits 主体 because the clip remains a pure environment."
+  },
+  {
+    "id": "video-world-dynamics-05-cross-shot-phase-continuity",
+    "prompt": "写10秒两镜 Seedance：同一阵右向左的山风中，镜头1女孩穿过竹林，镜头2切到她停在亭子近景。她的披风和竹叶要有真实惯性，切镜不能像风重新开始。",
+    "expected": "Establishes one right-to-left driver, carries its direction and active cloth/foliage phase across the cut, starts shot 2 from the inherited motion already underway, and lets the cape and nearby foliage settle with different damping after the girl stops. It does not reverse or restart the wind, replay the walk onset, or make cape and bamboo move in identical rhythm."
+  },
+  {
+    "id": "video-world-dynamics-06-intentionally-still-exception",
+    "prompt": "写5秒 Seedance 产品视频：白色背景固定机位，腕表只做匀速转台展示。背景、灯光和表带都必须完全静止，不要任何环境运动。",
+    "expected": "Runs the world-activity decision and resolves intentionally_still from the explicit lock rather than adding living-world motion. It preserves the single turntable action, stable silhouette, label/detail readability, background, light, and strap, and does not add wind, reflection drift, cloth motion, particles, handheld movement, or a 世界动态 heading."
+  },
+  {
+    "id": "video-world-dynamics-07-strict-edit-inherits-source",
+    "prompt": "严格编辑视频1：只把第2到4秒人物的蓝色外套改成灰色。原视频里风从右向左吹，衣摆和树叶正在摆动，水面余波还没散。其他内容全部不变。",
+    "expected": "Keeps the operation as a narrow strict edit and changes only coat color. It inherits the source wind direction, ongoing cloth and foliage phase, water residual state, action, camera, timing, and sound without adding or redesigning world dynamics, and it does not recast video1 as a reference-generation input."
+  },
+  {
+    "id": "video-world-dynamics-08-previsualization-downscope",
+    "prompt": "做一个12秒四镜白模预演，只检查人物站位、遮挡、机位和构图。每镜人物姿势不要像完全冻结，但环境动态不是这轮检查重点。结构已经确认。",
+    "expected": "Runs the dynamic-world step but downscopes it for composition previsualization. It gives each representative state only enough body settling or minimal secondary motion to avoid dead poses, does not add detailed wind, foliage, water, reflections, particles, or environmental interactions that obscure the inspection, and preserves all four shots and the confirmed structure."
+  },
+  {
+    "id": "video-world-dynamics-09-frozen-world-local-recovery",
+    "prompt": "生成结果里人物走路和运镜都对，只有衣摆、路边草叶和脚边尘土完全静止，像人物贴在背景上。请只修这一镜的世界反馈，不改人物动作、构图、运镜和其他镜头。",
+    "expected": "Treats the observed frozen-world failure as local. It preserves the accepted subject action, composition, and camera, then adds the smallest supported shared driver and causal chain across attached cloth, nearby existing grass, foot contact, and a decaying dust response. It does not rewrite the whole prompt, add water or weather, animate every background element, or use a generic environment-motion list."
+  },
+  {
+    "id": "video-world-review-01-echo-planned-column",
+    "prompt": "8秒单镜最终 Seedance：固定中景，女孩在画面左侧，男孩在右侧，两人同排无遮挡。山风从左后方吹来，女孩转头看向男孩。站位都按这段文字，不用从图片读取。",
+    "expected": "Classifies the shared composition as echo and renders a 镜头结构回显 table immediately before the final prompt. The table uses the exact header 环境动态确认 and the shot cell directly states the supported left-rear wind, visible response, and any residual state in one natural sentence or no more than three semicolon-separated groups, without a 规划 or other status prefix, without duplicating the full shot paragraph, and without inventing clothing, hair, weather, water, leaves, or props that were not supplied or visibly supported."
+  },
+  {
+    "id": "video-world-review-02-unresolved-source-dynamic-blocks",
+    "prompt": "双人站位已经用文字写清：女人在左、男人在右、同排无遮挡。但视频1里的风向和浅水波纹传播方向必须原样继承，我看不清是向左还是向右。请写最终 Seedance 提示词。",
+    "expected": "Treats the materially required unreadable source dynamics as blocking even though character structure is text-complete. It returns only a 镜头结构确认 table with the exact 环境动态确认 header; the cell directly names the unresolved wind and ripple directions and ends with 待确认, without a status prefix. It asks for one grouped decision or clearer evidence and does not guess, render the final prompt, or replace the directions with generic natural motion."
+  },
+  {
+    "id": "video-world-review-03-intentionally-still-cell",
+    "prompt": "8秒单镜最终 Seedance：正面中景固定机位，画面左边是乐奶奶，右边是罗大娘，两人同排站立无遮挡。做成刻意静止的压抑对峙，人物、衣服、背景和灯光都不动，只允许罗大娘说“走吧。”",
+    "expected": "Classifies the shared composition as echo, renders the table and final prompt in the same turn, and uses the exact 环境动态确认 header. The cell directly names the protected still body/clothing/background/light boundary and the spoken line as the only active beat, without a 刻意静止 or other status prefix, and does not add breathing, wind, cloth settling, particles, camera motion, or an extra confirmation question."
+  },
+  {
+    "id": "video-world-review-04-source-backed-cell",
+    "prompt": "视频1是双人粗模，站位、遮挡和环境运动都按视频来。视频里山风清楚地从右向左吹，衣摆和树叶正处于同一次摆动中，地面水纹向左下扩散。请先整理镜头结构，再写最终提示词。",
+    "expected": "Treats the visual structure as blocking and returns only the 镜头结构确认 table. Under the exact 环境动态确认 header, the shot cell directly records the readable right-to-left wind, current shared cloth/foliage phase, and lower-left ripple propagation for confirmation, without a 素材承接 or other status prefix. It does not yet render the final prompt, reset the phase, or expand the cell into the full shot prose."
+  },
+  {
+    "id": "video-world-dynamics-10-full-scene-image-inventory",
+    "prompt": "图片1是山谷场景图：前景有湿草和水洼，中景有溪流、人物长袍和树枝，远景有薄雾与云层。先按结构确认流程处理，再写8秒Seedance提示词。",
+    "expected": "Scans the readable scene image across foreground, midground, and background for all visible motion-capable candidates, including wet grass or puddle reflections, stream flow, robe and branches, fog and clouds. It returns only the pending structure table with one concise 环境动态确认 cell that directly summarizes the selected persistent drivers, material-specific responses, and residual continuity. The inventory is complete internally but the cell is not a catalog, does not animate every candidate, and does not invent rain, animals, falling leaves, new water, or exact directions unsupported by the image."
+  },
+  {
+    "id": "video-world-dynamics-11-vfx-environment-coupling",
+    "prompt": "结构和上一轮环境动态表已经确认。山谷里原有薄雾向右缓移、溪水顺坡流动，人物衣袍受谷风轻摆。两名角色交手时一道剑气从左向右掠过近地面。现在输出8秒最终Seedance提示词。",
+    "expected": "Preserves one accepted persistent baseline system covering the coherent fog drift, stream flow, wind, and cloth response instead of resetting it. It treats the sword energy as the single dominant transient left-to-right driver, propagates its influence through only reachable existing receivers with distance and delay, and may press nearby grass, shear the water surface, split fog, move cloth, light, shadow, particles, or reflections only where supported. It renders the persistent baseline in 场景 and the effect-caused disturbance plus dissipation and residual in the owning 情节 shot, while keeping the fight action dominant and avoiding a second competing event driver, synchronized whole-frame motion, or invented damage and props."
   }
 ]

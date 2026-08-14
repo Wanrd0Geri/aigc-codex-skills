@@ -31,7 +31,7 @@ Default final labels are plain upload-order labels. Treat a supplied `@` handle,
 - Give every material a specific job: identity/appearance, wardrobe, prop, environment, layout, light, material, action, motion, camera, timing, effect, audio, voice, text, or graphic.
 - Consolidate all authorized jobs from the same material into one line.
 - Bind materials once, then use semantic names in the timeline.
-- For Seedance new/reference generation, never render a generic `参考素材：` heading. `主体：` owns every visible character, animal, product, vehicle, or key prop, including explicit identity, appearance, wardrobe, material, and prop references. Render it even when the opening frame is empty but a subject enters later. In the exceptional text-only case, use the available stable source-backed description and do not invent missing appearance. `场景：` owns explicit scene references and the persistent location, topology, materials, light, atmosphere, and ambience. `风格：` owns look/style references. Motion, camera, storyboard, audio, text, and interval-only roles stay in their owning shot or active audio/text sentence. Later shots use semantic names and repeat only visible changes or continuity-critical state. Never ask the user which equivalent layout to use.
+- Render `主体：` even when the opening frame is empty but a subject enters later. In a text-only case, use only the available stable description. Bind each material once, use semantic names afterward, and never ask the user to choose among equivalent field layouts.
 - Use `作为[角色名]` only when selecting one subject among several or combining several sources for one character. Do not add routine `定义为` wording.
 - A storyboard or multi-panel sheet must name its authorized dimensions such as shot order, framing, blocking, screen direction, and occlusion. Do not treat it as a generic style reference.
 - If one material applies only to a time interval, write that interval in the responsibility line.
@@ -45,7 +45,7 @@ Use the same ordered structure for every known-duration Seedance 2.5 new/referen
 [required whenever any character, animal, product, vehicle, or key prop appears; omit only for a clip that remains a pure environment or empty shot throughout]
 
 场景：
-[optional: scene-reference materials plus time, location, topology, light, atmosphere, and persistent ambience]
+[optional: scene-reference materials plus time, location, topology, light, atmosphere, persistent ambience, and any whole-clip physical driver/background response baseline]
 
 风格：
 [optional: medium, palette, material, and texture]
@@ -64,16 +64,16 @@ Never render a `全局补充：` heading. Put an owned whole-clip requirement na
 
 ## Timeline rules
 
-- Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike.
+- Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike, except for the unreadable-cut coarse-white-model route below.
 - Start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
 - Use integer-second boundaries by default. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
 - If locked shot count and duration cannot give every shot a positive integer range, ask for a longer duration or restructuring permission instead of using decimals.
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
-- Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase.
-- Put stable subject information and explicit subject references in `主体：`. An empty opening frame does not suppress the field when a subject appears later. Shots use the semantic name and state only visible changes or continuity-critical inheritance.
+- Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. For a normal motion-bearing shot, add only the minimum living-world response that shares a cause with the main action or persistent scene driver.
+- Shots use semantic names and state only visible changes or continuity-critical inheritance.
 - When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
 - For previsualization, use the same timeline formula once total duration is known; establish the selected representative state at cut-in.
-- For a coarse white-model video, inherit the source duration, shot order, and cuts without asking for or separately writing total duration. Reuse exact ranges only when they are readable; otherwise preserve the source order without inventing seconds.
+- For a coarse white-model video, inherit the source duration, shot order, and cuts without asking for or separately writing total duration. Reuse exact ranges only when they are readable. When the cut ranges are unreadable, preserve the source order and cuts and render `镜头1：`、`镜头2：` in order without time ranges; this explicit exception overrides the normal timestamp formula and never authorizes invented seconds.
 
 ## Shot sentence order
 
@@ -81,10 +81,10 @@ Use this stable order:
 
 1. shot size, angle, and camera mode
 2. subject's current visible state and material spatial relationship
-3. action, performance, dialogue, and causal response
+3. action, performance, dialogue, local body/material/environment coupling, and causal response
 4. main camera movement and the visible result it creates
 5. visual focus only when several visible elements compete
-6. ending state or next-shot handoff
+6. ending state, residual world motion, or next-shot handoff
 
 Omit an irrelevant field instead of inserting filler. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, or repositioned.
 
@@ -105,11 +105,11 @@ For visible text, state exact content, timing, frame position, appearance method
 
 ## Control and repetition
 
-- Put subject-reference responsibility and stable subject facts in `主体：`; put scene-reference materials and persistent environment in `场景：`; put a look/style reference in `风格：`; and put motion/camera/storyboard roles in their owning shot. Never render a generic `参考素材：` heading or restate the same appearance later.
+- Put one persistent world driver and background response baseline in `场景：` when supported; put local clothing, hair, prop, contact, fluid, foliage, reflection, light, or surface response in the owning shot. Do not render a `世界动态：` or `环境动态：` heading.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Treat internal viewer priority and rendered `画面重心` as one field.
-- Never render a `全局补充：` heading. Place a whole-clip fact in its owning field; if a genuine cross-shot control has no better owner, append it once as a natural unheaded sentence before the standing subtitle/background-music sentence.
-- Do not repeat a material label, global scene description, character appearance, camera rule, or negative instruction in every shot.
+- Do not repeat a material label, global scene description, world driver, character appearance, camera rule, or negative instruction in every shot.
+- Do not use a generic suffix such as `微风吹动衣摆和树叶，水面泛起涟漪`. Select only visible receivers, connect them to one supported cause, and vary timing and amplitude by material and depth.
 - A longer prompt is acceptable when it adds distinct executable information. Different wording of the same fact is redundancy, not stronger control.
 
 ## UI parameters

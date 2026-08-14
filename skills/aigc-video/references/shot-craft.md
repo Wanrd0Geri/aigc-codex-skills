@@ -89,6 +89,8 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 
 Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling -> environmental or sound response. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
+Do not stop the performance at the skin. When visible materials support it, let body acceleration and settling propagate into hair, clothing, loose accessories, or a carried prop with material-appropriate lag and damping; let contact propagate into the touched surface or medium. Keep these responses subordinate to the acting beat and use `references/world-dynamics.md` for the full driver, receiver, evidence, and continuity rules.
+
 When prop handling is the main action, define the visible active hand, contact, necessary support or counterbalance, transition, and endpoint. Mention the supporting hand only when it is inside the crop and leaving it undefined would make the pose or action materially ambiguous.
 
 When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.

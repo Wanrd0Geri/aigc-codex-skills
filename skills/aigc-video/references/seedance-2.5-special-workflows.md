@@ -43,7 +43,7 @@ Put color/shape-to-character or prop correspondence at the start of `主体：`.
 
 When final character images are assigned only to identity, appearance, wardrobe, or prop, do not inherit their presentation pose. Keep action, blocking, and performance owned by the coarse model, storyboard, or current user instruction. Borrow pose or action from a character image only when that dimension is explicitly authorized.
 
-Inherit the source video's duration, shot order, and cuts. Do not ask for or separately write total duration. Reuse exact shot ranges only when they are readable; otherwise preserve the source order without inventing seconds. If the model has articulated limbs, wings, or a tail, describe the complete action process through preparation, movement, contact, and endpoint instead of naming only the result.
+Inherit the source video's duration, shot order, and cuts. Do not ask for or separately write total duration. Reuse exact shot ranges only when they are readable. When cut ranges are unreadable, preserve the source order and cuts and write ordered `镜头N：` entries without time ranges; never invent seconds. If the model has articulated limbs, wings, or a tail, describe the complete action process through preparation, movement, contact, and endpoint instead of naming only the result.
 
 If a detailed white-model animation is supplied in the future, require planning overlays to be cleaned before use, then follow the provider's basic instruction to render the white-model animation into the final finished video. Do not create prompt-side exclusions for tracks, axes, camera cones, labels, or controls.
 
