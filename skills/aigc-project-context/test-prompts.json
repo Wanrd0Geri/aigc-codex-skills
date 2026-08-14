@@ -88,5 +88,10 @@
     "id": "project-18-video-handoff-unrecognized-control",
     "prompt": "VideoContext 里 @图1 role=character_identity，may_control=[face, aura_signature]。直接接视频提示词流程。",
     "expected": "Maps face to the identity borrowed dimension but leaves aura_signature unresolved because it is not a known alias or downstream atomic dimension. It does not guess effect, look, lighting, or identity for that value, and it asks one focused question only if resolving it can materially change the final prompt."
+  },
+  {
+    "id": "project-19-video-handoff-world-state",
+    "prompt": "项目分镜明确：镜头3开始时山风从右向左，薄雾正向左缓移；终帧剑气已消散，但水纹仍向左下扩散，衣摆正在回落。镜头4必须接住这些状态。直接交给 aigc-video，不要展示完整卡片。",
+    "expected": "Compiles VideoContext schema 1.1 with source-backed start and terminal world_state fields for driver, direction, material intensity, active phase, disturbance, and residual. It carries only the required terminal subset into next_handoff so shot 4 inherits the leftward wind/fog phase, lower-left ripple propagation, and settling cloth instead of restarting them. It does not add planned weather, effects, damage, or unrelated receivers in the project-context layer."
   }
 ]

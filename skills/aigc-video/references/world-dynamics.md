@@ -2,6 +2,13 @@
 
 Use this reference for every new/reference generation and whenever optimization changes visible motion or physical interaction. Treat the image as one already-running world, not a foreground subject animated over a static background.
 
+## Contents
+
+1. Core contract and evidence boundary
+2. Scene scan, coupled system, and motion hierarchy
+3. Rendering ownership and structure-table cell
+4. Format adjustments and final audit
+
 ## Core contract
 
 Resolve `world_activity` on every task:
@@ -9,6 +16,8 @@ Resolve `world_activity` on every task:
 - `active`: build and render a compact living-world chain; default for new/reference generation.
 - `inherited`: preserve the source driver's direction, intensity, disturbance, and residual phase; default for edit, extension, and bridge.
 - `intentionally_still`: keep secondary motion absent because the user locks stillness or the inspection format would be harmed by it. Record this as a completed decision, not a skipped check.
+
+Keep this task-level mode separate from per-shot `world_dynamics_review`: `planned | source_backed | inherited | intentionally_still | unresolved` records evidence and confirmation state. An active task may contain planned and source-backed shots; `planned` never blocks, while a materially required unreadable source-backed or inherited state resolves as `unresolved` and may block.
 
 Build subject-to-world and world-to-subject coupling when visible evidence supports it. Let the world act before the subject enters, respond while the subject moves, and retain a decaying state after the main action ends. Camera movement never counts as world activity.
 
@@ -21,7 +30,7 @@ Infer low-risk physical behavior from existing visible bodies and materials:
 - existing foliage, curtains, hanging objects, dust, smoke, fog, water, rain, steam, reflections, shadows, crowds, traffic, or machinery continuing plausible motion
 - contact response where a visible subject touches ground, water, vegetation, a door, furniture, fabric, or another existing surface
 
-Do not infer a new weather event, water source, plant, animal, crowd, vehicle, prop, effect, damage event, or story beat. A visible tree may support restrained leaf and branch response; it does not authorize falling leaves. A wet surface may support changing reflections under footsteps; it does not authorize new rain. When the source is unreadable, label-only, graphic UI, or silent about a material fact that would change the scene, stay neutral.
+Do not infer a new weather event, water source, plant, animal, crowd, vehicle, prop, effect, damage event, or story beat. Treat an effect consequence explicitly supplied by the current user or an upstream `aigc-vfx-combat` design card as authorized; render only that named consequence and its physically necessary response, not adjacent unstated destruction. A visible tree may support restrained leaf and branch response; it does not authorize falling leaves. A wet surface may support changing reflections under footsteps; it does not authorize new rain. When the source is unreadable, label-only, graphic UI, or silent about a material fact that would change the scene, stay neutral.
 
 ## Scene-image dynamics pass
 
@@ -79,7 +88,14 @@ Whenever `SKILL.md` requires a `镜头结构确认` or `镜头结构回显` tabl
 - For `intentionally_still`, directly name what stays still and the only allowed main motion when useful.
 - For `unresolved`, directly name what cannot be read reliably and end with `待确认`.
 
-Keep the exact `环境动态确认` column. Write only the moving world elements and causal relationship as one natural Chinese sentence or at most three semicolon-separated groups: persistent environment; interaction or VFX influence; residual or cross-shot handoff. Omit inactive groups, group related receivers, and never expose the internal review-state label or add a status prefix. Keep it as an approval summary rather than duplicating the complete shot paragraph. Source-backed dynamics must be compared with the corresponding frame or interval; ordinary low-risk planning does not block same-turn delivery. If the user explicitly skips the structure table, resolve the same fields internally without rendering the column.
+Examples:
+
+- `继承视频1右向左风向；衣摆、树叶与水面余波保持当前相位。`
+- `谷风推动薄雾向右缓移，溪水顺坡下流；剑气掠过时近处草叶伏倒、水面外扩，雾层裂开后回卷。`
+- `背景、灯光与表带保持静止；仅腕表匀速转台。`
+- `视频中的风向与水波传播方向无法可靠辨认，待确认。`
+
+Keep the exact `环境动态确认` column. Write only the moving world elements and causal relationship as one natural Chinese sentence or at most three semicolon-separated groups: persistent environment; interaction or VFX influence; residual or cross-shot handoff. Omit inactive groups, group related receivers, and never expose the internal review-state label or add a status prefix. Keep it as an approval summary rather than duplicating the complete shot paragraph. Compare source-backed or inherited dynamics with the corresponding frame or interval; only a materially required unreadable state may block. `planned` never blocks same-turn delivery. If the user explicitly skips the structure table, resolve the same fields internally without rendering the column.
 
 ## Format adjustments
 
