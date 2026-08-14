@@ -14,7 +14,7 @@ Load only the references required by the request.
 | Condition | Read |
 | --- | --- |
 | Any Seedance-family output | `references/seedance-2-rules.md` |
-| Any new/reference generation, or any optimization that changes visible motion or physical interaction | + `references/world-dynamics.md` |
+| Any new/reference generation; any task that renders a structure confirmation or echo table; any edit, extension, or bridge that must inherit source world state; or any optimization that changes visible motion or physical interaction | + `references/world-dynamics.md` |
 | Seedance version limits, duration, input counts, or feasibility | + `references/seedance-capability-matrix.md` |
 | Strict edit, extension, or bridge | + `references/seedance-2-video-operations.md` |
 | 白模、绿幕、多宫格、音色参考、局部标注或超长视频 | + `references/seedance-2.5-special-workflows.md` |
@@ -51,7 +51,7 @@ Record the platform/version, output mode, and one base task kind:
 
 Record optimization, project scope, Vibe, A/B, previsualization, ultra-long mode, and `world_activity` separately. They do not replace the base task kind. Platform-neutral final prompts remain owned here but receive no Seedance-specific syntax.
 
-Record a per-shot `structure_gate` and `world_dynamics_review`, then aggregate the gates into the task-level `structure_review` (`not_required | pending | confirmed`). Structure fields are: visible roster, screen-left-to-right order, foreground/midground/background placement, occlusion, and dialogue ownership. Record `world_dynamics_review` as `planned | source_backed | inherited | intentionally_still | unresolved`; it is a required review field whenever a structure confirmation or echo table is rendered, but it does not create a table by itself. Judge per shot, not per task:
+Record a per-shot `structure_gate` and `world_dynamics_review`, then aggregate the gates into the task-level `structure_review` (`not_required | pending | confirmed`). Structure fields are: visible roster, screen-left-to-right order, foreground/midground/background placement, occlusion, and dialogue ownership. `world_activity` is the task-level execution mode; `world_dynamics_review` is the per-shot evidence state (`planned | source_backed | inherited | intentionally_still | unresolved`). They are not interchangeable, and the review state does not create a table by itself. Judge per shot, not per task:
 
 - `none`: a pure single-character shot whose structure fields are all given in the current user's text. No table for this shot.
 - `echo`: multiple characters or shared composition, but every structure field is explicitly given in the current user's text. This shot's structure row is delivered as a non-blocking `镜头结构回显` in the same turn as the final prompt, placed before the prompt so the user can check the transcription.
@@ -61,7 +61,7 @@ Aggregation: any `blocking` shot makes the task `pending`; no final prompt rende
 
 Explicit requests: 「先按结构确认流程处理」 upgrades every shot to `blocking`. 「不用结构表」 or 「跳过结构确认」 skips the table entirely; the structure fields are still resolved internally. A speed request such as 「直接给我提示词」 or 「尽快输出」 is a delivery preference and does not downgrade `blocking`.
 
-If an exact wind/flow direction, active material phase, contact response, or residual state must be read from a visual asset and choosing incorrectly would materially change the shot, treat that shot as `blocking` even when its character structure is otherwise text-complete. Do not block for ordinary low-risk dynamic-world planning; mark it `planned` and show it in the same-turn echo table. An explicit stillness lock resolves the cell as `intentionally_still`.
+Only a materially required source-backed or inherited dynamic fact may upgrade a shot to `blocking`: exact wind/flow direction, active material phase, contact response, or residual state must be read from a visual asset and a wrong reading would change the shot. `planned` never blocks; ordinary low-risk planning stays in the same-turn echo. An explicit stillness lock resolves the cell as `intentionally_still`.
 
 For optimization of an existing accepted prompt, strict edit, extension, bridge, observed-result review, or local repair, inherit the source or previously accepted structure as `confirmed` when the operation preserves composition. When the requested change alters character identity, visible roster, framing, camera side, screen order, depth placement, occlusion, dialogue ownership, or a structure-bearing asset, return only the affected shots to the gate their new structure source implies: `echo` when the change is fully specified in the current user's text, `blocking` when it must be read from a visual asset. A later user correction to identity, framing, blocking, dialogue ownership, or asset version re-gates the affected shots the same way.
 
@@ -108,19 +108,11 @@ When `structure_review` is `pending`, first compare every source-backed row dire
 - exact dialogue owner and line when active
 - locked action and visible endpoint
 - one concise locked performance intention such as restrained argument, mild intoxication, doubt, or reluctance; do not yet expand it into micro performance
-- one `环境动态确认` cell per shot: directly state the moving world elements and their causal relationship; use one natural Chinese sentence or at most three semicolon-separated groups for persistent environment -> interaction/VFX influence -> residual/cross-shot handoff; when stillness is intentional, directly name the protected boundary
+- one `环境动态确认` cell per shot, using the exact header and one concise status-free sentence of no more than three semicolon-separated groups; read `references/world-dynamics.md` for its evidence-state mapping and writing rules
 
 Use this table as a review view of the MotionSpec, not as a second fact system. If a source frame is unreadable or supports more than one materially different mapping, label the field unresolved and ask rather than filling it. Return only the structure table plus one grouped confirmation request — fold any missing total duration, exact dialogue, or asset question into the same round. When echo shots coexist with blocking shots, include their rows in this table marked `同轮回显`; blocking rows are marked `待确认`. Do not render the platform prompt or enrich performance until the user confirms the blocking rows; after confirmation, do not repeat the echo rows.
 
-Use the exact table header `环境动态确认`. Keep each cell concise and omit inapplicable subparts rather than writing placeholders:
-
-- `山风左后向右前；长发、宽袖与前中后景竹叶分层响应；回头后继续衰减。`
-- `继承视频1右向左风向；衣摆、树叶与水面余波保持当前相位。`
-- `谷风推动薄雾向右缓移，溪水顺坡下流；剑气掠过时近处草叶伏倒、水面外扩，雾层裂开后回卷。`
-- `背景、灯光与表带保持静止；仅腕表匀速转台。`
-- `视频中的风向与水波传播方向无法可靠辨认，待确认。`
-
-Do not expose internal review-state labels such as `规划`、`素材承接`、`刻意静止` or prefix the cell with a status. Keep the `环境动态确认` column and write only the concise visible motion relationship. Use one sentence and no more than three semicolon-separated groups; group related receivers rather than listing every scanned candidate. Do not copy the entire shot prompt into this cell.
+Example: `山风左后向右前；长发、宽袖与前中后景竹叶分层响应；回头后继续衰减。` Do not expose internal review-state labels or copy the full shot prompt into this cell.
 
 When the task has no blocking shot but contains echo shots, render a compact `镜头结构回显` table with the `环境动态确认` column immediately before the final prompt in the same turn. It is a transcription and motion-plan check, not a question; do not wait for confirmation.
 
@@ -136,7 +128,7 @@ When `structure_review` is `confirmed` or `not_required`, define:
 
 When a cut continues the same event, inherit the current phase, contact point, direction, and active effect state; advance the event instead of restarting it.
 
-Run dynamic-world modeling every time, including when the brief names only the main subject action. Scan each readable scene image across foreground, midground, and background, then animate only the causally active visible subset. Organize all source-backed persistent flows into one readable baseline system, with one dominant environmental driver and any quieter independent flows kept subordinate; add at most one dominant event/VFX driver per shot. Connect reachable body, material, contact, atmosphere, surface, light, and background responses with plausible distance, delay, and damping. Infer only low-risk behavior from existing visible materials and do not invent weather, water, vegetation, crowds, animals, props, effects, or story events. Read `references/world-dynamics.md` for the full method.
+Run dynamic-world modeling every time, including when the brief names only the main subject action. Scan each readable scene image, select only the causally active visible subset, and preserve source-bounded direction, phase, disturbance, and residual continuity. Read `references/world-dynamics.md` for the complete inventory, hierarchy, evidence boundary, VFX authorization, table-cell writing, and audit rules.
 
 Treat `intentionally_still` as a resolved result, not a skipped check. Use it for an explicit stillness lock or a format whose inspection purpose would be harmed by secondary motion. For strict edit, extension, and bridge, preserve or inherit the source's driver, direction, disturbance, and residual phase unless the user asks to change them.
 
@@ -178,19 +170,15 @@ Use complete natural Chinese sentences inside the stable structure. Remove repea
 
 Check in this order:
 
-1. `structure_review` is `confirmed` or `not_required`; a pending task cannot render a final prompt
-2. every source-backed structure and environment-dynamics row has been compared directly with its readable source frame or interval; material ambiguity remains unresolved rather than guessed
-3. exact dialogue, text, duration, interval, shot order, material order and role; preserve a literal handle only when the current user explicitly requests it
-4. every supplied material accounted for and bound once with a specific responsibility
-5. every visible character, animal, product, vehicle, or key prop has a rendered `主体：` owner, including when the opening frame is empty; only a clip that remains a pure environment or empty shot throughout may omit it
-6. the active adapter's structure, timeline, dialogue, sound, visible-text, and standing-final-sentence rules all pass
-7. framing, visible roster, screen order, depth relationship, occlusion, action phase, endpoint, and handoff continuity
-8. `world_activity` is resolved; every readable scene image has received a full dynamics-candidate scan; every structure table retains one concise, status-free `环境动态确认` cell of no more than one sentence and three semicolon groups; each shot organizes persistent flows into one baseline system and adds no more than one dominant event/VFX driver; causal response, direction, phase, damping, and residual state remain coherent across cuts; camera movement is not counted as world activity
-9. every visible prop-handling action inside the crop defines the active hand, contact point, necessary support or body counterbalance, transition, and visible endpoint
-10. correct task grammar for edit, extension, bridge, or platform-neutral output
-11. no duplicate subject/scene/style fact, material binding, visual-priority explanation, negative rule, or appearance description
-12. no unsupported invention, stale replaced-asset fact, reference leakage, synchronized whole-frame motion, or decorative motion list without a shared cause
-13. `agents/openai.yaml`, reference routing, and regression cases remain consistent with this file after maintenance
+1. `structure_review` permits delivery; no pending row renders a final prompt
+2. every source-backed structure or dynamic fact has been compared with its readable source; ambiguity remains unresolved rather than guessed
+3. exact dialogue, text, duration, interval, shot order, material order, and roles are preserved; every material is accounted for and bound once
+4. every visible character, animal, product, vehicle, or key prop has the adapter's required `主体：` owner; pure environment remains the only omission case
+5. adapter structure and task grammar pass for timeline, dialogue, sound, visible text, edit, extension, bridge, or platform-neutral output
+6. framing, roster, screen order, depth, occlusion, action phase, prop contact, endpoint, and handoff remain coherent
+7. `world_activity` and every per-shot `world_dynamics_review` are resolved; the detailed `references/world-dynamics.md` audit and any required `环境动态确认` cell pass
+8. no duplicate ownership, unsupported invention, stale asset fact, reference leakage, synchronized whole-frame motion, or decorative motion list remains
+9. `agents/openai.yaml`, reference routing, and regression cases remain consistent after maintenance
 
 If a check fails, repair only the failed field and run the checks again. While structure confirmation is pending, deliver only the compact table and one confirmation request. Otherwise, default delivery is at most one useful judgment or risk sentence followed by one Chinese final prompt in one fenced code block.
 

@@ -18,7 +18,7 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 - `expression_request`: default | explicit_vibe
 - `project_scope`: optional project/episode/scene/shot ids
 - `requested_duration`
-- `world_activity`: active | inherited | intentionally_still — resolve on every task; default new/reference generation to active and source operations to inherited
+- `world_activity`: active | inherited | intentionally_still — task-level execution mode; resolve on every task, default new/reference generation to active and source operations to inherited
 - `structure_review`: not_required | pending | confirmed — task level, aggregated from the per-shot `structure_gate: none | echo | blocking` defined in `SKILL.md`; any blocking shot or materially required unresolved source dynamic makes the task `pending`
 
 For optimization of an existing accepted prompt, strict edit, extension, bridge, observed-result review, and local repair, inherit a source-backed or previously accepted structure as `confirmed` while composition remains preserved. Reopen only the affected shot rows when the operation changes a material structural field; each reopened shot re-enters at the gate its new structure source implies (`echo` for text-specified changes, `blocking` for visual reads).
@@ -100,7 +100,7 @@ World presence never implies membership in the visible roster. A terminal Bounda
 - references and any active source-backed audio, dialogue, or visible text
 - shots:
   - purpose
-  - `world_dynamics_review`: planned | source_backed | inherited | intentionally_still | unresolved — use this only to decide the content and blocking state of `环境动态确认`; never render the enum value or a Chinese status prefix
+  - `world_dynamics_review`: planned | source_backed | inherited | intentionally_still | unresolved — per-shot evidence state, separate from task-level `world_activity`; use `world-dynamics.md` as the single owner of blocking and `环境动态确认` rendering rules
   - sparse visible-start BoundaryState
   - shot size, angle, and camera mode
   - current visible state and material spatial relationship
@@ -118,7 +118,7 @@ World presence never implies membership in the visible roster. A terminal Bounda
 
 For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. Keep the established world driver, direction, and material system shared unless the user explicitly makes world behavior the comparison variable. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared. For A/B structure review, deliver one table built from the shared core; only a field deliberately placed in a variant overlay carries two labeled A/B values in its row — never two full parallel tables.
 
-Externalize the visible roster, visible action chain, and the minimum dynamic-world clues needed to make the shot physically continuous. When a structure table is active, expose the governing driver/direction, selected visible response or contact, and residual/handoff state once under `环境动态确认`; do not duplicate the full shot paragraph there. Keep offscreen world continuity, unused receivers, and unused boundary fields internal.
+Externalize the visible roster, visible action chain, and only the dynamic-world clues needed for physical continuity. When a structure table is active, follow the single `环境动态确认` writing contract in `world-dynamics.md`. Keep offscreen world continuity, unused receivers, and unused boundary fields internal.
 
 Mark project-sourced facts separately from bounded interpretation. Never present an interpretation as a locked project fact.
 

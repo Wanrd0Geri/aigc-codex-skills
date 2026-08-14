@@ -14,7 +14,7 @@ Use this contract only when project context is required for a final video prompt
 artifact: final_video_prompt
 project: "<project id/title>"
 shot_range: "<exact episode/scene/shot ids>"
-context_schema_version: "1.0"
+context_schema_version: "1.1"
 context_status: validated
 source_authority: "<field-scoped winners and unresolved conflicts>"
 shots:
@@ -23,6 +23,13 @@ shots:
       visible_roster: []
       offscreen_causal_sources: []
       spatial_state: []
+      world_state:
+        driver: "<source/project-backed environmental or VFX driver>"
+        direction: "<source direction>"
+        intensity: "<source intensity when material>"
+        phase: "<active material or effect phase>"
+        disturbance: []
+        residual: []
     locked_actions: []
     source_visible_facts: []
     performance_intent: "<source-backed intent or 未指定>"
@@ -31,6 +38,13 @@ shots:
       state: "<locked or unlocked>"
       visible_roster: []
       spatial_state: []
+      world_state:
+        driver: "<source/project-backed environmental or VFX driver>"
+        direction: "<source direction>"
+        intensity: "<source intensity when material>"
+        phase: "<terminal material or effect phase>"
+        disturbance: []
+        residual: []
     next_handoff: []
     exact_dialogue_sound_text: []
     duration: "<source value or unspecified>"
@@ -47,13 +61,13 @@ requested_platform: "<named platform, unspecified, or platform_neutral>"
 output_request: "<prompt only, explanation, variants, etc.>"
 ```
 
-Omit empty optional fields. Do not include the full script, complete cards, project bible, `must_not_control` lists, or unrelated neighboring shots.
+Omit empty optional fields. Populate `world_state` only from the current user, active project/source, or an already accepted boundary; never fill it with downstream motion planning. If a materially required direction, phase, disturbance, or residual is missing or contradictory, keep it unresolved in `open_decisions`. Do not include the full script, complete cards, project bible, `must_not_control` lists, or unrelated neighboring shots.
 
 ## Downstream ownership
 
 Treat this envelope as already compiled evidence, locks, references, and boundaries. `aigc-video` maps it directly into MotionSpec without rebuilding the source ledger or asking again about resolved fields. It owns platform or platform-neutral rendering, duration feasibility, shot execution, dialogue/lip-sync syntax when applicable, protected language cleanup, and final formatting.
 
-Preserve exact ids, anchors, identity, count, location, locked action order, dialogue, required silence, prop state, start/terminal boundaries, and next handoff. A next handoff is only a subset of terminal state; if the rest of the terminal boundary is unlocked, every non-empty handoff field still remains locked there. Keep bounded performance intent from authorizing new plot, props, symbols, lighting, or action.
+Preserve exact ids, anchors, identity, count, location, locked action order, dialogue, required silence, prop state, start/terminal boundaries, boundary `world_state`, and next handoff. A next handoff is only a subset of terminal state and may carry the world driver, direction, phase, disturbance, or residual that a later shot must inherit; if the rest of the terminal boundary is unlocked, every non-empty handoff field still remains locked there. `aigc-video` may add low-risk planned responses without overwriting this source-backed state. Keep bounded performance intent from authorizing new plot, props, symbols, lighting, or action.
 
 ## Role crosswalk
 

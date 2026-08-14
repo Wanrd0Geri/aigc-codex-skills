@@ -648,5 +648,15 @@
     "id": "video-world-dynamics-11-vfx-environment-coupling",
     "prompt": "结构和上一轮环境动态表已经确认。山谷里原有薄雾向右缓移、溪水顺坡流动，人物衣袍受谷风轻摆。两名角色交手时一道剑气从左向右掠过近地面。现在输出8秒最终Seedance提示词。",
     "expected": "Preserves one accepted persistent baseline system covering the coherent fog drift, stream flow, wind, and cloth response instead of resetting it. It treats the sword energy as the single dominant transient left-to-right driver, propagates its influence through only reachable existing receivers with distance and delay, and may press nearby grass, shear the water surface, split fog, move cloth, light, shadow, particles, or reflections only where supported. It renders the persistent baseline in 场景 and the effect-caused disturbance plus dissipation and residual in the owning 情节 shot, while keeping the fight action dominant and avoiding a second competing event driver, synchronized whole-frame motion, or invented damage and props."
+  },
+  {
+    "id": "video-world-review-05-planned-never-blocks",
+    "prompt": "8秒双人单镜，站位、遮挡和动作都已经在文字里写清。场景图里能看到长袍、草地和远处薄雾，但没有需要原样匹配的风向或运动相位。直接给最终 Seedance 提示词。",
+    "expected": "Keeps task-level world_activity active and marks the low-risk per-shot dynamics as planned without upgrading the shot to blocking. It renders the text-complete shared composition as a same-turn echo table plus final prompt, uses existing visible materials for a restrained causal chain, and asks no confirmation about exact wind direction or phase that the user did not require to inherit."
+  },
+  {
+    "id": "video-world-dynamics-12-authorized-vfx-consequence",
+    "prompt": "特效设计卡已确认：冲击命中时地面只在落点裂开一圈，三块现有碎石短暂浮起后落回，人物衣袍被冲击波推开。不要增加火雨、建筑坍塌或更大范围破坏。写8秒最终 Seedance 提示词。",
+    "expected": "Treats the explicitly accepted VFX design-card consequences as authorized even though the crack and temporary rubble motion are new event outcomes. It uses one dominant impact driver across the named ground, existing rubble, and cloth receivers with material-specific timing and residual settling, while adding no fire rain, collapse, extra debris, second event driver, or unstated destruction."
   }
 ]
