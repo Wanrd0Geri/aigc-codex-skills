@@ -2,6 +2,8 @@
 
 Load only for ultra-long generation, white-model workflows, green screen, multi-panel storyboards, voice reference, local annotations, viewpoint changes, or music removal.
 
+These workflows supply evidence or operation grammar; none bypasses the universal structure pass in `SKILL.md`. A white model, storyboard, multi-panel sheet, or supplied Diagram is a `structure_source`, not automatic user confirmation.
+
 ## Contents
 
 1. Ultra-long generation
@@ -72,6 +74,7 @@ Treat the sheet as structured shot evidence, not a generic style image:
 - Preserve the supplied panel order and count unless the user asks to restructure it.
 - Translate each panel through the adapter's canonical timeline without changing panel order.
 - Use separate assets for identity, style, or environment unless the storyboard is explicitly authoritative for those dimensions.
+- Compare every panel with the compact structure table and wait for confirmation before enriching performance or rendering the final timeline.
 
 ## Voice and audio reference
 
@@ -101,6 +104,8 @@ Use the strict-edit formula. State the target view and the visible consequence, 
 ```
 
 Do not combine `固定机位` with a tracking move. If the new view crosses the action axis, state the visible crossing or preserve screen direction explicitly.
+
+A viewpoint or camera-side change is structural. Return the affected interval to `pending`, confirm its new crop, screen/depth relationship, occlusion, and route, then render the complete strict-edit command. A camera setting change that demonstrably preserves all those fields may inherit confirmation.
 
 ## Background-music removal
 

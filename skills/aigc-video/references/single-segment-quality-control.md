@@ -2,7 +2,7 @@
 
 Use this reference for complex subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family prompts.
 
-These checks assume the structure gate in `SKILL.md` has already run: a shot whose visible roster, screen order, depth placement, occlusion, or dialogue ownership must be read from a visual asset needs its `镜头结构确认` row confirmed before a final prompt is audited here.
+These checks assume the universal structure pass in `SKILL.md` has already run. Every new or structurally rebuilt shot has a confirmed `镜头结构确认` row before a final prompt is audited here, regardless of character count or whether its facts came from text or a visual asset.
 
 ## Quality order
 
@@ -42,6 +42,8 @@ If the duration cannot hold locked beats, simplify mutable camera and descriptio
 ## Persistent scene topology
 
 Use this only when multiple shots share a location and depend on persistent blocking, separation, occlusion, or a repeated camera setup. Establish the source-backed regions, separators, relative distance, eyeline height, and any locked screen side or camera relation before drafting. Externalize each cross-shot spatial invariant once; shot paragraphs carry only material changes and any local fact needed to preserve the intended visible roster or occlusion. Do not infer permanent left/right placement or distance from fixed camera or shot count alone.
+
+If the confirmed relationship still cannot be represented unambiguously in text, or repeated outputs break the same positions, occlusion, swap, route, or camera path, load `blocking-diagram.md`. Do not turn Diagram creation into a default quality step.
 
 ## Visibility, path, and terminal audit
 
@@ -96,4 +98,4 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - every restriction passes the admission test: user/source lock, active personal default, platform requirement, active-reference conflict, or observed failure
 - deleting any remaining sentence would change the visible result, a costly lock, a necessary role, or platform execution
 
-For an observed bad generation, paired success/failure comparison, ontology error, or unstable prior result, load `references/failure-recovery.md` instead of expanding this checklist.
+For an observed bad generation, paired success/failure comparison, ontology error, or unstable prior result, load `references/failure-recovery.md` and `references/change-impact-and-delivery.md` instead of expanding this checklist.

@@ -1,6 +1,6 @@
 # Observed Video Failure Recovery
 
-Load this file only when the user supplies an observed failed/unstable Seedance-family result, paired results, or another concrete prior-result error. Do not preload these controls on a first attempt or generalize its heuristics to other video models. Provider guidance in this file follows the source and version recorded in `seedance-2-rules.md`.
+Load this file only when the user supplies an observed failed/unstable Seedance-family result, paired results, or another concrete prior-result error. Also load `change-impact-and-delivery.md`: this file diagnoses the smallest cause, while that file owns propagation, structure reopening, recompilation, and delivery scope. Do not preload these controls on a first attempt or generalize its heuristics to other video models. Provider guidance in this file follows the source and version recorded in `seedance-2-rules.md`.
 
 ## Generated-result review order
 
@@ -58,4 +58,4 @@ Use provider guidance only to form the next diagnostic hypothesis after a matchi
 | Secondary world motion overwhelms the subject or makes the frame chaotic | Keep the main action as primary, reduce the receiver count and amplitude, and retain only one useful ambient/contact/residual chain | Remove all physical response or add a global `环境稳定` prohibition |
 | A strict replacement introduces new wind, water, particles, or background movement | Remove the injected dynamic axis and inherit the source video's existing world state while keeping the requested replacement | Recast the operation as reference generation or change unrelated source motion |
 
-Return a clean standalone local replacement sentence or field and name the exact shot, time range, sentence, or field that it replaces. If the user cannot locate the anchor or explicitly requests the complete affected shot, return that complete shot only. Never solve a local failure by rewriting unaffected shots or the whole prompt.
+Rewrite the smallest attributable field internally, then propagate its dependencies and return at least the complete affected shot. If the repair crosses a handoff or shared state, return the complete affected sequence; if it changes a global field, return the complete prompt; for an edit, extension, or bridge, return the complete operation command. Never deliver a standalone replacement sentence or field, and never rewrite unaffected shots when a smaller complete scope is sufficient. If the latest complete affected unit is unavailable, request it rather than inventing unchanged content.

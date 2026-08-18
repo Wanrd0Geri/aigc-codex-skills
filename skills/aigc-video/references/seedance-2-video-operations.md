@@ -4,6 +4,15 @@ Load only for strict editing, extension, or seamless transition. Keep these oper
 
 Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by default. Keep supplied handles or UUIDs only in the internal mapping; render one literally only when the current user explicitly requests it for the current output.
 
+## Structure and delivery
+
+- A strict edit that preserves framing, camera side, visible roster, position, depth, facing, route, occlusion, crop, dialogue ownership, and endpoint inherits confirmed structure. If any of those fields changes, reopen only the affected interval and wait for its structure confirmation.
+- An extension creates a new visible segment. Inherit the readable source opening/ending boundary, but confirm the added segment's own structure before writing the command.
+- A bridge creates a new transition. Inherit both source boundaries, but confirm the transition's structure before writing the command.
+- After confirmation, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
+
+Use `change-impact-and-delivery.md` when modifying or repairing an existing command.
+
 ## Strict edit
 
 Use one stable formula:
@@ -50,6 +59,7 @@ Examples:
 - use a continuous one-take extension for the same action, dialogue, emotion, or movement path
 - use a cut-based extension when the new material changes scene, time, major action phase, or narrative viewpoint
 - repeated extension can degrade identity and image quality; mention this only when the plan actually uses repeated passes
+- the added segment's confirmed structure owns its framing, roster, route, action/dialogue, and endpoint; performance and world response are enriched only afterward
 
 Follow the current duration rules in `seedance-capability-matrix.md`.
 
@@ -68,6 +78,8 @@ Example:
 ```
 
 Start from video 1's ending state and converge on video 2's opening state. Carry only the needed subject motion, camera motion, light, material, shape, or source-backed sound. A transition must be visible and causal; avoid a bare `自然过渡`.
+
+Before rendering this formula, confirm the transition's own camera/framing, visible roster, spatial path, action, and terminal convergence. Do not treat two readable source boundaries as confirmation of the unseen bridge between them.
 
 Do not infer that the general ten-video input allowance means one bridge accepts ten endpoints. If the user wants a chain of three or more source videos, plan separate pairwise bridges or verify the current interface first.
 

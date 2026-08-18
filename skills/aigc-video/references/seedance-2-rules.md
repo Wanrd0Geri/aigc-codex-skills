@@ -34,11 +34,12 @@ Default final labels are plain upload-order labels. Treat a supplied `@` handle,
 - Render `主体：` even when the opening frame is empty but a subject enters later. In a text-only case, use only the available stable description. Bind each material once, use semantic names afterward, and never ask the user to choose among equivalent field layouts.
 - Use `作为[角色名]` only when selecting one subject among several or combining several sources for one character. Do not add routine `定义为` wording.
 - A storyboard or multi-panel sheet must name its authorized dimensions such as shot order, framing, blocking, screen direction, and occlusion. Do not treat it as a generic style reference.
+- A `staging_map` binds only its confirmed geometry in the owning shot and never supplies identity, style, environment, material, lighting, expression, or sound. Follow `blocking-diagram.md` for versioning and leakage checks.
 - If one material applies only to a time interval, write that interval in the responsibility line.
 
 ## Unified generation structure
 
-Use the same ordered structure for every known-duration Seedance 2.5 new/reference generation. `主体：` is conditionally required by visible subject presence; omit the other optional headings when they have no material information. Never leave a heading empty or fill it with invented prose.
+Use this ordered structure only after every affected shot's structure is confirmed. Use the same structure for every known-duration Seedance 2.5 new/reference generation. `主体：` is conditionally required by visible subject presence; omit the other optional headings when they have no material information. Never leave a heading empty or fill it with invented prose.
 
 ```text
 主体：

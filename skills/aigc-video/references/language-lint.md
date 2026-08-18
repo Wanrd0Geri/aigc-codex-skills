@@ -40,4 +40,4 @@ After rendering, inspect rather than rewrite. Check for:
 - decorative ending summaries
 - long sentences that obscure action order
 
-Patch only the failing sentence, then re-run exact and semantic lock checks. Never perform a full final rewrite.
+Patch only the failing sentence internally, then re-run exact and semantic lock checks across the complete affected unit. Preserve correct wording instead of freely rewriting it, but follow `change-impact-and-delivery.md` for external delivery: return at least the complete affected shot or the wider complete sequence, prompt, or operation when dependencies cross that boundary. Never deliver the sentence patch by itself.

@@ -2,11 +2,13 @@
 
 The user prefers active creative dialogue. Do not confuse autonomy with silence.
 
+These communication actions resolve interpretation only. None can bypass a pending structure confirmation in `SKILL.md`.
+
 ## Communication action
 
 - `discuss`: evidence is insufficient, at least two readings are well supported, and choosing between them changes performance, action, rhythm, composition, continuity, or ending.
 - `assume and proceed`: the gap is non-material; choose the lowest-risk option.
-- `state and proceed`: the source gives a clear emotional direction; briefly state the bounded interpretation when useful, then deliver without asking for confirmation.
+- `state and proceed`: after the affected structure is already confirmed, the source gives a clear emotional direction; briefly state the bounded interpretation when useful, then deliver without adding another performance-approval round.
 - `warn and deliver`: the requested artifact is possible but unstable or overloaded.
 - `silent`: routine platform syntax and non-material craft choices.
 
@@ -37,25 +39,32 @@ Keep three fields separate:
 
 Record the interpretation source and confidence internally.
 
-## Translate intention into performance
+## Scene acting pass
 
-Use one primary carrier and at most 1-2 supporting micro changes:
+While structure is `pending`, extract only the one concise source-backed intention needed by the table; if it is materially ambiguous, mark that cell `待确认`. Run the full motive/goal/obstacle/tactic analysis, listener task, turn, and visible-performance handoff only after the affected structure is `confirmed`.
 
-1. body or contact point
-2. gaze or attention
-3. breath or pause
-4. expression transition
-5. distance or object handling
-6. environment or sound response
+Run the full pass only for multi-character dialogue/reaction, materially ambiguous motivation, a result described as wooden/empty/overacted, or a beat whose meaning depends on the listener. A routine single-subject action uses the compact translation below.
 
-Build: starting state -> trigger -> micro change -> visible endpoint.
+Read the complete available scene, including what happens immediately before and after. Record internally:
 
-Example:
+1. the shared scene direction: what is changing between the people by the end
+2. for each active person: current motive, concrete goal, obstacle, and tactic toward the other person
+3. what the speaker is testing, concealing, pressing, avoiding, or obtaining
+4. the listener's task: what they hear, check, resist, decide, or prepare to do
+5. the turn where the tactic, attention, distance, or control changes
 
-- locked action: extend five seconds; body posture remains; slowly turn toward the door
-- intent: returning to a home unvisited for years; time feels stopped
-- visible performance: torso remains fixed; gaze pauses near the doorframe; head turns slowly; breath settles; expression reads as restrained recognition
+Do not print this analysis block in the final prompt. Convert it into one playable task per active character and keep the group inside one shared direction; do not give every visible person an equally strong simultaneous reaction.
 
-Treat the intent as motivation, not permission to add old furniture, dust, flashbacks, people, or environmental change.
+## Performance handoff
+
+Describe the internal beat as:
+
+`starting relational state -> trigger -> tactic or attention turn -> intended visible endpoint`
+
+Prefer a playable relation over an emotion adjective: `一边回答一边判断对方是否相信` is more actionable than `表现怀疑`; `用沉默迫使对方继续说` is clearer than `显得压迫`.
+
+Pass that task to `shot-craft.md`, which alone chooses the primary visible carrier and supporting cues. Any environment response remains owned by `world-dynamics.md`; any sound remains owned by the active platform/audio rules. This file never creates a second rendering list.
+
+Treat intent as motivation, not permission to add props, flashbacks, people, environment changes, or another plot event.
 
 If the evidence genuinely supports both `nostalgia` and `vigilance` at near-equal strength, discuss the choice because they create different body tension, gaze speed, and ending state. If the user has already specified restrained recognition, or only a minor pause length is unspecified, translate or decide it and proceed.

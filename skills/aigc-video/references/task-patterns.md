@@ -102,7 +102,7 @@ Prioritize beat ownership and action timing.
 
 Use this pattern when the user wants a low-cost multi-shot generation to inspect composition, camera position or direction, framing, blocking, crop, screen direction, foreground/background placement, or occlusion rather than to judge the complete performance.
 
-预演 does not bypass the structure gate: a shot whose structure fields must be read from a visual asset still requires `镜头结构确认` per `SKILL.md` before the previsualization prompt renders. The structure table verifies the reading; the previsualization verifies execution.
+预演 does not bypass the universal structure pass: every new previsualization shot requires `镜头结构确认` per `SKILL.md`, whether its facts come from text or a visual asset. The structure table verifies the intended setup; the previsualization verifies execution.
 
 - Preserve any user-supplied shot count and order, reference roles, camera relationships, framing, visible roster, subject positions, foreground/background layers, and occlusion needed for the inspection. Do not assume five shots, cap a larger shot list, or merge shots merely to fit a default preview template.
 - A final Seedance 2.5 previsualization prompt uses the active adapter's canonical timeline. If total duration is missing, ask for it — except when a coarse white-model video supplies the whole clip's timing and cuts; then inherit them per the duration rule in `SKILL.md` without asking. Once supplied or inherited, do not delete or combine locked shots to make the allocation easier.
@@ -138,6 +138,7 @@ Prioritize inheritance and transition logic.
 - Record each video's operational role first. A true bridge uses `bridge_predecessor` and `bridge_successor`; a non-bridge video that supplies `camera`, `action` / `motion`, `look`, or `timing` is a `reference_input` with that separate borrowed dimension. Never use a borrowed dimension as an operational-role name.
 - For a true bridge/track-completion task, address the two sources directly in order: `视频1，[可见过渡]，接视频2`; use plain upload-order labels by default and do not describe either source as an ordinary reference video.
 - Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
+- Treat the generated transition as a new visible segment. Confirm its camera/framing, visible roster, spatial route, action and endpoint before rendering the complete bridge command; inherited source boundaries remain locked rather than being reinterpreted.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.
 - Record a start-frame image as `start_frame_source` and an end-frame image as `end_frame_target`. Assign only the authorized boundary lock scope—selected composition, pose, identity, light, material, or visible-roster attributes, or `full_frame` when the whole frame is explicitly authoritative. These are boundary roles, not borrowed dimensions; do not recast either image as `reference_input` unless the user explicitly assigns that additional role.

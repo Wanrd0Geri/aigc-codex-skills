@@ -5,13 +5,13 @@ Load this reference when a shot needs performance direction, camera movement des
 ## Contents
 
 1. Shot detail levels
-2. Camera movement and framing
-3. World, screen, and camera coordinates
+2. Camera movement, framing, and optical result
+3. World, screen, camera, and lighting coordinates
 4. Performance, cross-shot action, and dialogue
 
 ## Shot Detail Levels
 
-Length is decided per shot or action unit, not per whole video. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
+Length is decided per shot or action unit, not per whole video. These labels control only post-confirmation detail density; every new or rebuilt shot still passes the same structure confirmation. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
 
 ### Simple Shot
 
@@ -79,6 +79,39 @@ Write each shot as an objective account of what the camera can observe from its 
 
 Visibility roster, offscreen causality, effect-path, and terminal-frame checks belong to `references/single-segment-quality-control.md`; do not restate them here.
 
+## Optical Result
+
+Choose optics from the visible purpose rather than decorating every shot with a focal-length number:
+
+- portrait or reaction: protect facial readability and subject separation
+- observation or dialogue: preserve readable distance and spatial relation
+- environment or choreography: preserve depth, geography, and route
+- detail or product: protect surface, edge, label, and focus transition
+
+Describe the result the model must show: camera distance, near/far perspective, background compression or expansion, environment readability, foreground exaggeration, subject separation, and depth-of-field behavior. Preserve an exact focal length, aperture, or FOV only when the user or source locks it; pair it with its visible consequence. Do not invent precise millimeters or optical parameters merely to sound professional.
+
+Use one optical character within a shot. A dolly may change camera distance while preserving that character; a deliberate zoom must state the visible perspective/framing result. A cut may change optics, but the new choice must still agree with the confirmed crop, visible envelope, and spatial continuity. Check for accidental lens drift when a modification changes camera position or framing.
+
+## Lighting Direction And Exposure
+
+Treat lighting as world-space geometry, not a mood adjective. When light materially affects readability or continuity, resolve this chain:
+
+`physical source -> world direction -> subject lit and shadow sides -> camera relation -> visible result`
+
+Record only the fields that change the image:
+
+- primary source and location: sun, window, practical lamp, fire, screen, or authorized effect
+- world direction and height
+- whether the camera sees mainly the lit side, shadow side, rim, silhouette, or mixed planes
+- subject exposure and face/eye readability
+- background exposure and separation
+- important highlight, reflection, translucent, wet, metal, or edge-light receivers
+- the neighboring shot state that must remain continuous
+
+Write one compact source-direction-result sentence for a simple stable setup. Add exposure separation, receivers, or cross-shot continuity only for side/back/low-key light, moving or occluded light, reflective/translucent materials, multiple shots in one space, or a lighting-related failure. Do not add a lighting paragraph when the source has no material effect on the requested result.
+
+A camera move or cut changes which lit plane the camera sees; it does not move the sun, window, lamp, or fire. Recalculate the camera-to-light relation after every camera-side change. Keep static source, direction, exposure, and highlight ownership here. Let `world-dynamics.md` own moving-light phase, shadow/reflection motion, occlusion, flicker, receiver response, and residual continuity.
+
 ## Performance And Blocking Detail
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
@@ -87,7 +120,7 @@ For performing subjects, scale detail by complexity. Do not reduce performance t
 - **Standard**: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
 - **Complex**: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
-Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling -> environmental or sound response. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
+Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
 Do not stop the performance at the skin. When visible materials support it, let body acceleration and settling propagate into hair, clothing, loose accessories, or a carried prop with material-appropriate lag and damping; let contact propagate into the touched surface or medium. Keep these responses subordinate to the acting beat and use `references/world-dynamics.md` for the full driver, receiver, evidence, and continuity rules.
 

@@ -17,7 +17,7 @@ Resolve `world_activity` on every task:
 - `inherited`: preserve the source driver's direction, intensity, disturbance, and residual phase; default for edit, extension, and bridge.
 - `intentionally_still`: keep secondary motion absent because the user locks stillness or the inspection format would be harmed by it. Record this as a completed decision, not a skipped check.
 
-Keep this task-level mode separate from per-shot `world_dynamics_review`: `planned | source_backed | inherited | intentionally_still | unresolved` records evidence and confirmation state. An active task may contain planned and source-backed shots; `planned` never blocks, while a materially required unreadable source-backed or inherited state resolves as `unresolved` and may block.
+Keep this task-level mode separate from per-shot `world_dynamics_review`: `planned | source_backed | inherited | intentionally_still | unresolved` records evidence state. It never replaces `structure_status`. An active task may contain planned and source-backed shots; `planned` needs no separate dynamics question, while a materially required unreadable source-backed or inherited state remains `unresolved` inside the universal structure-confirmation row.
 
 Build subject-to-world and world-to-subject coupling when visible evidence supports it. Let the world act before the subject enters, respond while the subject moves, and retain a decaying state after the main action ends. Camera movement never counts as world activity.
 
@@ -79,23 +79,18 @@ Vary response rather than writing synchronized motion: light fabric reacts soone
 
 For a normal motion-bearing clip, include at least one supported living-world cue in the final prompt and, when visible contact exists, at least one two-way subject-world interaction across the clip. Treat these as quality targets rather than quotas: a one-second insert, tight face crop, explicit freeze, clean UI recording, composition-only previsualization, or stable product hero frame may legitimately carry less.
 
-## Structure-table review cell
+## Structure-table input
 
-Whenever `SKILL.md` requires a `镜头结构确认` or `镜头结构回显` table, add the exact column `环境动态确认` and summarize the per-shot `world_dynamics_review` there:
+The universal table in `SKILL.md` owns its columns. Supply only continuity-critical content to `光线与环境连续性` before confirmation:
 
-- For `planned`, write the low-risk chain from existing visible materials directly.
-- For `source_backed` or `inherited`, directly state the source and the driver, direction, phase, disturbance, or residual state being continued.
-- For `intentionally_still`, directly name what stays still and the only allowed main motion when useful.
-- For `unresolved`, directly name what cannot be read reliably and end with `待确认`.
+- `source_backed` or `inherited`: the source plus only a direction, active phase, disturbance, or residual state whose preservation changes the shot.
+- `intentionally_still`: the explicit stillness lock and the only allowed main motion when useful.
+- `unresolved`: the unreadable required fact followed by `待确认`.
+- `planned`: use `—` unless a cross-shot world fact is already locked. Do not design the full receiver chain before structure is confirmed.
 
-Examples:
+Examples: `继承视频1右向左风向，水面余波保持当前相位。` / `背景与灯光保持静止，仅腕表匀速转动。` / `视频中的风向无法可靠辨认，待确认。`
 
-- `继承视频1右向左风向；衣摆、树叶与水面余波保持当前相位。`
-- `谷风推动薄雾向右缓移，溪水顺坡下流；剑气掠过时近处草叶伏倒、水面外扩，雾层裂开后回卷。`
-- `背景、灯光与表带保持静止；仅腕表匀速转台。`
-- `视频中的风向与水波传播方向无法可靠辨认，待确认。`
-
-Keep the exact `环境动态确认` column. Write only the moving world elements and causal relationship as one natural Chinese sentence or at most three semicolon-separated groups: persistent environment; interaction or VFX influence; residual or cross-shot handoff. Omit inactive groups, group related receivers, and never expose the internal review-state label or add a status prefix. Keep it as an approval summary rather than duplicating the complete shot paragraph. Compare source-backed or inherited dynamics with the corresponding frame or interval; only a materially required unreadable state may block. `planned` never blocks same-turn delivery. If the user explicitly skips the structure table, resolve the same fields internally without rendering the column.
+After confirmation, build the complete dynamic-world layer internally and render it through the normal ownership rules. Never expose review-state labels or duplicate the full shot paragraph inside the table.
 
 ## Format adjustments
 
@@ -122,4 +117,4 @@ Keep the exact `环境动态确认` column. Write only the moving world elements
 - Do cuts inherit direction, phase, disturbance, and residual state when the same event continues?
 - Does the main action remain dominant, with no unsupported object, weather, event, or synchronized whole-frame motion added?
 
-Patch only the failed layer. If the body action is correct but the world is frozen, add the smallest causal receiver chain; if motion is excessive, reduce receivers and amplitude rather than freezing the whole scene.
+Repair only the failed layer internally. If the body action is correct but the world is frozen, add the smallest causal receiver chain; if motion is excessive, reduce receivers and amplitude rather than freezing the whole scene. Then follow `change-impact-and-delivery.md` and return the complete affected shot or wider affected unit, never only the repaired sentence.

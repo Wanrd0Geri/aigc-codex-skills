@@ -18,7 +18,7 @@ Define only what the evidence supports:
 - one emotional direction from start to end
 - one visual anchor
 - the initiating action and resulting state
-- one primary performance carrier
+- one supported performance beat or attention turn that needs a visible carrier; let `shot-craft.md` choose the concrete body, gaze, breath, expression, distance, or object-handling carrier
 - one relation connecting multiple shots, when applicable
 
 Use the source's dominant force:
