@@ -56,7 +56,7 @@ Camera movement detail scales by shot complexity:
 
 Do not stack multiple major camera moves in one shot unless the user explicitly asks for that complexity. Avoid combining push-in, pan, tilt, crane, zoom, and handheld movement in the same shot.
 
-Avoid contradictions: if the camera is `固定机位`, the subject may cross frame, but the camera should not also follow. If the camera follows a subject, object, or energy trail, write `跟随拍摄` and specify the following relationship.
+Reject camera contradictions: a fixed camera cannot also follow; a following camera names its target and relationship. Strict first-person POV places the camera at the viewpoint character's eyes and, without a reflection, cannot show that character's own head, face, or back. Over-the-shoulder may show that person's partial shoulder or back; a rear two-person view may show both backs; an independent observation view is not POV. If locked camera relation and visibility cannot coexist, surface the conflict instead of silently changing views.
 
 Apply the shot sentence order from the active platform adapter; this reference does not redefine it. Use the camera guidance below only to express a camera choice that survived that order.
 

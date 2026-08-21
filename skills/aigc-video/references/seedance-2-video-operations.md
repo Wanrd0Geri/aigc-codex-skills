@@ -6,7 +6,7 @@ Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by def
 
 ## Structure and delivery
 
-- A strict edit that preserves framing, camera side, visible roster, position, depth, facing, route, occlusion, crop, dialogue ownership, and endpoint inherits confirmed structure. If any of those fields changes, reopen only the affected interval and wait for its structure confirmation.
+- A strict edit that preserves framing, camera side and viewpoint owner, visible roster, position, depth, facing, route, occlusion, crop, dialogue ownership, and endpoint inherits confirmed structure. If any of those fields changes, reopen only the affected interval and wait for its structure confirmation.
 - An extension creates a new visible segment. Inherit the readable source opening/ending boundary, but confirm the added segment's own structure before writing the command.
 - A bridge creates a new transition. Inherit both source boundaries, but confirm the transition's structure before writing the command.
 - After confirmation, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
@@ -53,9 +53,10 @@ Examples:
 向前延长视频1：新增片段的结尾收束到原视频开头的人物位置、朝向、动作阶段、光线和机位关系，再无缝接入原视频。
 ```
 
-- append-after inherits the source ending BoundaryState
+- append-after derives its seam from the actual readable tail segment and terminal frame
 - prepend-before creates a predecessor whose ending converges on the source opening; never use the source ending as the prepend boundary
-- the original source segment is not regenerated; describe only required, unreadable seam facts
+- the original source segment is not regenerated; continue from the seam without replaying the tail, and describe only required seam facts
+- inherit readable source dialogue, ambience, subtitles, and music unless the current user changes them; never append the new/reference no-subtitle or no-background-music tail
 - use a continuous one-take extension for the same action, dialogue, emotion, or movement path
 - use a cut-based extension when the new material changes scene, time, major action phase, or narrative viewpoint
 - repeated extension can degrade identity and image quality; mention this only when the plan actually uses repeated passes

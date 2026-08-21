@@ -6,7 +6,7 @@ Load this reference whenever the user modifies, optimizes, or repairs an accepte
 
 Before final recompilation of a generated shot/prompt or revision of an existing operation command, obtain the latest complete affected unit plus any active assets, confirmed structure rows, and neighboring boundary states needed for continuity. A structural request may first reopen and confirm its affected row from the user's new facts; it still cannot be finally recompiled without that current unit. Do not reconstruct unchanged content from memory. If the user supplies only a replacement phrase and the complete current affected unit is unavailable, ask for the unit rather than delivering a disconnected patch or inventing the rest.
 
-For a first-time source-video operation, the complete current unit is the readable operational evidence, not an old generation prompt: strict edit needs the target video, target/interval, requested change, and preservation boundary; extension needs the source boundary plus the confirmed new segment; bridge needs both source boundaries plus the confirmed transition. Do not ask for a prior prompt merely because the operation changes video content.
+For a source-video operation, the complete current source is the readable operational media, not an old generation prompt: strict edit needs the target video, target/interval, requested change, and preservation boundary; extension needs the source boundary plus the confirmed new segment; bridge needs both source boundaries plus the confirmed transition. Do not ask for a prior prompt merely because the operation changes video content.
 
 ## Impact pass
 
@@ -24,7 +24,7 @@ Do not freely reinterpret the whole project. A full review means checking all re
 | Changed field | Recheck before rendering |
 | --- | --- |
 | visible roster, identity, position, facing, path, depth, or Diagram version | framing/crop, screen order, occlusion, gaze and body axis, action route/contact, light-facing side, visible endpoint, and neighboring handoff |
-| camera position, angle, shot size, axis side, or movement | visible envelope, screen direction, occlusion, gaze readability, perspective, depth compression, focus behavior, world-light relation, and boundaries |
+| camera position, viewpoint owner, angle, shot size, axis side, or movement | visible envelope, viewpoint-character self-visibility, over-the-shoulder foreground, target and mouth visibility, screen direction, occlusion, gaze readability, perspective, depth compression, focus behavior, world-light relation, and boundaries |
 | locked action or endpoint | timing, performance tactic, contact/physics, world response and residual, terminal state, and next-shot opening |
 | dialogue, speaker, or line timing | exact text, mouth visibility, speaking time, listener task/reaction, attention handoff, and cut allocation |
 | performance intention | primary carrier, gaze target, posture/contact, listener response, rhythm, and endpoint; reopen structure only if visible position, action, framing, or endpoint changes |

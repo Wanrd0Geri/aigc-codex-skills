@@ -37,7 +37,7 @@ Use these as internal feasibility estimates before allocating the required timel
 
 A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
 
-If the duration cannot hold locked beats, simplify mutable camera and description first, then recommend extending or splitting. Never delete, merge, or reorder locked beats. Let the active adapter own timeline allocation and missing-duration behavior.
+If the duration cannot hold locked beats, simplify mutable camera and description first, then ask for more duration or user-approved restructuring. Never delete, merge, reorder, or silently split locked beats. Let the active adapter own timeline allocation and missing-duration behavior.
 
 ## Persistent scene topology
 

@@ -35,6 +35,8 @@ For each fact record:
 
 Apply precedence per field, not to a whole document. A newer composition instruction does not erase unrelated current dialogue or identity facts.
 
+For a source-video operation, a readable opening or tail boundary controls existing visible source state over prior prompts, storyboards, or project cards. A current user request may deliberately change the new segment or define a strict edit; prior text may otherwise fill only media-unreadable identity, context, relationship, or sound facts. If required boundary evidence is unreadable, keep it unresolved.
+
 When the current user replaces a video, layout, storyboard, image, or other asset, invalidate only facts sourced from the replaced asset whose fields fall within that asset's operational role, boundary scope, or borrowed dimensions. Preserve unrelated current-user and project locks such as identity, exact dialogue, and duration. Mark directly dependent shot fields unresolved until they are rebuilt from the replacement asset. If same-named, similarly named, older, and newer files could be confused, verify the full source identifier or path before reading or reviewing one; a matching base filename is not evidence that it is the intended asset.
 
 ## ReferenceMap
@@ -89,15 +91,14 @@ Use `change-impact-and-delivery.md` as the single owner of propagation and deliv
 
 Use a BoundaryState for a source opening or ending and for a shot's visible start or terminal frame. It is a sparse boundary delta, not a duplicate shot description. Record only fields that are locked, change at that boundary, or materially affect continuity/composition:
 
-- visible roster: subjects, effects, props, and environment anchors actually in frame
-- offscreen causal sources that continue to exist but should not be rendered at this boundary
+- continuity-material entities classified as `visible_primary`, `visible_partial`, or `offscreen_present`; the visible roster is the first two, while offscreen presence is rendered only through a needed causal clue
 - subject world relationship plus screen position, scale, or occlusion only when materially fixed
 - facing, gaze, pose, contact, and active effect or light state only when the boundary depends on them
 - active action identity and phase when the next shot continues the same event rather than starting a new one
 - active world driver, direction, contact disturbance, and residual phase only when the boundary depends on them
 - camera framing, action-axis side, or motion vector only when it changes or must carry across the boundary
 
-World presence never implies membership in the visible roster. A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
+A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
 
 ## MotionSpec
 

@@ -60,11 +60,11 @@ Record per shot or generated operation segment:
 - `structure_status`: pending | confirmed
 - `world_dynamics_review`: planned | source_backed | inherited | intentionally_still | unresolved
 
-Structure fields are: shot size and camera relation; visible roster; screen order and foreground/midground/background placement; pose, facing, path, occlusion, and crop; locked action, dialogue ownership, and visible endpoint; plus only continuity-critical light or world state. `world_activity` is the task-level execution mode; `world_dynamics_review` records per-shot evidence. Neither changes the universal structure-confirmation rule.
+Structure fields are: shot size, camera relation, and viewpoint owner; continuity-material roster with primary, partial, or offscreen presence; screen order and foreground/midground/background placement; pose, facing, path, occlusion, and crop; locked action, dialogue ownership, and visible endpoint; plus only continuity-critical light or world state. `world_activity` is task-level; `world_dynamics_review` records per-shot evidence. Neither changes structure confirmation.
 
 Every newly generated or structurally rebuilt visible unit starts `pending`, whether its source is text or a visual asset and whether it is single-character, empty, simple, or complex. Explicit requests such as 「不用结构表」, 「跳过结构确认」, 「直接给我提示词」, or 「尽快输出」 do not change this status. Only an explicit user confirmation or an already accepted structure artifact marks the unit `confirmed`; silence never does.
 
-For optimization, strict edit, or repair of an existing accepted prompt, inherit structure as `confirmed` only when the requested change preserves it. Reopen only affected shots when a change alters framing, camera side, visible roster or identity, screen order, depth, position, facing, path, occlusion, crop, dialogue ownership, locked endpoint, or a structure-bearing asset. A lighting or performance change reopens structure only when it also changes visibility, blocking, framing, or the endpoint. Read `references/change-impact-and-delivery.md` before deciding the affected range.
+For optimization, strict edit, or repair of an existing accepted prompt, inherit structure as `confirmed` only when the requested change preserves it. Reopen only affected shots when a change alters framing, camera side or viewpoint owner, visible roster or identity, screen order, depth, position, facing, path, occlusion, crop, dialogue ownership, locked endpoint, or a structure-bearing asset. A lighting or performance change reopens structure only when it also changes visibility, blocking, framing, or the endpoint. Read `references/change-impact-and-delivery.md` before deciding the affected range.
 
 Extension and bridge create new visible material: the added segment or transition always starts `pending`, while readable source boundaries remain inherited. A strict edit that preserves composition can remain confirmed; a strict edit that changes a structure field reopens the affected interval. Final operation commands render only after every new or reopened unit is confirmed.
 
@@ -109,7 +109,7 @@ When any affected unit is `pending`, compare source-backed facts with the readab
 | --- | --- | --- | --- | --- | --- |
 
 - `构图与机位`: shot size, angle, camera mode, and crop only.
-- `人物与空间`: visible roster, order, depth, position, facing, route, occlusion, and partial visibility only when material.
+- `人物与空间`: primary and partial visible roster; offscreen presence only when material; order, depth, position, facing, route, occlusion, and crop.
 - `动作、对白与终点`: locked action, exact dialogue owner and line, and the visible endpoint.
 - `简短表演意图`: one concise source-backed intention; do not yet prescribe gaze micro-movement, breath, fingers, or facial choreography.
 - `光线与环境连续性`: only source-backed, inherited, unresolved, explicitly still, or continuity-critical light/world facts. Use `—` when no such fact is locked; do not design the full dynamic-world or lighting pass here.
@@ -134,7 +134,7 @@ Treat `intentionally_still` as a resolved result, not a skipped check. Use it fo
 
 ## 5. Render the final prompt
 
-Enter this stage only when every affected unit is `confirmed`. Never treat silence after a pending structure table as confirmation.
+Enter this stage only when every affected unit is `confirmed`.
 
 ### New and reference generation
 
@@ -177,14 +177,14 @@ Check in this order:
 3. exact dialogue, text, duration, interval, shot order, material order, and roles are preserved; every material is accounted for and bound once
 4. every visible character, animal, product, vehicle, or key prop has the adapter's required `主体：` owner; pure environment remains the only omission case
 5. adapter structure and task grammar pass for timeline, dialogue, sound, visible text, edit, extension, bridge, or platform-neutral output
-6. framing, roster, screen order, depth, occlusion, action phase, prop contact, endpoint, and handoff remain coherent
+6. framing, viewpoint, roster, screen order, depth, occlusion, action phase, prop contact, endpoint, and handoff remain coherent
 7. `world_activity` and every per-shot `world_dynamics_review` are resolved; the detailed `references/world-dynamics.md` audit and any `光线与环境连续性` cell pass
 8. no duplicate ownership, unsupported invention, stale asset fact, reference leakage, synchronized whole-frame motion, or decorative motion list remains
 9. static optics and lighting direction are coherent; camera movement or a cut has not moved the world light source
 10. every modification passed the impact-closure audit and its delivery is at least one complete affected shot, complete affected sequence, complete prompt, or complete operation command
 11. `agents/openai.yaml`, reference routing, and regression cases remain consistent after maintenance
 
-If a check fails, repair the smallest failed field internally and run the full affected-unit checks again. Never expose a field-only patch: re-render at least the complete affected shot, or the complete affected sequence/prompt/operation when the impact crosses that boundary. While structure confirmation is pending, deliver only the compact table and one confirmation request. Otherwise, default delivery is at most one useful judgment or risk sentence followed by the complete Chinese deliverable in one fenced code block.
+If a check fails, repair the smallest failed field internally and run the full affected-unit checks again. Never expose a field-only patch: re-render at least the complete affected shot, or the complete affected sequence/prompt/operation when the impact crosses that boundary. Default delivery is at most one useful judgment or risk sentence followed by the complete Chinese deliverable in one fenced code block.
 
 ## Stop conditions
 
@@ -194,13 +194,14 @@ Ask one grouped question and wait only when:
 - a required asset or boundary state is missing
 - a final Seedance 2.5 new/reference prompt lacks total duration and no coarse-white-model source-timing exception applies
 - required exact dialogue, narration, or visible text is missing
-- hard locks conflict
+- hard locks, camera relation, or visibility requirements conflict
 - a materially required environment-dynamics field from a visual asset remains unresolved
 - two well-supported creative readings would materially change the result
 
+For a blocking conflict, scan the complete affected unit, state every root conflict once, offer the smallest set of materially different executable resolutions (normally two), identify the lock each changes, recommend one, and ask for one choice. Do not create serial follow-up rounds or presentation-only alternatives.
+
 ## Avoid
 
-- Do not output `@` handles or UUIDs by default. Use plain upload-order labels; preserve a literal handle only on an explicit current-user request.
 - Do not create a second non-timestamped generation default; only the explicit unreadable-cut coarse-white-model route may use ordered `镜头N：` entries without time ranges.
 - Do not use `定义为` as routine boilerplate.
 - Do not repeat material responsibilities inside every shot.

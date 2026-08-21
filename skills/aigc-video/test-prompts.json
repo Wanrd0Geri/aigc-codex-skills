@@ -703,5 +703,20 @@
     "id": "video-diagram-05-geometry-change-invalidates-version",
     "prompt": "四人镜头结构和站位图v2已经确认。现在把角色A从右后景改为左前景，并让她绕过桌子走到角色B身边；其他人物、机位和对白不变。先处理结构。",
     "expected": "Recognizes that position, depth, occlusion, and route change. It invalidates v2 for the affected geometry, returns only the revised compact structure row for confirmation, and does not bind v2 or render the final prompt. After confirmation it creates a candidate v3 map; v3 becomes active only after validation."
+  },
+  {
+    "id": "video-extension-05-source-truth-six-layered-roster",
+    "prompt": "向后延长视频1 5秒，先处理新增结构。旧提示词写“院内只有四人，四人始终同排同框”；但可读的视频1真实尾段清楚显示六个人都在院内：甲乙在近前景，丙丁在中景，戊己正从后景门口分两拍入画，固定机位。新增5秒让戊己完成入画，六人保持现有前中后景层次，结尾六人仍都在场，但不要求同排或全身同时清楚可见。",
+    "expected": "Treats readable 视频1 as the authoritative extension boundary for source-owned geometry and the old prompt as stale non-authoritative text. Preserves a six-person continuity roster, staged entry, depth, partial visibility, and fixed camera rather than shrinking the roster to four or forcing six equally visible people into one row. Returns only one compact extension-segment structure row and one grouped confirmation request. It does not ask which source to trust, request a staging Diagram or map, add process explanation, or ask follow-up questions piecemeal."
+  },
+  {
+    "id": "video-pov-01-self-back-hard-lock-two-options",
+    "prompt": "做8秒最终 Seedance：严格林川第一人称 POV，全程只从他的双眼看；同时林川本人完整背影必须一直在画面中央。固定机位，不使用镜子、玻璃反射、影子、替身、分身或切镜。直接给提示词。",
+    "expected": "Recognizes that strict first-person POV and persistent visibility of the viewpoint owner's own full back are mutually incompatible under the supplied exclusions. Returns only the compact structure-confirmation row, marks the camera/visibility conflict 待确认, and states the complete conflict once. In the same grouped request it gives two shootable options: preserve strict POV and remove Lin Chuan's visible back, or preserve the back and change to a third-person rear or over-the-shoulder view. It recommends one concisely. It renders no final prompt, reflection loophole, serial follow-up questions, long POV theory, or process report."
+  },
+  {
+    "id": "video-extension-06-inherit-audio-text-sufficient-tail",
+    "prompt": "新增片段结构已经确认。向后延长视频1 5秒。视频1真实尾段清楚可读：固定中景，女孩在画面右侧关窗后停住，左侧桌灯不变，镜头静止；原对白尾句“我明天会回来”跨接缝继续，底部字幕同步显示同句，钢琴配乐不断。新增5秒她转身走到左侧桌边拿起信，结尾低头看信。",
+    "expected": "Renders one complete extension command directly because the inherited boundary is readable and the new segment is already confirmed. Carries the exact dialogue tail, matching subtitle, piano music, fixed camera, light, pose, and action phase through the seam; it does not append the new/reference no-subtitle or no-background-music sentence. It does not request an old prompt, another boundary description, a structure table, staging Diagram or map, or a second approval round. Outside the command it uses at most one short useful note and no process narration."
   }
 ]
