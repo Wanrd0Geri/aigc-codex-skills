@@ -6,9 +6,9 @@ Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by def
 
 ## Structure and delivery
 
-- A strict edit that preserves framing, camera side and viewpoint owner, visible roster, position, depth, facing, route, occlusion, crop, dialogue ownership, and endpoint inherits confirmed structure. If any of those fields changes, reopen only the affected interval and wait for its structure confirmation.
-- An extension creates a new visible segment. Inherit the readable source opening/ending boundary, but confirm the added segment's own structure before writing the command.
-- A bridge creates a new transition. Inherit both source boundaries, but confirm the transition's structure before writing the command.
+- A strict edit inherits confirmed structure only while `change-impact-and-delivery.md` preserves every structure field; otherwise reopen only the affected interval and wait.
+- An extension creates a new visible segment. Inherit its source BoundaryState under `video-contracts.md`; confirm the added segment before writing the command.
+- A bridge creates a new transition. Inherit each source BoundaryState under `video-contracts.md`; confirm the transition before writing the command.
 - After confirmation, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
 
 Use `change-impact-and-delivery.md` when modifying or repairing an existing command.
@@ -53,14 +53,16 @@ Examples:
 向前延长视频1：新增片段的结尾收束到原视频开头的人物位置、朝向、动作阶段、光线和机位关系，再无缝接入原视频。
 ```
 
-- append-after derives its seam from the actual readable tail segment and terminal frame
-- prepend-before creates a predecessor whose ending converges on the source opening; never use the source ending as the prepend boundary
+- append-after starts from the source ending BoundaryState
+- prepend-before converges on the source opening BoundaryState; never use the source ending
 - the original source segment is not regenerated; continue from the seam without replaying the tail, and describe only required seam facts
-- inherit readable source dialogue, ambience, subtitles, and music unless the current user changes them; never append the new/reference no-subtitle or no-background-music tail
+- unless changed by the current user, preserve seam-active sound/text and phase under `video-contracts.md`
+- never append the new/reference no-subtitle or no-background-music tail
+- state each inherited seam fact once; repeat it only when its phase changes or the new action could disturb it
 - use a continuous one-take extension for the same action, dialogue, emotion, or movement path
 - use a cut-based extension when the new material changes scene, time, major action phase, or narrative viewpoint
 - repeated extension can degrade identity and image quality; mention this only when the plan actually uses repeated passes
-- the added segment's confirmed structure owns its framing, roster, route, action/dialogue, and endpoint; performance and world response are enriched only afterward
+- the added segment owns its confirmed structure; enrich performance and world response only afterward
 
 Follow the current duration rules in `seedance-capability-matrix.md`.
 
@@ -78,9 +80,9 @@ Example:
 视频1结尾的镜头继续向前穿过门框，门框贴近镜头形成短暂暗场；暗场内保持同一向前速度和方向，逐渐显出视频2开头的街道透视与晨光，接入视频2时人物位置、镜头高度和运动方向一致。
 ```
 
-Start from video 1's ending state and converge on video 2's opening state. Carry only the needed subject motion, camera motion, light, material, shape, or source-backed sound. A transition must be visible and causal; avoid a bare `自然过渡`.
+Start from video 1's ending state and converge on video 2's opening state. Carry only needed subject/camera motion, light, material, shape, and BoundaryState sound/text phase. A transition must be visible and causal; avoid a bare `自然过渡`.
 
-Before rendering this formula, confirm the transition's own camera/framing, visible roster, spatial path, action, and terminal convergence. Do not treat two readable source boundaries as confirmation of the unseen bridge between them.
+Before rendering, confirm the transition's structure and terminal convergence. Two source boundaries do not confirm the unseen bridge.
 
 Do not infer that the general ten-video input allowance means one bridge accepts ten endpoints. If the user wants a chain of three or more source videos, plan separate pairwise bridges or verify the current interface first.
 

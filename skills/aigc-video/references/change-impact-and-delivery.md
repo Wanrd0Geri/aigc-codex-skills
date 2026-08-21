@@ -6,7 +6,7 @@ Load this reference whenever the user modifies, optimizes, or repairs an accepte
 
 Before final recompilation of a generated shot/prompt or revision of an existing operation command, obtain the latest complete affected unit plus any active assets, confirmed structure rows, and neighboring boundary states needed for continuity. A structural request may first reopen and confirm its affected row from the user's new facts; it still cannot be finally recompiled without that current unit. Do not reconstruct unchanged content from memory. If the user supplies only a replacement phrase and the complete current affected unit is unavailable, ask for the unit rather than delivering a disconnected patch or inventing the rest.
 
-For a source-video operation, the complete current source is the readable operational media, not an old generation prompt: strict edit needs the target video, target/interval, requested change, and preservation boundary; extension needs the source boundary plus the confirmed new segment; bridge needs both source boundaries plus the confirmed transition. Do not ask for a prior prompt merely because the operation changes video content.
+For new or structurally changed source-video operations, use the boundary precedence in `video-contracts.md`, never an old generation prompt. Strict edit needs target/interval, change, and preservation boundary; extension needs source boundary plus confirmed new segment; bridge needs both boundaries plus confirmed transition. For wording-only optimization that preserves structure and boundaries, the complete current command is the affected unit; do not demand media or an old prompt without a source-dependent claim.
 
 ## Impact pass
 
@@ -23,10 +23,10 @@ Do not freely reinterpret the whole project. A full review means checking all re
 
 | Changed field | Recheck before rendering |
 | --- | --- |
-| visible roster, identity, position, facing, path, depth, or Diagram version | framing/crop, screen order, occlusion, gaze and body axis, action route/contact, light-facing side, visible endpoint, and neighboring handoff |
+| visible roster, material offscreen presence, identity, position, facing, path, depth, or Diagram version | framing/crop, screen order, occlusion, offscreen causal clue, gaze and body axis, action route/contact, light-facing side, visible endpoint, and neighboring handoff |
 | camera position, viewpoint owner, angle, shot size, axis side, or movement | visible envelope, viewpoint-character self-visibility, over-the-shoulder foreground, target and mouth visibility, screen direction, occlusion, gaze readability, perspective, depth compression, focus behavior, world-light relation, and boundaries |
 | locked action or endpoint | timing, performance tactic, contact/physics, world response and residual, terminal state, and next-shot opening |
-| dialogue, speaker, or line timing | exact text, mouth visibility, speaking time, listener task/reaction, attention handoff, and cut allocation |
+| dialogue, narration, voice, subtitle/visible text, sound/music, or seam phase | exact content and owner, active/completed state, mouth visibility, speaking time, text position/timing, listener task/reaction, sound continuity, and cut allocation |
 | performance intention | primary carrier, gaze target, posture/contact, listener response, rhythm, and endpoint; reopen structure only if visible position, action, framing, or endpoint changes |
 | light source, world direction, intensity, or exposure | subject lit/shadow sides, camera-visible bright/dark relation, eye/catch lights, highlights, reflections, background exposure, moving-light receivers, and adjacent-shot continuity |
 | world driver or physical response | all reachable visible receivers, phase, delay/amplitude, residual state, and cross-shot handoff |
@@ -36,7 +36,7 @@ Do not freely reinterpret the whole project. A full review means checking all re
 
 ## Structure reopening
 
-Return only affected rows to `pending` when the closure changes shot size or camera relation, visible roster, screen order, depth, position, facing, route, occlusion, crop, dialogue ownership, locked action boundary, endpoint, or a structure-bearing asset. Text-specified changes and visually read changes follow the same confirmation rule.
+Return only affected rows to `pending` when the closure changes shot size or camera relation, visible roster, material offscreen presence, screen order, depth, position, facing, route, occlusion, crop, dialogue ownership, locked action boundary, endpoint, or a structure-bearing asset. Text-specified changes and visually read changes follow the same confirmation rule.
 
 A non-structural change may inherit confirmation. Examples include restrained performance refinement, static lighting refinement, sound wording, or material response that leaves composition and endpoints intact. Even then, recompute every dependent field and deliver the complete affected unit.
 

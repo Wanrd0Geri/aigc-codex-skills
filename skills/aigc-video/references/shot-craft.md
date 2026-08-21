@@ -56,7 +56,7 @@ Camera movement detail scales by shot complexity:
 
 Do not stack multiple major camera moves in one shot unless the user explicitly asks for that complexity. Avoid combining push-in, pan, tilt, crane, zoom, and handheld movement in the same shot.
 
-Reject camera contradictions: a fixed camera cannot also follow; a following camera names its target and relationship. Strict first-person POV places the camera at the viewpoint character's eyes and, without a reflection, cannot show that character's own head, face, or back. Over-the-shoulder may show that person's partial shoulder or back; a rear two-person view may show both backs; an independent observation view is not POV. If locked camera relation and visibility cannot coexist, surface the conflict instead of silently changing views.
+Reject camera contradictions: fixed cannot follow; following names its target and relation. Strict first-person POV sits at the viewpoint character's eyes and cannot show their head, face, or back without reflection. OTS may show partial shoulder/back; a rear two-person view may show both backs; observation is not POV. Surface locked relation/visibility conflicts instead of silently changing views.
 
 Apply the shot sentence order from the active platform adapter; this reference does not redefine it. Use the camera guidance below only to express a camera choice that survived that order.
 

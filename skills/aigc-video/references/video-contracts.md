@@ -35,7 +35,7 @@ For each fact record:
 
 Apply precedence per field, not to a whole document. A newer composition instruction does not erase unrelated current dialogue or identity facts.
 
-For a source-video operation, a readable opening or tail boundary controls existing visible source state over prior prompts, storyboards, or project cards. A current user request may deliberately change the new segment or define a strict edit; prior text may otherwise fill only media-unreadable identity, context, relationship, or sound facts. If required boundary evidence is unreadable, keep it unresolved.
+For source-video operations, a readable boundary controls existing visible state over old prompts, storyboards, or project cards. When unavailable or unreadable, a complete current-user BoundaryState substitutes; only required fields absent from both remain unresolved. Current requested new-segment changes or strict edits stay authoritative; older text fills only nonconflicting unresolved identity, context, relationship, or sound.
 
 When the current user replaces a video, layout, storyboard, image, or other asset, invalidate only facts sourced from the replaced asset whose fields fall within that asset's operational role, boundary scope, or borrowed dimensions. Preserve unrelated current-user and project locks such as identity, exact dialogue, and duration. Mark directly dependent shot fields unresolved until they are rebuilt from the replacement asset. If same-named, similarly named, older, and newer files could be confused, verify the full source identifier or path before reading or reviewing one; a matching base filename is not evidence that it is the intended asset.
 
@@ -91,12 +91,15 @@ Use `change-impact-and-delivery.md` as the single owner of propagation and deliv
 
 Use a BoundaryState for a source opening or ending and for a shot's visible start or terminal frame. It is a sparse boundary delta, not a duplicate shot description. Record only fields that are locked, change at that boundary, or materially affect continuity/composition:
 
-- continuity-material entities classified as `visible_primary`, `visible_partial`, or `offscreen_present`; the visible roster is the first two, while offscreen presence is rendered only through a needed causal clue
+- visible roster, with primary or partial visibility only when materially fixed, plus any material offscreen presence
 - subject world relationship plus screen position, scale, or occlusion only when materially fixed
 - facing, gaze, pose, contact, and active effect or light state only when the boundary depends on them
 - active action identity and phase when the next shot continues the same event rather than starting a new one
 - active world driver, direction, contact disturbance, and residual phase only when the boundary depends on them
-- camera framing, action-axis side, or motion vector only when it changes or must carry across the boundary
+- seam-active source-backed sound/text—dialogue, narration/voice, ambience/SFX/music, subtitle/visible text, or locked silence—with locked owner/content/position and current phase; never restart completed elements
+- camera framing, relation, viewpoint owner when POV applies, action-axis side, or motion vector only when it changes or must carry across the boundary
+
+VideoContext 1.1 mapping: preserve `visible_roster`; map `offscreen_causal_sources` to material offscreen presence; refine primary/partial visibility only from source-backed crop; promote `exact_dialogue_sound_text` to boundary state only when explicitly reaching it. For a source-operation seam, leave any required phase unbacked by readable media or the current user unresolved. Never infer or re-ask resolved facts.
 
 A terminal BoundaryState is the desired ending image even when no later shot needs a handoff.
 
@@ -111,7 +114,7 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
 - primary performance carrier
 - dynamic-world layer: `world_activity`, primary physical driver, visible receivers, subject-to-world and world-to-subject coupling, material-specific delay/amplitude/damping, depth propagation, and only the residual states that must persist
 - total duration and continuous, non-overlapping time ranges that start at zero and end exactly at total duration; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
-- references and any active source-backed audio, dialogue, or visible text
+- references and any active source-backed audio, dialogue, or visible text with its boundary phase
 - shots:
   - `structure_source`: current_text | visual_asset | inherited | unresolved
   - `structure_status`: pending | confirmed
@@ -119,8 +122,8 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
   - purpose
   - `world_dynamics_review`: planned | source_backed | inherited | intentionally_still | unresolved — per-shot evidence state, separate from task-level `world_activity`; use `world-dynamics.md` as the single owner of dynamic-world planning
   - sparse visible-start BoundaryState
-  - shot size, angle, and camera mode
-  - current visible state and material spatial relationship
+  - shot size, angle, and camera relation, including viewpoint owner when POV applies
+  - current visible state, material offscreen presence, and spatial relationship
   - any visible entry or exit not already expressed by the boundaries
   - action, performance, exact dialogue, and causal response
   - main camera movement and its visible result

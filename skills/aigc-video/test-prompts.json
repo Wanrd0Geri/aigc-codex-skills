@@ -712,7 +712,7 @@
   {
     "id": "video-pov-01-self-back-hard-lock-two-options",
     "prompt": "做8秒最终 Seedance：严格林川第一人称 POV，全程只从他的双眼看；同时林川本人完整背影必须一直在画面中央。固定机位，不使用镜子、玻璃反射、影子、替身、分身或切镜。直接给提示词。",
-    "expected": "Recognizes that strict first-person POV and persistent visibility of the viewpoint owner's own full back are mutually incompatible under the supplied exclusions. Returns only the compact structure-confirmation row, marks the camera/visibility conflict 待确认, and states the complete conflict once. In the same grouped request it gives two shootable options: preserve strict POV and remove Lin Chuan's visible back, or preserve the back and change to a third-person rear or over-the-shoulder view. It recommends one concisely. It renders no final prompt, reflection loophole, serial follow-up questions, long POV theory, or process report."
+    "expected": "Recognizes that strict first-person POV and persistent visibility of the viewpoint owner's own full back are mutually incompatible under the supplied exclusions. Returns only the compact structure-confirmation row, marks the camera/visibility conflict 待确认, and states the complete conflict once. In the same grouped request it gives two shootable options: preserve strict POV and remove Lin Chuan's visible back, or preserve the full back and change to a third-person rear view. It recommends one concisely. It renders no final prompt, reflection loophole, serial follow-up questions, long POV theory, or process report."
   },
   {
     "id": "video-extension-06-inherit-audio-text-sufficient-tail",
