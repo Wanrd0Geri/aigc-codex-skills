@@ -13,7 +13,7 @@ Load only the references required by the request.
 
 | Condition | Read |
 | --- | --- |
-| Any Seedance-family output | `references/seedance-2-rules.md` |
+| Seedance-family generation; 2.0/2.0 Fast operations | `references/seedance-2-rules.md` |
 | Any new/reference generation; any task that renders a structure-confirmation table; any edit, extension, or bridge that must inherit source world state; or any optimization that changes visible motion or physical interaction | + `references/world-dynamics.md` |
 | Seedance version limits, duration, input counts, or feasibility | + `references/seedance-capability-matrix.md` |
 | Strict edit, extension, or bridge | + `references/seedance-2-video-operations.md` |
@@ -25,7 +25,7 @@ Load only the references required by the request.
 | The user requests or supplies a staging Diagram; an existing geometry asset needs role isolation or a route overlay; or direct asset binding still produces repeated geometry failure | + `references/blocking-diagram.md` |
 | Product, UGC, VFX, one-take, educational, or previsualization pattern | + `references/task-patterns.md` |
 | Emotional, memory, or subjective intent | + `references/vibe-expression.md` |
-| Performance intent absent or materially ambiguous | + `references/collaboration-and-performance.md` |
+| Multi-character dialogue/reaction; materially ambiguous motive; observed wooden/empty/overacted result; listener-dependent beat | + `references/collaboration-and-performance.md` |
 | AI-flavored prose or an explicit natural-wording request | + `references/language-lint.md` |
 | An observed failed or unstable result is supplied | + `references/failure-recovery.md` |
 | Comparing with the observed 即梦 optimizer format or maintaining this Skill | + `references/seedance-2.5-optimizer-example.md` |

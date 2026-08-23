@@ -1,6 +1,6 @@
 # Seedance 2.5 Prompt Adapter
 
-Use this file for every default Seedance-family final prompt. Default to 即梦 Seedance 2.5. Use the legacy note at the end only when the user explicitly selects Seedance 2.0 or 2.0 Fast.
+Use for Seedance-family generation and 2.0/2.0 Fast operations.
 
 Source basis:
 
