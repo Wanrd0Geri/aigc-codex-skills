@@ -34,19 +34,19 @@ Default final labels are plain upload-order labels. Treat a supplied `@` handle,
 - Render `主体：` even when the opening frame is empty but a subject enters later. In a text-only case, use only the available stable description. Bind each material once, use semantic names afterward, and never ask the user to choose among equivalent field layouts.
 - Use `作为[角色名]` only when selecting one subject among several or combining several sources for one character. Do not add routine `定义为` wording.
 - A storyboard or multi-panel sheet must name its authorized dimensions such as shot order, framing, blocking, screen direction, and occlusion. Do not treat it as a generic style reference.
-- A `staging_map` binds only its confirmed geometry in the owning shot and never supplies identity, style, environment, material, lighting, expression, or sound. Follow `blocking-diagram.md` for versioning and leakage checks.
+- A `staging_map` binds only its structure-resolved `composition` or `route` scope in the owning shot. Identity, style, environment, material, lighting, expression, and sound retain their normal owners. Follow `blocking-diagram.md` for direct-asset priority, versioning, and leakage checks.
 - If one material applies only to a time interval, write that interval in the responsibility line.
 
 ## Unified generation structure
 
-Use this ordered structure only after every affected shot's structure is confirmed. Use the same structure for every known-duration Seedance 2.5 new/reference generation. `主体：` is conditionally required by visible subject presence; omit the other optional headings when they have no material information. Never leave a heading empty or fill it with invented prose.
+Use this ordered structure only after every affected shot passes the structure-delivery gate in `SKILL.md`. Use the same structure for every known-duration Seedance 2.5 new/reference generation. `主体：` is conditionally required by visible subject presence; omit the other optional headings when they have no material information. Never leave a heading empty or fill it with invented prose.
 
 ```text
 主体：
 [required whenever any character, animal, product, vehicle, or key prop appears; omit only for a clip that remains a pure environment or empty shot throughout]
 
 场景：
-[optional: scene-reference materials plus time, location, topology, light, atmosphere, persistent ambience, and any whole-clip physical driver/background response baseline]
+[optional: scene-reference materials plus time, location, the smallest shared stable topology, light, atmosphere, persistent ambience, and any driver/background baseline that remains active across every shot]
 
 风格：
 [optional: medium, palette, material, and texture]
@@ -70,7 +70,7 @@ Never render a `全局补充：` heading. Put an owned whole-clip requirement na
 - Use integer-second boundaries by default. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
 - If locked shot count and duration cannot give every shot a positive integer range, ask for a longer duration or restructuring permission instead of using decimals.
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
-- Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. For a normal motion-bearing shot, add only the minimum living-world response that shares a cause with the main action or persistent scene driver.
+- Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. Render each shot through its resolved world-dynamics mode.
 - Shots use semantic names and state only visible changes or continuity-critical inheritance.
 - When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
 - For previsualization, use the same timeline formula once total duration is known; establish the selected representative state at cut-in.
@@ -106,7 +106,9 @@ For visible text, state exact content, timing, frame position, appearance method
 
 ## Control and repetition
 
-- Put one persistent world driver and background response baseline in `场景：` when supported; put local clothing, hair, prop, contact, fluid, foliage, reflection, light, or surface response in the owning shot. Do not render a `世界动态：` or `环境动态：` heading.
+- Evaluate each world driver independently. Put one in `场景：` only when it remains active and useful across every shot in the complete command. Put a partial, changing, or mixed-mode driver and its local response in the owning shot. Operation commands keep seam dynamics inside their operation grammar.
+- Render `coupled_world` as one compact cause and selected response chain, `primary_action` as the main action plus necessary body/prop mechanics, and `intentional_stillness` as stable fields plus the sole activity beat. Do not render a `世界动态：` or `环境动态：` heading.
+- Render each active stable-topology fact once at the smallest common scope. Multiple locations keep their topology with their owning shots or segments. Keep internal contract names out of the final prompt.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Treat internal viewer priority and rendered `画面重心` as one field.
 - Do not repeat a material label, global scene description, world driver, character appearance, camera rule, or negative instruction in every shot.

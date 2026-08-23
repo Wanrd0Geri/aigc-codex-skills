@@ -530,6 +530,21 @@
     "expected": "Invalidates and rebuilds only shots 3 and 4 fields sourced from the replaced layout dimensions, preserves identity, total duration, shot count and order, exact dialogue, and unaffected world dynamics, then returns only the affected canonical six-column structure rows for confirmation. 光线与环境连续性 contains only inherited or continuity-critical facts. It does not clear the whole MotionSpec, retain stale 视频1 geometry, or render the final prompt before reconfirmation."
   },
   {
+    "id": "video-structure-review-06-performance-posture-inside-envelope",
+    "prompt": "镜头结构已经确认。正面中景里女孩仍站在原位、保持原裁切与遮挡，递信动作和结尾不变；只让她肩膀略微放松、呼吸停半拍、握信的手稍微收紧。请输出更新后的完整镜头。",
+    "expected": "Treats the posture, breath and hand-tension changes as performance inside the accepted blocking envelope. It preserves the confirmed structure version, skips another structure table, propagates the performance dependencies, and returns the complete affected shot."
+  },
+  {
+    "id": "video-structure-review-07-blocking-critical-pose-reopens",
+    "prompt": "镜头结构已经确认。原来女孩站在桌后露出完整上半身；现在改成蹲到桌后，只露出眼睛，并让手扶桌沿。机位和其他人物不变。",
+    "expected": "Treats the new crouch as a blocking-critical pose because it changes body footprint, crop, occlusion and contact geometry. It increments only the affected structure version, returns that structure row for confirmation, and holds performance and final rendering."
+  },
+  {
+    "id": "video-structure-review-08-position-only-reopens",
+    "prompt": "镜头结构已经确认。单人固定中景里，女孩原本位于画面中央；现在只把她移到画面左侧，景深、裁切、姿势、朝向、动作和终点全部不变。",
+    "expected": "Treats the screen-position change as structural even though every other field stays fixed. It increments only this shot's structure version, returns the affected structure row for confirmation, and holds final rendering."
+  },
+  {
     "id": "video-dialogue-02-group-attention-handoff",
     "prompt": "四人镜头结构已经确认。罗大娘面对曲伯说“我们凭什么相信你？”，乐奶奶和芳儿姐站在她身后。写8秒最终 Seedance 提示词，人物之间要有互动，但表演克制。",
     "expected": "Renders the final prompt with Luo as visible speaker, Qu Bo as the addressed listener, and only one materially useful restrained listener or attention response in the main dialogue beat. It does not make all four characters react simultaneously, stare forward throughout, or add unrelated gestures and dialogue."
@@ -565,14 +580,14 @@
     "expected": "Even though the simple two-person geometry is complete in text, returns only one compact 镜头结构确认 row and one confirmation request, preserving framing, left-right order, no occlusion, dialogue owner, endpoint, and concise performance intent. It does not render the final prompt in the same turn and does not invoke Diagram for this unambiguous setup."
   },
   {
-    "id": "video-structure-gate-03-explicit-skip-does-not-override",
+    "id": "video-structure-gate-03-explicit-skip-authorizes-direct",
     "prompt": "视频1是三人粗模，站位、遮挡都按视频里的来。不用结构表，直接写12秒最终 Seedance 提示词。",
-    "expected": "Treats 不用结构表 and 直接写 as delivery preferences that cannot override the universal structure pass. It reads the three-person layout from 视频1, returns only the compact structure-confirmation table and one confirmation request, and does not render the final prompt or expose old gate labels."
+    "expected": "Treats 不用结构表 as explicit current-request direct authorization for every affected unit. It reads and compiles the three-person layout from 视频1 internally, keeps structure_status pending rather than falsely recording confirmation, resolves all other gates, and returns the complete 12-second Seedance prompt without displaying a structure table."
   },
   {
     "id": "video-world-dynamics-01-shared-driver-material-response",
     "prompt": "结构已经确认。写一个8秒 Seedance 参考图生视频。图片1里女孩站在竹林小路，长发、宽袖和腰间小饰物清晰可见，前中后景都有竹叶。山风从画面左后方吹来，她缓慢回头。让画面像一个真实流动的世界，不要只是人物动。",
-    "expected": "Resolves world_activity as active, binds 图片1 without inventing new scene elements, places the persistent left-rear wind and background response baseline in 场景, and writes one causal 情节 chain in which the turn propagates through hair, wide sleeves, and the waist accessory while bamboo at different depths responds to the same wind with different delay and amplitude. It keeps the turn primary, avoids synchronized whole-frame swaying, and adds no falling leaves, rain, water, animals, or unrelated event."
+    "expected": "Resolves world_dynamics_review and selects coupled_world, binds 图片1 without inventing new scene elements, places the clip-wide left-rear wind and background baseline once in 场景, and writes one causal 情节 chain in which the turn propagates through hair, wide sleeves, and the waist accessory while bamboo at different depths responds with different delay and amplitude. It keeps the turn primary and adds no unsupported event."
   },
   {
     "id": "video-world-dynamics-02-two-way-contact-and-residual",
@@ -597,7 +612,7 @@
   {
     "id": "video-world-dynamics-06-intentionally-still-exception",
     "prompt": "结构已经确认。写5秒 Seedance 产品视频：白色背景固定机位，腕表只做匀速转台展示。背景、灯光和表带都必须完全静止，不要任何环境运动。",
-    "expected": "Runs the world-activity decision and resolves intentionally_still from the explicit lock rather than adding living-world motion. It preserves the single turntable action, stable silhouette, label/detail readability, background, light, and strap, and does not add wind, reflection drift, cloth motion, particles, handheld movement, or a 世界动态 heading."
+    "expected": "Resolves world_dynamics_review and selects intentional_stillness from the explicit lock. It renders the stable background, light, strap, silhouette, and label detail plus the sole turntable action, with no added world-response layer or 世界动态 heading."
   },
   {
     "id": "video-world-dynamics-07-strict-edit-inherits-source",
@@ -607,7 +622,7 @@
   {
     "id": "video-world-dynamics-08-previsualization-downscope",
     "prompt": "做一个12秒四镜白模预演，只检查人物站位、遮挡、机位和构图。每镜人物姿势不要像完全冻结，但环境动态不是这轮检查重点。结构已经确认。",
-    "expected": "Runs the dynamic-world step but downscopes it for composition previsualization. It gives each representative state only enough body settling or minimal secondary motion to avoid dead poses, does not add detailed wind, foliage, water, reflections, particles, or environmental interactions that obscure the inspection, and preserves all four shots and the confirmed structure."
+    "expected": "Resolves each previsualization shot as primary_action. It gives each representative state only the body or prop mechanics needed to read the pose, keeps auxiliary world dynamics out of the inspection, and preserves all four shots and the resolved structure."
   },
   {
     "id": "video-world-dynamics-09-frozen-world-local-recovery",
@@ -647,7 +662,7 @@
   {
     "id": "video-world-review-05-planned-dynamics-still-await-structure",
     "prompt": "8秒双人单镜，站位、遮挡和动作都已经在文字里写清。场景图里能看到长袍、草地和远处薄雾，但没有需要原样匹配的风向或运动相位。直接给最终 Seedance 提示词。",
-    "expected": "Low-risk planned dynamics require no separate question about an unstated wind direction or phase, but the universal structure pass still applies. It returns only the compact structure-confirmation row; 光线与环境连续性 may remain — because no cross-shot state is locked. It waits for structure confirmation before building the restrained final causal chain."
+    "expected": "The world-dynamics review resolves internally without asking for an unstated wind direction or phase. 直接给最终 remains a speed request, so structure_review_mode stays review_required and the response contains only the compact structure-confirmation row; 光线与环境连续性 may remain — because no cross-shot state is locked."
   },
   {
     "id": "video-world-dynamics-12-authorized-vfx-consequence",
@@ -655,9 +670,9 @@
     "expected": "Treats the explicitly accepted VFX design-card consequences as authorized even though the crack and temporary rubble motion are new event outcomes. It uses one dominant impact driver across the named ground, existing rubble, and cloth receivers with material-specific timing and residual settling, while adding no fire rain, collapse, extra debris, second event driver, or unstated destruction."
   },
   {
-    "id": "video-diagram-01-high-risk-enters-map-step",
-    "prompt": "四人两镜结构已经确认。两镜包含前景遮挡、人物交换座位和不同景别，之前只靠文字连续三次生成错位；图片5是确认过的原始构图帧。现在继续制作。",
-    "expected": "Recognizes repeated high-risk geometry and pauses before the final video prompt. It outputs one staging-map image-generation prompt, a candidate version id, and a text color-to-character key, then waits for the returned map. The prompt requires a camera-facing straight view, exact source aspect ratio and crop, unchanged screen/depth overlap and occlusion, no completion of cropped or hidden bodies, and no added people, furniture, props, or landmarks; it does not default to a bird's-eye plan. The version becomes active only after validation, Diagram stays geometry-only, and performance is not enriched yet."
+    "id": "video-diagram-01-repeat-binding-failure-enters-map-step",
+    "prompt": "四人两镜结构已经确认。图片5是确认过的原始构图帧，已经作为构图、站位、遮挡素材直接绑定，但连续三次仍出现前景遮挡错误和人物换位错位。现在启用 Diagram。",
+    "expected": "Recognizes that direct binding of the readable source asset has already failed the same geometry repeatedly, so Diagram generation is justified. It outputs one composition staging-map prompt, candidate version id, map_scope, and text color-to-character key, then waits. The prompt preserves the source aspect ratio, crop, screen/depth overlap and occlusion without completing hidden bodies or adding scene content."
   },
   {
     "id": "video-diagram-02-active-version-and-style-isolation",
@@ -692,12 +707,12 @@
   {
     "id": "video-bridge-05-complete-boundaries-still-confirm-transition",
     "prompt": "把视频1接到视频2。视频1结尾女孩在画面右侧举伞，镜头向前推；视频2开头伞面占满画面，随后镜头后拉露出女孩已在画面左侧。过渡用伞面遮满镜头后换侧。",
-    "expected": "Treats both source boundaries as readable and inherited but the unseen transition as new unconfirmed structure. It returns only the compact transition row with camera path, occlusion, side change, visible action, and successor endpoint for confirmation; it does not render the complete bridge command until that row is confirmed."
+    "expected": "Treats both source boundaries as readable and inherited but the unseen transition as a new pending structure version with review_required mode. It returns only the compact transition row with camera path, occlusion, side change, visible action, and successor endpoint; it renders the bridge command after review resolves."
   },
   {
     "id": "video-diagram-04-supplied-map-does-not-confirm-structure",
     "prompt": "图片6是我刚上传的四人站位图v1，但这枚镜头的普通结构表还没有确认。请直接按站位图写最终视频提示词。",
-    "expected": "Treats 图片6 as visual structure evidence, not user confirmation. It reads the map and returns only the canonical structure-confirmation row and one request; it does not activate the map, enrich performance, or render the final video prompt until the ordinary structure is confirmed."
+    "expected": "Treats 图片6 as visual structure evidence, not confirmation or direct authorization. 请直接按站位图写 is a speed request, so review_required remains active. It validates the map as a candidate, returns only the canonical structure-confirmation row and one request, and holds performance and final rendering until review resolves."
   },
   {
     "id": "video-diagram-05-geometry-change-invalidates-version",
@@ -718,5 +733,155 @@
     "id": "video-extension-06-inherit-audio-text-sufficient-tail",
     "prompt": "新增片段结构已经确认。向后延长视频1 5秒。视频1真实尾段清楚可读：固定中景，女孩在画面右侧关窗后停住，左侧桌灯不变，镜头静止；原对白尾句“我明天会回来”跨接缝继续，底部字幕同步显示同句，钢琴配乐不断。新增5秒她转身走到左侧桌边拿起信，结尾低头看信。",
     "expected": "Renders one complete extension command directly because the inherited boundary is readable and the new segment is already confirmed. Carries the exact dialogue tail, matching subtitle, piano music, fixed camera, light, pose, and action phase through the seam; it does not append the new/reference no-subtitle or no-background-music sentence. It does not request an old prompt, another boundary description, a structure table, staging Diagram or map, or a second approval round. Outside the command it uses at most one short useful note and no process narration."
+  },
+  {
+    "id": "video-structure-gate-04-speed-still-requires-review",
+    "prompt": "8秒双人镜头，直接给提示词，尽快输出，少解释。女孩在左前景，男人在右后景，中间隔着桌子。",
+    "expected": "Treats every phrase as speed or brevity, keeps structure_review_mode review_required, and returns only the compact structure row plus one confirmation request. It does not infer direct authorization."
+  },
+  {
+    "id": "video-structure-gate-05-direct-authorization-hard-input",
+    "prompt": "跳过结构确认，直接写8秒最终提示词。女孩必须逐字说出我指定的台词，但这条消息没有提供台词内容。",
+    "expected": "Applies direct_authorized to the current unit and omits the structure table, while stage_status remains blocked by the missing exact dialogue. It asks only for the exact line; after the line arrives in the same logical request, it continues directly to the final prompt without converting authorization into confirmed status."
+  },
+  {
+    "id": "video-structure-gate-06-direct-authorization-expires",
+    "prompt": "上一项视频任务我说过跳过结构确认。现在开始一个新的10秒三镜任务：女孩进屋、放下信、坐到窗边。直接给提示词。",
+    "expected": "Treats this as a new logical request, expires the previous direct authorization, interprets 直接给提示词 as speed only, and returns the three-row structure table with one confirmation request."
+  },
+  {
+    "id": "video-structure-gate-07-scoped-direct-authorization",
+    "prompt": "两镜共8秒。镜头1结构还没确认；镜头2跳过结构确认，直接按我写的固定近景生成。现在继续。",
+    "expected": "Scopes direct_authorized only to shot 2. Shot 2 compiles internally, while shot 1 stays review_required and appears alone in the structure table. Final rendering waits for shot 1 because every affected unit must pass its own gate."
+  },
+  {
+    "id": "video-extension-07-direct-authorized-new-segment",
+    "prompt": "向后延长视频1 5秒，跳过新增段结构确认。视频1尾帧可读：女孩在画面右侧关窗后停住，固定中景。新增段她走到左侧桌边拿起信，结尾低头看信。",
+    "expected": "Keeps the readable source boundary inherited, applies direct_authorized to the new segment, compiles its route and endpoint internally, resolves remaining gates, and returns the complete extension command without a structure table."
+  },
+  {
+    "id": "video-bridge-06-direct-authorized-transition",
+    "prompt": "跳过过渡段结构确认。把视频1接到视频2：视频1结尾伞面从右侧推近遮满镜头，视频2开头从同一伞面后拉并在左侧露出女孩；两端都清楚可读。",
+    "expected": "Applies direct_authorized only to the unseen transition, preserves both source boundaries, compiles the side change and occlusion internally, and returns one complete bridge command after all hard facts resolve."
+  },
+  {
+    "id": "video-diagram-06-direct-authorized-enters-map-stage",
+    "prompt": "跳过结构确认，直接进入 Diagram。图片5是复杂四人构图源帧，已经直接绑定过但仍反复出现同一遮挡错误。",
+    "expected": "Uses direct_authorized to skip the structure table while still compiling an internal MotionSpec. Because direct asset binding has repeatedly failed, it outputs a candidate composition-map prompt, map_scope and color key, then waits for map validation rather than rendering the final video prompt."
+  },
+  {
+    "id": "video-world-dynamics-13-mixed-modes-no-global-leak",
+    "prompt": "三镜结构已经确认：镜头1竹林全景，山风推动人物衣袍与竹叶；镜头2室内近景只看女孩递信，衣服和背景保持稳定；镜头3白色背景腕表固定展示，只允许表盘转动。",
+    "expected": "Resolves shot 1 as coupled_world, shot 2 as primary_action, and shot 3 as intentional_stillness. The wind stays local to shot 1 and never enters global 场景, so it cannot animate shots 2 or 3."
+  },
+  {
+    "id": "video-world-dynamics-14-preserving-edit-resolved-without-mode",
+    "prompt": "严格编辑视频1：只把第2到4秒人物的蓝色外套改成灰色；原有风、水纹、动作、运镜和声音全部保持。",
+    "expected": "Resolves the dynamics review without setting world_dynamics_mode, because the strict edit preserves source motion. It carries driver, direction, disturbance and residual phase through the preservation boundary and returns one narrow complete edit command."
+  },
+  {
+    "id": "video-world-dynamics-15-extension-inherited-plus-local-coupling",
+    "prompt": "新增段结构已经确认。视频1尾段有持续右向左山风，女孩正走到浅水边。向后延长5秒：她踏入浅水并停下，风向保持。",
+    "expected": "Inherits the seam wind direction and phase through BoundaryState, independently selects coupled_world for the new segment, preserves the inherited wind responses, and adds the local step-water displacement plus residual ripple. It renders a wet-cloth response only when readable source evidence establishes clothing-water contact."
+  },
+  {
+    "id": "video-world-dynamics-16-partial-shared-driver-stays-local",
+    "prompt": "三镜结构已经确认。镜头1山谷全景，右向左山风带动女孩衣袖和竹叶；镜头2同一山谷近景，风向与相位延续，只看她拔剑；镜头3切到密闭石室，背景稳定，只让她眼睛转向门口。",
+    "expected": "Resolves shot 1 as coupled_world, shot 2 as primary_action with the authoritative wind continuity kept compact, and shot 3 as intentional_stillness. Because the wind serves only shots 1 and 2 and the sequence mixes modes, it stays local to those shots and never enters global 场景."
+  },
+  {
+    "id": "video-spatial-contract-01-multiple-locations",
+    "prompt": "12秒四镜已经确认：镜头1和2在书房，镜头3和4在院子。书房门连接走廊，窗固定在书桌左侧；院门连接街道，水井位于院子中央。",
+    "expected": "Builds two SceneSpatialContract entries with distinct scene_id and spatial_version values. Each shot references only its location contract; no book-room topology leaks into the courtyard and no task-level single geometry value is created."
+  },
+  {
+    "id": "video-spatial-contract-02-reverse-angle-screen-flip",
+    "prompt": "同一书房两镜结构已经确认。女孩世界位置始终靠窗，男人始终靠门；镜头2反打后两人在画面左右互换。",
+    "expected": "Keeps the stable window-door world relationship in one SceneSpatialContract while allowing shot 2 screen order to flip. Screen left/right remains shot-owned and never becomes a topology invariant."
+  },
+  {
+    "id": "video-spatial-contract-03-multiple-action-axes",
+    "prompt": "同一大厅三镜：镜头1两人沿南北方向对话，镜头2第三人从东门横穿，镜头3镜头主动越过第一组人物动作轴。结构已确认。",
+    "expected": "Stores hall regions, east door and connectivity in SceneSpatialContract, while each action unit owns its own action axis and camera side. The deliberate crossing remains a shot event rather than changing world topology."
+  },
+  {
+    "id": "video-spatial-contract-04-diagram-cannot-create-topology",
+    "prompt": "图片6是单镜四人 Diagram，只显示这一镜的裁切、前后景和遮挡。请据此推断整间房所有出入口、人物距离和跨镜路线。",
+    "expected": "Uses 图片6 only for its authorized shot geometry and leaves unseen cross-shot topology unresolved. It does not create or update SceneSpatialContract from a single Diagram."
+  },
+  {
+    "id": "video-spatial-contract-05-light-state-not-topology",
+    "prompt": "同一大厅两镜结构已经确认。当前完整序列：镜头1（0-4秒）固定中景，女孩在北墙固定壁灯下低头读信，壁灯稳定发光，结尾仍低头；镜头2（4-8秒）同一机位、人物位置、裁切和遮挡，女孩全程保持不动，北墙同一壁灯缓慢闪烁，这是唯一活动点。现在只把镜头2的闪烁改成急促；人物、路线、终点和其他状态不变。",
+    "expected": "Keeps the current scene_spatial_ref and spatial_version because the fixed light anchor is unchanged. It preserves structure confirmation, re-resolves shot 2 as intentional_stillness, updates the local flicker and light handoff, and returns the complete recompiled shot 2."
+  },
+  {
+    "id": "video-diagram-07-existing-storyboard-direct-first",
+    "prompt": "结构已经确认。图片5是清晰分镜帧，准确给出四人站位、前后景、裁切和遮挡；此前还没有按图片5生成过。现在继续制作。",
+    "expected": "Binds 图片5 directly to the named geometry fields and proceeds without generating a Diagram. Complexity alone does not create a map step."
+  },
+  {
+    "id": "video-diagram-08-neutral-isolation",
+    "prompt": "结构已经确认。图片5的站位和裁切正确，但图中角色身份、服装、场景和风格全部错误；直接作为参考会污染最终画面。请启用 Diagram。",
+    "expected": "Generates a neutral composition staging map because role isolation is evidenced. The map keeps only frame, crop, position, facing, depth and occlusion; all visual identity and style fields remain with their proper assets."
+  },
+  {
+    "id": "video-diagram-09-route-overlay-scope",
+    "prompt": "结构已经确认。图片5已经稳定控制构图和遮挡，但静态图看不出角色A绕桌走到角色B身边的路线。请补 Diagram。",
+    "expected": "Keeps 图片5 as the composition owner and generates only a sparse route-scope map. The route overlay cannot change frame, crop, screen order, depth or occlusion."
+  },
+  {
+    "id": "video-diagram-10-repeated-candidate-stop",
+    "prompt": "结构已经确认。Diagram候选v2和v3基于同一结构、同一修正假设和同一判别标准，仍把角色A与角色B的位置交换。继续生成下一张。",
+    "expected": "Ends the generated-Diagram path, sets stage_status blocked, and does not create another candidate from the exhausted hypothesis. It requests a corrected geometry source or user-supplied map, or re-opens attribution; structure stays confirmed unless new evidence reveals a genuine ambiguity."
+  },
+  {
+    "id": "video-recovery-04-zero-delta-controlled-rerun",
+    "prompt": "同一提示词、素材、设置连续得到一成一败，失败版人物站位错了；现在没有其他差异。",
+    "expected": "After excluding prompt, asset and setting deltas, resolves the comparison class to generation_variance, preserves every prompt field, and selects controlled_rerun only with one new evidence-backed hypothesis and explicit discriminating criterion. It does not tighten wording or split the shot."
+  },
+  {
+    "id": "video-recovery-05-stable-repeat-reattribution",
+    "prompt": "相同输入、相同假设、相同判别标准的受控重跑再次出现同样站位错误。继续重跑。",
+    "expected": "Ends that rerun path and re-opens attribution. It requests the next useful comparison or evaluates prompt, asset and structural causes instead of repeating the same experiment."
+  },
+  {
+    "id": "video-recovery-06-overload-evidence-structural-replan",
+    "prompt": "8秒单镜锁定六人依次入场、三段对白、两次换位、一次环绕运镜和最终六人同框；两次局部提示词修复后仍稳定漏动作，逐项删减测试证明单独动作都能生成。",
+    "expected": "Attributes the failure to demonstrated combined load, selects structural_replan, and ends local wording repair. Because exact dialogue timing, the latest complete unit, phase order, and lock-release authority are unavailable, it preserves every supported lock, marks only unsupported timing and phase fields pending, sets the stage blocked, presents the smallest lock-named options, and requests the missing evidence and one user choice in a grouped question."
+  },
+  {
+    "id": "video-recovery-07-capability-boundary-evidence",
+    "prompt": "平台当前文档明确规定此模式最多接受两个边界视频，我的任务要求同时输入三个边界视频；受控测试也确认第三个输入被忽略。",
+    "expected": "Resolves attribution to a current hard capability boundary and selects workflow_fallback. It proposes pairwise bridge operations or another supported workflow instead of rewriting the prompt or blaming random variance."
+  },
+  {
+    "id": "video-recovery-08-pure-duration-overload",
+    "prompt": "当前4秒单镜结构已确认，固定中景、单人、无运镜：女孩逐字说道“我明天会回来，但如果天亮前没见到我，你就先走”，随后拿起桌上的信、折好放进口袋，结尾走出画面。相同提示词、素材和设置连续两次都在台词中途结束并漏掉后续动作；对照测试只把总时长改为12秒就完整成功，对照时间线为0-7秒完整对白、7-10秒取信折信并放进口袋、10-12秒走出画面。我允许采用这版12秒时间线，其他锁定内容保持，请按最小改动返回完整最终Seedance提示词。",
+    "expected": "Resolves pure duration_overload from the one-variable 4-second/12-second comparison, selects structural_replan, preserves the confirmed single-shot fixed-camera structure, exact dialogue, beat order, and endpoint, follows the duration closure, and returns one complete 12-second final prompt. The current structure version remains confirmed because every listed structure field stays stable."
+  },
+  {
+    "id": "video-recovery-09-pure-one-shot-structural-overload",
+    "prompt": "当前24秒一镜到底结构已确认：甲从左前景绕桌到右后景，乙从右前景到左后景，丙从左后景到右前景，丁从右后景到左前景，四人依次交叉换位，摄影机同步绕桌一周，结尾四人落在指定新位置；没有台词。相同素材和设置下，24秒与30秒都稳定出现人物互换、路线遮挡和终点错位，但每条路线单独测试都成功；两镜对照版完整成功：镜头1为0-12秒，依次完成甲、乙路线和环绕前半圈；镜头2为12-24秒，依次完成丙、丁路线和环绕后半圈，结尾四人落在指定新位置。我允许采用这版两镜结构，请按最小改动修复。",
+    "expected": "Resolves pure one_shot_overload from the duration and split controls, selects structural_replan, proposes the evidenced two-shot split, preserves the 24-second total, four-person roster, route order, camera intent, and terminal positions, increments only the affected structure versions, and returns the affected rows plus one grouped confirmation request."
+  },
+  {
+    "id": "video-recovery-10-mixed-duration-and-structural-overload",
+    "prompt": "当前8秒一镜到底结构已确认：甲从左前景绕桌把信交给右后景乙，乙走到门边把钥匙交给丙，丙对门外的丁逐字说“天亮前不要回来”，丁入画关门，结尾四人同框；摄影机全程环绕。相同素材和设置下，只把时长延到24秒的一镜版能完成全部台词和动作，却仍稳定错路线、遮挡和终点站位；只把结构拆成两个固定机位镜头但仍保持8秒的版本站位与路线正确，却仍截断台词并漏掉关门终点。成功几何对照的分段是镜头1完成甲绕桌交信，镜头2完成乙交钥匙、丙说话、丁入画关门和四人终点。我允许把总时长增至24秒，采用0-8秒与8-24秒两镜，其他锁定内容保持，请给出最小修复方案。",
+    "expected": "Resolves mixed_overload from the two controlled comparisons, selects structural_replan, proposes the combined 24-second two-shot plan, names the duration, shot-count, and continuous-take changes, preserves every locked beat, exact line, order, roster, and endpoint, carries only source-backed participant visibility, screen order, depth, occlusion, paths, handoffs, and camera geometry, marks missing spatial fields pending, and returns only the reopened affected structure rows plus one grouped confirmation request."
+  },
+  {
+    "id": "video-recovery-11-direct-authorized-structural-replan",
+    "prompt": "当前12秒一镜到底完整结构：固定中景，甲从画面左侧入场，对乙逐字说“钥匙在桌上”，把钥匙交给乙；乙绕桌到右侧把钥匙交给丙；丙逐字说“我不会再等”，随后关门，终点三人都在门内。相同素材、设置和总时长下，一镜版连续两次都出现路线错位并漏掉关门；只拆成两镜的对照版完整成功，逐项动作单测也都成功。现在按已验证方案重排：镜头1为0-6秒，完成甲入场、第一句和交钥匙；镜头2为6-12秒，完成乙绕桌交给丙、第二句和关门终点。跳过这次重排后的结构确认，不用结构表，直接给完整最终Seedance提示词。",
+    "expected": "Resolves the demonstrated one_shot_overload, selects structural_replan, increments the affected structure versions, applies request-scoped direct_authorized to both rebuilt shots while their status remains pending, compiles the specified split internally, preserves both exact lines, beat order, and terminal state, and returns one complete 0-12-second final prompt after the remaining gates resolve."
+  },
+  {
+    "id": "video-recovery-12-controlled-rerun-stop-on-criterion-failure",
+    "prompt": "同一提示词、素材和设置先得到一成一败，失败版甲站到了乙的位置；随后按‘甲乙全程保持锁定站位’作为唯一判据做了一次零差异受控复跑，这次甲的位置正确，但乙离开了锁定站位。现在继续处理。",
+    "expected": "Treats the second result as recurrence because it fails the declared discriminating criterion, ends the identical-input rerun path, reopens attribution, preserves every prompt field, and requests the smallest comparison needed to isolate the remaining cause."
+  },
+  {
+    "id": "video-recovery-13-direct-authorized-missing-complete-unit",
+    "prompt": "上次的12秒一镜到底提示词连续两次路线错位并漏掉关门，0-6秒与6-12秒两镜对照完整成功。我授权按这版两镜重排，并明确跳过结构确认、不用结构表；但这次消息没有附上当前完整提示词，也没有写两镜的机位、遮挡和终点屏幕站位。请继续。",
+    "expected": "Resolves the supported structural replan and applies request-scoped direct_authorized, keeps the rebuilt structure rows internal, sets the stage blocked because the latest complete affected unit and required spatial evidence are unavailable, and asks for those inputs together without displaying a structure table or rendering a final prompt."
   }
 ]

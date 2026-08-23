@@ -6,10 +6,24 @@ Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by def
 
 ## Structure and delivery
 
-- A strict edit inherits confirmed structure only while `change-impact-and-delivery.md` preserves every structure field; otherwise reopen only the affected interval and wait.
-- An extension creates a new visible segment. Inherit its source BoundaryState under `video-contracts.md`; confirm the added segment before writing the command.
-- A bridge creates a new transition. Inherit each source BoundaryState under `video-contracts.md`; confirm the transition before writing the command.
-- After confirmation, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
+- A strict edit inherits a confirmed structure version only while `change-impact-and-delivery.md` preserves every structure field. A structural change increments only the affected interval and applies the current request's review mode.
+- An extension creates a new visible segment. Inherit its source BoundaryState under `video-contracts.md`; resolve structure review for the added segment before writing the command.
+- A bridge creates a new transition. Inherit each source BoundaryState under `video-contracts.md`; resolve structure review for the transition before writing the command.
+- After the structure-delivery gate passes, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
+
+For world dynamics:
+
+- A structure- and dynamics-preserving strict edit resolves review without choosing a mode; its preservation boundary carries source dynamics.
+- A dynamics edit sets the affected review to `pending`, then selects a new mode after the requested change and source evidence are resolved.
+- An extension inherits its seam driver, direction, disturbance, and residual phase, then independently selects the new segment's mode.
+- A bridge inherits both source states, selects the transition's mode, and converges on the successor opening state.
+
+For `SceneSpatialContract`:
+
+- A strict edit preserves `scene_spatial_ref` while stable topology remains unchanged.
+- An edit to a region, portal, fixed anchor, distance, height, connectivity, or locked cross-shot world relation increments the contract and only its dependent closure.
+- An extension in the same continuous location may inherit the active contract; a new location or authoritative topology change creates a new contract version.
+- A bridge shares a contract only when both boundaries occupy the same established topology or the transition visibly connects them. Otherwise each boundary keeps its own contract.
 
 Use `change-impact-and-delivery.md` when modifying or repairing an existing command.
 
@@ -62,7 +76,7 @@ Examples:
 - use a continuous one-take extension for the same action, dialogue, emotion, or movement path
 - use a cut-based extension when the new material changes scene, time, major action phase, or narrative viewpoint
 - repeated extension can degrade identity and image quality; mention this only when the plan actually uses repeated passes
-- the added segment owns its confirmed structure; enrich performance and world response only afterward
+- the added segment owns its structure version; enrich performance and world response after its review resolves
 
 Follow the current duration rules in `seedance-capability-matrix.md`.
 
@@ -82,7 +96,7 @@ Example:
 
 Start from video 1's ending state and converge on video 2's opening state. Carry only needed subject/camera motion, light, material, shape, and BoundaryState sound/text phase. A transition must be visible and causal; avoid a bare `自然过渡`.
 
-Before rendering, confirm the transition's structure and terminal convergence. Two source boundaries do not confirm the unseen bridge.
+Before rendering, resolve review for the transition's structure and terminal convergence. Two source boundaries do not resolve the unseen bridge.
 
 Do not infer that the general ten-video input allowance means one bridge accepts ten endpoints. If the user wants a chain of three or more source videos, plan separate pairwise bridges or verify the current interface first.
 

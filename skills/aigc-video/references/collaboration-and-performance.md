@@ -2,14 +2,15 @@
 
 The user prefers active creative dialogue. Do not confuse autonomy with silence.
 
-These communication actions resolve interpretation only. None can bypass a pending structure confirmation in `SKILL.md`.
+These communication actions resolve interpretation only. Structure review follows `SKILL.md`; only a current-user direct authorization removes its pause.
 
 ## Communication action
 
 - `discuss`: evidence is insufficient, at least two readings are well supported, and choosing between them changes performance, action, rhythm, composition, continuity, or ending.
 - `assume and proceed`: the gap is non-material; choose the lowest-risk option.
-- `state and proceed`: after the affected structure is already confirmed, the source gives a clear emotional direction; briefly state the bounded interpretation when useful, then deliver without adding another performance-approval round.
-- `warn and deliver`: the requested artifact is possible but unstable or overloaded.
+- `state and proceed`: after structure review resolves for the affected unit, the source gives a clear emotional direction; briefly state the bounded interpretation when useful, then deliver without adding another performance-approval round.
+- `warn and deliver`: the requested artifact remains executable but carries a stability tradeoff, such as exceeding a provider recommendation while staying inside hard limits.
+- `structural replan`: locked time, space, subject count, action load, or camera load cannot fit the current structure; reopen the affected structure and present the smallest executable replan.
 - `silent`: routine platform syntax and non-material craft choices.
 
 When discussing, use this shape:
@@ -41,7 +42,7 @@ Record the interpretation source and confidence internally.
 
 ## Scene acting pass
 
-While structure is `pending`, extract only the one concise source-backed intention needed by the table; if it is materially ambiguous, mark that cell `待确认`. Run the full motive/goal/obstacle/tactic analysis, listener task, turn, and visible-performance handoff only after the affected structure is `confirmed`.
+While a review-required structure version is pending, extract only the one concise source-backed intention needed by the table; if it is materially ambiguous, mark that cell `待确认`. For a directly authorized unit, keep the same compact intent internal. Run the full motive/goal/obstacle/tactic analysis, listener task, turn, and visible-performance handoff after structure review resolves.
 
 Run the full pass only for multi-character dialogue/reaction, materially ambiguous motivation, a result described as wooden/empty/overacted, or a beat whose meaning depends on the listener. A routine single-subject action uses the compact translation below.
 

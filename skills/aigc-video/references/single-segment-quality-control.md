@@ -2,7 +2,7 @@
 
 Use this reference for complex subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family prompts.
 
-These checks assume the universal structure pass in `SKILL.md` has already run. Every new or structurally rebuilt shot has a confirmed `镜头结构确认` row before a final prompt is audited here, regardless of character count or whether its facts came from text or a visual asset.
+These checks run after structure review resolves under `SKILL.md`. A review-required unit uses its confirmed row; a directly authorized unit uses the same internally compiled structure.
 
 ## Quality order
 
@@ -41,9 +41,11 @@ If the duration cannot hold locked beats, simplify mutable camera and descriptio
 
 ## Persistent scene topology
 
-Use this only when multiple shots share a location and depend on persistent blocking, separation, occlusion, or a repeated camera setup. Establish the source-backed regions, separators, relative distance, eyeline height, and any locked screen side or camera relation before drafting. Externalize each cross-shot spatial invariant once; shot paragraphs carry only material changes and any local fact needed to preserve the intended visible roster or occlusion. Do not infer permanent left/right placement or distance from fixed camera or shot count alone.
+Consume `SceneSpatialContract[]` from `video-contracts.md` when multiple shots share a location and depend on stable world regions, separators, portals, connectivity, fixed anchors, distances, heights, or locked cross-shot world relationships. Each shot references the applicable `scene_id@spatial_version`; shot paragraphs carry only visible changes and local facts needed for roster, route, occlusion, and continuity.
 
-If the confirmed relationship still cannot be represented unambiguously in text, or repeated outputs break the same positions, occlusion, swap, route, or camera path, load `blocking-diagram.md`. Do not turn Diagram creation into a default quality step.
+Keep screen left/right, crop, shot size, current occlusion, camera side, action axis, current subject position, and Diagram version in their existing shot or BoundaryState owners. A reverse angle may flip screen order while preserving the world relationship. A single composition frame or Diagram remains shot evidence and never promotes itself into persistent topology.
+
+Use existing storyboard, composition, white-model, or coarse-model geometry directly when its authorized fields are readable. Load `blocking-diagram.md` after direct binding repeatedly fails the same geometry, when a neutral geometry asset must isolate unwanted visual roles, when a route overlay is needed, or when the user explicitly requests Diagram.
 
 ## Visibility, path, and terminal audit
 
@@ -93,6 +95,7 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - terminal visible roster matches the shot purpose even when no next handoff exists
 - next handoff is only a subset of terminal state
 - world position, screen position, camera side, and screen direction agree when material
+- every `scene_spatial_ref` points to the current spatial version, and local shot geometry agrees with its stable world facts
 - asset operational roles, boundary scopes, and borrowed dimensions do not leak; reference-input anchors are normally bound once
 - exact dialogue, visible text, required sound/silence, style, and initiating action remain intact
 - every restriction passes the admission test: user/source lock, active personal default, platform requirement, active-reference conflict, or observed failure

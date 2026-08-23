@@ -11,7 +11,7 @@ Load this reference when a shot needs performance direction, camera movement des
 
 ## Shot Detail Levels
 
-Length is decided per shot or action unit, not per whole video. These labels control only post-confirmation detail density; every new or rebuilt shot still passes the same structure confirmation. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
+Length is decided per shot or action unit, not per whole video. These labels control only detail density after structure review resolves under `SKILL.md`. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
 
 ### Simple Shot
 
@@ -90,7 +90,7 @@ Choose optics from the visible purpose rather than decorating every shot with a 
 
 Describe the result the model must show: camera distance, near/far perspective, background compression or expansion, environment readability, foreground exaggeration, subject separation, and depth-of-field behavior. Preserve an exact focal length, aperture, or FOV only when the user or source locks it; pair it with its visible consequence. Do not invent precise millimeters or optical parameters merely to sound professional.
 
-Use one optical character within a shot. A dolly may change camera distance while preserving that character; a deliberate zoom must state the visible perspective/framing result. A cut may change optics, but the new choice must still agree with the confirmed crop, visible envelope, and spatial continuity. Check for accidental lens drift when a modification changes camera position or framing.
+Use one optical character within a shot. A dolly may change camera distance while preserving that character; a deliberate zoom must state the visible perspective/framing result. A cut may change optics, but the new choice must still agree with the structure-resolved crop, visible envelope, and spatial continuity. Check for accidental lens drift when a modification changes camera position or framing.
 
 ## Lighting Direction And Exposure
 
@@ -116,13 +116,15 @@ A camera move or cut changes which lit plane the camera sees; it does not move t
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
 
+Keep performance detail inside the resolved blocking envelope. Expressive posture, balance, and hand support may change after confirmation while body footprint, crop, occlusion, contact geometry, route, locked opening/action boundary, and endpoint remain stable. A change to any of those structure fields follows `change-impact-and-delivery.md` before enrichment.
+
 - **Simple**: one visible action plus one cue, such as gaze target, hand contact, posture shift, or expression change.
 - **Standard**: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
 - **Complex**: add action order, eye-line logic, foreground/background blocking, and inherited pose/gaze only when the shot depends on them.
 
 Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
-Do not stop the performance at the skin. When visible materials support it, let body acceleration and settling propagate into hair, clothing, loose accessories, or a carried prop with material-appropriate lag and damping; let contact propagate into the touched surface or medium. Keep these responses subordinate to the acting beat and use `references/world-dynamics.md` for the full driver, receiver, evidence, and continuity rules.
+Apply the resolved world-dynamics mode. `coupled_world` may propagate body acceleration and contact into supported hair, clothing, accessories, carried props, surfaces, or media with material-appropriate lag and damping. `primary_action` keeps only the body and prop mechanics needed to read the acting beat. `intentional_stillness` preserves the stable fields and sole activity. Use `references/world-dynamics.md` for evidence and continuity.
 
 When prop handling is the main action, define the visible active hand, contact, necessary support or counterbalance, transition, and endpoint. Mention the supporting hand only when it is inside the crop and leaving it undefined would make the pose or action materially ambiguous.
 

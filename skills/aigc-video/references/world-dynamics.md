@@ -1,6 +1,6 @@
 # Dynamic World Modeling
 
-Use this reference for every new/reference generation and whenever optimization changes visible motion or physical interaction. Treat the image as one already-running world, not a foreground subject animated over a static background.
+Use this reference for every new/reference generation and whenever optimization changes visible motion or physical interaction. Review the physical world around each visible unit, then choose whether valuable coupling, primary action mechanics, or intentional stillness best serves the shot. Review is mandatory; added world motion is conditional.
 
 ## Contents
 
@@ -11,15 +11,20 @@ Use this reference for every new/reference generation and whenever optimization 
 
 ## Core contract
 
-Resolve `world_activity` on every task:
+Resolve world dynamics for every affected shot or operation segment:
 
-- `active`: build and render a compact living-world chain; default for new/reference generation.
-- `inherited`: preserve the source driver's direction, intensity, disturbance, and residual phase; default for edit, extension, and bridge.
-- `intentionally_still`: keep secondary motion absent because the user locks stillness or the inspection format would be harmed by it. Record this as a completed decision, not a skipped check.
+```text
+world_dynamics_review: pending | resolved
+world_dynamics_mode: coupled_world | primary_action | intentional_stillness
+```
 
-Keep this task-level mode separate from per-shot `world_dynamics_review`: `planned | source_backed | inherited | intentionally_still | unresolved` records evidence state. It never replaces `structure_status`. An active task may contain planned and source-backed shots; `planned` needs no separate dynamics question, while a materially required unreadable source-backed or inherited state remains `unresolved` inside the universal structure-confirmation row.
+- `coupled_world`: render a useful visible causal exchange between the main action and existing world receivers.
+- `primary_action`: render the main action, necessary body mechanics, and necessary prop motion; finish this layer when the action reads clearly.
+- `intentional_stillness`: render the stable fields and the sole authorized activity beat.
 
-Build subject-to-world and world-to-subject coupling when visible evidence supports it. Let the world act before the subject enters, respond while the subject moves, and retain a decaying state after the main action ends. Camera movement never counts as world activity.
+`pending` leaves the mode unset. A new, reference-generated, rebuilt, extended, bridged, or dynamics-redesigned visible unit becomes `resolved` after one mode is selected. A structure-preserving strict edit that leaves dynamics untouched becomes `resolved` without a mode; its preservation boundary carries the source behavior.
+
+Evidence source and confidence remain in `EvidenceLedger`. Driver, direction, disturbance, contact state, and residual phase remain in `BoundaryState`. Extension and bridge read the inherited seam state, then select a mode for the new segment. A materially required unreadable seam fact keeps the review pending and the stage blocked. Camera movement remains camera behavior.
 
 ## Evidence boundary
 
@@ -46,7 +51,9 @@ Treat this as a complete inventory, not an instruction to animate everything. Se
 
 ## Build one coupled system
 
-1. Organize all source-backed persistent motion into one readable baseline system. Identify one dominant environmental driver, such as wind, gravity, water flow, rainfall, heat, machinery, vehicle passage, or moving/occluded light, while keeping other real independent flows quieter and subordinate. When an authorized combat/VFX event occurs, add at most one dominant transient driver.
+Use this section for `coupled_world`. Preserve every authoritative independent persistent driver that materially affects the shot, such as a valley wind and stream flow. Establish one dominant driver per causal chain; keep quieter independent systems distinct. When an authorized combat/VFX event occurs, add at most one dominant transient driver.
+
+1. Organize source-backed persistent motion into readable baseline systems.
 2. Select only visible receivers that clarify the same world: body, attached materials, contact zone, ambient medium, responsive surface, or background system.
 3. Write one causal chain in visible order: pre-existing state -> driver or contact -> material-specific response -> residual or handoff.
 4. Keep direction coherent. Let depth, attachment, mass, stiffness, drag, and distance change amplitude and delay.
@@ -57,7 +64,7 @@ When combat or VFX adds the dominant transient driver, preserve the existing bas
 
 ## Motion hierarchy
 
-Keep one readable hierarchy instead of making everything equally active:
+For `coupled_world`, keep one readable hierarchy instead of making everything equally active. For `primary_action`, use only the primary level plus necessary attached or contact mechanics. For `intentional_stillness`, protect the stable fields and one activity beat.
 
 | Level | Typical carriers | Rule |
 | --- | --- | --- |
@@ -71,50 +78,51 @@ Vary response rather than writing synchronized motion: light fabric reacts soone
 
 ## Rendering ownership
 
-- Put persistent driver, direction, intensity, and background response baseline in `场景：` for Seedance generation.
-- Put local body/cloth/prop/environment coupling, contact response, visible material change, and residual state in the owning `情节：` shot.
-- Use the same ownership in platform-neutral prose without Seedance headings.
-- Do not add a `世界动态：`, `环境动态：`, or generic control section.
-- Render one compact causal sentence, not a catalog of moving objects. Repeat only a changed or continuity-critical state.
+Evaluate each driver independently:
 
-For a normal motion-bearing clip, include at least one supported living-world cue in the final prompt and, when visible contact exists, at least one two-way subject-world interaction across the clip. Treat these as quality targets rather than quotas: a one-second insert, tight face crop, explicit freeze, clean UI recording, composition-only previsualization, or stable product hero frame may legitimately carry less.
+- When one driver remains active and useful across every shot in the complete Seedance generation command, place its direction, intensity, and background baseline once in `场景：`.
+- When a driver serves only some shots, changes direction or state, or belongs to a sequence containing `primary_action` or `intentional_stillness`, place it only in the owning `情节：` shots.
+- Put local body, cloth, prop, environment, contact, material change, and residual response in the owning `情节：` shot.
+- Use the same ownership in platform-neutral prose without Seedance headings.
+- Operation commands use their own grammar and include only dynamics needed at the seam or inside the requested change.
+
+Render one compact causal sentence for `coupled_world`. Render only the primary action mechanics for `primary_action`. State the stable result and sole activity for `intentional_stillness`. Repeat a driver only when its state changes or continuity requires it.
 
 ## Structure-table input
 
-The universal table in `SKILL.md` owns its columns. Supply only continuity-critical content to `光线与环境连续性` before confirmation:
+The table in `SKILL.md` owns its columns. For a review-required pending unit, supply only continuity-critical content to `光线与环境连续性`:
 
-- `source_backed` or `inherited`: the source plus only a direction, active phase, disturbance, or residual state whose preservation changes the shot.
-- `intentionally_still`: the explicit stillness lock and the only allowed main motion when useful.
-- `unresolved`: the unreadable required fact followed by `待确认`.
-- `planned`: use `—` unless a cross-shot world fact is already locked. Do not design the full receiver chain before structure is confirmed.
+- For source-backed or inherited continuity, write the source plus only a direction, active phase, disturbance, or residual state whose preservation changes the shot.
+- For `intentional_stillness`, write the explicit stable fields and sole activity beat when useful.
+- For a materially required unreadable fact, write that fact followed by `待确认` and keep the review pending.
+- Use `—` when no cross-shot world fact is locked. Keep mode selection and receiver-chain design internal until structure review resolves.
 
 Examples: `继承视频1右向左风向，水面余波保持当前相位。` / `背景与灯光保持静止，仅腕表匀速转动。` / `视频中的风向无法可靠辨认，待确认。`
 
-After confirmation, build the complete dynamic-world layer internally and render it through the normal ownership rules. Never expose review-state labels or duplicate the full shot paragraph inside the table.
+After structure review resolves, complete the selected mode internally and render it through the normal ownership rules. Never expose review-state labels or duplicate the full shot paragraph inside the table.
 
 ## Format adjustments
 
-- Dialogue: keep body performance primary; use breathing, clothing settle, a nearby environmental response, or persistent ambience only when visible and useful.
-- Product: protect silhouette, label, and hero readability; use restrained turntable inertia, liquid/material behavior, condensation, reflection, hand contact, or surface response only when supported.
-- VFX/combat: let impact, heat, pressure, light, particles, cloth, dust, water, or vegetation respond only when the requested effect could visibly cause it; keep the effect outcome and subject action dominant.
-- VFX/combat table and prompt: preserve the baseline fog, water, wind, weather, or mechanical flow; then state the effect-caused disturbance, propagation order, material-specific response, and residual that survives the impact.
-- Pure environment: use the environment itself as the primary system; define driver, propagation through depth, material differences, and residual state.
-- One-take: maintain the same driver and accumulating disturbances along the route instead of resetting the world when framing changes.
-- Previsualization/white model: downscope secondary and ambient motion to the minimum needed to prevent dead poses; omit it when it would obscure the structure being inspected.
-- Strict edit: do not inject new world motion into an unrelated replacement. Preserve source dynamics unless the edit target is the dynamic behavior itself.
-- Extension/bridge: inherit the boundary phase before introducing any authorized change; converge on the successor's opening world state for a bridge.
+- Dialogue: choose `primary_action` when body performance alone carries the beat; choose `coupled_world` when one visible nearby response improves the same beat.
+- Product: use `primary_action` for clean silhouette and operation; choose `coupled_world` only for supported material, liquid, reflection, hand-contact, or surface behavior that improves product readability.
+- VFX/combat: choose `coupled_world` when reachable existing receivers clarify impact, heat, pressure, or light; keep the effect outcome and subject action dominant.
+- VFX/combat with `coupled_world`: preserve any authoritative baseline fog, water, wind, weather, or mechanical flow; then state the effect-caused disturbance, propagation order, material-specific response, and residual that survives the impact.
+- Pure environment: normally use `coupled_world`; define existing driver, propagation through depth, material differences, and residual state.
+- One-take: when `coupled_world` applies, maintain drivers and accumulating disturbances along the route as framing changes.
+- Previsualization/white model: normally use `primary_action`; use `intentional_stillness` when stability is the inspection target.
+- Strict edit: resolve without a mode when the operation preserves source dynamics. A dynamics edit returns the review to pending and selects a new mode.
+- Extension/bridge: inherit the boundary phase, select the new segment's mode, and converge on the successor's opening world state for a bridge.
 
 ## Final audit
 
-- Does the world have a driver other than the camera?
-- Do body, clothing, hair, props, surfaces, atmosphere, foliage, water, light, and background respond only when present and visible?
-- Does one cause connect the selected responses?
-- Was the complete readable scene scanned before selecting the active subset?
-- Do material, depth, mass, attachment, delay, amplitude, and damping differ plausibly?
-- Does visible contact create an observable reaction or resistance?
-- When combat/VFX is present, do baseline natural motion and the transient effect influence coexist without resetting one another?
-- Does some motion pre-exist the main action or continue after it instead of starting and stopping in unison?
-- Do cuts inherit direction, phase, disturbance, and residual state when the same event continues?
-- Does the main action remain dominant, with no unsupported object, weather, event, or synchronized whole-frame motion added?
+- Every affected unit's review is resolved.
+- Every visible-motion generation or redesign unit has one mode; a dynamics-preserving strict edit carries the source state without a mode.
+- `coupled_world` has one readable cause per chain, present visible receivers, plausible material differences, and coherent direction, phase, disturbance, and residual continuity.
+- `primary_action` contains the mechanics needed to read the action and ends before auxiliary world detail competes.
+- `intentional_stillness` states stable fields and one authorized activity beat.
+- Each driver occupies the smallest correct rendered scope.
+- The complete readable scene was scanned before mode and receiver selection.
+- Existing baseline motion and an authorized transient VFX event keep their distinct phases.
+- The main action remains dominant and every added fact stays inside the evidence boundary.
 
-Repair only the failed layer internally. If the body action is correct but the world is frozen, add the smallest causal receiver chain; if motion is excessive, reduce receivers and amplitude rather than freezing the whole scene. Then follow `change-impact-and-delivery.md` and return the complete affected shot or wider affected unit, never only the repaired sentence.
+Repair only the failed layer internally. A frozen result with `coupled_world` adds the smallest missing causal chain. Excessive response may change the mode to `primary_action` when auxiliary motion adds no visible value. Then follow `change-impact-and-delivery.md` and return the complete affected unit.
