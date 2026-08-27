@@ -1,129 +1,169 @@
 ---
 name: aigc-project-context
-description: Use when a script, storyboard, shot list, project package, episode/scene/shot range, or long-form AIGC production must be compiled into validated shot cards, source-backed performance understanding, reference-role mapping, start/terminal boundary state, continuity handoffs, missing-asset status, or a continuity audit. This skill owns context artifacts, not the final video prompt; when the user requests a platform-specific or platform-neutral final video prompt, compile a lightweight VideoContext internally and let aigc-video deliver it in the same task.
+description: Resolve current production sources for a named AIGC project, episode, scene, or shot range and compile source-backed ImageContext, VideoContext, shot cards, or continuity audits. Use when project coordinates, live production data, cross-shot continuity, reference ownership, or source conflicts matter. This skill owns project-source access and field-level authority, not final image or video prompts. Do not invoke for unrelated standalone media requests.
 ---
 
 # AIGC Project Context
 
-Compile production sources into compact, validated shot-level context. Preserve existing directing choices. Do not redesign coverage, camera, lighting, blocking, edit rhythm, dialogue, or plot unless the user explicitly asks for a directing or writing change.
+Turn the smallest current project-source slice into a validated context envelope. Keep project data outside the Skill so workflow updates cannot overwrite production sources.
 
 ## Ownership
 
-- Own: source extraction, source conflicts, shot cards, performance interpretation, asset/reference mapping, continuity, and audits.
-- Do not own: new shot design or the final platform prompt.
-- When the user asks only for cards or an audit, stop at that artifact.
-- When the user asks for a final video prompt, compile a validated lightweight `VideoContext` internally and continue with `aigc-video` in the same task. Build full cards only when the user requests cards or an audit.
+- Own: project resolution, live/source access, freshness, field-level authority, source conflicts, reference roles, continuity, and context handoffs.
+- Do not own: directing new coverage, changing plot or blocking, editing project sources, or rendering final media prompts.
+- Final project-backed image edit: compile `ImageContext`, then continue with `aigc-image` in the same task.
+- Final project-backed video prompt: compile `VideoContext`, then continue with `aigc-video` in the same task.
+- Cards or audit requested: deliver that artifact and stop.
 
-## 1. Identify the active project
+## 1. Resolve project and terminal artifact
 
-Locate the selected project package, episode, scene, shot range, and active source versions. Never merge sources, assets, defaults, or exclusions across projects.
+Identify project, package root, episode, scene, shot range, requested artifact, and current source scope. Use this order:
 
-If the project is ambiguous, show the likely candidates and ask the user to choose. If the package is unavailable, request the project package, source files, or relevant excerpts instead of inventing project facts.
+1. current user-supplied package or registry path
+2. configured external project registry
+3. user-home data registry `%USERPROFILE%\.aigc-projects\registry.yaml` on Windows, or the equivalent home-directory path on another OS
 
-Load a project profile only when the user names the project or the current controlled workspace clearly contains that project. Do not scan project files for an unrelated standalone image or video request.
+Read [references/project-package-contract.md](references/project-package-contract.md) before loading a package. Load at most one project package. Never scan another project to fill a gap.
 
-Read `references/project-package-contract.md` when a project package or `project.yaml` is available.
+Choose one artifact:
 
-Packages stored with this skill are listed in `projects/README.md`. Check that registry first when the user names a project; it maps project names and aliases to a package directory. Load at most one package per task.
+- `ImageContext`: project facts and reference roles needed by one image edit.
+- `VideoContext`: project facts, boundaries, continuity, performance intent, and references needed by one final video request.
+- `shot cards`: user-visible source-backed cards for the requested range.
+- `continuity audit`: mismatches between a supplied artifact and current project facts.
 
-## 2. Resolve source authority per field
+Do not load project context for an unrelated standalone image or video request merely because a package exists.
 
-Default source priority:
+🔴 **CHECKPOINT · 🛑 STOP** when project identity, active package, or requested shot range has two materially different matches. Show the candidates and ask one choice. Return no mixed-project context.
+
+## 2. Resolve source access and freshness
+
+Read [references/source-access-and-cache.md](references/source-access-and-cache.md) when a package declares a live source, current local source, cache, or snapshot.
+
+For every field used, record:
+
+- source id and source type
+- record, row, asset, or file coordinate
+- retrieval or snapshot time
+- freshness: `live`, `local_current`, `cache_validated`, `snapshot`, or `unresolved`
+- exact or semantic authority
+
+Default performance route:
+
+1. Query only the requested records, useful boundary records, and required fields from a live source, or read the smallest useful range from a current local source.
+2. Reuse a validated cache entry when its source identity and freshness evidence still match.
+3. Download an attachment only when its pixels are needed for a visual claim or final reference role.
+4. If live access fails, use the newest scoped approved snapshot and label its date and non-live status.
+5. If neither current data nor a usable fallback exists, mark affected fields unresolved.
+
+Text records do not require a permanent XLSX or Markdown export. Batch NDJSON and downloaded attachments belong in task-local scratch or the external package cache, never inside this Skill.
+
+🔴 **CHECKPOINT · 🛑 STOP** before writing to a live source, refreshing a persistent cache, replacing an approved snapshot, or changing project registry/package data. Read access and task-local scratch do not authorize persistent updates.
+
+## 3. Resolve authority per field
+
+Default priority:
 
 1. current user instruction
-2. current readable assets, only for assigned roles
-3. current storyboard or shot list
-4. current episode script
-5. project bible, outline, worldbuilding, and older summaries
-6. bounded agent inference
+2. current readable asset, only for its assigned attributes
+3. current live production record or readable current local source, resolved by the package's field precedence
+4. current approved project snapshot
+5. current script or storyboard not already represented above
+6. derived project references
+7. bounded agent interpretation
 
-Project exclusions override raw rows. Current storyboard/script override an old outline. Apply precedence per field: a new composition reference does not erase unrelated dialogue or character identity.
+The project manifest may override this order per field. Apply priority separately to identity, composition, action, dialogue, timing, lighting, environment, continuity, and reference roles. A new composition source does not erase unrelated dialogue or identity.
 
 Separate:
 
-- `source fact`: directly supported by the active source
-- `working interpretation`: a bounded reading that connects facts without changing production choices
-- `unresolved`: a missing choice that would materially change action, performance, blocking, continuity, dialogue, prop state, or ending
+- `source fact`: directly supported by the selected source
+- `working interpretation`: bounded reading that adds no production event
+- `unresolved`: missing or conflicting choice that changes the result
 
-Never place a working interpretation inside the card's locked visible facts.
+Never put interpretation inside locked visible facts.
 
-## 3. Communicate as a creative collaborator
+## 4. Load the smallest useful slice
 
-The user prefers active dialogue. When sources support more than one meaningful interpretation:
+Load only:
 
-1. cite the relevant source evidence
-2. state your current reading
-3. explain how the alternatives change performance or production
-4. recommend one direction
-5. ask 1-3 related questions together
+- requested records in physical order
+- one useful boundary record on each side when continuity needs it
+- matching script or storyboard fields not supplied by the live record
+- referenced assets whose assigned roles matter
+- applicable exclusions and project defaults
 
-Examples of meaningful uncertainty: nostalgia versus vigilance, whether a pause is avoidance or recognition, conflicting reference roles, two valid end states, or equal-priority source conflict.
+Preserve duplicate ids with suffixes, blank-id continuation rows, physical order, and numeric gaps. Do not load a full episode, project bible, asset library, or old snapshot when the requested range does not need it.
 
-Do not ask about choices already resolved by source version, priority, or exclusion. Decide formatting, platform-neutral card wording, ordinary duration estimation, and other non-material details yourself.
+For performance interpretation, keep separate:
 
-## 4. Extract only the needed context
+- locked action
+- source-backed performance intent
+- restrained visible performance
+- interpretation source
+- confidence
 
-Locate the requested rows in physical order and include only the boundary context needed to understand inherited and outgoing state.
+Visible performance may clarify how an existing action is played. It cannot introduce a new action, prop, blocking choice, camera instruction, flashback, symbol, or endpoint.
 
-If a prepared scene context is absent or thin, fall back to:
+When sparse evidence permits materially different performance readings, cite the exact source gap, state the current bounded reading, contrast the viable alternatives, recommend one, and ask one focused choice before locking it. When 2–3 related creative or equal-priority source conflicts belong to the same decision, present their evidence and recommendations together and ask them in one grouped turn; do not serialize micro-questions or promote any option to source fact before the answer.
 
-- requested storyboard rows
-- one useful boundary row on each side
-- matching script scene
-- project exclusions and current asset registry
+## 5. Compile the requested envelope
 
-Do not rely on a scene-index summary alone. Preserve duplicate ids with suffixes, retain physical order, fold blank-id dialogue/actions into the appropriate surrounding range, and preserve numeric gaps.
+### ImageContext
 
-## 5. Translate performance without inventing action
+Read [references/image-handoff.md](references/image-handoff.md). Include only project facts that constrain the image edit: base-image role, identity/wardrobe locks, scene facts, composition and depth evidence, protected lighting/color/material state, exact text, editable properties, reference-role whitelist, exclusions, provenance, and unresolved decisions.
 
-Keep these fields separate:
+Do not turn a white-background character sheet into scene lighting, composition, or environment control. Do not authorize generation or redesign beyond the user's requested edit.
 
-- `locked action`: what the source says physically happens
-- `performance intent`: user/source-supported motivation or emotional direction
-- `visible performance`: gaze, posture, pause, breath, contact, distance, or expression cues that render the intent
-- `interpretation source`: user | storyboard | script | project | agent_inference
-- `confidence`
+### VideoContext
 
-Performance translation may clarify how an existing action is played. It cannot introduce a new action, prop state, blocking choice, camera instruction, flashback, symbol, or endpoint.
+Read [references/video-handoff.md](references/video-handoff.md). Preserve exact ids, action/dialogue order, start and terminal boundaries, world-state continuity, performance intent, reference roles, duration source, and only the terminal subset required by the next handoff.
 
-## 6. Build and validate the card
+`context_status: validated` proves source integrity, not acceptance of a video structure version. Let `aigc-video` own structure review, feasibility, platform grammar, and final rendering.
 
-Read `references/shot-card-contract.md` and use its field names. A card must identify its `schema_version` and status:
+### Shot cards
 
-- `validated`: all facts needed for the requested artifact are supported
-- `pending`: a named unresolved item remains
-- `overloaded`: a user/source-locked duration demonstrably cannot hold the locked beats; no source-free platform estimate may create this status
+Read [references/shot-card-contract.md](references/shot-card-contract.md). Build full cards only when requested. Record source duration when present; otherwise use `未提供`. A source-free planning estimate cannot create an overload verdict.
 
-Record source duration when present. For card-only output, when the user asks for an estimate and no duration exists, record a broad planning range plus `simple / standard / complex` source complexity; do not use that estimate as a platform overload verdict. For a final-video request, pass the source duration or `unspecified` and let `aigc-video` make the only execution-feasibility judgment.
+### Continuity audit
 
-Validate exact shot ids, identity, action/dialogue order, prop state, sparse start and terminal boundaries, performance source, and next handoff. The next handoff is only the subset of terminal state a later shot must inherit.
+Compare the supplied prompt, plan, image-edit contract, or result against current authoritative fields. List exact mismatches, stale-source risks, and unresolved decisions. Rewrite only when requested.
 
-## Output modes
+## 6. Validate and hand off
 
-- `shot cards`: source-backed cards for the requested range.
-- `continuity audit`: compare a prompt or plan against active sources and list mismatches; rewrite only when requested.
-- `final video request`: read `references/video-handoff.md`, compile a lightweight `VideoContext` without rendering full cards, then let `aigc-video` deliver the requested platform-specific or platform-neutral prompt.
+Before delivery, verify:
 
-For card-only output, include unresolved items and missing assets without appending a final video prompt.
+- project, package root, source scope, and shot ids are exact
+- freshness and fallback status are explicit
+- every field has one authority winner or remains unresolved
+- every asset controls only assigned attributes
+- exact dialogue, text, timing, identity, count, action order, prop state, and boundaries survive
+- no full source export or unrelated project material enters the handoff
+- final prompt ownership stays with `aigc-image` or `aigc-video`
+
+When the requested final artifact is ready to continue, hand off internally in the same task. Do not ask the user to invoke another Skill and do not display an internal envelope unless requested.
 
 ## Failure recovery
 
 | Trigger | First action | If unresolved |
 | --- | --- | --- |
-| Project/package ambiguous | Present the likely project interpretation and ask. | Return no mixed project facts. |
-| Equal-priority sources conflict | Explain both readings and recommend one. | Mark affected fields pending until the user decides. |
-| Reference role unclear | Offer the safest mapping and its consequences. | Keep the reference unassigned. |
-| Scene context missing | Use raw-source fallback. | List missing layers and mark affected facts pending. |
-| Required source exists but is unreadable, corrupt, password-protected, or unsupported | Request a readable export or the relevant excerpt. | Mark affected fields pending; do not infer them from summaries or filenames. |
-| Required production choice absent | Separate facts from interpretation and discuss it. | Leave the decision with the user and mark affected fields pending; do not design it inside the context layer. |
-| Final VideoContext lacks required source fields | Repair only the missing envelope fields from active sources. | Name the unresolved production decision; do not fabricate or rebuild unrelated card fields. |
+| Project or package ambiguous | Present exact candidates and request one choice. | Return no mixed facts. |
+| Live source unavailable | Try a validated scoped cache, then newest approved snapshot. | Mark affected fields unresolved and request the missing source. |
+| Cache freshness cannot be proven | Re-read the target live records. | Treat cache as snapshot evidence, never current truth. |
+| Required attachment unreadable | Re-download by record id and file token, then inspect it. | Keep visual fields unresolved; text fields may still proceed independently. |
+| Current local source corrupt, password-protected, unsupported, or unreadable | Request a readable export or the exact required rows. | Keep only that source's owned fields pending; preserve independently supported fields. |
+| Equal-priority fields conflict | Show both values, recommend one, and ask once. | Keep affected fields pending. |
+| Snapshot is older than requested state | State snapshot date and limitation. | Do not label it latest or validated-live. |
+| Persistent refresh requested | Stage live data outside the active package and verify scope, counts, ids, and hashes. | Stop before replacing registry, cache, snapshot, or project data. |
+| Final envelope lacks a required field | Repair only that field from current sources. | Name the blocking production decision; do not rebuild unrelated context. |
 
 ## Avoid
 
-- Do not merge project sources or assets across projects.
-- Do not let outlines or older summaries overwrite current production sources.
-- Do not present an inference as a source fact.
-- Do not create shot ids, camera, lighting, composition, blocking, dialogue, or edit choices absent from the active source.
-- Do not treat white-background character sheets as final scene lighting, color, camera, or environment references.
-- Do not turn every context request into a plot recap.
-- Do not stop at a handoff note when the user requested a final video prompt and the VideoContext can be validated.
+- Do not store project source files, production attachments, caches, or snapshots inside this Skill.
+- Do not download an entire table when a scoped record query can answer the task.
+- Do not treat a cache or dated snapshot as current live data without freshness evidence.
+- Do not write to Feishu or another live source from read authorization.
+- Do not merge projects, source versions, or asset roles.
+- Do not let a derived bible or old summary overwrite current production records.
+- Do not infer pixels from filenames, paths, hashes, or attachment metadata.
+- Do not emit full cards before a final image/video handoff unless the user requests cards.
+- Do not redesign camera, lighting, blocking, dialogue, plot, or final media syntax in the context layer.

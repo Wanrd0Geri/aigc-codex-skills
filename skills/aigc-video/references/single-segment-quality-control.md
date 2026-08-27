@@ -1,6 +1,6 @@
 # Single-Segment Quality Control
 
-Use this reference for complex subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family prompts.
+The core `VisibleSetGate` in `references/video-contracts.md` runs for every task before structure rows and final rendering. Load this reference only when subjects, blocking, occlusion, overloaded action, offscreen causality, terminal composition, or continuity-sensitive Seedance-family behavior needs extended checks; it consumes the core gate rather than replacing or redefining it.
 
 These checks run after structure review resolves under `SKILL.md`. A review-required unit uses its confirmed row; a directly authorized unit uses the same internally compiled structure.
 
@@ -37,6 +37,8 @@ Use these as internal feasibility estimates before allocating the required timel
 
 A roughly one-second fast insert can carry one instantaneous beat, such as an eye activation, hand contact, launch, impact, or reaction. A fast-cut sequence may distribute one causal chain across several inserts, but each insert should not contain its own setup, development, and result. Count described action phases, not just numbered shots.
 
+These estimates and phase counts are internal feasibility evidence only. Never render them as derived sub-ranges inside a shot. When the locked heading range can hold the beat, describe its phases through causal transitions and let the model allocate their pacing; when it cannot, simplify mutable load or ask for the smallest authorized structure/duration change.
+
 If the duration cannot hold locked beats, simplify mutable camera and description first, then ask for more duration or user-approved restructuring. Never delete, merge, reorder, or silently split locked beats. Let the active adapter own timeline allocation and missing-duration behavior.
 
 ## Persistent scene topology
@@ -49,7 +51,7 @@ Use existing storyboard, composition, white-model, or coarse-model geometry dire
 
 ## Visibility, path, and terminal audit
 
-Scan each shot silently:
+For a loaded complex shot, scan the core gate's visible start/path/terminal sets silently, then apply the following extended checks:
 
 1. Separate world existence from intended shot visibility.
 2. At each material start or terminal boundary, compare the intended crop with the minimum visible envelope implied by every body part, prop, subject, and landmark requested in that frame. Remove only mutable visibility details that exceed the crop; preserve any explicitly locked group view, full-body view, interaction point, or landmark. A supported camera move may transition between different envelopes.
@@ -90,6 +92,7 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - a cut that continues the same event inherits its current action phase rather than restarting it
 - any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
+- generation shot bodies contain no planning-derived timestamp subdivision; explicit current-user/source internal times remain narrow and unexpanded
 - the active adapter or operation grammar passes its own timeline and source-addressing checks
 - start and terminal BoundaryStates are sparse rather than full shot duplicates
 - terminal visible roster matches the shot purpose even when no next handoff exists

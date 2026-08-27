@@ -1,178 +1,165 @@
 ---
 name: aigc-image
-description: Use when the user wants a final ready-to-paste image prompt for GPT Image 2, Nano Banana, Seedream 5.0 Pro, Midjourney, or another image model from a text brief, existing prompt, readable image, frame, storyboard panel, product image, or multiple visual references; also use for visual diagnosis, production readiness, reverse prompting, source-faithful image-edit prompts, reference matching, platform adaptation, settings changes, prompt optimization, or diagnose-then-edit. Require the actual readable image only for source-dependent visual claims. Do not use when the user wants only direct generation or editing with no prompt or diagnosis artifact, or when the requested final artifact is a video prompt.
+description: Analyze readable images and compile or language-repair source-faithful image-edit prompts for GPT Image, Gemini/Nano Banana, Seedream, or another multimodal image editor. Use for image diagnosis, local edits, focus and depth, optical effects, perspective, composition, placement, lighting, palette, material integration, cleanup, or language-only cleanup of an existing image-edit prompt. Also use to ask one artifact question when a static-visual or generic AIGC prompt-cleanup request does not reveal whether it is image generation, image editing, or video. Require readable images for source-dependent claims. Do not perform text-to-image generation, reverse prompting, Midjourney parameter prompting, or final video prompting here; route after the artifact is known.
 ---
 
-# AIGC Image
+# AIGC Image Editor
 
-Own four image artifacts: `diagnose`, `generate`, `reverse`, and `edit`. Share one neutral source read and one evidence ledger whenever a readable image is involved. Keep internal control complete, but expose only the constraints the target model needs. Do not make the user route between separate image-prompt skills.
+Own three terminal artifacts: `diagnose`, `edit-prompt`, and `perform-edit`. Language-only cleanup of an existing image-edit prompt remains `edit-prompt`; it does not require the source image unless the requested wording depends on unseen pixels. Diagnose first only when the user asks why, the requested effect lacks visible support, or the correct edit module is uncertain. Keep the model-facing prompt smaller than the internal analysis.
 
-This skill analyzes images and writes prompts. If the user asks for an image to be generated or modified directly, use the available image-generation/editing capability instead of returning only a prompt.
+If the user asks for text-to-image generation, reverse prompting, Midjourney syntax, or a final video prompt, route to the matching specialized skill instead of expanding this skill.
 
-## 1. Gate the source
+If the user names a project, episode, scene, shot, or current project source and those facts constrain the edit, run `aigc-project-context` first. Consume its `ImageContext` in the same task as source locks and reference roles; do not rebuild the project-source ledger. Do not load project context for unrelated standalone edits.
 
-Pure text-to-image generation and optimization of a text-only prompt can proceed from the brief. Before making claims about an existing image or writing a source-dependent diagnose, reverse, or edit artifact, confirm that the actual source is readable in the current context.
+## 1. Gate the source and terminal artifact
 
-- A filename, URL label, old summary, diagnosis handoff, or remembered image is not the source image.
-- If a required source is missing, ask the user to attach it and stop only the source-dependent workflow. Do not request an image for a complete text-to-image brief.
-- If an image is small, blurred, cropped, or blocked, name the unreadable region and use only verifiable evidence.
-- For multiple images, identify each role: source, identity, style axis, pose, composition, environment, edit target, or variation target.
-- If roles are materially ambiguous, explain the likely mapping, recommend one interpretation, and ask one focused question.
+Before any source-dependent claim, confirm that the actual image is readable in the current context.
 
-## 2. Select the terminal artifact
+- A filename, URL label, old summary, prompt, or remembered image is not the source image.
+- A text-only edit request may be drafted only when it does not claim facts about an unseen image.
+- For language-only cleanup of an existing edit prompt, read [references/language-lint.md](references/language-lint.md). Preserve its exact and semantic locks before changing prose. If the user also requests a new visual decision, leave language-only mode and run the normal evidence and capability workflow.
+- For several images, assign each one a narrow role such as scene base, identity, object, composition, or semantic palette.
+- If the user asks for an actual edit, use the available image-editing capability. If the user asks for a prompt, do not call the editing capability.
+- If the request says only `处理一下`, `优化一下`, or otherwise leaves the terminal artifact unclear, state the likely interpretation and ask whether the user wants diagnosis, an edit prompt, or the edit performed.
+- If the supplied text could describe image generation, image editing, or video and no base image, edit target, or motion contract resolves the artifact, do not force it into image editing. Ask one focused artifact question. When several requested visual media or style systems are materially incompatible, ask which dominant medium or target owns the result before routing to its specialist.
+- If the same ambiguous text also lacks an executable visible subject, event, or setting, combine the artifact choice and the missing visible choice into that one focused question. Add no author voice, scene, posture, light, sound, or other visual fact before the user answers.
 
-Choose internally from:
+Choose one terminal artifact:
 
-- `diagnose`: explain why the frame works or fails, rank fixes, or judge `can proceed / repair first / redesign first`.
-- `generate`: turn a text brief or an existing image prompt into a final text-to-image prompt without claiming an unseen source image.
-- `reverse`: reconstruct or adapt the visible image as a text-to-image prompt.
-- `edit`: write a closed-scope image-to-image repair or transformation prompt.
-- `diagnose -> edit`: when the user explicitly asks both, inspect once, diagnose briefly, then deliver the edit prompt in the same response.
+- `diagnose`: explain the visible failure and rank the smallest useful fixes; no prompt unless requested.
+- `edit-prompt`: return one ready-to-paste edit instruction.
+- `perform-edit`: compile the same closed edit contract internally, call the available image-editing capability with the actual source, then inspect the result against the contract.
+- `diagnose -> edit-prompt`: inspect once, diagnose briefly, then compile the authorized repair.
 
-Record platform adaptation, settings changes, or optimization of an existing image prompt as operations, not additional artifacts. Preserve whether the base prompt is generation or editing. A text-only operation may proceed without the source image when it makes no new source-dependent visual claim.
+🔴 **CHECKPOINT · 🛑 STOP** when the required image is missing, a required region is unreadable, or image roles would produce materially different edits. Ask one focused question and do not fabricate the source-dependent result.
 
-If the request says only `处理一下`, `优化一下`, or otherwise leaves the final artifact unclear, state your current interpretation and ask what they want to receive. Do not guess between actual generation/editing, diagnosis, a new text-to-image prompt, reverse prompting, and an edit prompt.
+## 2. Build one source ledger
 
-If the requested final artifact is a video prompt, let `aigc-video` own the result; provide only image facts or readiness context that materially affects that video task.
+Record only visible or user-supplied facts:
 
-## 3. Compile one image fact ledger
+- subject count, identity traits, pose, gaze, contact, objects, text, and marks
+- composition, crop, subject scale, foreground/midground/background, current sharp planes, and occlusion order
+- light sources, direction, softness, shadow behavior, exposure hierarchy, color relationships, and atmosphere
+- medium, material behavior, edge quality, texture, and visible defects
 
-Read the frame neutrally before judging it:
+Classify control:
 
-- subjects, exact count, visible identity traits, action, pose, gaze, contact, and blocking
-- framing, camera relation, crop, subject scale, negative space, foreground/midground/background
-- light direction and softness, contrast, color hierarchy, atmosphere, and material response
-- medium and design language: photoreal, 2D, stylized 3D, illustration, product render, or mixed media
-- text, labels, logos, marks, and their legibility
-- what emotion the current image visibly communicates, separated from narrative speculation
+- `exact lock`: exact text, protected identity, subject count, and user-quoted values
+- `semantic lock`: pose, relationship, composition, camera relation, medium, and reference role
+- `editable`: only the properties authorized in this request
+- `unresolved`: a choice that would produce a materially different result
 
-Classify every detail:
+The visible source overrides older handoff prose. The latest user instruction releases only the locks it names.
 
-- `visible`: directly supported and safe to use.
-- `inferred`: plausible but not certain; phrase as appearance, not fact.
-- `uncertain`: unreadable or ambiguous; omit or flag outside the prompt.
+For products and packaging, additionally lock silhouette and proportions, closure geometry, material and color identity, exact label copy and hierarchy, crop, scale, set, contact shadow, and unrequested props unless the user releases them.
 
-Then classify control:
+Read [references/reference-roles-and-text.md](references/reference-roles-and-text.md) whenever multiple images, text, labels, logos, or watermarks are involved.
 
-- `exact lock`: literal text, subject count, protected identity, user-quoted names, exact reference anchors, and user-retained platform settings or values.
-- `semantic lock`: pose, action, relationship, composition, camera relation, medium, and assigned reference role.
-- `editable`: only the fields the user authorizes changing.
-- `unresolved`: a choice that would produce materially different outputs.
+## 3. Diagnose and select atomic capabilities
 
-The current visible image overrides an old handoff summary. The latest user instruction overrides older preferences only for the fields it addresses.
+For diagnosis, read [references/mode-diagnose.md](references/mode-diagnose.md). Load [references/diagnostic-dimensions.md](references/diagnostic-dimensions.md) or [references/production-design-dimensions.md](references/production-design-dimensions.md) only when that lens contains a real finding.
 
-## 4. Enforce reference and text boundaries
+For any edit, read:
 
-Treat each reference role as an attribute whitelist. Unassigned attributes are unavailable.
+1. [references/mode-edit.md](references/mode-edit.md)
+2. [references/edit-contract.md](references/edit-contract.md)
+3. [references/capability-router.md](references/capability-router.md)
+4. only the capability files selected by the router
 
-- Composition authorizes geometry, placement, scale, crop, overlap, depth, and negative space; it does not authorize identity, environment, palette, material, light, text, or style.
-- Style must be split into assigned axes such as medium, shape language, edge quality, surface flatness, texture density, palette, lighting, or finish.
-- Identity does not authorize pose, camera, environment, or lighting.
-- Environment does not authorize character identity or camera changes.
+Each capability owns its trigger, evidence gate, variables, canonical fragment, prohibited drift, and fallback. A request for one capability never authorizes another.
 
-For text and marks:
+## 4. Enforce evidence gates
 
-- Preserve fully legible, authorized text exactly.
-- Never complete partly legible text from expectation.
-- Describe unreadable text only by visible size, color, and placement when needed.
-- Do not guess logos, brands, or watermark wording; do not reproduce a watermark.
+Run every selected capability's evidence gate before compiling.
 
-Read `references/reference-roles-and-text.md` whenever multiple references, visible text, labels, logos, or watermarks are present.
+- If visible evidence supports the edit, fill the capability variables from the image and user instruction.
+- If evidence is missing but a smaller physical repair works, recommend that repair.
+- If the user explicitly authorizes a stylized or non-physical overlay, state the released physical constraint outside the prompt, then compile the requested effect.
+- If exact identity, text, logo, or texture is unreadable, request a clearer source when exact recovery matters; otherwise restrict reconstruction to verifiable features.
 
-## 5. Load only the selected craft
+🔴 **CHECKPOINT · 🛑 STOP** before releasing identity, subject count, exact text, camera, composition, or physical light/depth consistency when the user has not clearly authorized that release.
 
-| Selected workflow | Required reference | Conditional references |
-| --- | --- | --- |
-| diagnose | `references/mode-diagnose.md` | `references/diagnostic-dimensions.md`, `references/production-design-dimensions.md` |
-| generate | none | one named provider file; for unknown, Midjourney, or genuine multi-platform delivery, `references/generation-platform-adapters.md` |
-| reverse | `references/mode-reverse.md` | for one supported provider, its matching file below; for unknown, Midjourney, or genuine multi-platform delivery, `references/generation-platform-adapters.md` plus only the files for supported providers the user named |
-| edit | `references/mode-edit.md` | `references/edit-platform-templates.md` only for `controlled` or `specification`; one named provider file; for multi-platform delivery, `references/generation-platform-adapters.md`; `references/cinematic-language.md` only for applicable cinematic repair |
-| diagnose -> edit | diagnose references, then edit references | read the image only once |
+## 5. Compose one edit contract
 
-Provider files: `references/platform-gpt-image-2.md`, `references/platform-nano-banana.md`, and `references/platform-seedream-5-pro.md`. For a single-provider request, load only its matching file. For a genuine multi-platform request, load the router and only the matching files for the supported providers explicitly named; never load an unmentioned provider file.
+The shared semantic order is:
 
-Do not load cinematic vocabulary for product cleanup, simple dust/glare removal, graphic design, or non-photoreal work unless the user requests that treatment.
+1. `Input roles` — only for multiple images or a non-obvious base image
+2. `Target` — exact object, region, plane, or whole-image property
+3. `Change` — one operation and its visible endpoint
+4. `Integration` — only the perspective, contact, occlusion, light, shadow, material, edge, or depth relationships changed pixels require
+5. `Keep` — costly locks plus one general unchanged boundary
 
-## 6. Communicate creative uncertainty
+This is an internal contract, not a mandatory heading set. Omit empty or unnecessary blocks.
 
-Do not optimize for silence. When a creative ambiguity changes identity, expression, composition, medium, reference roles, edit scope, or the meaning of the result:
+- One capability: render its complete standalone prompt.
+- Several compatible capabilities: merge their fragments into one prompt; state input roles and shared locks once.
+- Never concatenate several complete templates.
+- If capabilities conflict, follow the dependency order in `capability-router.md`. If the conflict releases a protected lock, stop at the checkpoint.
 
-1. State the visible evidence.
-2. State your current interpretation.
-3. Name the meaningful alternatives.
-4. Recommend one direction and explain why.
-5. Ask 1-3 related questions together.
+Use concrete visible endpoints. Translate `更高级`, `更自然`, `电影感`, or `质感更好` into motivated light, readable depth, controlled contrast, coherent material response, or another source-supported result. Do not leave mood adjectives as executable instructions.
 
-Resolve formatting, ordinary platform wording, and non-material technical details yourself.
+For an existing prompt that is already clear and executable, return it unchanged. Do not expand mature wording merely to prove that cleanup occurred.
 
-## 7. Use the minimum sufficient prompt
+## 6. Adapt only when needed
 
-The evidence ledger may be detailed; the delivered prompt must not be detailed merely to display expertise. Include only information that changes the target image, protects a costly invariant, assigns a reference role, or makes an ambiguity executable.
+The canonical contract uses ordinary natural language and must remain usable by an unknown multimodal image editor. Do not depend on JSON, provider weights, negative-prompt fields, camera-brand shorthand, or invented color codes.
 
-Compile the model-facing prompt in this order and stop as soon as it is sufficient:
+When the user names a provider, read only its adapter:
 
-1. `target`: name the exact subject, object, region, or whole-image goal.
-2. `visible endpoint`: state what the result should visibly become, using concrete nouns, verbs, and spatial relations.
-3. `integration`: add only the reconstruction, contact, perspective, occlusion, light, shadow, or material behavior needed to make changed pixels belong in the image.
-4. `locks`: name only costly or likely-to-drift invariants, then use one general `everything else unchanged` boundary in edit mode.
+- [references/platform-gpt-image-2.md](references/platform-gpt-image-2.md)
+- [references/platform-nano-banana.md](references/platform-nano-banana.md)
+- [references/platform-seedream-5-pro.md](references/platform-seedream-5-pro.md)
 
-Translate abstract intent such as `更高级`, `更有电影感`, `更自然`, or `质感更好` into visible consequences before delivery. Do not leave a mood adjective as the only instruction, invent unsupported visual treatment, explain the diagnosis inside the prompt, or repeat the same boundary in both positive and negative language.
+For an unknown provider, keep the canonical natural-language contract and invent no provider syntax. Keep model, aspect ratio, resolution, quality, output format, seed, and API/UI controls outside the visual prompt when the target surface exposes separate controls.
 
-Choose the lightest useful shape internally:
+## 7. Output
 
-- `surgical`: one local edit or one simple scene. Use 1-3 direct natural-language sentences. Do not add section headings or restate the whole source image.
-- `controlled`: several linked changes or identity, geometry, layout, brand, or text locks. Use compact `Change` and `Keep` sections. Add one short exclusion only for a likely drift that those sections cannot prevent.
-- `specification`: multi-reference compositing, exact typography, dense layout, or several independent spatial relationships. Use short labeled blocks so roles and constraints remain auditable.
+- Default to one prompt in the user's language.
+- Return an English semantic mirror only when requested; treat the two languages as alternatives, never one combined prompt.
+- For `prompt only`, return only the requested fenced prompt block or blocks.
+- For `diagnose`, return visible evidence, root cause, smallest repair, and readiness when requested; do not append an unrequested prompt.
+- For `perform-edit`, show the edited image and summarize only the material change and preserved locks.
 
-Do not fill subject, camera, lens, lighting, palette, material, atmosphere, and style fields just because a template contains them. Omit any field that the user, readable source, or intended result does not make consequential. Prefer one coherent visual direction over competing style words.
+Non-photoreal media keep their own design logic. Do not force live-action camera, film-stock, skin, grain, or grading language onto illustration, animation, stylized 3D, graphic design, or product cleanup.
 
-For an image that is already close, write the smallest next edit instead of rebuilding a longer master prompt. Keep model name, aspect ratio, resolution, quality, output format, seed, and API/UI controls outside the visual prompt unless the target surface has no separate control and the user needs the value embedded. Delete any sentence whose removal would not change the visible result, protect a real failure boundary, or clarify a reference role.
+## 8. Verify before delivery
 
-## 8. Output the requested artifact
+Check that:
 
-- `diagnose`: neutral observation -> likely intention -> decisive findings -> top fixes -> readiness when requested. Do not append a prompt unless requested.
-- `generate`: default to one minimum-sufficient Chinese prompt and one English semantic mirror in separate fenced blocks.
-- `reverse`: default to semantically matched Chinese and English alternatives. Put the `中文` and `English` labels outside two separate fenced code blocks; never combine both languages in one block.
-- `edit`: default to one compact Chinese edit instruction and one semantically matched English alternative. Put the `中文` and `English` labels outside two separate fenced code blocks. Use headings inside the prompt only when the controlled or specification shape needs them.
-- `one language only`: return one fenced block in the requested language.
-- `prompt only`: return only the language label or labels and the requested fenced prompt block or blocks, with no diagnosis, routing note, or teaching wrapper.
+- every source-dependent claim is visible or explicitly supplied
+- every reference contributes only its assigned attributes
+- only authorized properties changed
+- selected capabilities passed their evidence gates
+- capability order is valid and repeated locks were merged
+- exact visible text remains exact; unreadable text was not invented
+- prompt settings remain outside the visual instruction when possible
+- language-only cleanup preserved every exact lock, reference role, target, endpoint, integration relation, provider control, and unchanged boundary
+- the response contains exactly the requested artifact
 
-The bilingual blocks are alternatives for copying, not one bilingual prompt to submit together. Preserve exact visible copy in its original language in both versions unless the user explicitly requests translation.
-
-Non-photoreal media keep their own design logic. Do not force film stock, realistic skin, IRE, lens-brand, or live-action grading language onto animation, illustration, stylized 3D, or graphic work.
-
-## 9. Final check
-
-Before delivery, verify:
-
-- every visual claim comes from the readable image or is clearly marked as inference
-- generate mode is grounded in the supplied brief or existing prompt and does not pretend to have inspected an image
-- subject count, identity, pose, action, composition, text, and reference roles did not drift
-- edit mode changes only authorized fields and states any released protection explicitly
-- reverse mode rebuilds the whole target image rather than using edit-language shortcuts
-- Chinese and English prompts are semantic mirrors when both are requested
-- Chinese and English occupy separate fenced blocks and are not concatenated into one model input
-- no empty template section, repeated synonym, generic quality stack, generic negative list, or full-source restatement makes the prompt longer than the task requires
-- every prompt sentence changes the visible target, protects a real boundary, or assigns a necessary role
-- no platform parameter stack, unsupported backstory, new person, prop, logo, text, or style leakage appeared
-- requested platform settings are preserved outside the visual prompt whenever the target surface exposes separate controls
-- the response contains exactly the artifact the user requested
+Read [references/validation-status.md](references/validation-status.md) before claiming that a capability or prompt is verified. Static validation or prompt forward-testing does not prove edited-image quality.
 
 ## Failure recovery
 
 | Trigger | First action | If unresolved |
 | --- | --- | --- |
-| Missing or unreadable required source | Request the actual image or a useful crop. | Return no visual diagnosis or source-dependent prompt; continue only if the user instead chooses text-only generation. |
-| Ambiguous multi-image roles | Offer the most likely mapping and ask one role question. | Keep unassigned fields neutral. |
-| Requested edit releases identity, pose, camera, or count | Name the released locks before drafting. | Treat it as redesign, not conservative repair. |
-| No visible functional failure | Say the image works for the stated intention. | Separate optional taste refinements; do not manufacture problems. |
-| Too many independent edits | Explain the conflict and recommend a staged order. | Ask before splitting; if the user keeps one integrated pass, include every requested edit and state the stability risk rather than silently dropping changes. |
+| Required image missing | Request the actual image or useful crop. | Return no source-dependent diagnosis or edit prompt. |
+| Image roles ambiguous | Offer the most likely mapping and ask one role question. | Keep unassigned attributes unavailable. |
+| Requested effect fails its evidence gate | Name the missing evidence and propose the smallest physical repair. | Require explicit authorization before a stylized non-physical overlay. |
+| Exact face, text, logo, or texture is unreadable | Request a clearer source or crop. | Reconstruct only verifiable features and state the risk outside the prompt. |
+| Too many edits conflict | Order them by dependency and recommend stages. | If the user keeps one pass, include all authorized edits and state the stability risk outside the prompt. |
+| Provider behavior is undocumented | Use the canonical natural-language contract. | Do not invent syntax, limits, or reliability claims. |
+| Generated result drifts | Compare the result against Target, Change, Integration, and Keep. | Revise one failed capability or shared dependency; do not rewrite unrelated modules. |
+| Language-only request needs an unseen visual choice | Name the missing visible variable and ask one focused question. | Preserve the source prompt; do not invent an edit decision. |
 
 ## Avoid
 
-- Do not call an image-generation tool when the user asked only for a prompt.
+- Do not diagnose from filenames, memory, summaries, or prompt prose.
+- Do not treat cinematic quality as automatic halo, flare, and bokeh stacking.
+- Do not force a fixed effect count when the visible image supports a different count.
+- Do not import the whole content of a narrowly assigned reference.
+- Do not repeat full-source descriptions or exhaustive lock lists in a surgical edit.
+- Do not restate the same boundary as both a positive lock and a negative keyword tail.
+- Do not promise exact recovery from unreadable pixels.
+- Do not call an editing tool when the user asked only for a prompt.
 - Do not return only a prompt when the user asked for the edit to be performed.
-- Do not diagnose from filenames, memory, or handoff prose.
-- Do not import the whole content of a reference assigned to one narrow role.
-- Do not turn every image into live-action cinema.
-- Do not rewrite a source-faithful edit as a new text-to-image scene.
+- Do not route image-edit language cleanup to a generic rewrite Skill or change provider controls merely to sound natural.

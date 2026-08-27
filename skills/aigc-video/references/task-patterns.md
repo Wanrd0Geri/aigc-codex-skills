@@ -47,6 +47,8 @@ Prioritize casual framing, natural imperfection, and source-backed sound.
 
 ## Creative VFX Or Transformation
 
+Use this section for simple non-combat effects that do not require new specialist design, or to render an already `design_ready` CombatHandoff. When `aigc-vfx-combat` owns the effect design, preserve its form, route, result, presentation, and authorized consequences instead of designing a second version here.
+
 Prioritize transformation logic and visible stages.
 
 - Define the source state, trigger, transformation path, and final state.
@@ -59,6 +61,8 @@ Prioritize transformation logic and visible stages.
 ## Large Apparition And Effect Confrontation
 
 Use this pattern only when a shot depends on a large summoned, projected, or assembled figure and a readable attack-response chain. It is not a default fantasy template.
+
+When the confrontation still needs initiative, contact, terminal behavior, or specialist VFX design, route through `aigc-vfx-combat` first. This section then compiles the resolved handoff into the final video grammar.
 
 - Decide whether the figure must be fully mapped in space or mainly felt as larger than the frame. Use a complete view for geography or choreography; use partial framing, depth, occlusion, or frame overflow when impact is the priority.
 - If the figure should assemble at full scale, define the final spatial envelope and let material resolve in separated regions. If literal growth is intended, preserve the scale change instead.
@@ -95,6 +99,8 @@ Prioritize beat ownership and action timing.
 
 - When `音频1` or `视频1` is a reference input, map rhythm, beat, or speech pace to `timing`, vocal timbre to `voice`, and a sound effect to `audio`. Use the final material label chosen by the active adapter. Keep an edit target's operational role separate and use direct edit grammar.
 - Map major visual changes to beats: entrance, cut, gesture, impact, reveal, transition, or final pose.
+- When that beat map materially controls the result, render the selected event-to-beat relation in the owning shot or operation sentence; do not leave the mapping only in analysis or expose an internal timing field. Bind the material once, then name only the relevant strong beat, rhythm change, speech turn, or sound cue where the visual event responds.
+- Keep that beat map causal unless the current user or authoritative source supplies exact internal timing; do not convert rhythm analysis into invented shot-body second ranges.
 - Keep the number of beat events realistic for the duration.
 - When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
 

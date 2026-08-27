@@ -1,6 +1,6 @@
 # Dynamic World Modeling
 
-Use this reference for every new/reference generation and whenever optimization changes visible motion or physical interaction. Review the physical world around each visible unit, then choose whether valuable coupling, primary action mechanics, or intentional stillness best serves the shot. Review is mandatory; added world motion is conditional.
+Use this reference for every final new/reference generation and whenever optimization changes visible motion or physical interaction. Review the physical world around each visible unit, then choose whether valuable coupling, primary action mechanics, or intentional stillness best serves the shot. Review is mandatory; added world motion is conditional, and the `VisibleSetGate` is mandatory even for a simple, object, environment, or previsualization shot.
 
 ## Contents
 
@@ -35,7 +35,7 @@ Infer low-risk physical behavior from existing visible bodies and materials:
 - existing foliage, curtains, hanging objects, dust, smoke, fog, water, rain, steam, reflections, shadows, crowds, traffic, or machinery continuing plausible motion
 - contact response where a visible subject touches ground, water, vegetation, a door, furniture, fabric, or another existing surface
 
-Do not infer a new weather event, water source, plant, animal, crowd, vehicle, prop, effect, damage event, or story beat. Treat an effect consequence explicitly supplied by the current user or an upstream `aigc-vfx-combat` design card as authorized; render only that named consequence and its physically necessary response, not adjacent unstated destruction. A visible tree may support restrained leaf and branch response; it does not authorize falling leaves. A wet surface may support changing reflections under footsteps; it does not authorize new rain. When the source is unreadable, label-only, graphic UI, or silent about a material fact that would change the scene, stay neutral.
+Do not infer a new weather event, water source, plant, animal, crowd, vehicle, prop, effect, damage event, or story beat. Treat an effect consequence explicitly supplied by the current user or a `design_ready` upstream CombatHandoff as authorized; render only that named consequence and its physically necessary response, not adjacent unstated destruction. A visible tree may support restrained leaf and branch response; it does not authorize falling leaves. A wet surface may support changing reflections under footsteps; it does not authorize new rain. When the source is unreadable, label-only, graphic UI, or silent about a material fact that would change the scene, stay neutral.
 
 ## Scene-image dynamics pass
 
@@ -49,6 +49,8 @@ Before planning motion, scan the entire readable scene image across foreground, 
 
 Treat this as a complete inventory, not an instruction to animate everything. Select only candidates that are visible, causally connected, and useful to the shot. A still image may reveal a material and a directional cue, but not necessarily its true motion phase; use gravity, slope, deformation, trails, or displaced receivers as evidence. If exact wind, flow, or effect propagation materially changes the shot and the image does not resolve it, keep it unresolved rather than claiming it was observed.
 
+Intersect the candidate inventory with the shot's `VisibleSetGate` before compiling a structure row and again before rendering. Any region or medium that exists in the world but is outside the current crop is not a shot fact; it enters the shot only at the interval where the camera or subject visibly reveals it, and only with the visible carrier supported there.
+
 ## Build one coupled system
 
 Use this section for `coupled_world`. Preserve every authoritative independent persistent driver that materially affects the shot, such as a valley wind and stream flow. Establish one dominant driver per causal chain; keep quieter independent systems distinct. When an authorized combat/VFX event occurs, add at most one dominant transient driver.
@@ -59,6 +61,8 @@ Use this section for `coupled_world`. Preserve every authoritative independent p
 4. Keep direction coherent. Let depth, attachment, mass, stiffness, drag, and distance change amplitude and delay.
 5. Let contact work both ways. The world may move clothing or hair; the subject may displace water, compress grass, disturb dust, shift a reflection, or set a hanging object moving.
 6. Carry only material state across cuts: wind/flow direction, wetness, smoke or fog drift, branch/cloth phase, spreading ripples, disturbed dust, moving shadow, or mechanical cycle.
+
+For a continuous moving shot that materially reveals space, record and render a light `visible space progression`: current visible region -> region revealed by the subject or camera path -> terminal visible region. Keep each region limited to its current visible set; omit this progression for a static shot or when movement does not reveal a meaningful new area.
 
 When combat or VFX adds the dominant transient driver, preserve the existing baseline system underneath it. Model the event as source -> propagation through space -> reachable material responses -> dissipation/residual. Respect distance, occlusion, surface orientation, mass, stiffness, fluid behavior, and delay: nearby loose cloth may snap first, fog may split then curl back, water may shear and spread, heavier branches may respond later, and distant systems may barely move. Do not add a second competing event driver or make every receiver react at once or with the same amplitude.
 
@@ -87,6 +91,8 @@ Evaluate each driver independently:
 - Operation commands use their own grammar and include only dynamics needed at the seam or inside the requested change.
 
 Render one compact causal sentence for `coupled_world`. Render only the primary action mechanics for `primary_action`. State the stable result and sole activity for `intentional_stillness`. Repeat a driver only when its state changes or continuity requires it.
+
+When the current user explicitly asks for a flowing world, environmental dynamics, or a list of environmental motion, the selected visible carriers and any needed `visible space progression` must appear in the final shot prose. Resolving `world_dynamics_review` internally without rendering the selected result is a failed gate. Keep the response causal and evidence-backed; do not satisfy the request with a generic motion suffix.
 
 ## Structure-table input
 

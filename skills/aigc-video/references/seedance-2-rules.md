@@ -41,6 +41,10 @@ Default final labels are plain upload-order labels. Treat a supplied `@` handle,
 
 Use this ordered structure only after every affected shot passes the structure-delivery gate in `SKILL.md`. Use the same structure for every known-duration Seedance 2.5 new/reference generation. `主体：` is conditionally required by visible subject presence; omit the other optional headings when they have no material information. Never leave a heading empty or fill it with invented prose.
 
+For two or more shots, multiple cut points, or a complete sequence, this structure produces one unified command with one `情节：` timeline. Separate prompts are allowed only for a single shot or an explicit user request for separate outputs. The timeline is not a set of independent prompt cards: each shot must restate its own current visible state, spatial relation, action phase, camera-visible result, and terminal state. Do not use `同上一镜`、`继续刚才`、`承接上一镜` or similar relative wording as a substitute for that state.
+
+For each shot, declare only the fields relevant to its current visible set and execution: current visible semantic assets/subjects; current spatial relationship and state; current held, connected, or contacted object; current visible lighting result or light-source direction; current action phase; current dialogue/sound; and the visible endpoint. Omit absent fields. Bind global material labels and identity/appearance responsibilities once in their owning headings, then use semantic names in shot prose; never repeat `图片N`/`视频N` labels per shot. A pure environment shot receives no human-only fields.
+
 ```text
 主体：
 [required whenever any character, animal, product, vehicle, or key prop appears; omit only for a clip that remains a pure environment or empty shot throughout]
@@ -59,22 +63,31 @@ Use this ordered structure only after every affected shot passes the structure-d
 不添加字幕，不添加背景音乐。
 ```
 
-Do not open with `生成一段N秒的……`. Duration belongs in the time ranges and remains an exact production fact.
+Do not open with `生成一段N秒的……`. Duration belongs in the shot-heading ranges and remains an exact production fact. The explicit unreadable-cut coarse-model route omits those ranges instead of inventing them.
 
 Never render a `全局补充：` heading. Put an owned whole-clip requirement naturally in `主体：`, `场景：`, `风格：`, or `情节：`. If a genuine cross-shot control has no better owner, append it once as a natural unheaded sentence after the last shot and before the standing subtitle/music sentence.
 
 ## Timeline rules
 
+- Number rendered headings with contiguous prompt-local indices beginning at `镜头1`, even when source/project identifiers are `场10镜5`, `10-12`, UUIDs, filenames, or non-contiguous storyboard labels. Preserve that source-to-local mapping internally; never render `镜头10-5`、`镜头10-12` or another project id as the Seedance shot heading.
 - Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike, except for the unreadable-cut coarse-white-model route below.
+- The shot heading is the default owner of exact generation timing. Inside that shot paragraph, write `开镜时的当前状态 -> 连续因果过程 -> 可见终点` in natural causal prose and let Seedance distribute the phases across the heading range. A shot may contain several necessary action phases without becoming a second timestamped timeline.
+- Do not infer or render shot-body ranges such as `4-6秒`、`6-8秒`、`17-18秒` from action complexity, planning estimates, keyframe spacing, or a failed result. Use `随后`、`当……时`、`过程中`、`落地后`、`最终` or equivalent observable transitions instead.
+- A narrow exception applies only when the current user or readable authoritative source explicitly locks an internal second/frame time. This may govern an action or visibility change, dialogue, visible text, audio, VFX, or frame-accurate synchronization. Preserve only the stated time or stated subdivision and do not create neighboring subdivisions. Edit, extension, and bridge intervals follow their operation grammar rather than this generation-shot rule.
 - Start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
 - Use integer-second boundaries by default. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
 - If locked shot count and duration cannot give every shot a positive integer range, ask for a longer duration or restructuring permission instead of using decimals.
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
 - Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. Render each shot through its resolved world-dynamics mode.
 - Shots use semantic names and state only visible changes or continuity-critical inheritance.
+- Each shot paragraph is executable in isolation from its current frame through its terminal frame. Describe inherited facts as present current state (for example, an already-open door or an already-connected beam), never as an instruction to consult an earlier shot. Keep the full command unified while keeping per-shot semantic closure.
+- When a dialogue, reaction, or close shot has a material `ActingTask`, write its playable task inline with the smallest visible execution cue. Add what feedback the character checks and how the strategy changes only when those turns are source-backed. Do not output `目标：`、`策略：` or another analysis label, and do not replace task logic with an expression list.
+- When a performance continuity anchor controls the shot, state the inherited relation, attention, intensity, or decision at cut-in before advancing the performance. Do not output the anchor label or repeat the full earlier task.
+- When an authorized audio/video rhythm materially controls a visual event, state the event's causal alignment to the relevant strong beat, rhythm change, speech turn, or sound cue in the owning shot. Mention the material label only at its single binding point; rhythm-only borrowing does not authorize the source music, lyrics, or background audio.
 - When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
 - For previsualization, use the same timeline formula once total duration is known; establish the selected representative state at cut-in.
 - For a coarse white-model video, inherit the source duration, shot order, and cuts without asking for or separately writing total duration. Reuse exact ranges only when they are readable. When the cut ranges are unreadable, preserve the source order and cuts and render `镜头1：`、`镜头2：` in order without time ranges; this explicit exception overrides the normal timestamp formula and never authorizes invented seconds.
+- Every final shot states a compact framing/camera relation from its resolved source authority and the current visible spatial relation. A generic whole-clip reference sentence never substitutes for either field in an individual shot.
 
 ## Shot sentence order
 
@@ -110,8 +123,10 @@ For visible text, state exact content, timing, frame position, appearance method
 - Render `coupled_world` as one compact cause and selected response chain, `primary_action` as the main action plus necessary body/prop mechanics, and `intentional_stillness` as stable fields plus the sole activity beat. Do not render a `世界动态：` or `环境动态：` heading.
 - Render each active stable-topology fact once at the smallest common scope. Multiple locations keep their topology with their owning shots or segments. Keep internal contract names out of the final prompt.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
+- Apply `VisibleSetGate` to every shot, including pure environment and object shots. Do not write a character field, human body cue, gait, clothing, or hair for a shot whose current visible set contains no such subject; a pure environment clip may omit `主体：` entirely, and an environment/object interval inside a mixed clip receives only its visible environment/object facts.
 - Treat internal viewer priority and rendered `画面重心` as one field.
 - Do not repeat a material label, global scene description, world driver, character appearance, camera rule, or negative instruction in every shot.
+- Do not repeat exact timing inside a shot after its range is established in the heading unless the explicit internal-time exception applies.
 - Do not use a generic suffix such as `微风吹动衣摆和树叶，水面泛起涟漪`. Select only visible receivers, connect them to one supported cause, and vary timing and amplitude by material and depth.
 - A longer prompt is acceptable when it adds distinct executable information. Different wording of the same fact is redundancy, not stronger control.
 

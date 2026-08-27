@@ -29,6 +29,12 @@ Use the source's dominant force:
 - subjective perception: keep every image perceivable and related
 - functional/commercial: preserve use and product intent; do not force drama
 
+## Output handoff
+
+The emotional direction is selection logic, not an internal result label. When it materially controls the clip, map its supported starting state, any supported change, and endpoint to the owning shots through observable attention, distance, posture, object handling, action result, or source-backed light/sound response. Not every shot needs a new cue: render a stable state once at the smallest useful scope and render only the shots where it changes.
+
+If the direction is acting-driven, pass its material beat into `ActingTask`; if it is carried by space, object, light, or sound, keep it with that field's existing owner. Do not print `情绪方向`、`体验曲线` or another method label, and do not invent a flashback or symbol to make the progression visible.
+
 ## Hard boundary
 
 Do not add subjects, props, relationships, backstory, symbols, plot turns, emotional reversals, or unassigned reference content. Preserve exact dialogue/audio timing and every lock.

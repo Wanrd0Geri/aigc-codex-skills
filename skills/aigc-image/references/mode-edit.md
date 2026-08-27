@@ -1,42 +1,26 @@
 # Edit mode
 
-Treat image editing as a closed change request.
+Treat every edit as a closed change request.
 
-## Change set
+## Internal change set
 
-- `Preserve`: source facts and user locks outside the requested edit.
-- `Transform`: only user-authorized changes plus the minimum visible correction needed to integrate them.
-- `Avoid`: concrete drift risks that cannot be expressed clearly as preserve/transform instructions.
-- `Released locks`: identity, pose, costume, camera, composition, count, geometry, or text the user explicitly allows to change.
+- `Preserve`: visible source facts and user locks outside the requested edit.
+- `Transform`: authorized properties plus the minimum integration needed for changed pixels.
+- `Avoid`: one concrete likely drift only when Transform and Preserve cannot prevent it.
+- `Released`: identity, count, text, camera, composition, geometry, light, color, or physical consistency the user explicitly allows to change.
 
-This is an internal audit structure, not a mandatory output template. Do not print every protected source fact merely because it appears in the ledger.
+Unmentioned content remains unchanged. Light, grade, depth, atmosphere, material, background, text, and props are independent permissions.
 
-Unmentioned content remains unchanged. Lighting, grade, haze, depth, material, background, surface texture, and props are not automatically editable.
+## Edit size
 
-## Select the edit intent
+- `surgical`: one local operation; use 1-3 direct sentences.
+- `controlled`: linked changes inside one visual system; use compact labeled blocks only when they improve auditability.
+- `staged`: several capabilities with dependency or drift risk; recommend the order before compiling.
 
-- Conservative cleanup: named changes are the complete whitelist.
-- Cinematic or art-direction repair: change only diagnosed high-impact systems.
-- Reference matching: transfer only the attributes assigned to the target reference.
-- Redesign: state released locks before drafting.
+Do not silently split a requested deliverable or drop an authorized change. If the user keeps one integrated pass, compile all compatible modules and state the stability risk outside the prompt.
 
-Protect face/identity, hair, costume, props, pose, blocking, character count, camera, framing, and useful design choices internally by default. Name only the costly or likely-to-drift subset in the delivered prompt.
+## Rendering rule
 
-For products and packaging, additionally protect silhouette and proportions, material/color identity, closure geometry, exact label copy and hierarchy, crop, scale, set, contact shadow, and unrequested props.
+Use the common contract in `edit-contract.md`, then load only selected capability files. A single capability may supply the full Change and Integration text. Multiple capabilities supply fragments; merge shared roles and locks once.
 
-## Edit budget
-
-Use the fewest coherent transforms:
-
-- surgical edit: one local object, color, text, light, cleanup, or removal change; use one direct command plus one compact preservation boundary
-- light repair: linked local light/color/contrast/haze/surface correction
-- medium repair: system-level light/material/integration changes while identity, pose, camera, and environment remain
-- heavy repair: only after redesign locks are released
-
-When unrelated changes would overload one pass, recommend a staged order and explain the benefit. Do not silently drop an authorized change or split the deliverable without approval; if the user keeps one integrated pass, include the full requested change set and state the stability risk outside the prompt.
-
-## Render the edit
-
-Use the prompt shape already selected in `SKILL.md`. A surgical edit needs no template reference: write the local change, necessary integration, one costly lock when needed, and the general unchanged boundary. Load `references/edit-platform-templates.md` only for a controlled or specification edit that benefits from auditable blocks.
-
-Surface-fragmentation controls are a diagnosed heuristic, not a universal provider rule. Use them only when noisy micro-texture, broken edges, painterly buildup, or patchwork rendering is visible or strongly implied by the requested style.
+When a result fails, identify the first failed capability or dependency and revise only that part. Do not rebuild the entire prompt unless the source, terminal artifact, or edit scope changed.

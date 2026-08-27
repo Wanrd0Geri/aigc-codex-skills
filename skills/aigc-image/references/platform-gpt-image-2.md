@@ -1,15 +1,14 @@
-# GPT Image 2 Prompt Adapter
+# GPT Image edit adapter
 
-Last verified against official OpenAI guidance on 2026-07-15. If the user asks for the latest model or exact API limits, verify the current official docs before answering.
-
-As of this snapshot, `gpt-image-2` is OpenAI's current most capable API image model. Do not infer an API model slug merely from a ChatGPT product-surface label.
+Last reviewed against official OpenAI image-edit guidance on 2026-08-27. If the user asks for the latest model name or exact API limits, verify the current official docs before answering.
 
 ## Provider delta
 
-- Use the minimum-sufficient generation or edit shape from `SKILL.md`; GPT Image 2 accepts clear natural-language briefs and does not need diffusion-style quality or negative-tag tails.
+- Use the universal edit contract from `SKILL.md`. For conservative edits, state `change only X`, the visible endpoint, and the costly invariants; finish with one general unchanged boundary.
+- Make small iterative changes when the previous result is close. Restate the important invariants on every follow-up edit to reduce drift.
 - For exact text, quote the copy and specify placement or typographic role only as needed. For multiple inputs, map each image to one narrow role.
 - Keep size, quality, output format, background, and other API controls outside the visual prompt when the surface exposes them.
-- Current official guidance says GPT Image 2 automatically uses high input fidelity. Do not add `input_fidelity` to a GPT Image 2 settings suggestion.
+- Do not add diffusion-style quality stacks or generic negative-tag tails.
 - Do not claim English is superior to Chinese. Follow the language-block contract in `SKILL.md`.
 
 Official sources:

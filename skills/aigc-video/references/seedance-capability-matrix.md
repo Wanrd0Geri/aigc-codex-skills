@@ -38,7 +38,7 @@ When the user's request is accepted by a hard limit but exceeds a recommendation
 
 ## Prompt-control evidence
 
-- Seedance 2.5 accepts second-based time ranges and uses them in official multi-shot examples.
+- Seedance 2.5 accepts second-based shot ranges and uses them in official multi-shot examples. This does not by itself require shot-body subdivisions.
 - The provider reports improved negative control for subtitles and background music. Treat this as a targeted capability, not proof that long generic negative lists are universally reliable.
 - Upload-order labels are sufficient for responsibility binding and are the default final form. Do not output a supplied `@` handle or UUID unless the current user explicitly requests it.
 
@@ -58,6 +58,6 @@ Do not infer a 2.0 output resolution or expose a 2.5-only mode without current p
 ## Workflow inferences
 
 - More accepted assets do not mean more useful assets. Assign one clear responsibility to every retained asset and remove only true duplicates or conflicts.
-- Long duration does not need a different prompt grammar. It needs more timeline segments, lighter density per segment, and explicit global continuity locks.
-- Very short duration does not justify dropping timestamps. Use fewer segments and one readable beat per segment.
+- Long duration does not need a different prompt grammar. When shot count is unlocked, allocate source- or story-supported shots by beat; when it is locked, reduce density inside the existing shot headings. Do not create extra timed subsections inside a shot merely because the clip is long.
+- Very short duration does not justify dropping readable shot-heading ranges. Use fewer shots only when shot count is unlocked, and keep one readable beat per shot; do not replace a short shot with internal timestamp scaffolding.
 - If the exact current UI differs from this file, the visible current UI wins and this file must be updated before making a hard-limit claim.

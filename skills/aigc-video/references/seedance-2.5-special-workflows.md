@@ -21,7 +21,7 @@ Reuse the canonical ordered generation structure and optional-heading rules from
 
 - Do not infer duration or aspect ratio. Express total duration through the final time range; keep aspect ratio in the UI unless the user requires it in the prompt.
 - Apply the adapter's canonical timeline rules without creating an ultra-long variant.
-- Divide by story or action beats, not equal mathematical chunks.
+- When shot count is unlocked, allocate shot-heading ranges by story or action beats rather than equal mathematical chunks. When it is locked, preserve those shots and reduce density; do not create timed subsections inside a shot.
 - Re-state only genuine cross-segment locks globally. Do not copy the full character appearance into every segment.
 - If action density is too high, simplify mutable camera/detail before deleting locked beats.
 
@@ -30,6 +30,16 @@ Reuse the canonical ordered generation structure and optional-heading rules from
 ### Coarse white model
 
 Use when layout, blocking, shot order, and camera path matter more than detailed geometry. Render one natural unheaded reference sentence before `主体：`. Name only what is actually borrowed, such as movement, blocking, camera, or cuts; include light only when the user explicitly assigns it.
+
+Use the following generic coarse-model contract for characters, animals, objects, environments, and pure camera movement alike:
+
+```text
+参考粗模的镜头顺序、时间切点、机位构图、空间关系、运动路径、关键状态与可见终点。以上内容作为结构依据，不要求逐帧复刻；由模型补全关键状态之间的运动过程，并保持需要延续的画面元素在切点前后状态一致。保留原剪辑方式，不新增镜头或转场。
+```
+
+The contract locks sequence/order, readable timing/cuts, framing and camera relation, spatial geometry, route, key states, and visible endpoints. It permits only the physically necessary in-between motion, continuous speed change, and secondary motion driven by the main motion. It does not ask the model to guess from `僵硬`、`自然`、`灵动` or other evaluations, and it never hard-codes a human center of gravity, gait, clothing, or hair into non-human, object, environment, or camera-only work.
+
+Before compiling the internal MotionSpec or its displayed structure table, inspect every source cut as a boundary pair: its readable opening state and terminal state. Add one representative middle/process state only when those boundaries do not reveal the current action phase or route. Record the visible set, subject positions, current action phase, camera/composition, contact/terrain state, and endpoint for that cut. The next cut starts from its own readable opening; do not assume it inherits a prior position or replay a completed approach, crossing, landing, reveal, or contact. If a later cut already opens beyond a gap or obstacle, describe that current state instead of moving the obstacle back under the subject.
 
 A readable stable coarse model directly owns its authorized geometry fields. Generate a Diagram only after that direct binding repeatedly fails the same geometry, when visual-role isolation is required, when a route overlay is missing, or when the user explicitly requests one.
 
@@ -47,7 +57,7 @@ Put color/shape-to-character or prop correspondence at the start of `主体：`.
 
 When final character images are assigned only to identity, appearance, wardrobe, or prop, do not inherit their presentation pose. Keep action, blocking, and performance owned by the coarse model, storyboard, or current user instruction. Borrow pose or action from a character image only when that dimension is explicitly authorized.
 
-Inherit the source video's duration, shot order, and cuts. Do not ask for or separately write total duration. Reuse exact shot ranges only when they are readable. When cut ranges are unreadable, preserve the source order and cuts and write ordered `镜头N：` entries without time ranges; never invent seconds. If the model has articulated limbs, wings, or a tail, describe the complete action process through preparation, movement, contact, and endpoint instead of naming only the result.
+Inherit the source video's duration, shot order, and cuts. Do not ask for or separately write total duration. Reuse exact shot ranges only when they are readable. When cut ranges are unreadable, preserve the source order and cuts and write ordered prompt-local `镜头N：` entries without time ranges; never invent seconds or reuse project/source shot ids as headings. Describe articulated limbs, wings, tails, mechanisms, or camera motion only when they are present in the current visible set; describe the complete supported process through preparation, movement, contact, and endpoint instead of naming only the result. Express those phases as one causal process inside the shot and do not derive internal second ranges from coarse-model keyframes or uneven motion. Do not add a new shot, transition, or editorial beat.
 
 If a detailed white-model animation is supplied in the future, require planning overlays to be cleaned before use, then follow the provider's basic instruction to render the white-model animation into the final finished video. Do not create prompt-side exclusions for tracks, axes, camera cones, labels, or controls.
 

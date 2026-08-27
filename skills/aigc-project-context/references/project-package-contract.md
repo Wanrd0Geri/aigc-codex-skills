@@ -1,135 +1,124 @@
-# Project Package Contract
+# External project package contract
 
-Read this reference only when the user names a project, supplies a project package, or the controlled workspace clearly contains the active project. A package is project data, not a second copy of this skill.
+Project data lives outside the Skill. A registry locates packages; a package identifies live sources, cache, snapshots, derived references, assets, field authority, defaults, and exclusions.
 
-## Registry and Package Root
+## Registry
 
-This section governs packages stored with this skill. `projects/README.md` is the skill-level registry for those packages: it maps project names and aliases to a package directory, and it is the first thing to check when the user names a project. Consult it before opening a stored package. A package the user supplies directly needs no registry entry.
-
-Each stored package root is `projects/<id>/`, where `<id>` matches `project.id` in that package's manifest. The registry lists one row per stored package root.
-
-Every relative path inside `project.yaml` resolves from that package root, never from the skill root and never from the registry. A manifest at `projects/linyuanxing/project.yaml` writing `contexts/EP01-storyboard.md` means `projects/linyuanxing/contexts/EP01-storyboard.md`. Do not repeat the `projects/<id>/` prefix inside the manifest.
-
-Load at most one package per task. Never scan or merge another project to fill a gap.
-
-A package supplied directly by the user, outside `projects/`, still follows this contract: its package root is whatever directory holds its `project.yaml`.
-
-## Package Goals
-
-A usable package identifies:
-
-- the active project and package root
-- current production sources and their versions/scopes
-- field-scoped source precedence
-- asset states and permitted roles
-- project defaults
-- exclusions
-- prepared context locations and raw-source fallback locations
-
-## Recommended `project.yaml`
+Default user-data registry: `%USERPROFILE%\.aigc-projects\registry.yaml` on Windows, or the equivalent home-directory path on another OS. It is not relative to the current repository, Skill directory, or shell working directory.
 
 ```yaml
 schema_version: "1.0"
-project:
-  id: "<stable-id>"
-  title: "<human title>"
-
-sources:
-  - id: current-storyboard
-    type: storyboard
-    path: "sources/storyboard.xlsx"
-    version: "<date/tag>"
-    scope: "<episode/scene range>"
-    status: current
-    # optional extensions
-    readable_context: "contexts/storyboard.md"
-    original_filename: "<name the file had when supplied>"
-    sheet: "<worksheet name>"
-    data_range: "<used range, e.g. A1:I412>"
-    raw_dimension: "<reported range when wider than data_range>"
-    sha256: "<uppercase hex digest of the archived file>"
-  - id: current-script
-    type: script
-    path: "sources/script.pdf"
-    version: "<date/tag>"
-    scope: "<episode/scene range>"
-    status: current
-
-source_precedence:
-  composition: [current_user, assigned_current_asset, current-storyboard, current-script]
-  action: [current_user, current-storyboard, current-script]
-  dialogue: [current_user, current-script, current-storyboard]
-  identity: [current_user, assigned_current_asset, character-registry, current-script]
-
-assets:
-  - id: character-lead
-    path: "assets/characters/lead.png"
-    state: available_readable
-    roles: [character_identity, clothing]
-    scope: "<character/version>"
-    must_not_control: [scene_light, environment, camera, composition]
-
-defaults:
-  medium: "<project medium>"
-  audio: "<project audio default>"
-  visible_text: "<project visible-text default>"
-
-exclusions:
-  - scope: "<scene/shot/asset>"
-    reason: "<why excluded>"
-
-context:
-  prepared: "contexts"
-  raw_storyboard: "sources"
-  raw_script: "sources/script.pdf"
-  bible: "contexts/series-bible.md"
+projects:
+  - id: "project-id"
+    title: "Project title"
+    aliases: ["alias"]
+    package_root: "project-id"
 ```
 
-Equivalent Markdown or JSON packages are acceptable when they contain the same semantics. Do not require conversion merely for formatting.
+Resolve relative `package_root` from the registry directory. A user-supplied absolute package path needs no registry entry. Load at most one package per task.
 
-## Paths and Optional Extensions
+## Package root
 
-`sources[].path` is the authoritative location of one concrete source file. It always points at a file, never a directory, and it is what a source-authority or re-verification question resolves to.
+Recommended layout:
 
-`context` fields are navigation hints and may point to either a directory or a file. `prepared: "contexts"` and `raw_storyboard: "sources"` name where to look; `raw_script: "sources/script.pdf"` names one file directly. Both forms are valid, and a `context` entry never overrides `sources[].path`.
+```text
+project-id/
+├─ project.yaml
+├─ connectors/       live-source coordinates and field mappings; no secrets
+├─ sources/          current readable local scripts, storyboards, briefs, and shot files
+├─ cache/            validated acceleration data and downloaded attachments
+├─ snapshots/        dated approved immutable source captures
+└─ derived/          bibles, indexes, and summaries with provenance
+```
 
-These keys are optional extensions. A package without them is still valid, and their absence is not a defect to report:
+`project.yaml` must identify:
 
-- `context.bible` — a derived, package-wide reference such as a series bible. It is derived material, not a raw source; when it conflicts with a production source, the source wins.
-- `sources[].readable_context` — a prepared, directly readable conversion of that source.
-- `sources[].original_filename`, `sheet`, `data_range`, `raw_dimension`, `sha256` — source-verification fields.
+- stable project id, title, aliases, and production state
+- live sources and their scopes
+- current local sources, when the project is file-backed rather than connector-backed
+- cache locations and freshness evidence
+- approved snapshots and dates
+- field-level source precedence
+- assets and allowed roles
+- defaults and exclusions
+- derived references and their provenance
 
-When a package archives an `.xlsx` source, record `sha256`, `original_filename`, `sheet`, and `data_range` for it. The digest detects a source that changed after conversion, the original filename preserves provenance across a rename, and the sheet plus range let a reader reach the same cells without guessing. Add `raw_dimension` when the workbook reports a wider range than it uses, so trailing empty columns are expected rather than treated as data.
+## Live source entry
 
-## Validation Rules
+```yaml
+live_sources:
+  - id: "current-storyboard"
+    type: "feishu_base"
+    access_context: "connectors/feishu-base.md"
+    scope: "episode/scene range"
+    status: "current_live"
+    verified_at: "ISO-8601 timestamp"
+```
 
-- `schema_version`, project identity, and package root must be knowable.
-- For a package stored with this skill, the registry entry, the package directory name, and `project.id` must agree. A user-supplied external package is exempt: it needs no registry entry, and its directory name need not match `project.id`.
-- Every relative path must resolve from the package root and must exist. A manifest path that repeats the `projects/<id>/` prefix is malformed.
-- Every source must have a type, location, scope, and current/older status.
-- Source priority must be field-scoped. A single global winner is insufficient when dialogue, composition, identity, and action come from different sources.
-- Every asset must declare `available_readable`, `anchor_only`, or `missing`, plus allowed roles. An unassigned asset controls nothing.
-- Exclusions override matching raw rows or assets.
-- Defaults fill unspecified fields only. They cannot override the current user, assigned current assets, or current production sources.
-- Paths or anchors do not prove visible content. Inspect readable assets before recording visual facts.
-- When an archived `.xlsx` source carries no `sha256`, drift between it and its prepared context cannot be verified; with no `sheet` or `data_range`, the cells behind a fact cannot be located again. Say so instead of assuming the conversion still matches the workbook.
-- When an archived `.xlsx` source carries no `original_filename`, the provenance chain back to the file the user supplied is incomplete. Say so instead of treating the archived name as the supplied name.
+Store resource coordinates and stable field ids when needed. Never store access tokens, refresh tokens, app secrets, device codes, or credentials.
 
-## Loading Strategy
+## Current local source entry
 
-Load only what the requested shot range needs:
+```yaml
+local_sources:
+  - id: "current-script"
+    type: "xlsx | docx | markdown | csv | json | other"
+    path: "sources/current-script.xlsx"
+    scope: "episode/scene range"
+    status: "current_local"
+    verified_at: "ISO-8601 timestamp"
+    sha256: "optional verified content hash"
+```
 
-1. project identity, exclusions, and relevant source/asset registry entries
-2. prepared context for the requested range when sufficient
-3. otherwise requested storyboard rows, one useful boundary row on each side, the matching script scene, and relevant assets
-4. outline or worldbuilding only for missing motivation/context that does not override production truth
+A project may be live-backed, local-file-backed, or hybrid. A readable current local source is first-class evidence; it is not a cache merely because it is local. Its relative path resolves from package root. File existence, filename, modified time, or an old summary alone does not prove readable content.
 
-Do not load every episode, asset, or lore file by default.
+## Cache entry
 
-## Missing or Partial Packages
+```yaml
+caches:
+  - id: "storyboard-cache"
+    path: "cache/storyboard.ndjson"
+    source: "current-storyboard"
+    scope: "episode/scene range"
+    validated_at: "ISO-8601 timestamp"
+    freshness_basis: "source revision, record modified time, or content hash"
+```
 
-- If project identity is ambiguous, present likely candidates and ask the user to select one.
-- If a required source path is missing, name the missing layer and mark affected card fields pending.
-- If prepared context is thin, use raw-source fallback rather than a scene-index summary alone.
-- If no manifest exists but the active package is clear, build a temporary in-memory registry from supplied sources; do not invent absent versions, roles, or defaults.
-- Keep project-specific style, naming, and exclusions in the package rather than hardcoding them into the generic skill.
+A path alone does not prove freshness. Missing freshness evidence downgrades the cache to snapshot evidence.
+
+## Snapshot entry
+
+```yaml
+snapshots:
+  - id: "release-2026-08-24"
+    root: "snapshots/2026-08-24"
+    captured_at: "2026-08-24T00:00:00+08:00"
+    scope: "episode/scene range"
+    status: "approved_fallback"
+```
+
+Every snapshot source records original filename, sheet or document coordinate, scope, and SHA-256 when available. Snapshot date must remain visible whenever it substitutes for live data.
+
+## Validation
+
+- Registry project id, package directory, and `project.id` agree.
+- Relative paths resolve from package root and exist.
+- Live source, cache, snapshot, and derived references remain distinct.
+- Current local sources remain distinct from cache and snapshots, carry scope, and pass a readable-content check before use.
+- Every cache names its source and freshness basis.
+- Every snapshot names capture date and scope.
+- Source authority is field-scoped.
+- Every asset declares state, scope, allowed roles, and prohibited roles.
+- Defaults fill only unspecified fields.
+- Exclusions override matching records or assets.
+- Paths, hashes, record ids, and attachment tokens do not prove visible content.
+
+## Missing or partial package
+
+- Missing registry: accept a user-supplied package root; otherwise request it.
+- Missing live source: use an approved scoped fallback only when declared.
+- Missing live source in a local-file-backed package: use its readable `local_sources`; do not require a connector.
+- Missing cache: query live; do not manufacture cache metadata.
+- Missing snapshot: live access may still proceed; offline fallback remains unavailable.
+- Malformed path or hash mismatch: mark that source unusable until repaired.
+- Corrupt, password-protected, unsupported, or unreadable local source: request a readable export or the required rows. Keep fields owned only by that source unresolved; other sources may still provide only the fields they independently own.

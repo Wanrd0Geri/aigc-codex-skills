@@ -12,13 +12,45 @@ For new or structurally changed source-video operations, use the boundary preced
 
 1. Record the literal change and its authoritative source.
 2. Compare it with the latest accepted version and identify the smallest changed field.
-3. Follow only the dependencies below until no downstream field changes.
-4. Lock every unaffected exact or semantic field; preserve its value and, when already executable, its wording.
-5. Decide whether each affected structure version stays `confirmed` or increments and returns to `pending`; preserve the current request's scoped review mode.
-6. Re-resolve `world_dynamics_review` when the change touches a driver, response, stability lock, or boundary phase.
-7. Recompile every complete affected unit, then run continuity and platform checks across its boundaries.
+3. For every touched prior corrective clause, decide `still_active`, `supplemented`, or `superseded`. A new statement supersedes an old one only when both govern the same field/scope and their meanings cannot coexist, or the user explicitly replaces it. A refinement or added condition supplements it. Recency, changed wording, or omission from the latest message alone does not cancel an accepted fact.
+4. If replacement versus supplementation is result-changing and not uniquely inferable, route the exact ambiguity through `IntentFactGate`. Otherwise record the evidence and continue.
+5. Follow only the dependencies below until no downstream field changes.
+6. Lock every unaffected exact or semantic field; preserve its value and, when already executable, its wording.
+7. Decide whether each affected structure version stays `confirmed` or increments and returns to `pending`; preserve the current request's scoped review mode.
+8. Re-resolve `world_dynamics_review` when the change touches a driver, response, stability lock, or boundary phase.
+9. Recompile every complete affected unit, then run continuity and platform checks across its boundaries.
+
+After dependency closure and before delivery, render only the current semantic state: keep each `still_active` fact once, merge each `supplemented` fact into its owning current statement, and remove only `superseded` wording plus diagnosis, duplicate micro-controls, repeated global facts, and planning-derived shot-internal timing. Preserve every explicit current-user/source internal time, accepted lock, boundary state, and visible endpoint. Keep at most one local negative only when an observed failure has no equivalent positive control. This cleanup changes presentation density, not the accepted structure.
 
 Do not freely reinterpret the whole project. A full review means checking all relevant dependencies, not rewriting correct content.
+
+## Incremental structure delivery
+
+The first structure confirmation for a request shows the complete current table. After an accepted `structure_version` exists, a revision still rebuilds and checks the complete current MotionSpec and dependency closure internally, but the user-facing review is a delta view:
+
+- keep the same canonical six-column header from `SKILL.md` and show only affected shot rows;
+- keep the same compact field ownership as the first table; do not use a changed cell to paste repair history, exclusion stacks, repeated appearance, or internal validation prose;
+- put 1–3 concise `变更摘要` bullets before the table;
+- prefix changed content in its cell with `【本轮修改】`;
+- prefix only dependency-closure consequences with `【联动修改】`;
+- in an affected row, write an unchanged cell as `沿用已确认` instead of repeating old text;
+- end with exactly: `未列出的镜头与未标注字段沿用已确认版本，已完成内部全量校验。`
+
+Compact revision skeleton:
+
+```text
+变更摘要：
+- [直接改动]
+- [仅在依赖闭包实际变化时写联动]
+
+| 镜头 | 构图与机位 | 人物与空间 | 动作、对白与终点 | 简短表演意图 | 光线与环境连续性 |
+| --- | --- | --- | --- | --- | --- |
+| 受影响镜头 | 【本轮修改】... / 沿用已确认 | 【联动修改】... / 沿用已确认 | ... | ... | ... |
+
+未列出的镜头与未标注字段沿用已确认版本，已完成内部全量校验。
+```
+
+If the dependency closure crosses a handoff, widen the affected rows and summary to that complete sequence. If no dependency field actually changes, do not add `【联动修改】`. A changed structure field still increments its version and follows the current `structure_review_mode`; the delta view does not turn a pending version into confirmed.
 
 ## Dependency closure
 
@@ -33,7 +65,7 @@ Do not freely reinterpret the whole project. A full review means checking all re
 | performance intention | primary carrier, gaze target, posture/contact, listener response, rhythm, and endpoint; reopen structure only when this closure changes a structure field defined in `SKILL.md` |
 | light source, world direction, intensity, or exposure | subject lit/shadow sides, camera-visible bright/dark relation, eye/catch lights, highlights, reflections, background exposure, moving-light receivers, and adjacent-shot continuity |
 | world driver, physical response, or stability lock | set affected dynamics reviews to `pending`; recheck mode, reachable visible receivers, necessary mechanics, phase, delay/amplitude, residual state, rendered scope, and cross-shot handoff |
-| duration or shot count | every time range, action/dialogue capacity, cut boundary, operation interval, and endpoint |
+| duration or shot count | every shot-heading range, explicitly locked internal time, action/dialogue capacity, cut boundary, operation interval, and endpoint |
 | shared style, scene, platform, or global policy | every shot or operation using that field and the adapter grammar |
 | asset role, upload order, or active version | every field and shot authorized by that asset; retired versions remain inactive |
 
@@ -67,4 +99,5 @@ Internal diagnosis may be field-level. External delivery is never a standalone r
 - Every changed dynamics field completed a fresh review and mode decision where required.
 - Unaffected facts and active wording did not drift.
 - Cross-shot boundaries still agree.
+- Superseded repair wording and derived shot-body time ranges have been removed; only explicit current-user/source internal timing remains.
 - The delivered artifact is complete at the selected scope and executable without locating an old sentence.

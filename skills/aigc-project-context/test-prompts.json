@@ -92,6 +92,21 @@
   {
     "id": "project-19-video-handoff-world-state",
     "prompt": "项目分镜明确：镜头3开始时山风从右向左，薄雾正向左缓移；终帧剑气已消散，但水纹仍向左下扩散，衣摆正在回落。镜头4必须接住这些状态。直接交给 aigc-video，不要展示完整卡片。",
-    "expected": "Compiles VideoContext schema 1.1 with source-backed start and terminal world_state fields for driver, direction, material intensity, active phase, disturbance, and residual. It carries only the required terminal subset into next_handoff so shot 4 inherits the leftward wind/fog phase, lower-left ripple propagation, and settling cloth instead of restarting them. It does not add planned weather, effects, damage, or unrelated receivers in the project-context layer."
+    "expected": "Compiles VideoContext schema 1.2 with source-backed start and terminal world_state fields for driver, direction, material intensity, active phase, disturbance, and residual. It carries only the required terminal subset into next_handoff so shot 4 inherits the leftward wind/fog phase, lower-left ripple propagation, and settling cloth instead of restarting them. It does not add planned weather, effects, damage, or unrelated receivers in the project-context layer."
+  },
+  {
+    "id": "context-live-feishu-video",
+    "prompt": "读取《临渊行》第二集第十场指定镜头的飞书最新分镜，并在同一任务里生成最终视频提示词。",
+    "expected": "Loads the external registry, queries only target records and useful boundaries from the live source, records provenance and freshness, compiles a hidden VideoContext, and continues with aigc-video without downloading the full table or showing full cards."
+  },
+  {
+    "id": "context-live-feishu-image",
+    "prompt": "根据《临渊行》飞书文字分镜和对应手绘附件，为指定镜头生成项目约束下的图像编辑提示词。",
+    "expected": "Queries only required text fields, downloads only the needed attachment, compiles a hidden ImageContext with narrow roles and source locks, and continues with aigc-image without importing full project data or letting the storyboard control identity, final lighting, color, or material."
+  },
+  {
+    "id": "context-offline-fallback",
+    "prompt": "飞书现在访问失败。用现有《临渊行》项目数据继续处理第二集第十场，但不要把旧资料说成最新。",
+    "expected": "Tries a validated scoped cache, then the approved 2026-08-24 snapshot, marks stale_fallback or snapshot freshness with date, preserves field authority, and makes no current-live claim or persistent write."
   }
 ]

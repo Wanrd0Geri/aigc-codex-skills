@@ -1,0 +1,18 @@
+[
+  {
+    "id": "terminal-artifact-ambiguous",
+    "requires": [
+      "readable_source_image"
+    ],
+    "prompt": "处理一下这张图。",
+    "expected": "States the likely interpretation and asks whether the user wants diagnosis, an edit prompt, or the edit performed; does not silently choose a terminal artifact."
+  },
+  {
+    "id": "product-cleanup-locks",
+    "requires": [
+      "readable_product_image"
+    ],
+    "prompt": "只清理背景灰尘并压住瓶身反光，瓶子轮廓、比例、封口结构、材质颜色、标签原文和层级、构图与接触阴影都不能改变。给我修图提示词。",
+    "expected": "Calls object cleanup plus only the needed material or lighting integration; protects silhouette, proportions, closure geometry, material and color identity, exact label copy and hierarchy, crop, scale, set, and contact shadow; does not redesign the product or set."
+  }
+]

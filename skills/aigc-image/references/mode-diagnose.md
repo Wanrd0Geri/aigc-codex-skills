@@ -1,40 +1,34 @@
 # Diagnose mode
 
-Use this mode to explain the frame and rank the smallest high-leverage fixes. Diagnosis is an artifact, not a pretext to write an unrequested prompt.
+Use diagnosis to find the first failing visual relationship and select the smallest edit capability. Diagnosis is a terminal artifact when the user asks only why; do not append a prompt without permission.
 
 ## Sequence
 
-1. Describe the readable frame neutrally.
-2. State the likely creative intention and its evidence.
-3. Inspect only lenses that contain real findings:
-   - director: story function, attention priority, action, emotional carrier
-   - cinematography: framing, camera motivation, depth, exposure, light, color
-   - production design: silhouette, costume, props, materials, era, world coherence
-   - storyboard/editing: readable pose, screen direction, implied before/after state, crop
-   - AIGC control: reference conflict, identity drift, artifacts, style averaging, malformed detail
-4. Rank up to three issues by impact. For each, state visible evidence, why it matters, and the smallest practical fix.
-5. When asked whether the frame can proceed, choose one:
-   - `can proceed`: structure already supports the intended use
-   - `repair first`: bounded defects block use but composition and motion support remain valid
-   - `redesign first`: subject scale/position, pose, silhouette, camera relation, or spatial structure must change
+1. Describe only the readable image evidence.
+2. State the likely visual intention and the evidence supporting that reading.
+3. Classify the root failure into one or more edit systems: geometry, composition, placement/contact, lighting, color, focus/depth, optical effects, material integration, object cleanup, or production design.
+4. Rank up to three issues by impact on the user's purpose. For each, state evidence, consequence, and the smallest repair.
+5. Map every recommended repair to one capability in `capability-router.md`.
 
-Give one decisive reason for readiness. Do not use red/yellow/green labels.
+Do not repeat one root cause under several headings. Separate functional failure from optional taste. If the intended visual priority is unknown and different choices would produce different edits, ask one focused question.
 
-## Depth
+## Readiness
 
-- Quick: 3-5 sentences plus the top issues.
-- Standard: observation, intention, relevant lenses, ranked fixes, next action.
-- Deep: only when the user asks for a full breakdown, comparison, grading, or art-direction review.
+When asked whether the image can proceed, choose one:
 
-Do not force five lens headings or exactly three problems. Separate functional failure from optional taste.
+- `can proceed`: the image already supports its intended use
+- `repair first`: bounded defects block use but the main structure remains valid
+- `redesign first`: identity, count, subject scale, pose, composition, camera relation, or spatial structure must change
+
+Give one decisive reason. Do not use red/yellow/green labels.
 
 ## Combined diagnose -> edit
 
-Keep a silent handoff with:
+Pass a silent handoff into edit mode:
 
-- preserve: what already works
-- fix: ranked authorized changes
-- release: any protection the user explicitly gives up
-- avoid: concrete drift risks
+- `preserve`: what already works
+- `fix`: ranked authorized changes and selected capabilities
+- `release`: protections explicitly surrendered by the user
+- `avoid`: concrete drift risks
 
-Pass this directly into edit mode without re-reading or repeating the full diagnosis.
+Read the image once. Do not repeat the full diagnosis inside the final prompt.

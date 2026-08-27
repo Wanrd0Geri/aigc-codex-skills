@@ -477,7 +477,7 @@
   {
     "id": "video-subject-03-empty-opening-later-subject-keeps-heading",
     "prompt": "结构已经确认。图片1是无人古寺的空镜首帧，图片2是苏云的人物参考。写8秒 Seedance 2.5：0-3秒保持空镜，3-8秒苏云从门外走入。",
-    "expected": "Renders 图片2和苏云 under 主体 even though the opening frame is empty, renders 图片1和古寺环境 under 场景, and preserves the empty 0-3秒 opening before 苏云 enters during 3-8秒. It does not omit 主体 or place the character reference in 场景."
+    "expected": "Renders 图片2和苏云 under 主体 even though the opening frame is empty, renders 图片1和古寺环境 under 场景, and preserves the explicitly user-locked empty 0-3秒 opening before 苏云 enters during 3-8秒. These two internal ranges are a current-user timing exception; it creates no additional subdivision, does not omit 主体, and does not place the character reference in 场景."
   },
   {
     "id": "video-structure-01-subject-scene-reference-separation",
@@ -517,7 +517,7 @@
   {
     "id": "video-structure-review-03-confirmed-then-enrich-performance",
     "prompt": "上一轮双人结构表已经确认：正面中景，罗大娘在右侧对曲伯说话，曲伯在左侧听。现在丰富表演并输出8秒最终 Seedance 提示词。罗大娘克制地据理力争，曲伯有些无奈。",
-    "expected": "Treats the supplied structure as confirmed and renders the final prompt rather than repeating the table. It preserves the confirmed side relationship and dialogue ownership, keeps the locked intentions, and enriches them with restrained visible carriers without changing framing, blocking, or adding unsupported actions. A performance-only enrichment does not trigger Diagram."
+    "expected": "Treats the supplied structure as confirmed and renders the final prompt rather than repeating the table or asking the same structure question again. It preserves the confirmed side relationship and dialogue ownership, keeps the locked intentions, and enriches them with restrained visible carriers without changing framing, blocking, or adding unsupported actions. A performance-only enrichment does not trigger Diagram."
   },
   {
     "id": "video-structure-review-04-material-ambiguity-no-guess",
@@ -652,7 +652,7 @@
   {
     "id": "video-world-dynamics-10-full-scene-image-inventory",
     "prompt": "图片1是山谷场景图：前景有湿草和水洼，中景有溪流、人物长袍和树枝，远景有薄雾与云层。先按结构确认流程处理，再写8秒Seedance提示词。",
-    "expected": "Scans the readable scene image across foreground, midground, and background for all visible motion-capable candidates, including wet grass or puddle reflections, stream flow, robe and branches, fog and clouds. It returns only the pending canonical structure table; 光线与环境连续性 records only source-backed or continuity-critical direction/phase facts and does not pre-design the full receiver chain. The inventory remains internal, does not animate every candidate, and does not invent rain, animals, falling leaves, new water, or unsupported exact directions."
+    "expected": "Scans the readable scene image across foreground, midground, and background for all visible motion-capable candidates, including wet grass or puddle reflections, stream flow, robe and branches, fog and clouds. Before displaying the pending canonical structure row, it runs the core VisibleSetGate and excludes any world region or medium outside the current crop; 光线与环境连续性 records only source-backed or continuity-critical direction/phase facts and does not pre-design the full receiver chain. The inventory remains internal, does not animate every candidate, and does not invent rain, animals, falling leaves, new water, or unsupported exact directions."
   },
   {
     "id": "video-world-dynamics-11-vfx-environment-coupling",
@@ -857,7 +857,7 @@
   {
     "id": "video-recovery-08-pure-duration-overload",
     "prompt": "当前4秒单镜结构已确认，固定中景、单人、无运镜：女孩逐字说道“我明天会回来，但如果天亮前没见到我，你就先走”，随后拿起桌上的信、折好放进口袋，结尾走出画面。相同提示词、素材和设置连续两次都在台词中途结束并漏掉后续动作；对照测试只把总时长改为12秒就完整成功，对照时间线为0-7秒完整对白、7-10秒取信折信并放进口袋、10-12秒走出画面。我允许采用这版12秒时间线，其他锁定内容保持，请按最小改动返回完整最终Seedance提示词。",
-    "expected": "Resolves pure duration_overload from the one-variable 4-second/12-second comparison, selects structural_replan, preserves the confirmed single-shot fixed-camera structure, exact dialogue, beat order, and endpoint, follows the duration closure, and returns one complete 12-second final prompt. The current structure version remains confirmed because every listed structure field stays stable."
+    "expected": "Resolves pure duration_overload from the one-variable 4-second/12-second comparison, selects structural_replan, preserves the confirmed single-shot fixed-camera structure, exact dialogue, beat order, and endpoint, and returns one complete 12-second final prompt. Because the current user explicitly adopts the controlled 0-7, 7-10, and 10-12 second internal timeline, it preserves those exact subdivisions but creates no others. The current structure version remains confirmed because every listed structure field stays stable."
   },
   {
     "id": "video-recovery-09-pure-one-shot-structural-overload",
@@ -883,5 +883,240 @@
     "id": "video-recovery-13-direct-authorized-missing-complete-unit",
     "prompt": "上次的12秒一镜到底提示词连续两次路线错位并漏掉关门，0-6秒与6-12秒两镜对照完整成功。我授权按这版两镜重排，并明确跳过结构确认、不用结构表；但这次消息没有附上当前完整提示词，也没有写两镜的机位、遮挡和终点屏幕站位。请继续。",
     "expected": "Resolves the supported structural replan and applies request-scoped direct_authorized, keeps the rebuilt structure rows internal, sets the stage blocked because the latest complete affected unit and required spatial evidence are unavailable, and asks for those inputs together without displaying a structure table or rendering a final prompt."
+  },
+  {
+    "id": "video-combat-01-unapproved-routes-design-first",
+    "prompt": "用 $aigc-video 给我最终可粘贴的 Seedance 2.5 提示词：8秒雨中双刀交锋，双方先试探、一次格挡后女剑客夺回主动。直接给提示词。",
+    "expected": "Recognizes the shot as specialist combat design, runs aigc-vfx-combat only through its structure phase, treats 直接给提示词 as speed rather than direct authorization, and returns only the canonical structure-confirmation row plus one grouped request. It does not design the presentation/VFX layer or render the final Seedance prompt yet."
+  },
+  {
+    "id": "video-combat-02-confirmed-resumes-design-handoff",
+    "prompt": "上一轮雨中双刀交锋的结构v2已经确认：女剑客在左、刀客在右，格挡触点和终点站位都不变。现在继续生成最终8秒Seedance 2.5提示词。",
+    "expected": "Resumes aigc-vfx-combat after the accepted structure instead of rendering immediately, completes presentation, optional restrained VFX and Seedance 2.5 feasibility, creates a design_ready CombatHandoff bound to structure v2, then maps it into one complete final prompt without reopening the structure table or redesigning the exchange in generic VFX patterns."
+  },
+  {
+    "id": "video-combat-03-direct-authorized-resumes-design-handoff",
+    "prompt": "跳过结构确认，不用结构表，直接写最终8秒Seedance 2.5提示词：窄桥上枪手控制距离，剑客偏开枪尖后贴身缴械，桥和栏杆不能损坏。",
+    "expected": "Applies request-scoped direct_authorized, compiles the pending combat structure internally, continues through aigc-vfx-combat presentation and feasibility rather than stopping on unapproved status, creates a design_ready CombatHandoff for the pending current version, and only then renders the complete final prompt while preserving the no-damage lock."
+  },
+  {
+    "id": "video-project-02-raw-project-combat-routes-context-first",
+    "prompt": "用 $aigc-video 根据当前项目剧本和分镜，给第二集第六场的三镜打斗写最终Seedance 2.5提示词；原始资料还没有整理成VideoContext。",
+    "expected": "Runs aigc-project-context first to compile one validated lightweight VideoContext without full user-visible cards, preserves source locks and boundaries, marks the affected fight shots combat_design_required, routes them through the combat structure gate and later design-ready handoff, and keeps final delivery ownership in aigc-video without rebuilding the source ledger."
+  },
+  {
+    "id": "video-language-01-existing-neutral-language-only-stays-owned",
+    "prompt": "这是一段已经完成的平台中立视频提示词，只把语言改自然、去模板腔，不新增动作、镜头、平台格式或参数。",
+    "expected": "Keeps the language-only cleanup in aigc-video because the existing artifact is a video prompt. It preserves the platform-neutral task and production locks, skips a new structure review or platform adapter, and creates no new final video design."
+  },
+  {
+    "id": "video-default-01-unspecified-platform-defaults-seedance25",
+    "prompt": "结构已经确认。写一个8秒最终视频提示词：女孩在雨夜车站听见广播后回头。没有指定平台和版本。",
+    "expected": "Defaults to 即梦 Seedance 2.5, preserves the confirmed structure, applies the Seedance 2.5 duration and rendering grammar, and does not choose 2.0, Doubao, Dreamina, or a platform-neutral artifact."
+  },
+  {
+    "id": "video-contract-01-coarse-four-shot-unified-topology",
+    "prompt": "四镜粗模结构已经确认，视频1可读出四个切点和完整时长。视频1只参考镜头顺序、时间切点、机位构图、空间关系、运动路径和关键状态；请直接写最终Seedance提示词。",
+    "expected": "Returns one unified Seedance command with one timeline and four ordered time segments, never four independent prompts. It preserves the readable four cuts and uses the generic coarse-model contract while allowing only supported in-between motion."
+  },
+  {
+    "id": "video-contract-02-current-state-closure-no-relative-shot-language",
+    "prompt": "三镜结构已经确认。镜头1门已打开，人物在门内抬手；镜头2切到门外，人物已经跨过门槛且手仍向前伸；镜头3固定近景，人物握住门把手停下。写一条统一的最终Seedance提示词。",
+    "expected": "Uses one unified timeline. Each shot states its own current visible state, spatial relation, action phase, and endpoint; that local semantic closure does not create separate prompt cards or repeat the global material package. It does not use 同上一镜、继续刚才、承接上一镜 or any instruction to consult a previous paragraph."
+  },
+  {
+    "id": "video-contract-03-visible-set-canyon-fog-reveal",
+    "prompt": "三镜连续移动镜头已经确认：镜头1只看到峡谷上层山脊、薄雾和光束，画面看不到峡谷下方；镜头2镜头下降并首次看到峡谷下方；镜头3沿峡谷向前推进到谷底。请写最终提示词。",
+    "expected": "Applies the visible-set gate per shot. Shot 1 never writes dense lower-canyon fog or other unseen valley details; shot 2 may introduce only the visibly revealed lower-canyon region and its visible fog; shot 3 states the terminal valley view."
+  },
+  {
+    "id": "video-contract-04-environment-object-shot-no-human-template",
+    "prompt": "结构已经确认。写8秒两镜Seedance：镜头1纯环境空镜，溪水绕过石阶；镜头2只拍桌上的铜铃被水汽凝成的水珠滴中后轻响。不要出现人物。",
+    "expected": "Keeps environment/object shots limited to visible water, stone, bell, droplets, contact and sound. It contains no human-only center-of-gravity, gait, clothing, hair, gaze, breathing, or body choreography fields and does not invent a character merely to fill 主体."
+  },
+  {
+    "id": "video-contract-05-coarse-k-frame-transition-without-diagnosis",
+    "prompt": "白模K帧已确认但第2帧到第3帧动作不连续。请锁定镜头顺序、机位构图、空间关系、运动路径和可见终点，允许补足关键状态之间的过渡帧；保留硬切，不新增镜头。直接写最终提示词。",
+    "expected": "Locks the coarse-model structure and visible endpoint, fills only supported in-between movement and speed continuity, preserves the hard cut, adds no shot or transition, and does not place words such as 僵硬、自然、灵动, failure diagnosis, or review rationale in the executable prompt."
+  },
+  {
+    "id": "video-contract-06-explicit-flow-renders-carriers-and-space-progression",
+    "prompt": "结构已经确认。用户明确要求空间是流动的，并列出环境动态：镜头从山脊向下移动，当前可见薄雾与尘埃被镜头揭示到峡谷下方，随后溪流进入终点画面；风向和水流方向按可读素材。请写最终Seedance提示词。",
+    "expected": "Renders the selected visible fog/dust/stream carriers and a compact current-visible -> revealed -> terminal visible space progression in the final timeline. It does not merely mark world_dynamics_review resolved, animate every element, or describe unseen regions before the reveal."
+  },
+  {
+    "id": "video-contract-07-incremental-shot-four-delta-markers",
+    "prompt": "上一版四镜结构v3已经确认。现在只修改镜头4：原终点是人物停在门前，改为人物推门进入；镜头3的门已关闭状态因此要联动更新。请先给增量结构复核。",
+    "expected": "Shows 1–3 concise 变更摘要 bullets, then the same canonical six-column header: 镜头、构图与机位、人物与空间、动作、对白与终点、简短表演意图、光线与环境连续性. It shows only affected rows; the direct endpoint change is marked 【本轮修改】, the shot-3 or boundary consequence is marked 【联动修改】 only if the dependency actually changes, and unchanged cells in affected rows say 沿用已确认 instead of repeating old text. It ends with 未列出的镜头与未标注字段沿用已确认版本，已完成内部全量校验。 Unaffected fields are carried from v3 after complete internal MotionSpec and closure checks."
+  },
+  {
+    "id": "video-contract-08-intent-fact-conflict-grouped-block",
+    "prompt": "已确认切点为镜头1 0-3秒、镜头2 3-6秒，且可读视频显示女孩在镜头2右侧。现在新指令说镜头2必须在0-2秒并且女孩在左侧；这可能是口误，请直接输出最终提示词。",
+    "expected": "Runs IntentFactGate before any structure row is displayed and before final rendering, then blocks both. It lists timing and screen-side root conflicts with authoritative evidence, gives the smallest distinct shootable options and a recommendation, asks one grouped confirmation question, and emits neither an erroneous structure table nor a half-built final prompt. It does not silently let current-user priority overwrite a suspected typo."
+  },
+  {
+    "id": "video-contract-09-unique-inference-does-not-block",
+    "prompt": "镜头结构已确认，用户说‘固定机位不移动’，但同句又要求镜头从当前中景保持不动直到终点；没有其他可执行歧义。请直接写最终Seedance提示词。",
+    "expected": "Treats the wording as one uniquely inferable fixed-camera instruction because it cannot change the shootable result, resolves it internally without a blocking question, and renders the complete final prompt after the normal gates."
+  },
+  {
+    "id": "video-contract-10-explicit-intent-confirmation-no-repeat",
+    "prompt": "可读视频原本显示女孩在镜头2右侧；我已经明确确认，把她改到左侧是本轮有意修改，不是口误。现在按这个新位置继续编译镜头2，不要再次询问同一冲突。",
+    "expected": "Treats the explicit user confirmation as the current authority for the changed position, updates the affected structure version and dependency closure, and does not re-ask the old right-versus-left conflict. It still runs the visible-set and intent gates and delivers the appropriate complete structure delta or final unit."
+  },
+  {
+    "id": "video-contract-11-shot-body-causal-timing-no-subranges",
+    "prompt": "四镜结构已经确认，粗模切点为0/4/10/17/21秒。镜头2里人物先看竹篓，再扫过近处岩壁，最后抬头看向前方；镜头4里人物完成起跳、越过一块缺板、落地并继续走。写一条统一的最终Seedance提示词，让模型自然分配每镜内部动作节奏。",
+    "expected": "Returns one unified timeline with exact ranges only in the four shot headings: 0-4, 4-10, 10-17, and 17-21 seconds. Inside each shot it uses opening-state, causal-transition, and terminal-state prose without derived ranges such as 4-6, 6-8, 17-18, or 18-19 seconds. It preserves every action phase and endpoint while allowing Seedance to allocate the internal pacing."
+  },
+  {
+    "id": "video-contract-12-explicit-internal-sync-narrow-exception",
+    "prompt": "结构已经确认。镜头1为0-5秒；素材明确要求第2秒警示灯闪一次，同时角色说‘走’，其余动作节奏由模型自然完成。写最终Seedance提示词。",
+    "expected": "Keeps the 0-5 second range in the shot heading and preserves the explicit second-2 light/dialogue cue because the source locks exact synchronization. It creates no neighboring 0-2, 2-3, or 3-5 second subdivisions and leaves unrelated motion in causal prose."
+  },
+  {
+    "id": "video-contract-13-repair-complexity-recovery-removes-scaffolding",
+    "prompt": "当前17-21秒镜头为了修动作被写成17-18秒起跳、18-19秒落地、19-21秒继续走，但这些小段不是素材时间锁。保留起跳、跨过单块缺板、落地缓冲、继续行走和21秒终点，重新输出完整受影响镜头。",
+    "expected": "Recompiles the complete 17-21 second shot with one heading range and one positive causal action chain. It preserves the locked phases and endpoint, removes the non-source-backed internal timestamp scaffolding, and does not carry failure-diagnosis wording into the executable prompt."
+  },
+  {
+    "id": "video-contract-14-source-shot-id-local-numbering",
+    "prompt": "项目来源编号是场10镜5、场10镜12、场10镜15，三镜结构与0-9秒切点都已确认。请写统一的最终Seedance提示词。",
+    "expected": "Keeps the project/source identifiers only in the internal traceability mapping and renders one contiguous prompt-local sequence headed 镜头1, 镜头2, and 镜头3 with the confirmed ranges. It never outputs 镜头10-5, 镜头10-12, 镜头10-15, or another source id as a Seedance heading."
+  },
+  {
+    "id": "video-contract-15-compact-structure-field-ownership",
+    "prompt": "请先给结构确认表。人物是苏云和裘水镜，桥板有两处缺口；苏云跨缺口，裘水镜正常行走。之前生成里双脚一起落地、人物穿洞、衣摆延迟不对、瀑布水雾也不自然，请把所有修复要求都写清楚。",
+    "expected": "Returns the canonical six-column structure table but compresses each cell to its current job instead of pasting every repair note. 人物与空间 contains only the visible roster and execution-critical relation/position; 动作、对白与终点 contains the positive action and endpoint; 简短表演意图 contains only the smallest source-backed direction needed for scene meaning or cross-shot consistency, not choreography; 光线与环境连续性 contains only continuity-critical light/world state. It omits repeated appearance, repair history, diagnostic prose, exclusion stacks, and uses — for a non-material field."
+  },
+  {
+    "id": "video-performance-04-close-reaction-playable-task",
+    "prompt": "近景里苏云听见异响后沉默、判断、警觉，但没有惊慌。结构已确认，请写最终表演。",
+    "expected": "Checks the beat against the script meaning, established relationship, current action phase, neighboring performance state, and close crop. It makes the intended distinction behind 沉默、判断、警觉、没有惊慌 observable with only the smallest useful cue or cues, preserves consistent intensity, and does not force a trigger/tactic/carrier/endpoint formula or a facial/gaze/breath/finger checklist."
+  },
+  {
+    "id": "video-contract-16-single-structural-authority-conflict",
+    "prompt": "视频1粗模显示木桥有两处缺口并负责运镜和路线；图片3的桥只有一处缺口，我又写了图片3参考桥的结构。两份都要严格参考，先给结构表。",
+    "expected": "Detects that two sources materially claim the same bridge-topology dimension. It does not blend them, stack exclusions, or produce a guessed structure row. Before the table it asks one grouped authority-priority question for bridge topology while preserving video timing/camera/route and any non-conflicting appearance dimensions."
+  },
+  {
+    "id": "video-contract-17-coarse-cut-current-phase-boundaries",
+    "prompt": "粗模四个切点可读：镜头2结束时苏云已跨过第一处缺板，镜头3开场时他已经走到两处缺口之后；镜头4才出现一次新的单脚跨步。请按粗模先整理结构，不要重演动作。",
+    "expected": "Reads each cut through its own opening and terminal state, using a middle/process state only if needed. It records the current visible set, positions, action phase, terrain/contact state, and endpoint. Shot 3 begins beyond both gaps and does not move a gap under the feet or replay a completed crossing; shot 4 alone carries the new supported crossing."
+  },
+  {
+    "id": "video-contract-18-final-shot-needs-local-composition",
+    "prompt": "三镜粗模负责全部机位构图和人物路线，结构已确认。当前最终草稿只在开头写了一句参考粗模，镜头2和镜头3没有写景别、机位或当前人物空间关系。请优化完整提示词。",
+    "expected": "Keeps the single coarse-model responsibility sentence but does not let it replace per-shot execution. Every final shot still includes a compact resolved framing/camera relation plus the current visible subject relationship, action phase, visible result, and endpoint, without repeating material labels or full global facts."
+  },
+  {
+    "id": "video-contract-19-complex-but-clear-no-generic-warning",
+    "prompt": "30秒10镜，5份角色和场景素材都可读，素材职责、对白、断桥结构、人物路线、镜头顺序和终点已经逐项确认且互不冲突。请按已确认版本写最终提示词。",
+    "expected": "Runs the internal reasoning and feasibility checks but proceeds without a generic high-load, cost, character-count, reference-count, or split warning. It preserves the confirmed structure, simplifies only mutable description when needed, and does not invent a problem, alternative plan, or extra approval step merely because the request is complex."
+  },
+  {
+    "id": "video-contract-20-human-led-reasoning-blocks-real-gap",
+    "prompt": "剧本写苏云左手拿竹篓，当前修改要求写右手拿，但我不确定这是不是口误；我还要求严格参考竹篓素材，但这份素材没有上传。先别问，直接替我决定并输出最终提示词。",
+    "expected": "Treats the user as the production authority while still running an active reasoning safeguard. It identifies the left-versus-right result-changing conflict and the missing required prop material, does not blindly choose or invent the asset, and asks one grouped question containing only those root issues and the smallest useful recommendation."
+  },
+  {
+    "id": "video-contract-21-revision-semantic-supersession",
+    "prompt": "当前完整已确认镜头写着：苏云听见异响后停住，迅速回头看峡谷，保持警觉；不要惊慌，不要慢慢转头；裘水镜左手扶竹篓。现在把苏云这段改成‘听见异响后短暂停步，确认声音来自前方后继续走’，其他已确认内容不变。请重新输出完整镜头。",
+    "expected": "Classifies the older rapid-turn, gorge-look, vigilance, and matching diagnostic negatives as superseded by the explicit replacement in the same performance/action scope. It renders the new current beat once, removes the superseded repair wording, and preserves the still-active unrelated fact that 裘水镜左手扶竹篓 plus all other locked fields."
+  },
+  {
+    "id": "video-contract-22-revision-supplement-does-not-delete",
+    "prompt": "当前完整已确认镜头写着：苏云听见异响后短暂停步，确认声音来自前方后继续走；裘水镜左手扶竹篓。现在在此基础上加一句：裘水镜听见声音时收紧扶篓的左手。重新输出完整镜头。",
+    "expected": "Classifies the new hand response as a supplement rather than a replacement. It merges the added response into one current statement, preserves 苏云's complete active beat and 裘水镜's established left-hand contact, removes no accepted fact merely because the latest message did not restate every field, and outputs the complete affected shot."
+  },
+  {
+    "id": "video-performance-05-oneiric-acting-task-rendered",
+    "prompt": "结构已确认。近景对白中，苏云想让裘水镜相信自己没受伤；他说完每个理由都会观察裘水镜是否相信，发现对方仍怀疑后便换一种说法。请写最终Seedance镜头，不要只写情绪。",
+    "expected": "Renders the playable task inside the final shot rather than keeping it as hidden analysis: 苏云 is trying to make 裘水镜 believe he is unharmed, checks the other person's response after each reason, and changes approach when disbelief remains. It expresses this as one compact causal acting sentence with only the smallest close-crop visible execution cue, uses natural prose without 目标/策略/反馈 labels, and does not replace the task with an eyebrow, lip, gaze, breath, or finger checklist."
+  },
+  {
+    "id": "video-performance-06-visible-gestures-cannot-replace-task",
+    "prompt": "剧本明确：她在试探对方是否说谎，对方回避后她改变问法。当前提示词只写了‘她皱眉、抿嘴、眼神锐利、呼吸变慢’。结构已确认，请优化完整镜头。",
+    "expected": "Restores the source-backed playable task, feedback check, and strategy turn in the final shot, then retains only the smallest gesture needed to make that logic readable in the crop. It does not leave the performance as a facial-action list and does not print an internal analysis block or schema labels."
+  },
+  {
+    "id": "video-performance-07-simple-action-no-invented-acting-task",
+    "prompt": "结构已确认。远景里苏云独自跨过一处缺板，落地后继续走，没有对白、对手或额外心理转折。写最终Seedance镜头。",
+    "expected": "Treats this as a routine physical action and renders the supported crossing mechanics and endpoint without inventing a persuasion goal, feedback check, strategy change, emotional backstory, or ActingTask schema."
+  },
+  {
+    "id": "video-contract-23-renderability-gate-output-owner",
+    "prompt": "结构已确认。内部分析已经决定：镜头2的门外冷光会照到人物手背；人物仍在判断对方是否相信；镜头3开场继续保持这个注意关系。当前最终草稿只写了两人的站位和对白。请复查并输出完整最终提示词。",
+    "expected": "Runs RenderabilityGate over the complete artifact. It gives the active light result and playable judgment task an explicit natural rendered owner, and carries the continuity-critical attention state through the prior endpoint and next-shot cut-in only where semantic closure requires it. It keeps evidence, confidence, schema names, and review rationale internal and does not dump the whole analysis block or create unrelated repetition."
+  },
+  {
+    "id": "video-performance-08-cross-shot-anchor-rendered",
+    "prompt": "两镜结构已确认。镜头1结尾，苏云发现裘水镜仍不相信自己；镜头2切到裘水镜近景，他仍盯着苏云，尚未接受解释，随后把信推回去。写统一最终Seedance提示词。",
+    "expected": "Renders shot 2's inherited attention, relation, and decision as its current cut-in state before the letter is pushed back. It does not leave the continuity anchor in analysis, write 同上一镜/承接上一镜, replay shot 1's discovery, or repeat Su Yun's complete earlier ActingTask."
+  },
+  {
+    "id": "video-vibe-15-experiential-progression-rendered",
+    "prompt": "三镜结构已确认。按Vibe写最终提示词：女孩推开旧屋门；看见桌上的旧照片后认出这里；最后把照片轻轻翻回正面。不要加闪回。",
+    "expected": "Uses the supported recognition direction as output control rather than an internal emotion label. The affected timeline makes the start, recognition change, and endpoint observable through the existing door, attention, photograph handling, and final state, without printing 情绪方向/体验曲线 or inventing a flashback, symbol, or new plot event."
+  },
+  {
+    "id": "video-audio-06-beat-map-must-render",
+    "prompt": "结构已确认。音频1只参考节奏，不使用其中歌曲和歌词。人物在主要强拍关门，节奏突然放缓时转身，最后一个强拍定格站稳；没有锁定镜内秒数。写最终Seedance提示词。",
+    "expected": "Binds 音频1 once for timing/rhythm and renders the door close, turn, and final stable pose against the named beat changes in the owning shot. It uses causal rhythm language without inventing shot-body second ranges, and does not import or play the source song, lyrics, or background music."
+  },
+  {
+    "id": "rewrite-02-video-language-only",
+    "prompt": "这段画面描述以后会交给 Seedance，但这一步只改平台中立的自然语言，不做 Seedance 格式：15秒，一镜到底，片场，男演员递意面，电影感拉满，4K，24fps，ARRI，最后黑场。",
+    "expected": "Keeps the artifact platform-neutral, preserves 15秒, one-take, scene, action, and final black frame exactly, removes only decorative quality terms, and returns one complete cleaned video prompt without a structure gate or Seedance adapter."
+  },
+  {
+    "id": "rewrite-04-numbered-anchor-locks",
+    "prompt": "帮我把这个视频 prompt 改自然点：@图1控制少年外貌和服装，@图2控制老狐狸形象，@图3控制人物站位，镜头从门口方向后拉，所有人听到响声后看向镜头。",
+    "expected": "Treats @图1, @图2, and @图3 as exact language-only locks, preserves their roles plus camera and reaction order, and changes only connective wording."
+  },
+  {
+    "id": "rewrite-05-filename-anchor-locks",
+    "prompt": "帮我改自然点：@庠序场景.png控制旧学堂环境和大门方向，@裘水镜-磨皮版.png控制人物外貌，镜头从门口方向拍，台词不要改。",
+    "expected": "Preserves both literal filename anchors and the no-dialogue-change lock; adds no dialogue, asset, camera, or scene fact."
+  },
+  {
+    "id": "rewrite-07-dialogue-duration-locks",
+    "prompt": "帮我改自然点：12秒，固定中景，裘水镜站在学堂门口，对少年说“你看见的不一定是真的”，说完停顿两秒，少年没有回答。",
+    "expected": "Preserves 12秒, fixed medium shot, identities, exact dialogue, 两秒 pause, silence, and action order while changing only surrounding wording."
+  },
+  {
+    "id": "rewrite-08-shot-preserving-cleanup",
+    "prompt": "三镜头去 AI 味：镜头1少年站在雨里宿命感拉满；镜头2他回头看门口，电影感高级；镜头3手慢慢握住剑，情绪复杂，最后有震撼收束。",
+    "expected": "Keeps exactly three shots and supplied actions, removes unsupported abstract boosters, and adds no timing, lighting, camera, prop, or performance action."
+  },
+  {
+    "id": "rewrite-10-cross-media-anchor-locks",
+    "prompt": "帮我把这个 prompt 改自然：@图1控制角色外貌，@图2控制旧学堂场景，@视频1控制动作节奏，画面要有电影感和命运感。",
+    "expected": "Preserves all three literal anchors and distinct roles; because no concrete beat supports the abstract terms, asks for the intended visible action instead of inventing one."
+  },
+  {
+    "id": "rewrite-11-final-video-route",
+    "prompt": "帮我直接写最终 Seedance 提示词：10秒，雨夜旧车站，一个女孩听见广播后回头。",
+    "expected": "Runs the normal aigc-video final-artifact workflow rather than language-only mode, preserves 10秒 and the supplied beat, and follows the structure gate before final rendering."
+  },
+  {
+    "id": "rewrite-12-mature-prompt-preserve",
+    "prompt": "这段提示词去 AI 味：中近景固定拍摄门内的男人。他仍保持倚墙的姿势，听见门轴轻响后才慢慢转头，目光停在门口，右手没有离开外套口袋。",
+    "expected": "Recognizes a mature executable prompt and returns it unchanged or with only obvious copy edits, without expanding it."
+  },
+  {
+    "id": "rewrite-13-performance-ambiguity-dialogue",
+    "prompt": "把这句视频提示词改自然：他回到多年没住过的老房子，觉得时间停止了，然后看向门口。",
+    "expected": "Identifies materially different performance readings, recommends one, and asks one focused question before adding any visible performance detail."
+  },
+  {
+    "id": "rewrite-16-bilingual-prompt-only",
+    "prompt": "把这段平台中立视频提示词改自然，中英文都要，只给提示词：女孩走到门口，在那里停下，回头看向空房间。",
+    "expected": "Returns separate Chinese and English prompt blocks only, with identical action order and endpoint and no diagnosis or new production fact."
+  },
+  {
+    "id": "rewrite-18-unsupported-video-platform-fallback",
+    "prompt": "直接给我写一版最终 Kling 提示词：雨夜车站里，一个女孩听见广播后回头。现在没有 Kling 专用 skill，也没有提供最新官方语法。",
+    "expected": "Does not invent verified Kling syntax. It requests current official syntax or offers a clearly labeled platform-neutral video prompt, and never presents neutral wording as platform-ready."
   }
 ]

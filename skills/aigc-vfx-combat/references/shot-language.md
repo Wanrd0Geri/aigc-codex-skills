@@ -1,8 +1,39 @@
-# Shot Language — 三拍式 / 机位构图 / 风格方法论
+# Shot Language — 攻防可读性 / 机位构图 / 特效强调
 
-## 三拍式打斗节拍 (charge → burst → aftermath)
+## 打斗镜头的第一原则
 
-Every convincing move follows this arc. The beats gain power from contrast, so never keep one shot size across all three.
+Camera design serves the attack-response relationship. Before choosing a dramatic move, establish:
+
+- the action axis and both fighters' screen direction;
+- who controls distance and who is forced to react;
+- where the decisive contact or near miss occurs;
+- which wider view will prove displacement or which held view will prove the result.
+
+At a decisive contact, the viewer must understand both the attack and the response. Do not cut only to the striking limb if that hides how the defender blocks, evades, absorbs or counters.
+
+### 轴线与屏幕方向
+
+- Establish left/right, near/far and facing before the exchange.
+- Preserve screen direction across contact. If the camera or fighters cross the axis, show the crossing or insert a neutral re-establishing view.
+- Keep a visible spatial anchor when the next beat inherits position.
+- For weapon contact, keep both weapon owners and the contact relationship readable before using an insert.
+
+### 张力的景别函数
+
+- **建立关系**: a view wide enough to read distance, obstacles and the action axis.
+- **证明触点**: a closer view that still preserves attacker-response causality.
+- **证明力量**: a wider view showing slide, launch, fall, pursuit or changed distance.
+- **证明结果**: a brief hold on stagger, pin, separation, guard recovery or weapon loss.
+
+These are functions, not a mandatory four-shot template. Use only what the beat needs.
+
+### 速度函数
+
+Use contrast: constrained anticipation → sudden acceleration → contact emphasis → consequence/recovery. Continuous maximum speed makes every action equal and removes tactical tension.
+
+## 特效三拍式 (charge → burst → aftermath)
+
+Use this arc for a technique reveal, transformation, spell, or finisher. Do not force it onto every physical exchange. The beats gain power from contrast, so avoid keeping one visual distance across all three when a distance change helps readability.
 
 **蓄力 (1–2s, 近/特写, 慢推)**
 - 指尖凝光、能量纹沿手臂爬升、武器出鞘半寸、瞳孔特写点亮阵营色
@@ -39,11 +70,11 @@ Every convincing move follows this arc. The beats gain power from contrast, so n
 人小景大 + 大面积留白构图，为书法字卡/标题留位置：`negative space composition, subject small in frame`。人物普遍只占 5-15%。适合：MV、片头、群像叙事。
 
 **黑白闪·漫画帧** (打击感流)
-用风格切换代替动作细节——AI 画不好复杂武打，但风格跳变完全可控且冲击力极强：
+用风格切换强调已经清楚的决定性触点，不替代动作设计：
 - 命中瞬间画面切成黑白线稿风：黑色放射速度线、白色负空间、人物剪影，持续数帧
 - 全片黑白中只保留一种颜色（阵营色电弧/瞳色/怒焰）= "超规格力量"信号
 - 大招结束瞬间恢复全彩，落差即爽感
-- 后期剪辑插单帧黑白效果比生成时求它更稳
+- 后期剪辑插单帧黑白效果通常比要求模型同时完成复杂接触和风格跳变更稳
 适合：近身武打、爆气、变身、以弱胜强的一击。
 
 ## 高价值运镜 (含风险等级)
@@ -51,10 +82,11 @@ Every convincing move follows this arc. The beats gain power from contrast, so n
 - **特写起手→急速后拉+环绕揭示**: 小(指尖水珠)瞬间炸开成大(屏障全貌)，信息落差大。风险：复合运镜方向可能反转（见 model-priors）。降级：只保留急速后拉+微上仰。
 - **慢推特写收束**: 对抗段落末尾推近面部，前景虚焦粒子，眼中映阵营色光 ✓（实测稳定且情绪浓）
 - **相邻镜景别互补**: 镜头 A 特写起→拉开收，镜头 B 全景起→推近收，衔接自然不跳。
-- **镜头震动**: 爆发瞬间"镜头随冲击轻微震动"，一句话增加物理可信度。
+- **镜头震动**: 只在清楚的接触之后轻微响应。震动证明冲击，不能掩盖触点。
 
-## 剪辑节奏参考 (做成片时)
+## 剪辑与连续性
 
-- 燃剪平均 1-1.2s 一切，副歌密集段 0.5s，靠同色系镜头连切保持连贯（红接红、紫接紫）
-- 字卡当小节线：歌词一句一卡，叙事段放慢到 2-3s
-- 帧级斩切（单帧黑白插帧）是打击感的真正来源，属后期而非生成
+- Cut at a decision, contact resolution, displacement, landing, recovery or initiative reversal—not merely because a fixed interval elapsed.
+- Preserve action direction, weapon ownership and terminal state across a cut.
+- A contact insert must inherit the exact limb/weapon relationship from the surrounding views.
+- 帧级黑白插帧、闪白和音效可以增强打击点，属强调层；真正的重量仍来自预备、触点、反作用和恢复成本。

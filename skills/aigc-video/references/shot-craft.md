@@ -77,7 +77,9 @@ Write each shot as an objective account of what the camera can observe from its 
 - With a tracking camera, the subject may remain at a stable screen position while changing world position; state the camera-subject relationship.
 - With an orbit or side change, preserve the established side of the action axis unless a visible, deliberate axis crossing is required. Translate the same world action into the correct new screen direction after a crossing.
 
-Visibility roster, offscreen causality, effect-path, and terminal-frame checks belong to `references/single-segment-quality-control.md`; do not restate them here.
+Visibility roster, offscreen causality, effect-path, and terminal-frame checks consume the core `VisibleSetGate` in `references/video-contracts.md`; load `references/single-segment-quality-control.md` only for its extended complex-shot checks.
+
+When the current visible set contains only environment, a product, an object, or camera motion, use only the relevant material and spatial mechanics. Do not import a human performance template such as center of gravity, gait, breathing, clothing, hair, gaze, or body-part choreography unless a human subject is actually visible and the field is needed.
 
 ## Optical Result
 
@@ -124,6 +126,8 @@ Keep performance detail inside the resolved blocking envelope. Expressive postur
 
 Choose one primary visible performance carrier in this order: body/contact -> gaze/attention -> breath/pause -> expression change -> distance/object handling. Add at most one or two supporting changes when they make the beat clearer. When several blocking details are necessary, write them in causal order: body/contact -> gaze/attention -> breath/pause or expression transition -> movement endpoint -> continuity handoff.
 
+For close, reaction, and dialogue shots, first compare the script beat, established relationship, current action phase, neighboring performance state, and crop. Preserve their meaning and intensity; then choose only the visible cue or cues needed to make the beat readable. When `collaboration-and-performance.md` supplies an `ActingTask`, attach those cues to the rendered playable task; never replace the task with gestures or keep it only in hidden analysis. A word such as `沉默`、`判断`、`警觉`、`没有惊慌` may summarize intent internally, but the rendered performance should make the intended difference observable when the crop and scene require it. Do not force every shot through a trigger/tactic/carrier/endpoint formula, and do not expand one intention into a facial, gaze, breath, and finger checklist.
+
 Apply the resolved world-dynamics mode. `coupled_world` may propagate body acceleration and contact into supported hair, clothing, accessories, carried props, surfaces, or media with material-appropriate lag and damping. `primary_action` keeps only the body and prop mechanics needed to read the acting beat. `intentional_stillness` preserves the stable fields and sole activity. Use `references/world-dynamics.md` for evidence and continuity.
 
 When prop handling is the main action, define the visible active hand, contact, necessary support or counterbalance, transition, and endpoint. Mention the supporting hand only when it is inside the crop and leaving it undefined would make the pose or action materially ambiguous.
@@ -134,7 +138,7 @@ When gaze is narratively material, name the visible target. If the target is off
 
 When a cut changes the view of one continuing event, carry the terminal action identity and phase into the next shot. Start the new shot from what is already happening and advance it; do not restage the onset merely because the camera angle changed.
 
-Use wording such as `承接上一镜同一次发射动作` only when it resolves a real ambiguity. The inherited visible state is more important than the phrase itself: an already-open door stays open, an already-emitted beam remains connected, and a subject already passing another person does not approach and pass them again.
+The inherited visible state is more important than any continuity label: an already-open door stays open, an already-emitted beam remains connected, and a subject already passing another person does not approach and pass them again. In the final unified timeline, write those as current facts (`门已打开`、`光束已与目标相连`、`主体正在越过对方`) rather than `同上一镜`、`继续刚才` or `承接上一镜`; relative labels may remain internal only.
 
 ## Dialogue And Lip Sync
 

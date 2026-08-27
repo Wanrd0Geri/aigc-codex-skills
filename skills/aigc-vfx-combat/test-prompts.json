@@ -1,0 +1,77 @@
+[
+  {
+    "id": "combat-01-pure-close-fight-no-vfx",
+    "prompt": "用 $aigc-vfx-combat 设计一段窄巷近身战：A连续三拳逼近，B不后退，用半步错位和低扫夺回主动。不要超自然效果，也不要破坏场景。只要设计卡。",
+    "expected": "Classifies the request as 真实攻防, defines start geometry and an initiative curve, pairs the combination with B's responses, records a decisive contact and terminal state, omits the VFX section, preserves the no-damage lock, and does not output a final Seedance prompt."
+  },
+  {
+    "id": "combat-02-size-mismatch-reference-role",
+    "prompt": "用 $aigc-vfx-combat 参考@视频1的贴身连击、击飞、追击和压制节奏，换成我的小个子女剑客与巨型石甲守卫；人物和场景都不能照搬参考视频。最终要交给 Seedance 2.5。",
+    "expected": "Treats Video 1 as a narrow motion, timing, displacement and authorized camera-rhythm reference only; preserves new identities and scene ownership; decomposes the progression into causal FightBeats with start and terminal boundaries; uses restrained contact VFX only if supported; and hands final prompt ownership to aigc-video."
+  },
+  {
+    "id": "combat-03-weapon-distance-reversal",
+    "prompt": "用 $aigc-vfx-combat 设计：长枪手在木桥上控制距离，剑客借完整无损的栏杆偏开枪尖后贴身缴械。",
+    "expected": "Defines reach as the combat problem, locks bridge geometry and weapon ownership, makes the railing an existing non-destructive contact surface, records deflection rather than absorption or collision, shows distance closure and initiative reversal, and ends with an unambiguous disarm state."
+  },
+  {
+    "id": "combat-04-mixed-spell-contact",
+    "prompt": "用 $aigc-vfx-combat 设计赤金洪流斜向轰击深蓝水幕，守方把洪流向画面右侧偏转并立刻反击，给设计卡。",
+    "expected": "Classifies as mixed combat, locks source, diagonal route, barrier plane, contact and rightward deflection result before adding faction color and material; flags the barrier/trajectory prior and proposes a Seedance 2.5 reference or geometry fallback; does not silently change deflection into absorption or vertical impact."
+  },
+  {
+    "id": "combat-05-spectacle-regression",
+    "prompt": "用 $aigc-vfx-combat 设计一个没有对手的宗门护山大阵启动高潮：青玉法环覆盖山门上空，只要特效设计卡。",
+    "expected": "Classifies as 招式奇观, preserves the existing charge-burst-aftermath VFX route, chooses one form root and at most three material words, uses source-supported consequences, does not invent an attacker-defender exchange, and does not output a final Seedance prompt."
+  },
+  {
+    "id": "combat-06-one-to-many-sequenced-threats",
+    "prompt": "用 $aigc-vfx-combat 设计一对三庭院战，三名敌人从不同方向逼近，但不能同时乱打一团，最终交给 Seedance 2.5。",
+    "expected": "Sequences the three threat routes into atomic FightBeats, preserves four-person count and each opponent's position, avoids simultaneous ambiguous contact, carries terminal boundaries between beats, and recommends a motion/clay reference or split only where geometry requires it."
+  },
+  {
+    "id": "combat-07-overloaded-one-take-root-cause",
+    "prompt": "用 $aigc-vfx-combat 做一个30秒一镜到底：四个人混战、飞上屋顶、兵器对撞、绕背擒拿、撞穿三栋楼，摄影机一直360度环绕。直接做得更燃。",
+    "expected": "Diagnoses simultaneous multi-person geometry, location changes, exact contacts, aerial interaction, destruction and compound camera motion as the root overload; does not merely add spectacle; proposes causal split points and a simpler motion-proof camera while preserving only authorized events; states that Seedance 2.5 long duration does not make the original one-take reliable."
+  },
+  {
+    "id": "combat-08-camera-cannot-hide-contact",
+    "prompt": "这段拳脚老是打不到，请用 $aigc-vfx-combat 加强：高速甩镜、强烈震屏、全程运动模糊、每拳白闪。",
+    "expected": "Identifies missing contact causality rather than insufficient camera intensity, restores start geometry and an attack-response contact ledger, validates action with a locked or simple camera first, and allows shake, blur or flashes only as restrained emphasis after contact reads."
+  },
+  {
+    "id": "combat-09-terminal-boundary-preservation",
+    "prompt": "用 $aigc-vfx-combat 设计5秒：A的刀停在B胸前，被B双手夹住；结束时两人仍保持左右位置，刀没有断，也没有人受伤。",
+    "expected": "Locks left-right positions, weapon ownership, the blade-catch contact, no breakage and no injury; designs support, opposing force and recovery without inventing impact damage; and makes the exact held contact the terminal boundary."
+  },
+  {
+    "id": "combat-10-final-seedance-ownership",
+    "prompt": "用 $aigc-vfx-combat 给我最终可粘贴的 Seedance 2.5 打斗提示词：雨中双刀交锋，8秒。",
+    "expected": "Runs the combat structure pass and enters aigc-video's canonical structure-confirmation gate because the new fight structure is not approved; preserves 8 seconds, does not treat the design card as the final platform prompt, and does not render the final Seedance 2.5 artifact in the same turn even though the user asks for it directly."
+  },
+  {
+    "id": "combat-11-three-failure-method-change",
+    "prompt": "同一个双人腾空缠斗我在 Seedance 2.5 连续三次都出现穿模和左右互换。用 $aigc-vfx-combat 再换几个词试试。",
+    "expected": "Stops prompt-only rewording, classifies the repeated invariant failure, and changes method by simplifying or splitting the aerial grapple, reducing camera load, and adding a checked motion/clay/start-end reference with explicit geometry."
+  },
+  {
+    "id": "combat-12-source-fact-boundary",
+    "prompt": "分镜只写两人短暂交手后分开，没有受伤也没有场景破坏。用 $aigc-vfx-combat 做得有张力。",
+    "expected": "Creates tension through threat, speed contrast, readable contact or near miss, initiative and separation while preserving the two-person, no-injury, no-damage terminal facts; it does not add a winner, new power, explosion, prop or injury."
+  },
+  {
+    "id": "combat-13-direct-authorized-resumes-design",
+    "prompt": "跳过结构确认，不用结构表，直接继续做最终Seedance 2.5：8秒，木桥上长枪手压制剑客，剑客偏开枪尖后缴械，栏杆不能损坏。",
+    "expected": "Passes the structure packet to aigc-video, receives current-request direct_authorized, keeps the structure pending and internal, then continues presentation, optional VFX and feasibility instead of stopping on unapproved status. It creates a design_ready CombatHandoff for the current pending version before aigc-video renders the final prompt."
+  },
+  {
+    "id": "combat-14-confirmation-resumes-before-video-render",
+    "prompt": "上一轮双刀交锋的结构v3我确认了，左右位置、格挡触点和终点都不改。继续最终Seedance 2.5提示词。",
+    "expected": "Resumes the unfinished combat workflow after the canonical gate, completes presentation and feasibility, binds a design_ready CombatHandoff to structure v3, and only then lets aigc-video render. It does not repeat the structure table or let video skip directly to generic final drafting."
+  },
+  {
+    "id": "combat-15-spectacle-final-gates-before-vfx",
+    "prompt": "最终要Seedance 2.5视频：宗门护山大阵启动，青玉法环覆盖山门上空，10秒，直接给提示词。",
+    "expected": "Classifies as 招式奇观, builds only the source, spatial envelope, trigger, route, visible result and terminal boundary before entering aigc-video's canonical structure gate, treats 直接给提示词 as speed only, and holds detailed VFX form, presentation and feasibility until the structure gate resolves."
+  }
+]

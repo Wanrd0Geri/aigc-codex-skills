@@ -1,6 +1,0 @@
-interface:
-  display_name: "AIGC Prompt Rewrite"
-  short_description: "Clean existing AIGC prompt language without changing controls."
-  default_prompt: "用 $aigc-prompt-rewrite 在不改变锚点、对白和动作顺序的前提下，把这段提示词改得自然可执行。"
-policy:
-  allow_implicit_invocation: true

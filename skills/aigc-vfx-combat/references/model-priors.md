@@ -1,6 +1,28 @@
-# Model Priors — Seedance 实测行为档案
+# Model Priors — Seedance 2.5 风险与降级档案
 
-Verified behaviors from repeated real generations (same design, 3 generations). A prior that survived three retries is a wall, not noise: design around it, don't re-word at it. Each entry: the design intent → what the model actually did → the working route.
+This file combines repeated observed behaviors from the existing production archive with Seedance 2.5 operating rules. A legacy observation is a risk signal, not proof that 2.5 behaves identically. Treat a prior as active for the current setup only after the same protected invariant fails three times on Seedance 2.5; then change method instead of rewording.
+
+## Combat-specific high-risk combinations
+
+**多人物同时进攻**
+风险：人物数量、攻击归属、触点和屏幕方向同时漂移。
+路线：把威胁路线排成顺序；每个 FightBeat 只保留一个主要攻击-回应关系。必须同时发生时，优先使用经过检查的动作/白模参考，并减少镜头运动。
+
+**精确兵器接触 + 大幅运镜**
+风险：兵器换手、穿模、接触点漂移，或镜头遮住格挡关系。
+路线：先用锁定或简单跟随镜头证明兵器接触，再增加摄影表现；必要时把接触和位移拆成相邻单元。
+
+**交叉走位 + 轴线翻转**
+风险：人物左右关系和运动方向突然反转。
+路线：明确谁从前/后经过、结束位置和可见锚；让交叉本身可见，或插入中性机位重新建立轴线。
+
+**动作参考职责泄漏**
+风险：模型把参考视频中的身份、服装、场景或VFX一并带入。
+路线：为每个参考写窄职责白名单；动作视频只承担用户授权的编排、节奏、重心、位移或机位维度，身份与场景由各自来源负责。
+
+**长时长能力被误当作复杂一镜到底能力**
+风险：时长增加后，多次接触、多人互动、跨场景和复合运镜的错误累积。
+路线：按战斗目标、行动轴、地点或主动权转折拆分；用上一单元终态作为下一单元起始边界。不要仅因为 Seedance 2.5 支持更长生成就取消结构拆分。
 
 ## 强先验（文字拧不过来的）
 
@@ -43,6 +65,8 @@ Verified behaviors from repeated real generations (same design, 3 generations). 
 
 ## 通用规律
 
-- **三连律**：同一意图连续 3 次生成失败 = 强先验，停止改词，换参考图或顺势设计。
+- **三连律**：同一受保护事实在 Seedance 2.5 连续 3 次失败 = 当前设置下的强先验，停止改词，改用参考、简化几何、降低机位负担、拆分单元或顺势设计。
 - **几何关系是文字控制的上限**：颜色、材质、氛围、单体动作文字可控；多物体精确空间关系（谁面对谁、什么角度撞什么面）是最先失控的维度，优先用图锁。
 - **位置锚要每镜重申**：镜头 N 确立的位置，镜头 N+2 不重申就会漂移（实测施法者从门洞漂到街心）。写法：位置 + 可见锚物（"仍站在门洞下，两侧石柱在画面边缘可见"）✓
+- **动作与摄影分层**：接触正确性风险高时，先锁定/简化摄影验证身体动作，再增加运镜、速度变化和特效强调。
+- **结构检查不等于成片质量**：提示词和设计卡通过检查，只证明因果、事实锁和降级路线齐全；必须审看真实 Seedance 2.5 结果才能评价打斗质量。

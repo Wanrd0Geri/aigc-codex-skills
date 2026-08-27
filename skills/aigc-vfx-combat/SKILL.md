@@ -1,89 +1,154 @@
 ---
 name: aigc-vfx-combat
-description: Use whenever a donghua/xianxia/wuxia fight, spell, technique, transformation, or energy effect needs visual design beyond a plain description — the user asks for 大场面, 大制作, 电影感, 燃, 震撼, 招式设计, 特效设计, 打斗设计, 法术对轰, or complains a generated effect looks 普通/平淡/没张力/没质感. Also use proactively before aigc-video or aigc-image renders any combat/VFX-heavy final prompt, so the effect gets structure, form, material, and camera design instead of a generic element. This skill owns the visual design layer only; final platform prompts stay with aigc-video (video) and aigc-image (image).
+description: Design readable, high-tension donghua, xianxia, or wuxia combat and optional VFX before a final Seedance 2.5 video prompt. Use for close combat, weapon exchanges, spells, transformations, clashes, large-scale techniques, or results described as flat, weightless, unclear, or lacking tension. This skill owns shot-level combat causality, contact physics, initiative changes, effect form, and presentation; `aigc-video` owns the final Seedance 2.5 prompt, reference grammar, locks, and delivery.
 ---
 
 # AIGC VFX & Combat Design
 
-Turn a plain move request ("女子发射火焰") into a production-grade visual design. The difference between an ordinary effect and a 大制作 effect is never adjectives — it is structure. This skill supplies that structure, then hands the design to `aigc-video` or `aigc-image` for final platform rendering.
+Turn a fight or technique into a readable chain of causes and consequences, then add only the VFX that helps the action read. This skill is optimized for Seedance 2.5 video generation. It designs the shot; `aigc-video` compiles the final platform prompt.
 
 ## Ownership and handoff
 
-- This skill owns: what the effect looks like — its stages, form, material, color regime, physical consequences, and camera presentation.
-- `aigc-video` owns: the final video prompt, platform grammar, locks, references, delivery format.
-- `aigc-image` owns: the final image prompt.
-- When the user asks for a final prompt, run this skill's design pass first, then apply the owning skill's full workflow to render. Never skip the owning skill's lock and grammar rules. When the user asks for design only, deliver a design card (format below) and stop.
+- This skill owns shot-level combat logic: combat objective, starting geometry, initiative, attack-response chain, contact, momentum transfer, ending state, and optional VFX presentation.
+- `aigc-video` owns the final Seedance 2.5 prompt, duration, timestamps, reference labels, locks, sound grammar, and complete deliverable.
+- For a final video request, use a two-phase handoff: build only the combat structure, let `aigc-video` resolve its canonical structure gate, then resume this skill for presentation, optional VFX, and feasibility before `aigc-video` renders the final prompt. For design-only requests, return the design card below and stop.
+- Do not redesign story-level intent already fixed by a script, storyboard, or `aigc-project-context`; solve only the visible fight inside the assigned shot or shot range.
 
-## Core principle: 结构 > 形容词
+## Root-cause model
 
-A generic result ("a flame from her hand") happens when the prompt contains only an *element*. Mature donghua teaches that a spectacle effect has three layers the model can actually execute:
+A weak fight is rarely fixed by adding `快速`, `震撼`, camera shake, particles, or destruction. The usual root causes are:
 
-1. **阶段 (stages)** — it unfolds over time: charge, burst, aftermath.
-2. **形 (form)** — the element takes a nameable shape: not fire, but a molten-gold phoenix; not water, but a standing mirror-sea wall.
-3. **后果 (consequences)** — the world reacts: shockwave rings, scorched ground, blown hair and robes, floating debris.
+1. no visible tactical problem between the fighters;
+2. no stable starting geometry or screen direction;
+3. actions listed without an attack-response causal chain;
+4. no precise contact state or momentum transfer;
+5. no change of distance, posture, cost, or initiative after contact;
+6. camera and VFX hiding motion that was never made readable.
 
-Adjectives like 震撼/华丽/炫酷 activate nothing. Concrete structure words activate the exact training-data cluster you want. The reference files below are curated activation vocabulary verified against real generations.
+Solve those causes before styling. Tension comes from **readable threat + speed contrast + contact consequence + initiative change**. VFX is an optional evidence layer, not the source of combat logic.
 
 ## Workflow
 
-### 1. Gauge the tier
+### 1. Classify the request
 
-Decide how much design the moment deserves:
+- **真实攻防**: close combat, grappling, dodging, weapon work, pursuit, or any exchange whose value is bodily action. Run the combat-tension pass. VFX may be absent.
+- **混合打斗**: readable physical exchange plus supernatural force. Run the combat-tension pass first, then attach VFX to selected contacts or the finisher.
+- **招式奇观**: transformation, technique reveal, environmental-scale spell, or effect display with no meaningful opponent response. Build its source, spatial envelope, trigger, route, visible result, and terminal boundary before the shared structure gate; after the gate resolves, use the VFX spectacle pass.
 
-- **常规演出**: a passing move, transition beat, or background action. Apply only a form noun and one consequence. Do not inflate every minor gesture into a set piece — spectacle inflation cheapens the climax.
-- **大制作**: a climax, reveal, duel exchange, ultimate technique, or any request containing 大场面/大制作/燃/震撼/电影感. Apply all five levers below.
+Do not force every request into `蓄力 → 爆发 → 余波`; that arc belongs to technique spectacle, not every punch, parry, or reversal.
 
-### 2. Set the color regime and form (颜色即阵营)
+### 2. Build the combat-tension pass when an exchange exists
 
-Every character or faction gets one exclusive color family and one signature form root. All of that side's effects derive from these two words. This is what makes a fight readable and a series feel designed — 赤金 vs 深蓝 needs no explanation on screen.
+Read `references/combat-tension.md`. Establish, in this order:
 
-Read `references/vfx-library.md` for the form lexicon (环/柱/雨/雾/浪/凤/镜海/裂隙…), the material lexicon (熔金流体/黑烟金边/琉璃质感/墨流…), and the ordinary→大制作 upgrade table per element. Pick one form and 2-3 material words; more dilutes.
+1. the visible combat problem — what A is trying to achieve now and how B prevents it;
+2. starting geometry — left/right, depth, distance, height, facing, support surface, and action axis;
+3. initiative curve — who controls the exchange, where it changes, and why;
+4. atomic FightBeats — one primary attack-response relation per beat;
+5. contact ledger — attack path, hit/block/evade state, exact contact point, support and weight transfer, reaction, displacement, and recovery cost;
+6. terminal boundary — final positions, postures, contact/effect state, initiative, and residual motion.
 
-### 3. Structure the beat (三拍式)
+Use the macro rhythm `压 → 抢 → 碰 → 翻 → 留` when the exchange needs a complete dramatic arc. A short beat may compress it, but must still answer: **who initiates, how contact resolves, and who changes the situation**.
 
-Design the move as 蓄力 → 爆发 → 余波:
+### 3. Resolve the shared structure gate for every final video
 
-- **蓄力** (1–2s): close framing, small signal — energy crawling up an arm, a bead of light at a fingertip, an eye catching color. Slow push-in.
-- **爆发** (instant): one frame-filling event — overexposed white flash, pure-energy fill, or a style snap. Shortest beat, highest contrast.
-- **余波** (1–2s): wide framing, the world responds — expanding ring shockwave, drifting debris, settling dust, held silhouette. Slow pull or orbit.
+For any new or reference-driven final video, pass the combat or spectacle structure packet into `aigc-video` before presentation or VFX enrichment. The packet contains only source locks, visible roster, starting geometry or spectacle envelope, action/FightBeat order, contact or effect result, and terminal boundary.
 
-The burst reads as powerful *because* the charge was quiet and the aftermath is wide. Never deliver all three beats at the same shot size.
+Follow the gate result instead of testing only whether the structure is approved:
 
-### 4. Add physical feedback
+- `review_required`: return only `aigc-video`'s canonical structure table and grouped request, then stop. “直接给提示词” does not waive this pause.
+- `direct_authorized`: keep the structure pending and internal, skip the table, and continue immediately with the presentation/VFX and feasibility phases in this skill.
+- `confirmed`: continue with the presentation/VFX and feasibility phases for the accepted structure version.
 
-At least two consequences from different bodies: environment (cracked ground, ring scorch, floating rubble), person (hair/robe blown, heels sliding, steady gaze against the wind), atmosphere (heat distortion, ember rain, mist pushed outward). Physical feedback is what makes an effect feel heavy instead of pasted on.
+When the user later confirms a pending combat structure, resume this skill at the next phase before `aigc-video` renders. Do not let a confirmation reply bypass the unfinished combat design. A design-only request may receive the complete design card without this extra confirmation round.
 
-### 5. Choose the camera lever
+### 4. Add VFX only after the action works
 
-Write composition relationships, not shot-size labels. Read `references/shot-language.md` for the five levers (仰拍/俯拍, subject scale + depth, frame-in-frame, shot-size contrast between beats, diagonal energy paths), the three donghua methodologies (法宝流 energy-sea, 字卡流 negative-space epic, 黑白闪 manga impact frames), and high-value camera moves with their risk levels.
+For mixed combat or spectacle, set one color family and one signature form root per side. Read `references/vfx-library.md` for form and material vocabulary. Pick one form and 2–3 material words; more dilutes.
 
-### 6. Check model priors before delivery
+Nest `蓄力 → 爆发 → 余波` inside the relevant technique or finisher:
 
-Read `references/model-priors.md` whenever the design includes barriers/shields, floating or hovering, small-subject epic framing combined with facial detail, or compound camera moves. These are the cases where verified generation behavior contradicts intuition, and a design that ignores them will fail identically on retry. Prefer designing *with* a strong prior over fighting it in text.
+- **蓄力**: a small visible signal and constrained anticipation;
+- **爆发**: the form materializes at a clear source, route, and contact/result;
+- **余波**: consequences that continue from the resolved contact.
 
-## Design card format
+For a normal hit, require one readable bodily or weapon reaction. Add at most one reachable environment receiver when the source or user authorizes it. Do not manufacture ground cracks, shockwaves, or building damage merely to prove force.
 
-When delivering design-only output, use this structure:
+### 5. Design presentation around readability
 
+Read `references/shot-language.md` for axis, screen direction, shot-distance contrast, speed contrast, contact emphasis, and VFX presentation. Establish the action before adding complex camera motion.
+
+- The contact shot must let the viewer understand both the attack and the response.
+- Camera shake, whip pans, motion blur, speed lines, slow motion, white flashes, and black-and-white inserts may emphasize an already readable contact; they must not replace it.
+- Use close framing to prove contact, wider framing to prove displacement, and a held ending to prove the result when those functions are needed.
+
+### 6. Run the Seedance 2.5 feasibility pass
+
+Read `references/model-priors.md` for known priors and failure recovery.
+
+- Treat a FightBeat as the minimum controllable unit. Keep more than one beat in a generation only when their causal and spatial continuity remains simple and visible.
+- Split or use a motion/clay reference when the same unit combines simultaneous multi-person actions, crossing trajectories, exact weapon contact, aerial interaction, viewpoint reversal, or compound camera movement.
+- When a motion reference exists, assign it only the requested dimensions, such as choreography, weight shift, timing, displacement, or camera rhythm. Identity, wardrobe, scene, and VFX remain with their declared sources.
+- Validate body action with a locked or simple following camera before asking for aggressive camera choreography when contact accuracy is the main risk.
+- Seedance 2.5 supporting a longer generation does not make a complex one-take the default. Split at changes of location, action axis, combat objective, or unstable multi-subject geometry.
+- After the same protected invariant fails three times, stop rewriting. Change method: simplify the beat, reduce camera load, add a motion/clay/start-end reference, or split the unit.
+
+## Final-video handoff
+
+After the shared structure gate resolves, compile one internal `CombatHandoff` for every affected unit using the contract in `../aigc-video/references/video-contracts.md`. Bind it to the exact current `structure_version` and set `combat_design_status: design_ready` only after presentation, optional VFX, and feasibility are complete.
+
+The handoff must preserve:
+
+- source and user locks;
+- combat problem or spectacle intent;
+- starting geometry or spatial envelope;
+- initiative curve, FightBeats, contact ledger, and terminal boundary when an exchange exists;
+- source, trigger, route, visible result, and terminal boundary for spectacle;
+- body/weapon mechanics, presentation, optional VFX, sound cues, and feasibility decisions.
+
+`aigc-video` maps this packet into MotionSpec without redesigning it. If a later structural change increments the bound `structure_version`, invalidate the presentation/VFX portion and return to the shared gate before rebuilding only the affected combat design.
+
+## Design card
+
+For design-only output, omit fields that truly do not apply:
+
+```text
+【CombatDesign｜交锋名】
+类型与强度: <真实攻防 / 混合打斗 / 招式奇观；常规 / 高潮>
+参考职责: <each source and only the dimensions it may contribute>
+事实锁: <character count, identity, wardrobe, weapons, scene, allowed damage>
+战斗问题: <A's immediate visible goal; how B prevents it>
+空间基线: <left/right, depth, distance, height, facing, support, action axis>
+主动权曲线: <A压制 → B化解 → B反转...>
+
+FightBeat 1:
+- 压/抢: <threat, preparation, initiator, attack route>
+- 碰: <hit/block/evade/deflect, exact contact point>
+- 翻: <body/weapon reaction, momentum, displacement, initiative change>
+- 留: <recovery cost and terminal state>
+
+身体力学: <support, center of mass, force chain, follow-through>
+机位与屏幕方向: <how the action remains readable>
+声音节拍: <only source-backed or intentionally designed cues>
+起始边界: <positions, posture, contact and effect state>
+终止边界: <positions, posture, initiative and residual motion>
+
+VFX（无则省略）:
+- 阵营色 / 形根 / 材质词
+- 蓄力 / 爆发 / 余波
+- VFX如何证明触点或力量，而不遮挡动作
+
+Seedance 2.5 风险与降级: <risk; split/reference/camera fallback>
 ```
-【招式名】
-阵营色: <exclusive color family>  形根: <signature form root>
-蓄力: <visible small signal, framing>
-爆发: <frame-filling event, the form materializing>
-余波: <world consequences, framing>
-材质词: <2-3 material words>
-物理反馈: <2+ consequences, different bodies>
-机位: <the one composition lever that carries tension>
-先验风险: <only if a known prior applies, with the workaround>
-```
 
-Keep it in Chinese, concrete, and short enough to paste into a conversation with `aigc-video`.
+Keep it concrete and compact enough to hand to `aigc-video` without reinterpreting the fight.
 
 ## Avoid
 
-- Do not render final Seedance/platform prompts from this skill alone; route through `aigc-video`/`aigc-image` so locks, references, and grammar rules apply.
-- Do not stack more than one form and three material words on a single effect.
-- Do not write bare shot-size labels (远景/特写) as the tension mechanism; write the composition relationship instead.
-- Do not apply full five-lever treatment to every minor action.
-- Do not fight a verified strong model prior in text when an image reference or design-with-the-prior route exists.
-- Do not invent new vocabulary when the verified lexicon covers the need; new words are hypotheses, verified words are assets.
+- Do not render the final Seedance 2.5 prompt from this skill alone.
+- Do not list both fighters' actions independently; pair every attack with the opponent's response and the resulting state change.
+- Do not hide unclear choreography with VFX, fast cutting, blur, shake, or black-and-white flashes.
+- Do not keep continuous maximum speed; tension needs anticipation, acceleration, contact emphasis, consequence, and recovery in proportions appropriate to the beat.
+- Do not stack more than one form and three material words on one effect.
+- Do not invent damage, props, powers, injuries, or environment interactions not authorized by the source.
+- Do not force a verified strong model prior through repeated wording when a reference, simpler geometry, or split unit can solve it.

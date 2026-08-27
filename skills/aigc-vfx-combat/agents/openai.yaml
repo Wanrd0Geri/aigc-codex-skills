@@ -1,4 +1,4 @@
 interface:
   display_name: "AIGC VFX & Combat Design"
-  short_description: "为国漫、仙侠与武侠战斗设计可执行的高质感专业特效结构"
-  default_prompt: "Use $aigc-vfx-combat to turn this combat or spell idea into a concise production-ready visual design card."
+  short_description: "为 Seedance 2.5 设计有因果、有张力的打斗与可选特效"
+  default_prompt: "Use $aigc-vfx-combat to design a readable high-tension combat exchange and optional VFX before the final Seedance 2.5 prompt."

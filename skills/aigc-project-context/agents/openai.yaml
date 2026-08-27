@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Project Context"
-  short_description: "Compile scripts and storyboards into shot context."
-  default_prompt: "用 $aigc-project-context 从剧本和分镜整理镜头任务卡、连续性和表演理解。"
+  short_description: "Resolve live project sources into image or video context."
+  default_prompt: "用 $aigc-project-context 读取当前项目来源，并为指定场镜编译可靠的图像或视频上下文。"
 policy:
   allow_implicit_invocation: true

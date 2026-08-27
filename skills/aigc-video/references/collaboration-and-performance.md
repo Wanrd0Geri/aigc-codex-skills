@@ -54,17 +54,31 @@ Read the complete available scene, including what happens immediately before and
 4. the listener's task: what they hear, check, resist, decide, or prepare to do
 5. the turn where the tactic, attention, distance, or control changes
 
-Do not print this analysis block in the final prompt. Convert it into one playable task per active character and keep the group inside one shared direction; do not give every visible person an equally strong simultaneous reaction.
+Do not print this analysis block or its field labels in the final prompt. Convert the material result into one `ActingTask` per active character and keep the group inside one shared direction; do not give every visible person an equally strong simultaneous reaction. The analysis may remain internal, but a task that materially changes performance must not remain hidden.
+
+When the shared scene direction materially changes distance, attention, turn-taking, object control, willingness, refusal, or another visible relationship by the end, give that change one rendered owner in the relevant shot process or endpoint. Do not leave the group change only in the internal scene analysis, and do not add a prose summary when the same relation is already visible in the acting sentence or endpoint.
 
 ## Performance handoff
 
-Describe the internal beat as:
+Use the internal beat only as a reasoning aid:
 
 `starting relational state -> trigger -> tactic or attention turn -> intended visible endpoint`
 
-Prefer a playable relation over an emotion adjective: `一边回答一边判断对方是否相信` is more actionable than `表现怀疑`; `用沉默迫使对方继续说` is clearer than `显得压迫`.
+An `ActingTask` contains only the parts that materially control this beat:
 
-Pass that task to `shot-craft.md`, which alone chooses the primary visible carrier and supporting cues. Any environment response remains owned by `world-dynamics.md`; any sound remains owned by the active platform/audio rules. This file never creates a second rendering list.
+- `playable_task`: what the character is trying to make the other person, situation, or self do, reveal, believe, stop, or permit
+- `feedback_target`: what response, look, sound, distance change, or result the character checks, only when the task depends on feedback
+- `strategy_turn`: how the character changes approach when the expected feedback succeeds or fails, only when the script/accepted scene contains that turn
+- `visible_execution`: the smallest crop-readable action selected through `shot-craft.md`
+- `continuity_anchor`: relation, attention, intensity, or decision state that the next shot must inherit, only when material
+
+Prefer a playable relation over an emotion adjective when the distinction affects the result: `一边回答一边判断对方是否相信` is more actionable than `表现怀疑`; `用停顿迫使对方继续说` is clearer than `沉默` or `显得压迫`. Emotion emerges from the task succeeding, failing, or changing; do not use eyebrow, lip, breath, or another expression checklist as a substitute for the task.
+
+In the final shot prose, render the task and visible execution together without schema labels. Default to one compact causal sentence per materially active character; give a listener a second full task only when their independent decision materially affects the beat. For example: `他试图让对方相信自己没事；每说完一个理由便确认对方的反应，对方仍未相信时，他换一种说法，原本稳定的语速出现一次短暂停顿。` A task without visible execution remains too abstract for video; visible gestures without the task lose the performance logic. A compact structure-table intention records only the source-backed core and does not carry this expanded sentence before confirmation.
+
+If `continuity_anchor` controls the next shot, render it there as the current relation, attention, intensity, or decision state before the next trigger or tactic advances it. This is a cut-in state, not an instruction such as `承接上一镜`, and it does not require repeating the earlier task.
+
+Pass the `ActingTask` to `shot-craft.md`, which chooses its visible execution and supporting cues but may not delete the playable task. Any environment response remains owned by `world-dynamics.md`; any sound remains owned by the active platform/audio rules. This file never creates a second rendering list.
 
 Treat intent as motivation, not permission to add props, flashbacks, people, environment changes, or another plot event.
 

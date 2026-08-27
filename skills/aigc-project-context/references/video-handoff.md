@@ -5,6 +5,7 @@ Use this contract only when project context is required for a final video prompt
 ## Gate
 
 - `validated`: continue.
+- `stale_fallback`: continue only with dated snapshot or validated-cache provenance; never call it current or live.
 - `overloaded`: pass every locked beat and source duration intact; `aigc-video` owns the feasibility decision.
 - `pending`: continue only when the unresolved item cannot change the requested final result. Otherwise discuss it before drafting.
 
@@ -14,9 +15,14 @@ Use this contract only when project context is required for a final video prompt
 artifact: final_video_prompt
 project: "<project id/title>"
 shot_range: "<exact episode/scene/shot ids>"
-context_schema_version: "1.1"
-context_status: validated
+context_schema_version: "1.2"
+context_status: "validated | overloaded | pending | stale_fallback"
 source_authority: "<field-scoped winners and unresolved conflicts>"
+provenance:
+  - field: "<field>"
+    source: "<source id + record/file coordinate>"
+    retrieved_at: "<timestamp or snapshot date>"
+    freshness: "live | local_current | cache_validated | snapshot"
 shots:
   - id: "<exact shot id>"
     start_boundary:
@@ -73,7 +79,7 @@ Preserve exact ids, anchors, identity, count, location, locked action order, dia
 
 Normalize card `role` or package `roles` without renaming anchors. Collapse attribute-donor roles into one `reference_input`; map `start_frame` / `end_frame` to `start_frame_source` / `end_frame_target`; preserve edit, extension, and bridge roles. Record combined roles only when explicitly assigned. A role never expands `may_control`.
 
-For `reference_input`, copy values already in the borrowed-dimension enum in `../aigc-video/references/video-contracts.md`; normalize only the card-specific aliases `face -> identity`, `age -> appearance`, `clothing -> wardrobe`, and `scene_light -> lighting`.
+For `reference_input`, use only these borrowed dimensions: `identity`, `appearance`, `wardrobe`, `prop`, `environment`, `layout`, `look`, `lighting`, `material`, `silhouette`, `scale`, `action`, `motion`, `pose`, `blocking`, `composition`, `camera`, `timing`, `effect`, `audio`, `voice`, `text`, or `graphic`. Normalize only the card-specific aliases `face -> identity`, `age -> appearance`, `clothing -> wardrobe`, and `scene_light -> lighting`.
 
 For boundary roles, copy an existing boundary-scope value; normalize `face -> identity`, `scene_light -> light`, and `age|clothing -> visible_roster_attributes`. Boundary roles receive no borrowed dimensions.
 
