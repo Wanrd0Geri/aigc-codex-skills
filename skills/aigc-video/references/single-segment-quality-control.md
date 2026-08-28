@@ -39,6 +39,8 @@ A roughly one-second fast insert can carry one instantaneous beat, such as an ey
 
 These estimates and phase counts are internal feasibility evidence only. Never render them as derived sub-ranges inside a shot. When the locked heading range can hold the beat, describe its phases through causal transitions and let the model allocate their pacing; when it cannot, simplify mutable load or ask for the smallest authorized structure/duration change.
 
+For a material acting beat, capacity includes current readable trigger evidence when the trigger occurs in the shot, one distinguishable change in the chosen crop, and enough stable visibility for the endpoint to register. A trigger that occurred before cut-in is not replayed; the new shot begins from its inherited current state. Dialogue occupancy, another person's handoff, body or prop action, occlusion, and camera movement consume the same capacity. Remove optional micro-cues and camera complexity before changing locked content; if the remaining locked load still cannot carry the performance endpoint, reopen the affected structure. Never convert these estimates into a universal reaction duration or derived timestamps.
+
 If the duration cannot hold locked beats, simplify mutable camera and description first, then ask for more duration or user-approved restructuring. Never delete, merge, reorder, or silently split locked beats. Let the active adapter own timeline allocation and missing-duration behavior.
 
 ## Persistent scene topology
@@ -92,6 +94,7 @@ These are diagnostic distinctions, not mandatory effect designs. Preserve the us
 - a cut that continues the same event inherits its current action phase rather than restarting it
 - any intended dominance, unusual scale, reveal continuation, or effect outcome is visible without forcing an unrelated composition
 - duration fits the locked beats without speculative micro-control
+- every material performance turn has protected visible capacity, a start/end difference readable in the crop, and a terminal state that does not reset before the cut
 - generation shot bodies contain no planning-derived timestamp subdivision; explicit current-user/source internal times remain narrow and unexpanded
 - the active adapter or operation grammar passes its own timeline and source-addressing checks
 - start and terminal BoundaryStates are sparse rather than full shot duplicates

@@ -58,6 +58,19 @@ Do not print this analysis block or its field labels in the final prompt. Conver
 
 When the shared scene direction materially changes distance, attention, turn-taking, object control, willingness, refusal, or another visible relationship by the end, give that change one rendered owner in the relevant shot process or endpoint. Do not leave the group change only in the internal scene analysis, and do not add a prose summary when the same relation is already visible in the acting sentence or endpoint.
 
+## Performance capacity gate
+
+Run this gate for every material reaction, realization, refusal, loss of control, or relationship turn after structure review resolves:
+
+1. identify the trigger and its current readable evidence when it occurs in this shot, the current starting state, the change, and the terminal state that must remain visible through the cut; when the trigger occurred before cut-in, inherit the reached state without replaying it
+2. count competing load in the same shot: exact dialogue, body or prop action, another person's handoff, occlusion, and camera movement
+3. keep one primary performance carrier whose start and endpoint are distinguishable in the chosen crop; restrained acting limits amplitude but never makes a material change invisible
+4. protect stable screen time for the change and terminal hold without rendering inferred shot-body timestamps
+
+If optional facial, breath, hand, atmosphere, or camera cues compete with the material turn, remove those mutable cues first. If locked dialogue, action, framing, and the material turn still cannot fit, select `structural replan` for the affected unit rather than compressing the reaction into a transient expression that resets. Do not apply one universal second count: use the feasibility estimates in `single-segment-quality-control.md` against the actual beat and competing load.
+
+Choose the lowest amplitude that still makes the start and endpoint unambiguous in the actual crop. Do not default a plot-critical change to `微妙`、`轻微` or another low-amplitude label merely because the performance is restrained. When a controlled comparison shows that the current amplitude remains unreadable, increase only the primary carrier's visible amplitude in the next hypothesis and keep its terminal hold; do not add a longer micro-action chain. Treat a strong amplitude as case-specific escalation because it may shift the meaning toward shock or injury, not as a universal default.
+
 ## Performance handoff
 
 Use the internal beat only as a reasoning aid:
@@ -73,6 +86,8 @@ An `ActingTask` contains only the parts that materially control this beat:
 - `continuity_anchor`: relation, attention, intensity, or decision state that the next shot must inherit, only when material
 
 Prefer a playable relation over an emotion adjective when the distinction affects the result: `一边回答一边判断对方是否相信` is more actionable than `表现怀疑`; `用停顿迫使对方继续说` is clearer than `沉默` or `显得压迫`. Emotion emerges from the task succeeding, failing, or changing; do not use eyebrow, lip, breath, or another expression checklist as a substitute for the task.
+
+Choose start and endpoint as visibly different states inside the current crop. If the character already begins with a stern frown, do not encode disappointment as a deeper version of the same frown; move the primary carrier to attention, head or shoulder set, relational distance, object control, or another supported channel. A continuity anchor inherits the reached endpoint, not the earlier mask or a momentary peak.
 
 In the final shot prose, render the task and visible execution together without schema labels. Default to one compact causal sentence per materially active character; give a listener a second full task only when their independent decision materially affects the beat. For example: `他试图让对方相信自己没事；每说完一个理由便确认对方的反应，对方仍未相信时，他换一种说法，原本稳定的语速出现一次短暂停顿。` A task without visible execution remains too abstract for video; visible gestures without the task lose the performance logic. A compact structure-table intention records only the source-backed core and does not carry this expanded sentence before confirmation.
 

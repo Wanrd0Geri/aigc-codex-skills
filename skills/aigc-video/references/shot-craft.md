@@ -1,13 +1,14 @@
 # Shot Craft: Detail Levels, Camera, Performance, Dialogue
 
-Load this reference when a shot needs performance direction, camera movement design, dialogue/lip-sync handling, or when deciding how much detail a shot paragraph deserves.
+Load this reference when a shot needs performance direction, camera movement design, dialogue/lip-sync handling, visual-specificity compilation, or a decision about how much detail a shot paragraph deserves.
 
 ## Contents
 
 1. Shot detail levels
 2. Camera movement, framing, and optical result
 3. World, screen, camera, and lighting coordinates
-4. Performance, cross-shot action, and dialogue
+4. Conditional visual specificity
+5. Performance, cross-shot action, and dialogue
 
 ## Shot Detail Levels
 
@@ -114,6 +115,38 @@ Write one compact source-direction-result sentence for a simple stable setup. Ad
 
 A camera move or cut changes which lit plane the camera sees; it does not move the sun, window, lamp, or fire. Recalculate the camera-to-light relation after every camera-side change. Keep static source, direction, exposure, and highlight ownership here. Let `world-dynamics.md` own moving-light phase, shadow/reflection motion, occlusion, flicker, receiver response, and residual continuity.
 
+## Visual Specificity Pass
+
+Run this hard pass only when the route in `SKILL.md` is active for the affected generation unit: the current user/project asks for enriched or higher-specificity visuals, supplies a visible descriptor bundle, or selects the cinematic 3D CG profile through ordinary language such as `院线级三维渲染CG动画电影`. The user never needs an internal profile token.
+
+Do not activate from the word `电影感` alone during language-only cleanup, for a source edit that must preserve the existing look, or for an unrelated product, UGC, previsualization, graphic, or other style task unless the current request makes visual enrichment material. This pass improves semantic and shot specificity; it does not prove or guarantee higher base image quality.
+
+After structure resolves and before platform rendering:
+
+1. classify each supplied quality/style phrase as an exact lock, concrete visible fact, or empty booster
+2. preserve exact locks; translate an empty booster only when the current brief supports concrete facts, otherwise remove it
+3. assign each concrete fact to one smallest stable owner, then run `VisibleSetGate` against every crop
+4. merge duplicates and resolve true material/light/optics conflicts through the authority order in `SKILL.md`
+
+| Owner | Put here | Keep out |
+| --- | --- | --- |
+| `主体：` | identity-stable visible surfaces and construction: face/skin, hair, eyes, wardrobe, carried prop material | scene surfaces, camera optics, per-shot light result |
+| `场景：` | environment surfaces, vegetation, stable light source/direction, atmosphere, persistent depth cues | portrait-only anatomy, lens/focus commands |
+| `风格：` | medium, rendering language, palette, and shared material/texture behavior | local skin pores, one rock face, one-shot focus |
+| owning `镜头N` | crop-visible optics, focal plane, depth of field, exposure separation, local light/material response, foreground depth device | invisible detail, repeated global style, another shot's camera state |
+
+Keep only facts the requested crop can show. Iris moisture, skin scattering, hair strands, or lip texture may control a close shot but do not belong in a wide environment shot. A foreground ribbon, sleeve, weapon, branch, or flare is allowed only when that object/effect already exists or is explicitly authorized; this pass cannot invent it merely to create depth.
+
+When the current user/project selects the cinematic 3D CG profile meaning, render `院线级三维渲染的CG动画电影截帧` exactly once in `风格：`. Concrete subject, scene, light, material, and optical facts carry execution. Do not add `正片`, `国漫`, `不是海报`, or `不是游戏宣传图`; the profile implies no regional, period, costume, or palette fact.
+
+| Trigger | First repair | If still unresolved |
+| --- | --- | --- |
+| prompt contains several empty quality boosters | keep the selected exact profile once and replace only source-supported boosters with visible facts | remove the unsupported boosters rather than invent detail |
+| the same material/light/optics fact appears globally and per shot | retain the smallest stable owner and remove duplicates | resolve a true source conflict through `IntentFactGate` |
+| requested detail is outside the crop | remove it from that shot or use a supported existing visible receiver | reopen structure only when that detail is a locked result |
+| cinematic profile appears in another style/task | remove the leaked profile and restore the active source/user style | ask only when two authoritative styles genuinely conflict |
+| a result remains low quality but semantically accurate | preserve the prompt and classify the observed failure through `failure-recovery.md` | do not add a generic quality or negative tail without a discriminating test |
+
 ## Performance And Blocking Detail
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
@@ -128,9 +161,15 @@ Choose one primary visible performance carrier in this order: body/contact -> ga
 
 For close, reaction, and dialogue shots, first compare the script beat, established relationship, current action phase, neighboring performance state, and crop. Preserve their meaning and intensity; then choose only the visible cue or cues needed to make the beat readable. When `collaboration-and-performance.md` supplies an `ActingTask`, attach those cues to the rendered playable task; never replace the task with gestures or keep it only in hidden analysis. A word such as `沉默`、`判断`、`警觉`、`没有惊慌` may summarize intent internally, but the rendered performance should make the intended difference observable when the crop and scene require it. Do not force every shot through a trigger/tactic/carrier/endpoint formula, and do not expand one intention into a facial, gaze, breath, and finger checklist.
 
+For a material change, verify that the chosen carrier reads differently at the start and endpoint in the actual crop. Do not ask one unchanged cue to carry both states, such as `皱眉 -> 更深地皱眉`, when the intended turn is loss, relief, recognition, or withdrawal. Let the trigger cause one observable attention, head/shoulder, posture, distance, contact, or expression change, then keep the reached state through the cut instead of returning to the opening mask.
+
+When the character is silent and no gasp, breath sound, or vocalization is source-backed, do not use opening the mouth as a generic emotion carrier. Prefer a change in gaze target, focus duration, head or shoulder set, lip-line tension, jaw tension, posture, distance, or object contact. Mouth opening belongs only to visible speech, an authorized vocal/breath event, or a physical action that requires it.
+
 Apply the resolved world-dynamics mode. `coupled_world` may propagate body acceleration and contact into supported hair, clothing, accessories, carried props, surfaces, or media with material-appropriate lag and damping. `primary_action` keeps only the body and prop mechanics needed to read the acting beat. `intentional_stillness` preserves the stable fields and sole activity. Use `references/world-dynamics.md` for evidence and continuity.
 
 When prop handling is the main action, define the visible active hand, contact, necessary support or counterbalance, transition, and endpoint. Mention the supporting hand only when it is inside the crop and leaving it undefined would make the pose or action materially ambiguous.
+
+When non-contact is a material lock, make the visible separation part of the terminal geometry rather than describing only an approach toward the target. State where the active hand, body, or prop visibly stops relative to an existing reference, then hold or withdraw it; do not rely on repeated `不接触` wording to counteract an otherwise contact-completing action. If the requested near-gap is too small for the resolved crop to verify, surface the smallest framing, isolated-shot, or boundary-asset choice instead of pretending the text alone guarantees that distance.
 
 When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
 
@@ -139,6 +178,8 @@ When gaze is narratively material, name the visible target. If the target is off
 When a cut changes the view of one continuing event, carry the terminal action identity and phase into the next shot. Start the new shot from what is already happening and advance it; do not restage the onset merely because the camera angle changed.
 
 The inherited visible state is more important than any continuity label: an already-open door stays open, an already-emitted beam remains connected, and a subject already passing another person does not approach and pass them again. In the final unified timeline, write those as current facts (`门已打开`、`光束已与目标相连`、`主体正在越过对方`) rather than `同上一镜`、`继续刚才` or `承接上一镜`; relative labels may remain internal only.
+
+Carry world-facing and world position across a cut unless a visible turn or reposition occurs before that boundary. A new camera side may reveal a face or reverse screen order, but it does not authorize the subjects to rotate toward each other. Solve face visibility by placing the camera around the preserved blocking; if the requested face view cannot coexist with the locked facing or axis, reopen the affected structure instead of silently changing the performance geometry.
 
 ## Dialogue And Lip Sync
 

@@ -33,6 +33,8 @@ A Diagram may control only:
 - occlusion and relative scale
 - subject, prop, effect, or camera route
 
+These are macro geometry responsibilities. A Diagram does not by itself guarantee a fine hand-to-body, prop-to-body, or surface-to-surface contact gap. Bind an exact contact or non-contact boundary from readable accepted evidence only when the crop can verify it; after a repeated fine-gap failure, do not generate another Diagram unless a fresh geometry hypothesis and discriminating criterion exist.
+
 Identity, face, wardrobe, detailed prop design, environment, visual style, material, lighting, expression, and sound remain owned by their normal text or assets. Treat the map as `staging_map`, not as a generic style or identity reference.
 
 Use `map_scope: composition` for frame, crop, camera side, screen/depth position, pose, facing, occlusion, relative scale, and route start. Use `map_scope: route` only for a sparse subject, prop, effect, or camera trajectory. A route map supplements the active composition source and never changes its framing.

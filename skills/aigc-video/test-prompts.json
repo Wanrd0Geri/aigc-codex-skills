@@ -360,6 +360,11 @@
     "expected": "Classifies the base task as new_text because no boundary asset or anchor exists. Records the supplied opening and ending conditions as BoundaryStates, preserves the terminal inside-door state, and does not invent start_frame_source, end_frame_target, or any literal asset anchor."
   },
   {
+    "id": "video-generation-08-text-only-no-generic-opener",
+    "prompt": "结构已经确认。没有图片、视频或其他参考素材。写一个6秒单镜头 Seedance 2.5 提示词：苏云背着竹背篓沿高山石路走向古松，3D国漫CG动画。",
+    "expected": "Renders pure text generation through the unified owning headings and begins at the first populated heading rather than a generic summary sentence. Places the exact duration in 镜头1（0-6秒）, the whole-clip 3D国漫CG medium in 风格：, and continuous single-shot ownership in the sole shot's camera clause. It does not open with or retain 生成一段6秒、生成一段N秒, or equivalent duration-summary boilerplate."
+  },
+  {
     "id": "video-multishot-01-all-assets-accounted",
     "prompt": "八镜结构已经确认。写一条16秒八镜 Seedance 最终提示词。我给你六份素材：前五张会在 Seedance 中依次作为@图1分镜故事板、@图2女主角色资产、@图3男主角色资产、@图4眼睛特写、@图5光影参考；第六张是分镜表，只供你读取人物坐姿、景别和动作，不在 Seedance 中上传。不要因为分镜故事板是线稿就删掉它。",
     "expected": "Accounts for all six user-supplied assets. It renders the five uploaded images as 图片1 through 图片5 with narrow borrowed dimensions and no @ or UUID, keeps the sixth storyboard table as evidence only without inventing an upload label for it, and uses its authorized sitting, framing, and action facts. It does not silently drop or merge an asset because of line-art style-transfer concerns; it narrows 图片1 to storyboard dimensions instead."
@@ -1118,5 +1123,45 @@
     "id": "rewrite-18-unsupported-video-platform-fallback",
     "prompt": "直接给我写一版最终 Kling 提示词：雨夜车站里，一个女孩听见广播后回头。现在没有 Kling 专用 skill，也没有提供最新官方语法。",
     "expected": "Does not invent verified Kling syntax. It requests current official syntax or offers a clearly labeled platform-neutral video prompt, and never presents neutral wording as platform-ready."
+  },
+  {
+    "id": "video-performance-09-protected-reaction-capacity",
+    "prompt": "结构和时长已确认：10秒五镜。前3镜是裘水镜制止、苏云回答并向前一步；精确对白依次为裘水镜：“站住，前面危险。”苏云：“我看得见。”苏云：“我不是孩子。”第4镜要表现裘水镜突然意识到苏云已经不太需要自己保护，失落但克制；第5镜延续这份失落。对白和镜头顺序不能改。请输出完整Seedance提示词。",
+    "expected": "Preserves the locked dialogue, order, and total duration while protecting stable visible capacity for the material reaction's trigger, crop-readable change, and held endpoint. It removes competing mutable micro-cues or camera complexity before proposing a structural replan, does not invent shot-body timestamps, and carries the reached loss state into shot 5 instead of resetting to the opening expression."
+  },
+  {
+    "id": "video-performance-10-restrained-readable-state-change",
+    "prompt": "结构已确认。裘水镜近景开场已经皱着眉警戒；听完苏云说‘我不是孩子’后，他意识到对方已经不再需要自己保护，结尾是克制的失落。不要把他演得大哭大叫。写最终镜头。",
+    "expected": "Treats restrained as an amplitude ceiling rather than permission for invisibility. Because the opening frown already owns the face, it chooses a different crop-readable carrier such as attention, head/shoulder set, posture, distance, or contact, produces a distinguishable endpoint, and holds it through the cut instead of rendering only a deeper frown or a transient facial twitch."
+  },
+  {
+    "id": "video-performance-11-silent-mouth-not-default",
+    "prompt": "结构已确认。无对白、无叹气、无喘息声。裘水镜听见苏云拒绝后沉默地失落，近景能看见脸。请写最终Seedance镜头。",
+    "expected": "Does not use mouth opening as a generic emotion cue because no speech or vocal event is authorized. It makes the silent change readable through one supported non-mouth carrier, keeps lip/jaw behavior compatible with silence, and avoids a facial micro-action checklist."
+  },
+  {
+    "id": "video-continuity-02-facing-preserved-across-cuts",
+    "prompt": "三镜结构已确认。镜头1裘水镜在前、苏云在后，两人都面向峡谷深处；镜头2切到侧前方看见裘水镜的脸；镜头3切苏云近景。两人没有转身或换位，也不能变成面对面。写统一最终Seedance提示词。",
+    "expected": "Carries both characters' world-facing and world position across every cut, expresses each new shot's current blocking without relative prior-shot wording, and obtains face visibility by moving the camera around the preserved axis. It never silently rotates the subjects toward each other or repositions them because the viewpoint changed."
+  },
+  {
+    "id": "video-visual-specificity-01-cinematic-cg-profile",
+    "prompt": "结构已确认，使用丰富描述版。文字锁定：苏云是浅白瞳少年，黑发束起，穿磨旧灰衣并背竹背篓；裘水镜是灰黑长发成年男子，穿橄榄色宽袍；峡谷由深灰岩壁、垂藤和狭窄石路构成。总长10秒五镜：镜头1（0-2秒）峡谷全景，两人一前一后同向走入深处；镜头2（2-4秒）中景侧拍，裘水镜在前抬臂拦住苏云；镜头3（4-6秒）苏云近景，他看向裘水镜并侧移一步越过手臂；镜头4（6-8秒）裘水镜近景，他放下手臂，视线追随苏云，意识到对方已不太需要保护；镜头5（8-10秒）中景，苏云继续向前，裘水镜停半步后跟上，两人始终同向且没有换位。风格统一为院线级三维渲染CG动画电影；近景要让皮肤、头发、眼睛和布料有可见材质，峡谷保持侧逆光和空气透视，镜头按各自景别控制焦点。请输出最终Seedance提示词。",
+    "expected": "Activates the visual-specificity pass and renders the exact selected medium phrase 院线级三维渲染的CG动画电影截帧 once in 风格. It assigns stable subject surfaces to 主体, environment surfaces/light/atmosphere to 场景, and only crop-visible optics/focus/material response to each shot; it does not claim guaranteed image quality, duplicate global facts, or add 正片, 国漫, 不是海报, or 不是游戏宣传图."
+  },
+  {
+    "id": "video-visual-specificity-02-profile-does-not-leak",
+    "prompt": "结构已确认。给我写一个手机实拍感UGC产品短视频：白天厨房里，一只手拿起透明水杯喝一口，固定机位，6秒。没有要求CG、电影或丰富材质描述。",
+    "expected": "Does not activate or leak the cinematic 3D CG profile. It preserves the requested UGC live-action style, writes only visible product/scene/camera facts needed for the shot, and does not append a generic cinematic, resolution, camera-brand, material, or negative-prompt quality tail."
+  },
+  {
+    "id": "video-performance-12-amplitude-escalates-one-carrier",
+    "prompt": "结构、对白和10秒五镜已经确认。当前完整受影响序列：镜头4（5-8秒）同一轴线推到裘水镜面部近景；他听完苏云说‘我看得见’后，原本紧皱的眉头稍微松开，表现克制失落，新状态保持到切镜。镜头5（8-10秒）同侧双人近景；苏云说‘我不是孩子’，裘水镜保持失落并把手臂放下。前两次中等克制幅度都只像眉头稍松，观众看不出状态变化；两次强幅度版本都能看懂，但有一条略像受到重击。请根据这组结果修订这两个完整镜头，时间、机位、对白、动作和其他字段不变。",
+    "expected": "Treats the paired results as case-specific evidence that the current amplitude is unreadable. It returns the complete affected two-shot sequence, keeps restrained loss as the semantic intensity ceiling, increases only one primary crop-readable performance carrier to the lowest clearly readable amplitude, preserves the held endpoint and every unchanged lock, and starts shot 5 from the reached loss state without replaying the trigger. It treats this as performance refinement inside the confirmed blocking envelope, does not add a longer facial micro-action chain, and does not turn the result into shock, injury, or a universal strong-amplitude default."
+  },
+  {
+    "id": "video-recovery-14-diagram-does-not-guarantee-fine-gap",
+    "prompt": "当前完整镜头2（3-6秒）已经确认：侧面中近景固定机位，裘水镜在左、苏云在右，两人并肩同向；裘水镜抬右手靠近苏云肩膀，结尾手掌与肩膀必须保留清楚空隙。相同设置无站位图两次、加站位图两次，四条成片都实际触肩。请修复完整镜头，时间、机位、左右和朝向不变。",
+    "expected": "Runs attribution first, retires the exhausted add-another-Diagram hypothesis, and selects one case-specific prompt-repair hypothesis for the shared approach/endpoint field with the discriminating criterion that a clearly visible gap persists in the terminal frame. Because the confirmed side medium-close crop already requires that visible gap, it preserves structure, successful macro left/right and facing geometry, and returns the complete repaired shot without an unnecessary new question. It does not stack no-touch negatives, claim a provider-wide capability boundary, assume another Diagram guarantees the gap, or rerun the same exhausted hypothesis."
   }
 ]

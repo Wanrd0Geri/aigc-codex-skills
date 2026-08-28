@@ -53,7 +53,7 @@ For each shot, declare only the fields relevant to its current visible set and e
 [optional: scene-reference materials plus time, location, the smallest shared stable topology, light, atmosphere, persistent ambience, and any driver/background baseline that remains active across every shot]
 
 风格：
-[optional: medium, palette, material, and texture]
+[optional: medium, palette, and shared rendering/material/texture behavior; local subject and scene surfaces stay in their owning headings]
 
 情节：
 [required]
