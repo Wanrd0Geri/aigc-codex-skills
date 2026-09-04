@@ -2,10 +2,6 @@
 
 Read this file for any fight with a meaningful attacker-defender exchange. It defines the action structure before VFX or camera styling.
 
-## Design choices and source gaps
-
-In an open action-design request, unspecified ordinary body actions, attacking limbs, defensive responses, contact points and relative blocking are design choices. Choose one simple concrete exchange that fulfills the supplied order and result; do not return these choices as fictitious “既定” slots. Preserve all source locks and do not invent identities, weapons, powers, injuries, damage or new environment surfaces. Missing source-dependent facts or decisions explicitly reserved by the user remain unresolved. The aerial target/landing exception in `state-relay.md` remains in force; story review and fixed-shot audits keep their existing boundaries.
-
 ## Root-cause map
 
 | Visible failure | Root cause | Tempting but wrong fix | Structural fix |
@@ -118,7 +114,7 @@ Slow motion, white flash, shake, speed lines and sound accents are presentation 
 
 Compile the fight problem, start geometry, FightBeats, contact ledger, initiative curve and terminal boundary before adding style. If the user supplied a script or accepted storyboard, preserve its facts and solve only missing execution logic.
 
-For a final video, send these facts to `aigc-video`'s canonical structure gate and follow the three returned states in `../SKILL.md`: stop only for `review_required`; for `direct_authorized` or `confirmed`, finish combat design before final compilation. A design-only request may return the full design card directly.
+For a new or reference-driven final video whose combat structure is not already approved, send these facts to `aigc-video`'s canonical structure-confirmation gate and stop. Do not add the performance pass or render the final Seedance 2.5 prompt in the same turn. A request for design only may return the full design card directly.
 
 ### 2. Reference-role pass
 
