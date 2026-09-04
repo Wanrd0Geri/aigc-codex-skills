@@ -118,7 +118,7 @@ Slow motion, white flash, shake, speed lines and sound accents are presentation 
 
 Compile the fight problem, start geometry, FightBeats, contact ledger, initiative curve and terminal boundary before adding style. If the user supplied a script or accepted storyboard, preserve its facts and solve only missing execution logic.
 
-For a new or reference-driven final video whose combat structure is not already approved, send these facts to `aigc-video`'s canonical structure-confirmation gate and stop. Do not add the performance pass or render the final Seedance 2.5 prompt in the same turn. A request for design only may return the full design card directly.
+For a final video, send these facts to `aigc-video`'s canonical structure gate and follow the three returned states in `../SKILL.md`: stop only for `review_required`; for `direct_authorized` or `confirmed`, finish combat design before final compilation. A design-only request may return the full design card directly.
 
 ### 2. Reference-role pass
 
