@@ -106,6 +106,8 @@ Read `references/state-relay.md`. Enforce `next opening state = previous termina
 
 Weapon transfer, takeoff, landing, location change, transformation, VFX exit, or environment damage requires a visible bridge or an authorized discontinuity. An orbit changes viewing angle, not world position. If all six families cannot remain legible in one unit, split at a causal boundary and pass the terminal state forward.
 
+When an aerial-attack request explicitly rejects unsupported hovering, close both the strike/contact phase and landing or recovered support. If the exact target or landing surface is absent, keep typed unresolved slots for them and withhold `design_ready`; do not invent their identity, damage or weapon, and do not substitute a suspended or merely descending pose.
+
 ### 8. Run the Seedance 2.5 feasibility pass
 
 Read `references/model-priors.md` for known priors and failure recovery.
