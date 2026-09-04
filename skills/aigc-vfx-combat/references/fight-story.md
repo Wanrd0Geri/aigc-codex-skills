@@ -1,6 +1,6 @@
 # FightStory — 白话打斗故事与短打斗编剧
 
-Read this file when a user needs to decide what a multi-beat fight means before technical choreography or when a failed fight needs a new escalation, initiative curve, reversal, or ending. Do not use it to turn a fixed single beat, mechanics question, or audit into an extra story round.
+Read this file when a user needs to decide what a multi-beat fight means before technical choreography or when a failed fight needs a new escalation, initiative curve, reversal, or ending. Do not use it to turn a fixed single beat, mechanics or feasibility/root-cause question, fixed reference/event progression, or audit into an extra story round.
 
 ## Purpose and boundary
 
@@ -62,7 +62,7 @@ Use terrain or a prop only when it changes a route, support, line of sight, dist
 | A reversal has no prior seed | Reuse an authorized weapon, terrain fact, recovery pattern, or ability already present | If none exists, ask for the reversal source instead of inventing one |
 | The first clue appears only in the reversal sentence | Move an authorized carrier behavior or dormant state into an earlier paragraph without defining the hidden mechanism | If no earlier visible clue is authorized, keep the reversal pending and ask once |
 | A suspense ending continues into contact | Stop at readable activation, occupation, aim, or range change | Move any later attack into a separately approved continuation |
-| The user supplies a fixed accepted story | Preserve it and check dramaturgy internally | Repair only missing visible causality; do not reopen the story review |
+| The user supplies a fixed story, reference action order, or prescribed event progression | Preserve it and check dramaturgy internally | Repair only missing visible causality or diagnose feasibility; do not reopen the story review |
 
 ## Output form
 
