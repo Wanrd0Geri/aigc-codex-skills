@@ -1,92 +1,144 @@
-# Shot Language — 攻防可读性 / 机位构图 / 特效强调
+# Fight Direction — 镜头职责、构图证据与动态清晰度
 
-## 打斗镜头的第一原则
+Read this file after the action order, geometry, contact result and initiative curve are stable. It turns those facts into screen evidence. It does not invent a new exchange, outcome, weapon, power, location or destruction.
 
-Camera design serves the attack-response relationship. Before choosing a dramatic move, establish:
+## 1. ShotPurpose before shot vocabulary
 
-- the action axis and both fighters' screen direction;
-- who controls distance and who is forced to react;
-- where the decisive contact or near miss occurs;
-- which wider view will prove displacement or which held view will prove the result.
+Every shot or compatible shot group must prove one current tactical fact. Choose its primary purpose before choosing shot size or camera motion:
 
-At a decisive contact, the viewer must understand both the attack and the response. Do not cut only to the striking limb if that hides how the defender blocks, evades, absorbs or counters.
+- establish the problem, distance, obstacle or action axis;
+- prove an attack route and the defender's available response;
+- prove contact, near miss, bind, release or weapon relation;
+- prove displacement, changed height, lost support or recovery cost;
+- re-establish world position after a crossing or aggressive camera move;
+- reveal the owner, stage or boundary of a technique;
+- hold a terminal state, initiative transfer or new threat.
 
-### 轴线与屏幕方向
+Combine purposes only when the same composition can prove them simultaneously. If a contact insert hides the defender's response, or a face close-up hides the required landing, separate them. Do not set a fixed shot count or cut interval.
 
-- Establish left/right, near/far and facing before the exchange.
-- Preserve screen direction across contact. If the camera or fighters cross the axis, show the crossing or insert a neutral re-establishing view.
-- Keep a visible spatial anchor when the next beat inherits position.
-- For weapon contact, keep both weapon owners and the contact relationship readable before using an insert.
+## 2. CompositionProof
 
-### 张力的景别函数
+Write composition as visible relationships, not as a shot-size label. Use only the fields that prove the current purpose:
 
-- **建立关系**: a view wide enough to read distance, obstacles and the action axis.
-- **证明触点**: a closer view that still preserves attacker-response causality.
-- **证明力量**: a wider view showing slide, launch, fall, pursuit or changed distance.
-- **证明结果**: a brief hold on stagger, pin, separation, guard recovery or weapon loss.
+```text
+观看重点：the first fact the viewer must read
+战术关系：who controls distance, route, support, height or escape space
+轮廓分离：how bodies, limbs, weapons and VFX remain attributable
+纵深与世界锚：foreground/midground/background relation and named persistent anchor
+尺度关系：how size or distance changes pressure without a fixed frame percentage
+力线：how body/weapon path and environment lines support or oppose force
+负空间职责：reserved attack lane, escape route, incoming threat or isolation
+边缘压力：which frame edge or obstacle restricts movement and why
+遮挡：what may enter foreground, what fact must never be hidden
+```
 
-These are functions, not a mandatory four-shot template. Use only what the beat needs.
+Pressure must come from a visible loss of room, angle, support, reaction time or route. A low angle, Dutch angle, close-up or large subject is not proof by itself. Keep a simpler locked-camera version in reserve when the intended relationship cannot survive the chosen composition.
 
-### 速度函数
+## 3. CameraMove contract
 
-Use contrast: constrained anticipation → sudden acceleration → contact emphasis → consequence/recovery. Continuous maximum speed makes every action equal and removes tactical tension.
+A camera term is incomplete until it answers all five fields:
 
-## 特效三拍式 (charge → burst → aftermath)
+1. **start** — where the camera begins and what spatial relation is already clear;
+2. **carrier** — the body center, limb, weapon axis, contact point, VFX force line or world anchor that drives the move;
+3. **path** — translation or rotation direction, height change, and whether the action axis is approached or crossed;
+4. **information change** — what new fact becomes visible because the camera moves;
+5. **end anchor** — where the camera settles and which world object, body relation or terminal state makes the next cut safe.
 
-Use this arc for a technique reveal, transformation, spell, or finisher. Do not force it onto every physical exchange. The beats gain power from contrast, so avoid keeping one visual distance across all three when a distance change helps readability.
+If the carrier or end anchor cannot be named, stabilize the camera. Camera motion may follow or counter a force, reveal an occluded route, magnify distance closure, or rebuild space after impact; it must not create unsupported character movement.
 
-**蓄力 (1–2s, 近/特写, 慢推)**
-- 指尖凝光、能量纹沿手臂爬升、武器出鞘半寸、瞳孔特写点亮阵营色
-- 瞳孔特写是大招前的标准"标点符号"——情绪+节奏双重锚
-- 施法手势要具体到腕指: "左袖短促一拂，右手划半圆，手腕一翻，指尖向前一点" ✓（实测手部动作连贯凌厉）
+### Common moves by function
 
-**爆发 (瞬间, 全屏)**
-- 画面过曝白闪一瞬 ✓（实测有效，衔接干净）
-- 或纯能量填屏：高潮对轰 2-3s 不画人，只有能量乱流+电弧+火星，人物剩剪影或消失 ✓（AI 最擅长、最出效果的镜头类型）
-- 或黑白闪风格切换（见下）
+- **Whip pan / 急扫**: depart from one clear owner or threat vector, hide only the travel interval, then land on a newly clear owner, target or result. Do not smear the departure, contact and arrival together.
+- **Orbit / 环绕**: bind the center to a body relation, weapon axis or contact point; preserve a world anchor throughout. Screen left/right may change during a visibly continuous crossing, but world position, facing and contact do not teleport.
+- **Follow / 贴身跟随**: bind to a trackable torso, pelvis or weapon owner while background parallax proves displacement. Release the follow at contact or landing when the result needs a wider view.
+- **Counter-move / 逆向拉移**: move against the attack vector to compress distance or reveal the defender's shrinking route; retain one stable anchor so the apparent speed is not mistaken for a location jump.
+- **Pass-through / 穿越**: define what approaches the lens, which side it passes, and where the true body or weapon reappears. Never use a foreground wipe to conceal owner, contact or destination.
 
-**余波 (1–2s, 大远景, 慢拉/环绕)**
-- 冲击波环扩散、光柱冲天、地面碎裂石块悬浮、烟尘中剪影缓缓落地
-- 冲击波永远是环形：地面同心圆冲击环+垂直光柱 = "强者落地/开大"通用符号
+## 4. Wide-angle close proximity and distortion
 
-## 机位构图五杠杆 (按有效度排序)
+“广角特写” is a near-camera spatial event, not a decorative lens label. Build a complete scale wave:
 
-原则：**景别标签少写，构图关系多写**。"远景/特写"对生成模型是弱控制，会漂；下面四样才是杠杆。
+1. a clear body/weapon begins at a readable distance and direction;
+2. it closes distance and enlarges rapidly while its owner remains attributable;
+3. near-lens perspective exaggerates the leading limb or weapon along the true force line;
+4. the subject passes, contacts or changes direction at a declared side of frame;
+5. the shot or next shot restores the true body, world anchor and consequence.
 
-1. **机位角度** — 仰拍=压迫/强大，俯拍=渺小/被压制。最强一档，一个词翻转气势。
-2. **主体占比+纵深** — 写"谁占满画面、谁在边缘、前景是什么"。两个方向都成立：
-   - 人小景大: 人占 5-15%，巨物(裂隙/巨日/巨佛/巨浪)占满天。AI 生成成功率最高、天然电影感 ✓
-   - 顶天立地: 人物占据画面主体，背景巨物化作光晕轮廓 ✓
-3. **画框式构图** — 门洞、屋檐、石柱把主体框住 ✓（实测牌坊门洞画框稳定生成）
-4. **景别对比节奏** — 大远景接特写的落差才是爽感来源；写"变化"（推近/拉开），别每镜标景别。相邻镜头一大一小互为呼吸。
-5. **对角线/失衡** — 洪流斜向贯穿、屏障立面对冲，比水平构图有冲击力 ✓
+Use distortion to amplify a real approach, reach mismatch, near miss or impact path. Do not begin and end on the same distorted pose, enlarge an unrelated limb, or let anatomy and weapon ownership disappear. If the exit cannot be re-established, use a less aggressive angle or split approach and result.
 
-## 三大风格方法论 (按片型选用)
+## 5. Cut motivation and relay
 
-**法宝流·能量海** (凡人修仙传式)
-颜色即阵营的全屏能量攻防。高潮直接切纯能量填屏。适合：法宝对轰、修仙大战。
+Cut when information changes: a decision commits, contact resolves, direction changes, support is lost or regained, a landing occurs, recovery cost appears, initiative transfers, or a new threat becomes readable. The outgoing terminal state must be a valid incoming state for the next shot.
 
-**字卡流·留白史诗** (燃向歌词 MV 式)
-人小景大 + 大面积留白构图，为书法字卡/标题留位置：`negative space composition, subject small in frame`。人物普遍只占 5-15%。适合：MV、片头、群像叙事。
+- Cut **on preparation** to transfer attention to the threatened route.
+- Cut **through acceleration** only when departure and arrival anchors remain legible.
+- Cut **at contact** only after limb/weapon owners and the response are established.
+- Cut **after consequence** to prove displacement, recovery or the new distance.
+- Hold **for breath** only to show observation, tactical choice, recovery cost, spatial reset or suspense. A pause with no new state is dead time.
 
-**黑白闪·漫画帧** (打击感流)
-用风格切换强调已经清楚的决定性触点，不替代动作设计：
-- 命中瞬间画面切成黑白线稿风：黑色放射速度线、白色负空间、人物剪影，持续数帧
-- 全片黑白中只保留一种颜色（阵营色电弧/瞳色/怒焰）= "超规格力量"信号
-- 大招结束瞬间恢复全彩，落差即爽感
-- 后期剪辑插单帧黑白效果通常比要求模型同时完成复杂接触和风格跳变更稳
-适合：近身武打、爆气、变身、以弱胜强的一击。
+Use `state-relay.md` for the full cross-cut ledger.
 
-## 高价值运镜 (含风险等级)
+## 6. Dynamic clarity and speed contrast
 
-- **特写起手→急速后拉+环绕揭示**: 小(指尖水珠)瞬间炸开成大(屏障全貌)，信息落差大。风险：复合运镜方向可能反转（见 model-priors）。降级：只保留急速后拉+微上仰。
-- **慢推特写收束**: 对抗段落末尾推近面部，前景虚焦粒子，眼中映阵营色光 ✓（实测稳定且情绪浓）
-- **相邻镜景别互补**: 镜头 A 特写起→拉开收，镜头 B 全景起→推近收，衔接自然不跳。
-- **镜头震动**: 只在清楚的接触之后轻微响应。震动证明冲击，不能掩盖触点。
+Fast action needs a trackable true body. Design the speed phrase as:
 
-## 剪辑与连续性
+`clear anchor → abrupt distance closure → directional blur or controlled smear → clear reappearance/contact → consequence/breath → renewed action or terminal hold`
 
-- Cut at a decision, contact resolution, displacement, landing, recovery or initiative reversal—not merely because a fixed interval elapsed.
-- Preserve action direction, weapon ownership and terminal state across a cut.
-- A contact insert must inherit the exact limb/weapon relationship from the surrounding views.
-- 帧级黑白插帧、闪白和音效可以增强打击点，属强调层；真正的重量仍来自预备、触点、反作用和恢复成本。
+- Before acceleration, show support, facing and intended direction clearly.
+- During the fastest interval, motion blur follows the actual screen vector; apply it to fast limbs, weapon tips, loose cloth, nearby particles or counter-moving background. Keep the owner or core body attributable.
+- A controlled smear or stretched pose may exaggerate one action path, but its origin and destination remain fixed; it is not multiple independent clones.
+- Restore a clear true body before or at decisive contact. The attacker, response and contact state must be readable together.
+- After contact, show compression, rebound, slide, launch, fall, debris route or recovery before the next acceleration.
+- During pursuit, re-establish who is ahead, who is closing, and the shared travel direction. Do not turn both fighters into indistinguishable trails.
+
+Do not apply uniform blur to the full frame or full sequence. Camera blur, subject blur, background streaking, animated smear and VFX trail are different carriers; choose only those that match the actual motion phase.
+
+## 7. Speed ramping and bullet time
+
+Speed ramping marks a change in action information, not general excitement. State what slows, what becomes newly visible, and how normal speed returns.
+
+Bullet time is permitted only when it reveals at least one fact unavailable at full speed: contact deformation, support or center-of-mass change, weapon flex/rebound, near-miss distance, a facial decision, ability ownership, or a transformation boundary. Enter from a clear fast vector and exit into a different resolved state. If it only prolongs the same pose, remove it.
+
+## 8. Responsibility routing for 2D-style devices
+
+| Layer | Owns | Must not own |
+|---|---|---|
+| Text prompt | visible preparation, acceleration intent, route, contact state, response, consequence, true-body reappearance and terminal state | exact single-frame timing, precise drawings or unsupported style transfer |
+| Checked motion / clay reference | pose spacing, center-of-mass shift, exact weapon relation, deformation path, crossing order and authorized camera rhythm | identity, wardrobe, scene, VFX design or outcome unless explicitly assigned |
+| Composition reference | framing, perspective pressure, depth hierarchy, negative space, lens proximity and world-anchor placement | choreography, weapon ownership, character identity or terminal behavior |
+| Post | frame-exact impact drawing, deterministic hold/repeat/drop cadence, exact exposure accent, speed-line frame and final sound sync | repairing missing attack-response causality or an incorrect generated contact |
+
+If the user bans black-and-white, flashes, shake, speed lines or another device, close it in every layer; do not reintroduce it through a reference or post. “A reference once used it successfully” is not authorization.
+
+## 9. VFX and sound as evidence
+
+VFX may reveal an owner, route, contact envelope, force transfer or residual state after the physical relation already reads. Set an occlusion boundary: the attack owner, response and decisive contact cannot all disappear behind the effect. Shape follows the authorized source and force propagation; a flash, ring, beam, full-screen fill or environment break is never automatic.
+
+Sound follows the same causality: preparation signal → contact peak → displacement or break tail → breath, recovery or environmental residue. Do not use a loud hit to imply contact the image does not show.
+
+## 10. Failure recovery
+
+| Trigger | First response | If still unresolved |
+|---|---|---|
+| Camera move causes a location jump or axis drift | restore a named world anchor and simplify to one carrier/path | lock the camera for motion proof, then split movement and result |
+| Wide-angle close-up loses anatomy or ownership | reduce near-lens exaggeration and keep the owner visible | split clear approach, near-lens pass/contact and spatial rebuild |
+| Orbit changes world position | bind the orbit to contact/weapon axis and retain roof, floor or architecture anchor | reduce arc or replace with a stable three-quarter view |
+| Speed reads as continuous blur | restore clear departure, contact and arrival bodies | move exact smear timing to checked motion/post and reduce camera load |
+| Bullet time feels weightless | require new contact, support, decision or deformation information | remove the slowdown and hold the consequence instead |
+| Frequent cuts destroy causality | group compatible purposes around one readable attack-response | cut only at the next causal boundary and carry terminal state forward |
+| VFX hides contact | reduce coverage, opacity or duration and expose the owner/response | separate the physical contact proof from the effect peak |
+
+## ShotDirection packet
+
+```text
+镜头ID / FightBeat:
+ShotPurpose / 观看重点:
+CompositionProof:
+CameraMove: <start; carrier; path/axis; information change; end anchor>
+动作与触点:
+动态清晰度: <clear body; permitted blur/smear carrier; reappearance; consequence>
+切镜动力 / 下一镜切入状态:
+表现职责: <text; checked motion; composition reference; post>
+```
+
+Keep the packet compact. It is a design contract for `aigc-video`, not the final Seedance prompt.

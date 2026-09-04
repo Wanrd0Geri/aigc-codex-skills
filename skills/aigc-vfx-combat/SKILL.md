@@ -10,9 +10,9 @@ Turn a fight or technique into a readable chain of causes and consequences, then
 ## Ownership and handoff
 
 - This skill owns the plain-language FightStory and only the short fight dramaturgy visible inside the assigned exchange: immediate goals, resistance, escalation, initiative change, false victory or reversal when requested, and ending function. It does not create long-form character arcs, subplots, lore, or a new outcome.
-- This skill owns shot-level combat logic: combat objective, starting geometry, initiative, attack-response chain, contact, momentum transfer, ending state, and optional VFX presentation.
+- This skill owns shot-level combat logic and direction: combat objective, starting geometry, initiative, attack-response chain, contact, momentum transfer, shot purpose, composition proof, camera path, cut motivation, state relay, ending state, and optional VFX presentation.
 - `aigc-video` owns the final Seedance 2.5 prompt, duration, timestamps, reference labels, locks, sound grammar, and complete deliverable.
-- For a final video request, use a two-phase handoff: build only the combat structure, let `aigc-video` resolve its canonical structure gate, then resume this skill for presentation, optional VFX, and feasibility before `aigc-video` renders the final prompt. For design-only requests, return the design card below and stop.
+- For a final video request, use a two-phase handoff: build only the combat structure, let `aigc-video` resolve its canonical structure gate, then resume this skill for Fight Direction, optional VFX, State Relay, and feasibility before `aigc-video` renders the final prompt. For design-only requests, return the design card below and stop.
 - Do not redesign story-level intent already fixed by a script, storyboard, or `aigc-project-context`; solve only the visible fight inside the assigned shot or shot range.
 
 ## Root-cause model
@@ -68,15 +68,27 @@ Use the macro rhythm `压 → 抢 → 碰 → 翻 → 留` when the exchange nee
 
 For any new or reference-driven final video, pass the combat or spectacle structure packet into `aigc-video` before presentation or VFX enrichment. The packet contains only source locks, visible roster, starting geometry or spectacle envelope, action/FightBeat order, contact or effect result, and terminal boundary.
 
-Follow the gate result instead of testing only whether the structure is approved:
+**🔴 CHECKPOINT · STRUCTURE GATE:** follow the returned state instead of testing only whether the structure is approved:
 
 - `review_required`: return only `aigc-video`'s canonical structure table and grouped request, then stop. “直接给提示词” does not waive this pause.
-- `direct_authorized`: keep the structure pending and internal, skip the table, and continue immediately with the presentation/VFX and feasibility phases in this skill.
-- `confirmed`: continue with the presentation/VFX and feasibility phases for the accepted structure version.
+- `direct_authorized`: keep the structure pending and internal, skip the table, and continue immediately with Fight Direction, optional VFX, State Relay, and feasibility in this skill.
+- `confirmed`: continue through those phases for the accepted structure version.
 
 When the user later confirms a pending combat structure, resume this skill at the next phase before `aigc-video` renders. Do not let a confirmation reply bypass the unfinished combat design. A design-only request may receive the complete design card without this extra confirmation round.
 
-### 5. Add VFX only after the action works
+### 5. Build Fight Direction from visible evidence
+
+Read `references/shot-language.md`. For every shot or compatible shot group, record:
+
+1. `ShotPurpose` — the one current tactical fact the viewer must understand;
+2. `CompositionProof` — the concrete silhouette, depth/world anchor, scale, force line, negative-space job, edge pressure, or occlusion relation that proves it;
+3. `CameraMove` — starting view, body/weapon/VFX carrier, path and axis behavior, then a terminal world anchor; if carrier or endpoint cannot be named, stabilize the camera;
+4. cut motivation — decision, contact resolution, direction change, landing, recovery, initiative transfer, or threat reveal, plus the inherited next cut-in state;
+5. dynamic clarity — where the true body is clear, where directional blur or controlled smear is allowed, where it reappears, and what consequence or breath follows.
+
+Use wide-angle close proximity, distortion, whip pans, orbits, speed ramps, and bullet time only when their entry, information gain, exit, and spatial re-establishment are explicit. A shot term without an action carrier and terminal anchor is not direction. Assign frame-exact cadence or impact frames to post, exact pose spacing/deformation to a checked motion reference, and framing/perspective only to a composition reference; text keeps action intent, route, contact, consequence, and terminal state.
+
+### 6. Add VFX only after the action and direction work
 
 For mixed combat or spectacle, set one color family and one signature form root per side. Read `references/vfx-library.md` for form and material vocabulary. Pick one form and 2–3 material words; more dilutes.
 
@@ -88,15 +100,13 @@ Nest `蓄力 → 爆发 → 余波` inside the relevant technique or finisher:
 
 For a normal hit, require one readable bodily or weapon reaction. Add at most one reachable environment receiver when the source or user authorizes it. Do not manufacture ground cracks, shockwaves, or building damage merely to prove force.
 
-### 6. Design presentation around readability
+### 7. Relay state across every cut
 
-Read `references/shot-language.md` for axis, screen direction, shot-distance contrast, speed contrast, contact emphasis, and VFX presentation. Establish the action before adding complex camera motion.
+Read `references/state-relay.md`. Enforce `next opening state = previous terminal state` for every material fact. Track six state families: body pose/facing/contact; direction/speed/action phase; world location/height/support/anchor; weapon owner/grip/orientation/contact/condition/terminal position; form or VFX owner/source/stage/coverage/propagation/connections/residue; and opponent actionability plus environment/weather residue.
 
-- The contact shot must let the viewer understand both the attack and the response.
-- Camera shake, whip pans, motion blur, speed lines, slow motion, white flashes, and black-and-white inserts may emphasize an already readable contact; they must not replace it.
-- Use close framing to prove contact, wider framing to prove displacement, and a held ending to prove the result when those functions are needed.
+Weapon transfer, takeoff, landing, location change, transformation, VFX exit, or environment damage requires a visible bridge or an authorized discontinuity. An orbit changes viewing angle, not world position. If all six families cannot remain legible in one unit, split at a causal boundary and pass the terminal state forward.
 
-### 7. Run the Seedance 2.5 feasibility pass
+### 8. Run the Seedance 2.5 feasibility pass
 
 Read `references/model-priors.md` for known priors and failure recovery.
 
@@ -109,7 +119,7 @@ Read `references/model-priors.md` for known priors and failure recovery.
 
 ## Final-video handoff
 
-After the shared structure gate resolves, compile one internal `CombatHandoff` for every affected unit using the contract in `../aigc-video/references/video-contracts.md`. Bind it to the exact current `structure_version` and set `combat_design_status: design_ready` only after presentation, optional VFX, and feasibility are complete.
+After the shared structure gate resolves, compile one internal `CombatHandoff` for every affected unit using the contract in `../aigc-video/references/video-contracts.md`. Bind it to the exact current `structure_version` and set `combat_design_status: design_ready` only after Fight Direction, optional VFX, State Relay, and feasibility are complete.
 
 The handoff must preserve:
 
@@ -119,7 +129,9 @@ The handoff must preserve:
 - starting geometry or spatial envelope;
 - initiative curve, FightBeats, contact ledger, and terminal boundary when an exchange exists;
 - source, trigger, route, visible result, and terminal boundary for spectacle;
-- body/weapon mechanics, presentation, optional VFX, sound cues, and feasibility decisions.
+- body/weapon mechanics, per-shot purpose and CompositionProof, CameraMove and cut motivation, dynamic-clarity schedule, reference/post responsibilities, optional VFX, and sound cues;
+- the six-family State Relay, including every protected transition and next-shot cut-in state;
+- feasibility decisions and localized fallback.
 
 `aigc-video` maps this packet into MotionSpec without redesigning it. If a later structural change increments the bound `structure_version`, invalidate the presentation/VFX portion and return to the shared gate before rebuilding only the affected combat design.
 
@@ -143,7 +155,9 @@ FightBeat 1:
 - 留: <recovery cost and terminal state>
 
 身体力学: <support, center of mass, force chain, follow-through>
-机位与屏幕方向: <how the action remains readable>
+导演执行: <per shot: purpose; viewer priority; CompositionProof; CameraMove carrier/path/end anchor; cut motivation; dynamic clarity>
+表现职责: <text / checked motion / composition reference / post, each with a narrow whitelist>
+状态接力: <per cut: previous terminal -> visible bridge or unchanged carry -> next opening, covering only material state families>
 声音节拍: <only source-backed or intentionally designed cues>
 起始边界: <positions, posture, contact and effect state>
 终止边界: <positions, posture, initiative and residual motion>
@@ -163,6 +177,8 @@ Keep it concrete and compact enough to hand to `aigc-video` without reinterpreti
 - Do not render the final Seedance 2.5 prompt from this skill alone.
 - Do not list both fighters' actions independently; pair every attack with the opponent's response and the resulting state change.
 - Do not hide unclear choreography with VFX, fast cutting, blur, shake, or black-and-white flashes.
+- Do not treat whip pan, orbit, distortion, speed ramp, bullet time, or a shot-size label as self-sufficient direction; bind it to evidence, a carrier, an exit, and a terminal anchor.
+- Do not change weapon ownership, grip, world position, support, flight phase, form coverage, VFX ownership, or environment condition without a visible bridge or authorized discontinuity.
 - Do not keep continuous maximum speed; tension needs anticipation, acceleration, contact emphasis, consequence, and recovery in proportions appropriate to the beat.
 - Do not stack more than one form and three material words on one effect.
 - Do not invent damage, props, powers, injuries, or environment interactions not authorized by the source.

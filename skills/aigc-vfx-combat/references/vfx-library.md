@@ -1,6 +1,10 @@
-# VFX Library — 形 / 材质 / 颜色阵营词库
+# VFX Library — 功能 / 形 / 材质 / 颜色阵营词库
 
-Curated from frame-level analysis of production donghua (凡人修仙传-tier 法宝流, 牧神记-tier lyric MV, 黑白闪 manga-frame fight cuts) and verified against Seedance generations. Words marked ✓ have landed correctly in at least one real generation.
+Curated from frame-level combat analysis and prior Seedance generations. Words marked ✓ landed in at least one historical generation; they are vocabulary evidence, not default recommendations. Current source facts, force propagation and user locks decide whether any form is allowed.
+
+## VFX contract
+
+Build an effect in this order: `function → owner/source → route or envelope → contact/result → occlusion boundary → exit/residue`. If any required fact is unknown, keep it unresolved rather than filling the screen. Environment damage, flashes, shockwaves, creature silhouettes and full-screen coverage require source support or user authorization.
 
 ## 颜色即阵营 (color as faction)
 
@@ -29,7 +33,7 @@ An effect must BE something, not just an element. Verified forms:
 - **雷柱**: 连接天地的巨型闪电柱，全屏放射状电弧
 - **光柱雨**: 数十根垂直光柱如帘幕砸落
 - **星月背轮**: 人物背后悬浮巨大日轮/月轮，星尘粒子环绕
-- **冲击环**: 贴地荡开的环形冲击波，碎石悬浮 ✓
+- **冲击环**: only for an authorized radial or ground-centered force; the ring expands from the true contact/source and any debris follows that force ✓
 - **剑气弧线**: 燃烧的橘色弧形刀光拖尾横贯画面
 - **兽形虚影**: 爆气时背后浮现的巨大兽头虚影（狼/凤/龙），火焰鬃毛
 - **粒子汇入**: 大量半透明性灵粒子从四周汇入，拖出长尾影，只保留抽象人形残影 ✓（人形残影可正确渲染）
@@ -41,15 +45,15 @@ An effect must BE something, not just an element. Verified forms:
 
 熔金流体 / 黑烟金边 / 琉璃质感 / 玉质半透明 / 墨流 ✓ / 绸缎状流体 / 星尘粒子 / 碎裂光片 ✓ / 粒子丝 ✓ / 流体丝线 ✓ / 镜面反光 ✓ / 细密水流纹 ✓ / 向内旋转的暗流 ✓ / 火星剥落 ✓ / 紫白电弧游走 ✓ / 长尾影 ✓
 
-## 元素升级表 (ordinary → 大制作)
+## 从功能到可见形态
 
-| 普通写法 | 大制作写法 |
+| 功能意图 | 可见形态示例 |
 |---|---|
-| 发射火焰 | 熔金火凤自掌心轰然展翅，翼展占满上半画面，凤身熔金流体质感，边缘黑烟金边 |
-| 水盾挡住攻击 | 指尖深蓝水珠骤亮，展开成竖立镜海水墙，镜面反光、细密水流纹、向内旋转暗流 |
-| 释放闪电 | 指尖一点绿芒沿臂爬升，炸成贯穿天地的金色雷柱，放射状电弧铺满画面 |
-| 强大的气场 | 环形冲击波贴地荡开，碎石悬浮，衣袍长发被压向身后，脚步不动 |
-| 挥出剑气 | 燃烧的橘色弧形刀光横贯画面，切换纯红底剪影重复一次强调 |
-| 变身/爆气 | 背后浮现巨大兽形虚影，火焰鬃毛倒竖，瞳色点亮为阵营色 |
+| 火焰沿掌击路线进攻 | 掌心作为来源，熔金流体沿真实攻击线展开为已授权的火焰形根，接触后只保留沿受力方向剥落的黑烟金边 |
+| 水系力量偏转攻击 | 指尖或掌心深蓝源点展开为有明确平面的水幕，入射流在可见触点改变方向，镜面反光与流体丝线沿偏转路线延续 |
+| 雷力从身体传入目标 | 电弧从已声明的身体或兵器连接点沿接触链传播，离开触点后衰减；是否形成雷柱由尺度与授权决定 |
+| 气场压迫但不破坏环境 | 衣袍、尘雾或已有悬浮物沿压力方向响应，人物支撑和对手反应证明力量；不自动裂地或生成冲击环 |
+| 剑气延长兵器攻击线 | 弧形能量从刃口沿挥击切线离开，终点、命中/擦过状态和残余轨迹可读；不自动切换背景或重复冲击画 |
+| 变身阶段显形 | 形态从明确附着点按覆盖边界逐段生成，继承上阶段拓扑；不自动补全兽头、巨龙或完整生物 |
 
-Upgrade rule: 元素 → 有名字的形 + 2-3 材质词 + 尺度词（占满画面/翼展占半屏/贯穿天地）。
+Construction rule: `one function + one owner/source + one form root + 2–3 material words + one route/result + one terminal residue`. Scale follows the shot's evidence need; “larger” is not an automatic upgrade.

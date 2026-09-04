@@ -1,6 +1,6 @@
 # Model Priors — Seedance 2.5 风险与降级档案
 
-This file combines repeated observed behaviors from the existing production archive with Seedance 2.5 operating rules. A legacy observation is a risk signal, not proof that 2.5 behaves identically. Treat a prior as active for the current setup only after the same protected invariant fails three times on Seedance 2.5; then change method instead of rewording.
+This file combines repeated observed behaviors from the existing production archive with Seedance 2.5 operating rules. A legacy observation is a risk signal, not proof that 2.5 behaves identically. Treat a prior as active for the current setup only after the same protected invariant fails three times on Seedance 2.5; then change method instead of rewording. A historical success is only evidence that one asset once landed, not a default recommendation for another fight. Current source facts and user locks always outrank every prior; a banned device stays closed in text, references and post.
 
 ## Combat-specific high-risk combinations
 
@@ -52,11 +52,11 @@ This file combines repeated observed behaviors from the existing production arch
 实测风险：后拉偶尔做成前推，环绕幅度不稳（概率性，非必然）。
 降级路径：去掉环绕，只保留"急速后拉+微上仰"，成功率显著更高。先试全版，失败即降级。
 
-## 已验证可靠的资产（可直接押注）
+## 历史成功信号（仅在当前功能需要且获授权时复用）
 
-- 纯能量填屏开场：火云+光核+电弧+粒子，三次生成全部撑住场面 ✓
+- 纯能量填屏开场：火云+光核+电弧+粒子，三次历史生成成立；只适用于已授权且不需保留身体/触点信息的效果段落 ✓
 - 抽象人形残影粒子汇入裂隙：可正确渲染 ✓
-- 白闪过曝转场 ✓
+- 白闪过曝转场：曾生成成功；只有用户允许且不取代接触、空间或状态桥时才使用 ✓
 - 逆光剪影登场（人物立于屋脊，被身后能量体压成剪影）✓
 - 手部大特写施法起手（腕指动作连贯凌厉）✓
 - 牌坊/门洞画框构图 + 人小景大 ✓
