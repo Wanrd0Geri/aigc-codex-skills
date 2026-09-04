@@ -70,3 +70,31 @@ This file combines repeated observed behaviors from the existing production arch
 - **位置锚要每镜重申**：镜头 N 确立的位置，镜头 N+2 不重申就会漂移（实测施法者从门洞漂到街心）。写法：位置 + 可见锚物（"仍站在门洞下，两侧石柱在画面边缘可见"）✓
 - **动作与摄影分层**：接触正确性风险高时，先锁定/简化摄影验证身体动作，再增加运镜、速度变化和特效强调。
 - **结构检查不等于成片质量**：提示词和设计卡通过检查，只证明因果、事实锁和降级路线齐全；必须审看真实 Seedance 2.5 结果才能评价打斗质量。
+
+## Combat Audit — evidence, scope and repair ownership
+
+Use this pass internally before `design_ready`, or externally when the user requests an audit or supplies an observed failure. Identify the artifact and layer first: source, story/design, compiled prompt, or actual rendered media. A description of a clean design is not the design itself; if it is absent, mark the relevant checks unknown and request only what this review needs. Do not require a video for a text-only design audit.
+
+| Status | Evidence rule |
+| --- | --- |
+| PASS | A directly locatable fact supports this check at the stated layer. |
+| FAIL | A quoted lock, action relation, continuity boundary or execution contract is explicitly violated. |
+| WARN | A concrete tradeoff or local incompleteness remains; identify its impact and whether it blocks the requested stage. Generic model difficulty is not a finding. |
+| UNKNOWN | Necessary evidence is missing or unreadable. State what would resolve it; never count it as passed. |
+| N/A | The feature or layer does not apply to this artifact, with a reason. Absence of required evidence is not N/A. |
+
+Check only applicable layers:
+
+1. facts and authorization: roster, identity, weapon/ability, location, outcome/damage locks, prohibited devices and reference dimensions;
+2. fight story: visible goal, resistance, escalation, initiative, requested reversal and ending, only when that arc applies;
+3. space and physics: support, route, exact contact/result, reciprocal reaction, recovery and terminal state;
+4. direction: shot purpose, composition proof, camera carrier/anchor, causal cut, speed contrast, clarity and authorized VFX/sound;
+5. continuity: the material six-family relay and visible bridges across ownership, position, support or form changes;
+6. compilation/feasibility: only applicable duration, timing, reference roles, load and platform contract; video owns final grammar;
+7. rendered result: observed identity, contact accuracy, weight, blur, rhythm, occlusion and continuity. With no actual video these properties remain UNKNOWN even when their text specification passes. An absent optional VFX design may be N/A while overall rendered action remains UNKNOWN.
+
+For each relevant finding record `check/layer; status; evidence location or missing input; impact; smallest affected closure; responsible layer`. Evidence is a shot plus a short exact quote, or a readable media timestamp/frame; never invent coordinates. For PASS/N/A, repair is none. Prefer compact grouped clean results and local actionable findings over a long checklist; do not force all five statuses to appear.
+
+Protect clean fields. A discrepancy confined to one shot is repaired there plus only the boundaries whose inherited state changes; propagate until a stable unaffected boundary. Combat repairs story/action/direction/relay; video repairs mapping, grammar and delivery; motion reference or post owns only its authorized mechanics or frame-exact execution. Missing evidence goes to its source owner. If actual footage permits several causes, report the visible error and keep causal attribution unknown rather than blaming a layer without evidence.
+
+A required textual conflict or unresolved generation-critical fact blocks `design_ready`; a concrete non-blocking tradeoff may remain WARN. Render-only UNKNOWN never becomes a text-level FAIL or an extra generation approval gate. Repair mutable internal inconsistencies within the authorized task, recheck the affected closure, and ask only when a required fact or hard choice remains. An audit-only request receives findings and the minimal proposed repair, without silently editing its subject. Ordinary final prompts contain the corrected current instructions, not this report or its metadata.

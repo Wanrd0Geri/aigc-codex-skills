@@ -12,7 +12,7 @@ Turn a fight or technique into a readable chain of causes and consequences, then
 - This skill owns the plain-language FightStory and only the short fight dramaturgy visible inside the assigned exchange: immediate goals, resistance, escalation, initiative change, false victory or reversal when requested, and ending function. It does not create long-form character arcs, subplots, lore, or a new outcome.
 - This skill owns shot-level combat logic and direction: combat objective, starting geometry, initiative, attack-response chain, contact, momentum transfer, shot purpose, composition proof, camera path, cut motivation, state relay, ending state, and optional VFX presentation.
 - `aigc-video` owns the final Seedance 2.5 prompt, duration, timestamps, reference labels, locks, sound grammar, and complete deliverable.
-- For a final video request, use a two-phase handoff: build only the combat structure, let `aigc-video` resolve its canonical structure gate, then resume this skill for Fight Direction, optional VFX, State Relay, and feasibility before `aigc-video` renders the final prompt. For design-only requests, return the design card below and stop.
+- For a final video, build combat structure and a minimal DirectorDraft for the canonical structure gate in `aigc-video`; after review resolves, refine Fight Direction, optional VFX, State Relay, feasibility and Combat Audit before final compilation. Design-only requests return the design card below.
 - Do not redesign story-level intent already fixed by a script, storyboard, or `aigc-project-context`; solve only the visible fight inside the assigned shot or shot range.
 
 ## Root-cause model
@@ -36,7 +36,7 @@ Solve those causes before styling. Tension comes from **readable threat + speed 
 - **混合打斗**: readable physical exchange plus supernatural force. Run the combat-tension pass first, then attach VFX to selected contacts or the finisher.
 - **招式奇观**: transformation, technique reveal, environmental-scale spell, or effect display with no meaningful opponent response. Build its source, spatial envelope, trigger, route, visible result, and terminal boundary before the shared structure gate; after the gate resolves, use the VFX spectacle pass.
 
-Do not force every request into `蓄力 → 爆发 → 余波`; that arc belongs to technique spectacle, not every punch, parry, or reversal.
+Do not force every request into `蓄力 → 爆发 → 余波`; that arc belongs to technique spectacle, not every punch, parry, or reversal. For a requested audit or observed failure, use Combat Audit in `references/model-priors.md`; assess the supplied artifact without redesigning clean fields.
 
 ### 2. Resolve the plain-language FightStory when the fight arc is still being designed
 
@@ -66,19 +66,19 @@ Use the macro rhythm `压 → 抢 → 碰 → 翻 → 留` when the exchange nee
 
 ### 4. Resolve the shared structure gate for every final video
 
-For any new or reference-driven final video, pass the combat or spectacle structure packet into `aigc-video` before presentation or VFX enrichment. The packet contains only source locks, visible roster, starting geometry or spectacle envelope, action/FightBeat order, contact or effect result, and terminal boundary.
+Before a final-video structure review, read the DirectorDraft section of `references/shot-language.md`. Add only structure-bearing direction to the source locks, roster, geometry/envelope, action order, contact/result and terminal boundary. Combat designs these facts; `aigc-video` checks visibility, light/sound and renders its canonical table without replacing them. Detailed presentation and VFX wait for the gate.
 
 **🔴 CHECKPOINT · STRUCTURE GATE:** follow the returned state instead of testing only whether the structure is approved:
 
 - `review_required`: return only `aigc-video`'s canonical structure table and grouped request, then stop. “直接给提示词” does not waive this pause.
-- `direct_authorized`: keep the structure pending and internal, skip the table, and continue immediately with Fight Direction, optional VFX, State Relay, and feasibility in this skill.
+- `direct_authorized`: keep the structure pending and internal, skip the table, and finish the remaining design phases in this skill.
 - `confirmed`: continue through those phases for the accepted structure version.
 
 When the user later confirms a pending combat structure, resume this skill at the next phase before `aigc-video` renders. Do not let a confirmation reply bypass the unfinished combat design. A design-only request may receive the complete design card without this extra confirmation round.
 
 ### 5. Build Fight Direction from visible evidence
 
-Read `references/shot-language.md`. For every shot or compatible shot group, record:
+Read `references/shot-language.md`. For final video, refine the gate-resolved DirectorDraft; for design-only, build direction here. Preserve resolved structure fields; reopen affected units only if a necessary refinement changes them. Per shot or compatible group, record:
 
 1. `ShotPurpose` — the one current tactical fact the viewer must understand;
 2. `CompositionProof` — the concrete silhouette, depth/world anchor, scale, force line, negative-space job, edge pressure, or occlusion relation that proves it;
@@ -121,21 +121,11 @@ Read `references/model-priors.md` for known priors and failure recovery.
 
 ## Final-video handoff
 
-After the shared structure gate resolves, compile one internal `CombatHandoff` for every affected unit using the contract in `../aigc-video/references/video-contracts.md`. Bind it to the exact current `structure_version` and set `combat_design_status: design_ready` only after Fight Direction, optional VFX, State Relay, and feasibility are complete.
+Run the scoped Combat Audit in `references/model-priors.md` after feasibility. Keep routine checks internal; a requested audit receives its evidence report, not an unsolicited redesign or final prompt. Do not add another confirmation gate.
 
-The handoff must preserve:
+Use `../aigc-video/references/video-contracts.md` as the single CombatHandoff schema. Bind every affected unit and StateRelay boundary to its current structure version and dependencies. `design_ready` requires complete direction, applicable VFX, relay and feasibility, with no unresolved generation-required fact or text-level conflict. Missing render evidence stays `UNKNOWN` and cannot certify or block an otherwise complete text prompt.
 
-- source and user locks;
-- the accepted FightStory and its immediate goals, escalation, initiative turns, reversal logic, and ending function when that stage applied;
-- combat problem or spectacle intent;
-- starting geometry or spatial envelope;
-- initiative curve, FightBeats, contact ledger, and terminal boundary when an exchange exists;
-- source, trigger, route, visible result, and terminal boundary for spectacle;
-- body/weapon mechanics, per-shot purpose and CompositionProof, CameraMove and cut motivation, dynamic-clarity schedule, reference/post responsibilities, optional VFX, and sound cues;
-- the six-family State Relay, including every protected transition and next-shot cut-in state;
-- feasibility decisions and localized fallback.
-
-`aigc-video` maps this packet into MotionSpec without redesigning it. If a later structural change increments the bound `structure_version`, invalidate the presentation/VFX portion and return to the shared gate before rebuilding only the affected combat design.
+`aigc-video` consumes the packet without redesign. After a change, follow its existing change-impact closure: recompute affected mechanics, direction, relay and audit, preserve valid unrelated fields, and resolve any reopened structure before rendering. A matching version alone does not validate stale dependent content.
 
 ## Design card
 

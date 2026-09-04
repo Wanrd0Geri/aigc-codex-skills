@@ -67,12 +67,12 @@
   {
     "id": "combat-14-confirmation-resumes-before-video-render",
     "prompt": "上一轮双刀交锋的结构v3我确认了，左右位置、格挡触点和终点都不改。继续最终Seedance 2.5提示词。",
-    "expected": "Resumes the unfinished combat workflow after the canonical gate, completes presentation and feasibility, binds a design_ready CombatHandoff to structure v3, and only then lets aigc-video render. It does not repeat the structure table or let video skip directly to generic final drafting."
+    "expected": "Resumes the unfinished combat workflow after the canonical gate, completes presentation and feasibility, binds a design_ready CombatHandoff to structure v3, and only then lets aigc-video render. It does not repeat the structure table or let video skip directly to generic final drafting. Preserve reviewed director fields; complete the current StateRelay, scoped text audit and affected dependency checks before design_ready; missing render evidence stays UNKNOWN."
   },
   {
     "id": "combat-15-spectacle-final-gates-before-vfx",
     "prompt": "最终要Seedance 2.5视频：宗门护山大阵启动，青玉法环覆盖山门上空，10秒，直接给提示词。",
-    "expected": "Classifies as 招式奇观, builds only the source, spatial envelope, trigger, route, visible result and terminal boundary before entering aigc-video's canonical structure gate, treats 直接给提示词 as speed only, and holds detailed VFX form, presentation and feasibility until the structure gate resolves."
+    "expected": "Classifies as 招式奇观, builds the source, spatial envelope, trigger, route, visible result, terminal boundary and minimal structure-bearing DirectorDraft before entering aigc-video's canonical structure gate, treats 直接给提示词 as speed only, and holds detailed VFX form, presentation and feasibility until the structure gate resolves."
   },
   {
     "id": "candidate-01-plain-language-fight-story",
@@ -133,5 +133,15 @@
     "id": "candidate-13-audit-planted-defects",
     "prompt": "审查四镜设计：镜1 B双手持棍在屋顶；镜2 A在寺门突然持同一根棍；镜3 B没有起跳便悬空下劈；镜4 A的普通手臂直接变成完整巨龙。",
     "expected": "Finds the location jump, weapon ownership transfer, missing aerial support and skipped transformation stages; cites the responsible shots; assigns each finding to the correct layer; and proposes the smallest repair closure without adding style or plot."
+  },
+  {
+    "id": "round3-a1",
+    "prompt": "只审查下面这份完整动作设计，不改写，不需要最终提示词。两名普通人A、B，徒手，无超自然效果，没有上传图片或视频。A左B右在同一平整石地相向站立。镜1：0到3秒，固定侧前方全身机位；A原地用右掌直推B胸前，B以左前臂外侧接A右掌掌根并向自身左侧拨开，双方脚下有支撑，接触后A掌路偏出胸前，结尾仍有掌根与前臂接触。镜2：3到6秒，机位和左右不变；从该接触状态开始，A先收右掌解除接触，B再放下左前臂，双方各后退半步站稳。两人均无伤，石地未损。两镜都看清支撑与触点，不用模糊或快速切镜遮挡，镜尾给站稳留出可见停顿。声音为一次接触声与后退脚步，无对白、字幕和背景音乐。请分清文字已经能证明的内容、具体风险、不适用项和没有成片还不能判断的内容，给出证据位置与最小修复范围；没有问题的地方保留。",
+    "expected": "对有明确文字证据的事实锁、接触解除和状态顺接给出通过判断及镜号/原句，不为了审查而捏造FAIL。 无VFX、无武器等确实不适用内容为N/A或明确不适用；没有实际视频的身份/触点精度/重量/节奏/遮挡质量为UNKNOWN，未用文本通过冒充成片通过。 没有具体支持时不把通用生成风险升级成确定缺陷；保留干净方案，不提出无因全段重写或追加剧情。 审计状态、证据、影响、责任层与最小范围可区分；不把用户未要求的最终视频格式/素材完整性当作设计审计前提。"
+  },
+  {
+    "id": "round3-a2",
+    "prompt": "只审查，不改写。锁定条件：A、B都是普通人，不会飞；A徒手，黑铁棍始终属于B；三镜都必须在同一完整石地庭院，无伤无损、没有时间跳跃。下列待审稿：镜1（0到3秒），A左B右相向站立，B双手持黑铁棍，结尾仍站在原地、双脚着地。镜2（3到6秒），开场A忽然在寺门内双手握住同一根黑铁棍；B未起跳就悬停空中朝下攻击。镜3（6到9秒），切回庭院，B双手持黑铁棍，A在原左侧徒手站稳。没有上传视频。请定位明确错误，区分未见成片的未知项，并给每个错误的影响、责任层和最小修复范围；保留已经清楚且没有冲突的事实。",
+    "expected": "至少发现三类预埋缺陷：B到A及返回B的无桥武器转移、庭院/寺门跳位、无起跳支撑的悬停；证据精确到镜2及相邻边界。 明确违约判FAIL，保留镜1和镜3已给的正常位置/握棍事实；修复以镜2及其两端接力为闭包，不能擅自新增飞行能力、缴械剧情或改锁为允许换手。 成片实际身份、接触与连续性未读到，为UNKNOWN；无新增未证缺陷或声称视频已审看。 区分用户锁/动作空间设计/接力/编译或实际成片责任；不把所有问题交给特效或后期掩盖。"
   }
 ]

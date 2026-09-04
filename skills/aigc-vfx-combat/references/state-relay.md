@@ -133,3 +133,9 @@ For a design-only request that explicitly asks for continuity or ownership self-
 | Environment repairs or breaks without cause | inherit condition and residue from the last visible contact | remove unsupported damage or add the missing authorized contact bridge |
 
 After three failures of the same protected state, stop adding synonyms. Change method through a simpler beat, lower camera load, checked motion/clay/stage-state/start-end references, or a causal split.
+
+## Version binding and receiving contract
+
+Bind each relay boundary to both endpoint shot ids and their current structure versions; record only material state families and their existing source/dependency owners. Reuse the CombatHandoff mapping in `../../aigc-video/references/video-contracts.md` and the existing closure in `../../aigc-video/references/change-impact-and-delivery.md`.
+
+When an endpoint, support, grip, phase, effect residue or another tracked state changes, recheck its outgoing and incoming rows until the next stable unaffected boundary. Invalidate only affected cached states and audit findings, rebuild their dependent mechanics/direction, and rebind after the gate resolves. A later shot can retain its confirmed structure when the recheck proves its fields unchanged; record the newly checked boundary without rewriting that shot. Never carry an old two-hand grip into a newly one-hand opening merely because the weapon owner or camera is unchanged.

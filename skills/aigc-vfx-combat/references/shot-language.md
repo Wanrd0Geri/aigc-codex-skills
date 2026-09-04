@@ -2,6 +2,17 @@
 
 Read this file after the action order, geometry, contact result and initiative curve are stable. It turns those facts into screen evidence. It does not invent a new exchange, outcome, weapon, power, location or destruction.
 
+## DirectorDraft before structure review
+
+For final video, Combat supplies the direction that the user is about to confirm, before `aigc-video` displays its structure table. Per shot, provide:
+
+- the tactical ShotPurpose and one viewer priority, with the focal-plane/depth relation needed to see it;
+- framing/crop, camera side/angle and any material move: carrier, path and terminal anchor;
+- only blocking/visibility dependencies and the action, contact and endpoint that this view proves;
+- the causal cut boundary and material next cut-in state.
+
+These are structure-bearing selections, not a second review table. Preserve supplied camera/shot locks and resolve genuine conflicts through the canonical gate. Video compiles this draft into its existing columns and supplies its light/composite and sound checks; it must not choose a competing camera design. After confirmation or direct authorization, reuse these selections and add only the detailed dynamic clarity, performance, VFX, reference/post and sound execution needed. Reopen a shot only if a necessary change touches its versioned structure fields; ordinary refinements inside the accepted envelope do not reopen it.
+
 ## 1. ShotPurpose before shot vocabulary
 
 Every shot or compatible shot group must prove one current tactical fact. Choose its primary purpose before choosing shot size or camera motion:

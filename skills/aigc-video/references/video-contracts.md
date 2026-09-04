@@ -241,24 +241,30 @@ Mark project-sourced facts separately from bounded interpretation. Never present
 
 ## CombatHandoff
 
-Use one internal CombatHandoff for every unit that routes through `aigc-vfx-combat`. It has two states:
+Use one internal handoff for each combat-required unit; never attach it to unrelated tasks. Combat owns the action and director design; video owns canonical review, MotionSpec integration and final grammar.
 
-- `structure_ready`: source locks, combat problem or spectacle intent, starting geometry or spatial envelope, FightBeat/action order, contact or effect result, and terminal boundary are ready for the canonical structure gate. It is not sufficient for final rendering.
-- `design_ready`: the same structure version also has body/weapon mechanics, initiative and recovery, presentation, optional VFX, sound cues, and Seedance 2.5 feasibility decisions. Only this state may enter final video rendering.
+- `structure_ready`: source locks, geometry/envelope, action/FightBeat order, contact/result, terminal boundary and a minimal DirectorDraft are ready for the canonical gate; not final rendering.
+- `design_ready`: the current structure and dependencies also have complete mechanics, direction refinement, applicable VFX, sound cues, material StateRelay, feasibility and scoped text audit. Missing render evidence cannot establish or prevent this text-design status.
 
-Record:
+Record only applicable fields:
 
-- affected shot or operation id and exact `structure_version`
-- source/user locks and reference responsibilities
-- combat type and visible objective or spectacle intent
-- starting geometry or spatial envelope
-- initiative curve, atomic FightBeats, contact ledger, and terminal boundary when an exchange exists
-- source, trigger, route, visible result, and terminal boundary for spectacle
-- body/weapon mechanics, presentation, optional authorized VFX, sound cues, and feasibility decisions
+- affected unit/shot ids and exact `structure_version`; source/user locks and reference roles;
+- accepted FightStory when applicable, combat/spectacle objective, geometry/envelope, initiative, atomic FightBeats, contact/force/recovery ledger and terminal boundary;
+- spectacle source, trigger, route, visible result and ending when applicable;
+- `DirectorDraft`: per-shot purpose, framing/crop, camera relation or move with carrier/path/end anchor, viewer priority and material focus/depth, blocking dependencies, causal cut and next cut-in;
+- refined direction with CompositionProof, dynamic clarity and reference/post roles; body/weapon mechanics, optional authorized VFX, sound cues and feasibility;
+- `StateRelay`: from/to shot ids and both current structure versions, material terminal -> visible bridge/unchanged carry -> next opening, and source/dependency owners for body/contact, motion/phase, world/support, weapon, form/VFX and opponent/environment state;
+- scoped `CombatAudit`: applicable textual checks, status, evidence, impact, repair closure and responsible layer. Keep render-only results separate; required unresolved facts or textual conflicts cannot enter `design_ready`.
 
-The canonical structure gate owns phrase interpretation. Under `review_required`, stop with the compact structure table while the handoff remains `structure_ready`. Under `direct_authorized`, keep the pending structure internal and immediately resume the combat design. Under `confirmed`, resume or retain the design only for the accepted version. If structure changes, invalidate only the affected handoff's presentation/VFX/feasibility fields and return it to `structure_ready`; do not reuse a design bound to an older version.
+DirectorDraft supplies combat selections to the existing table: framing/camera -> `构图与机位`; viewer priority/focus -> `画面重心`; blocking/visibility -> `人物与空间`; causal action and endpoint -> `动作与终点`. Video checks its current visibility, performance, sound and light/composite owners without choosing a second combat camera design. Detailed performance/VFX/clarity refinement follows the resolved gate and preserves these structure fields; a necessary structural change reopens only its affected units.
 
-Map a design-ready handoff into MotionSpec without inventing a second attack-response chain or changing hit, block, evade, deflect, absorb, reflect, dismantle, or terminal behavior. `aigc-video` still owns duration, timestamps, material labels, locks, sound grammar, platform syntax, world-response integration, and complete delivery.
+The canonical gate owns phrase interpretation. `review_required` returns the table with `structure_ready` and stops; `direct_authorized` keeps structure pending and internal, then immediately finishes combat design; `confirmed` resumes or retains design for that accepted version. No audit introduces another user checkpoint.
+
+Map StateRelay into existing MotionSpec owners rather than a parallel timeline: previous terminal -> sparse terminal BoundaryState; next opening -> sparse visible-start BoundaryState; visible bridge -> owning shot's causal action process; material state to inherit -> next handoff and that next shot's current wording. Body/weapon contact, action phase, world support and form/residue must survive this mapping whenever they affect execution. Keep owner identity distinct from touch or grip changes. Do not print relay/audit/version metadata in the final prompt, and do not use “同上一镜” as an executable state.
+
+After a tracked fact or dependency changes, use `change-impact-and-delivery.md`: invalidate only affected cached mechanics, direction, VFX, relay and audit; recompute across dependent boundaries until stable. Increment only structures actually changed, return their handoffs to `structure_ready`, and rebind rows to both current endpoint versions after review resolves. For nonstructural changes, retain confirmation but clear stale `design_ready` until affected checks finish. A version match is necessary, not sufficient, for reusing dependent content.
+
+Compile the final prompt without inventing a second attack-response chain or changing hit, block, evade, deflect, absorb, reflect, dismantle or terminal behavior. Return upstream conflicts to their smallest owning closure; never silently change choreography to make compilation easier. Video retains duration, timestamps, material labels, locks, sound grammar, platform syntax, world/light integration and complete delivery.
 
 ## State transitions and admission — VIDEO-STATE-01
 
@@ -270,7 +276,7 @@ Use the current MotionSpec and its latest ChangeSet to decide; status words with
 | Explicit acceptance of the displayed current version | `confirmed`, unchanged version, `acceptance_ref` points to that user/project acceptance | Continue unfinished detail passes |
 | Current request explicitly skips structure review | Keep `pending`; set scoped `direct_authorized`; no acceptance record | Continue once remaining requirements resolve |
 | First source edit with no structural change | `source_preserved`, null version/review mode/acceptance; evidence from `VIDEO-STRUCTURE-01` | Render complete operation after its impact checks |
-| Non-structural detail change | Preserve confirmed/source-preserved state; invalidate only touched world/light/sound/performance dependencies | Recheck those fields, then deliver |
+| Non-structural detail change | Preserve confirmed/source-preserved state; invalidate only touched world/light/sound/performance and required combat/relay dependencies | Recheck those fields, then deliver |
 | Structural dependency changes after confirmation or source preservation | Increment affected design version (null becomes 1), set `pending`; invalidate dependent Diagram and combat design readiness | Rebuild affected structure under the current request's review mode |
 | Pure language repair | Preserve all production state and literal locks; no new structure/version | Validate protected differences and deliver complete existing artifact |
 | Delivery, cancellation, or replacement of the logical request | Expire only that request's direct authorization | A new request receives its own mode; recorded acceptance is retained only for the same version |
@@ -281,7 +287,7 @@ Admission order:
 
 1. Complete all internally resolvable checks. An unfinished internal pass is work to resume, not a reason to ask the user. A structural blocker or result-changing conflict under IntentFactGate gives `wait_for_input` / `unresolved`; display neither a guessed row nor a partial final prompt.
 2. A review-required pending designed unit with reliable structure gives `wait_for_review`; display the reliable current rows and one grouped request. An unresolved non-structural field, including a material light/boundary fact, may share this round as `待确认` only when IntentFactGate says the row is reliable.
-3. Before final rendering, every required fact, applicable world/light review, invalidated dependency, and specialist phase must be resolved. If required input is still missing after available internal work, give `wait_for_input` / `unresolved`; do not render a partial final artifact. Otherwise admit each unit from one evidenced basis: current `confirmed_version`, scoped `direct_authorized`, strict-edit `source_preserved`, or protected `language_only`. Combat design must be `design_ready` for that exact version when required. `not_applicable` light is legal only for explicit non-physical imagery. Language-only and untouched source fields do not acquire new craft reviews merely to pass admission.
+3. Before final rendering, every required fact, applicable world/light review, invalidated dependency, and specialist phase must be resolved. If required input is still missing after available internal work, give `wait_for_input` / `unresolved`; do not render a partial final artifact. Otherwise admit each unit from one evidenced basis: current `confirmed_version`, scoped `direct_authorized`, strict-edit `source_preserved`, or protected `language_only`. Combat design must be `design_ready` for that exact version when required, with valid dependencies and mapped StateRelay boundaries under the CombatHandoff contract above. `not_applicable` light is legal only for explicit non-physical imagery. Language-only and untouched source fields do not acquire new craft reviews merely to pass admission.
 4. Check complete-unit delivery under `VIDEO-DELIVERY-01` and render. `stage_status` may be ready, assumed, or evidence-backed warn under `VIDEO-WARN-01`; it cannot override any earlier failed gate.
 
 ## Stage status

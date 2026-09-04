@@ -928,17 +928,17 @@
   {
     "id": "video-combat-01-unapproved-routes-design-first",
     "prompt": "用 $aigc-video 给我最终可粘贴的 Seedance 2.5 提示词：8秒雨中双刀交锋，双方先试探、一次格挡后女剑客夺回主动。直接给提示词。",
-    "expected": "Recognizes the shot as specialist combat design, runs aigc-vfx-combat only through its structure phase, treats 直接给提示词 as speed rather than direct authorization, and returns only the canonical structure-confirmation row plus one grouped request. It does not design the presentation/VFX layer or render the final Seedance prompt yet."
+    "expected": "Recognizes the shot as specialist combat design, runs aigc-vfx-combat through structure and minimal DirectorDraft, treats 直接给提示词 as speed rather than direct authorization, and returns only the canonical structure-confirmation row plus one grouped request. It does not build detailed presentation/VFX or render the final Seedance prompt yet."
   },
   {
     "id": "video-combat-02-confirmed-resumes-design-handoff",
     "prompt": "上一轮雨中双刀交锋的结构v2已经确认：女剑客在左、刀客在右，格挡触点和终点站位都不变。现在继续生成最终8秒Seedance 2.5提示词。",
-    "expected": "Resumes aigc-vfx-combat after the accepted structure instead of rendering immediately, completes presentation, optional restrained VFX and Seedance 2.5 feasibility, creates a design_ready CombatHandoff bound to structure v2, then maps it into one complete final prompt without reopening the structure table or redesigning the exchange in generic VFX patterns."
+    "expected": "Resumes aigc-vfx-combat after the accepted structure instead of rendering immediately, completes presentation, optional restrained VFX and Seedance 2.5 feasibility, creates a design_ready CombatHandoff bound to structure v2, then maps it into one complete final prompt without reopening the structure table or redesigning the exchange in generic VFX patterns. Preserve reviewed director fields; complete the current StateRelay, scoped text audit and affected dependency checks before design_ready; missing render evidence stays UNKNOWN."
   },
   {
     "id": "video-combat-03-direct-authorized-resumes-design-handoff",
     "prompt": "跳过结构确认，不用结构表，直接写最终8秒Seedance 2.5提示词：窄桥上枪手控制距离，剑客偏开枪尖后贴身缴械，桥和栏杆不能损坏。",
-    "expected": "Applies request-scoped direct_authorized, compiles the pending combat structure internally, continues through aigc-vfx-combat presentation and feasibility rather than stopping on unapproved status, creates a design_ready CombatHandoff for the pending current version, and only then renders the complete final prompt while preserving the no-damage lock."
+    "expected": "Applies request-scoped direct_authorized, compiles the pending combat structure internally, continues through aigc-vfx-combat presentation and feasibility rather than stopping on unapproved status, creates a design_ready CombatHandoff for the pending current version, and only then renders the complete final prompt while preserving the no-damage lock. Preserve reviewed director fields; complete the current StateRelay, scoped text audit and affected dependency checks before design_ready; missing render evidence stays UNKNOWN."
   },
   {
     "id": "video-project-02-raw-project-combat-routes-context-first",
@@ -1444,5 +1444,25 @@
     "pair": "strict-edit-reflection-authority",
     "prompt": "视频1清楚显示橙色陶瓶和同一陶瓶在玻璃桌上的倒影。我要刻意做超现实错位：严格编辑第1至3秒，只把瓶身改成钴蓝，属于这只瓶子的倒影故意保持原橙色，不追求两者颜色物理一致。其他画面、桌面材质、光线、声音和时间不变。",
     "expected": "Honors the explicit intentional mismatch: blue bottle body with its identified reflection remaining orange in the interval. Does not automatically recolor that specifically protected reflection or ask the user to confirm a physical-consistency tradeoff already resolved by the request. Preserves the source lighting, surface material and unrelated regions and returns a complete strict-edit command; no new source-light design or blanket realism gate is introduced."
+  },
+  {
+    "id": "round3-m1",
+    "prompt": "最终要一条12秒Seedance 2.5提示词。下面是本请求的完整文本条件，不涉及外部项目或素材。两人是A、B，A徒手，黑铁棍始终由B持有。场地是平整石地庭院，两人始终A左B右、相向站立，无伤、无场景破坏。事件顺序已经确定：第一镜0到4秒，B双手持棍横压过来，A用右前臂挡住棍身，结尾双方保持这处接触；第二镜4到8秒，保持上一镜接触，B收棍，A撤开前臂，结尾棍回到B胸前；第三镜8到12秒，两人各退半步分开，B仍持棍。动作的普通执行细节和机位由你设计，不新增招式。无对白，有脚步与一次棍臂接触声。先给结构确认表，确认后再输出完整提示词。",
+    "expected": "第1回合只给唯一标准八列结构表及一次确认请求；已有可执行机位、构图和画面重心；不提前给最终提示词。 第2回合承接真实上回合确认，无重复结构确认；完成绑定当前版本的设计、状态接力与可行性后交付完整三镜提示词。 第3回合只重开受影响结构行并显示直接与联动变化；明确B左手松开/右手握棍，第二镜开场承接单手，结尾才双手；未把旧手握状态当作仍可复用。 第4回合完整0-12秒三镜一条提示词，第一镜末与第二镜初单手、第二镜末与第三镜初双手；物主一直B、A不持棍，未变成缴械或抓棍。 版本只沿实际结构影响范围增加，重算接力行及其依赖，第三镜已稳定且字段未变时保留已确认结构；可重查边界但不能凭空加动作。 四回合均守住用户动作/机位/时长/无伤无损和声音；最终无内部字段泄漏、无衍生镜内秒段，含标准无字幕无背景音乐句。",
+    "followups": [
+      "我确认你上一轮完整结构表，保留其中全部机位、画面重心、动作和终点。继续完成整条Seedance 2.5提示词。",
+      "修改刚才完整版本：第一镜结尾B的左手已松开，右手仍握黑铁棍；A的右前臂仍挡着棍身。第二镜开头必须接这个单手握棍状态，由B右手收棍，左手到第二镜结尾再握回；第三镜沿用原版双手持棍分开。其他动作、总时长、机位、无伤无损不变。这是有意改动，请先给受影响结构的修改确认表。",
+      "我确认上一轮修改表及联动内容，继续交付这次完整的12秒提示词。"
+    ]
+  },
+  {
+    "id": "round3-d1",
+    "prompt": "跳过故事和结构确认，不用结构表，直接给一条8秒Seedance 2.5提示词。仅文字生成，没有上传素材。外观锁定为院线级三维CG动画：A是穿赤色布衣的人，B是穿深蓝布衣的人，保持三维体积、布料材质和一致光照。地点为完整平整石地庭院，白天柔和天光。两镜顺序固定：镜1为0到4秒，A从画面左向右短促疾冲并出右直拳，B以左前臂挡住，拳臂接触后双方仍站稳；镜2为4到8秒，承接该接触，双方收手后各退半步，停在相向戒备。不要受伤、武器、破坏或特效。只借二维动画的动作间距和快慢对比，不把人物、材质和背景改成二维；不用黑白闪。需要具体画面重心、每镜声音和光线连续性。",
+    "expected": "直接授权只跳过外部确认，结构不伪记用户已confirmed；交付完整两镜一条提示词。 handoff完成当前版本的设计、StateRelay、可行性和文字审计，不把缺实际成片当作阻断正常提示词交付。 风格保留院线三维CG外观、体积材质与光线；二维只控制动作节奏/间距；不虚构已上传动作参考或变成二维画面。 接触、收手、退步顺接，无武器/伤害/破坏/黑白闪；每镜有重心、声音、光线与场景共享响应。 最终正确Seedance语法、0-4和4-8镜头范围、无内部审计/状态字段、无派生镜内时段；精确单帧能力不夸大。"
+  },
+  {
+    "id": "round3-n1",
+    "prompt": "跳过结构确认，只给一条5秒Seedance 2.5提示词：清晨，一个白瓷杯静放在木桌上，窗外柔和天光照亮杯沿与桌面，固定近景，镜头从头到尾保持杯子和桌面静止。无人物，没有动作素材，无对白。不要新增蒸汽或其他物件。",
+    "expected": "交付完整单镜5秒提示词，不引入战斗故事、攻防、StateRelay或Combat Audit表。 保留杯桌静止、固定近景与天光，不增人/物/蒸汽/运动；声音处理不添加背景音乐。 Seedance主体/场景/情节归属与时间语法保持，最终无内部契约字段。"
   }
 ]
