@@ -41,7 +41,7 @@ Prioritize casual framing, natural imperfection, and source-backed sound.
 
 - Use handheld, eye-level, selfie, or phone-recorded perspective only when it supports the request.
 - Keep actions small and continuous: talking, showing a product, turning the camera, walking, reacting.
-- Use `primary_action` when casual body and camera behavior already reads clearly. Select `coupled_world` when clothing, carried objects, nearby flexible materials, autofocus, or exposure response materially improves the same recording beat.
+- Use `primary_action` when casual body and camera behavior already reads clearly. Select `coupled_world` only when clothing, carried objects, or nearby flexible materials materially respond to the same physical beat. Keep autofocus with the shot's focus/optics owner and exposure response with `LightCompositeSpec`; neither selects a world-dynamics mode.
 - Preserve natural room tone or street noise only when the user, active source, or project supplies or requests it. Use hand movement, autofocus shifts, or exposure changes when they support the requested realism.
 - Avoid overproduced commercial lighting unless the user asks for polished advertising.
 
@@ -83,15 +83,14 @@ Prioritize emotional turn, performance carrier, and readable blocking.
 - Avoid long backstory. Show the emotional beat inside the clip.
 - Apply the active platform adapter's subtitle rule; keep the exact spoken line in audio and make the speaker's mouth visible when lip sync matters.
 
-## Visible Text, Subtitle, Or Logo
+## Visible Text Or Logo
 
-Use only when the current user instruction or active project requests visible text or overrides the no-subtitle default.
+Use only when the current user instruction or active project requests diegetic text, a title, an advertising line, a label, or a logo. Subtitle overlays remain disabled by the standing user lock.
 
 - Write visible text as: exact content + appearance timing + frame position + appearance method + color/style when needed.
-- Label requested subtitle text in ordinary Chinese and state that it follows the spoken rhythm.
 - Prefer common characters; avoid rare characters and special symbols.
 - For an exact logo, font, or layout, assign a dedicated image reference with the narrow `graphic`, `text`, or `layout` borrowed dimension instead of relying on description alone.
-- Keep visible text separate from dialogue. Use ordinary quotation marks for dialogue; write discrete sound effects, music, and subtitles in natural Chinese only when active.
+- Keep visible text separate from dialogue. Use ordinary quotation marks for dialogue and write discrete sound effects in natural Chinese only when active; do not convert dialogue into subtitles.
 
 ## Audio Beat And Rhythm Reference
 
@@ -102,7 +101,7 @@ Prioritize beat ownership and action timing.
 - When that beat map materially controls the result, render the selected event-to-beat relation in the owning shot or operation sentence; do not leave the mapping only in analysis or expose an internal timing field. Bind the material once, then name only the relevant strong beat, rhythm change, speech turn, or sound cue where the visual event responds.
 - Keep that beat map causal unless the current user or authoritative source supplies exact internal timing; do not convert rhythm analysis into invented shot-body second ranges.
 - Keep the number of beat events realistic for the duration.
-- When a music-bearing reference is assigned only to rhythm, do not leak its song, lyrics, or BGM into the clip. If the user or project explicitly authorizes its music as an audio dimension, preserve that audio assignment and the exact requested constraints.
+- A music-bearing reference may supply rhythm or beat timing only; do not carry its song, lyrics, or BGM into a new/reference-generated clip. A source operation may preserve music already embedded in its boundary state but may not introduce a new track.
 
 ## 预演
 
@@ -134,7 +133,7 @@ Prioritize clarity, cause-effect, and readable states.
 
 - Define the thing being explained and the visible before/after change.
 - Use simplified symbolic visualization when microscopic, medical, mechanical, or abstract processes are involved.
-- Keep labels, diagrams, subtitles, or narration out unless the current user instruction or active project requires them.
+- Keep labels, diagrams, or narration out unless the current user instruction or active project requires them; subtitle overlays remain disabled.
 - End on a clear comparison or stable explanatory frame.
 
 ## Multi-Video Fusion Or Bridge
@@ -144,7 +143,7 @@ Prioritize inheritance and transition logic.
 - Record each video's operational role first. A true bridge uses `bridge_predecessor` and `bridge_successor`; a non-bridge video that supplies `camera`, `action` / `motion`, `look`, or `timing` is a `reference_input` with that separate borrowed dimension. Never use a borrowed dimension as an operational-role name.
 - For a true bridge/track-completion task, address the two sources directly in order: `视频1，[可见过渡]，接视频2`; use plain upload-order labels by default and do not describe either source as an ordinary reference video.
 - Start from the previous clip's ending visible state and converge on the next clip's opening visible state; do not protect only the first boundary.
-- Treat the generated transition as a new visible segment. Resolve structure review for its camera/framing, visible roster, spatial route, action, and endpoint before rendering the complete bridge command; inherited source boundaries remain locked.
+- Treat the generated transition as a new visible segment. Resolve its complete structure field set from `SKILL.md`, including viewer priority and focal-plane state, then resolve its current sound and light-composite reviews before rendering the complete bridge command; inherited source boundaries remain locked.
 - Write the transition as visible action, material, camera movement, or matching shape/color, not as "connect to next".
 - Preserve identity, lighting, and spatial direction unless the user asks for a deliberate change.
 - Record a start-frame image as `start_frame_source` and an end-frame image as `end_frame_target`. Assign only the authorized boundary lock scope—selected composition, pose, identity, light, material, or visible-roster attributes, or `full_frame` when the whole frame is explicitly authoritative. These are boundary roles, not borrowed dimensions; do not recast either image as `reference_input` unless the user explicitly assigns that additional role.

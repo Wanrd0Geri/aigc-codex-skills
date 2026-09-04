@@ -84,9 +84,10 @@ Vary response rather than writing synchronized motion: light fabric reacts soone
 
 Evaluate each driver independently:
 
-- When one driver remains active and useful across every shot in the complete Seedance generation command, place its direction, intensity, and background baseline once in `场景：`.
+- When one non-light physical driver remains active and useful across every shot in the complete Seedance generation command, place its direction, intensity, and background baseline once in `场景：`.
 - When a driver serves only some shots, changes direction or state, or belongs to a sequence containing `primary_action` or `intentional_stillness`, place it only in the owning `情节：` shots.
 - Put local body, cloth, prop, environment, contact, material change, and residual response in the owning `情节：` shot.
+- For moving, flickering, switched, or occluded light, render only its phase, transition, response delay, and residual timing here. Pass that current state to `LightCompositeSpec`, which alone renders source authority, subject/material receivers, shadows/reflections, and camera-visible exposure; do not write a second light-receiver chain.
 - Use the same ownership in platform-neutral prose without Seedance headings.
 - Operation commands use their own grammar and include only dynamics needed at the seam or inside the requested change.
 
@@ -96,12 +97,12 @@ When the current user explicitly asks for a flowing world, environmental dynamic
 
 ## Structure-table input
 
-The table in `SKILL.md` owns its columns. For a review-required pending unit, supply only continuity-critical content to `光线与环境连续性`:
+The table in `SKILL.md` owns its columns. `lighting-compositing.md` supplies the required shared-light relation to `光影、合成与环境连续性`; world dynamics may add only continuity-critical motion content to the same cell:
 
 - For source-backed or inherited continuity, write the source plus only a direction, active phase, disturbance, or residual state whose preservation changes the shot.
 - For `intentional_stillness`, write the explicit stable fields and sole activity beat when useful.
 - For a materially required unreadable fact, write that fact followed by `待确认` and keep the review pending.
-- Use `—` when no cross-shot world fact is locked. Keep mode selection and receiver-chain design internal until structure review resolves.
+- Do not replace the required light/composite relation with `—`. When no cross-shot world-motion fact is locked, add no world-motion clause. Keep mode selection and the detailed dynamic receiver chain internal until structure review resolves.
 
 Examples: `继承视频1右向左风向，水面余波保持当前相位。` / `背景与灯光保持静止，仅腕表匀速转动。` / `视频中的风向无法可靠辨认，待确认。`
 

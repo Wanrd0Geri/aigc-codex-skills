@@ -41,7 +41,7 @@ Use `map_scope: composition` for frame, crop, camera side, screen/depth position
 
 Default to a camera-facing straight view of the structure-resolved or source composition, with the same aspect ratio, frame edges, crop, subject scale, screen position, depth overlap, and occlusion. It is not a bird's-eye floor plan. A body or object cut by the source frame stays cut; preserve hidden and off-frame boundaries and every established person, furniture item, prop, and landmark. When an explicit route cannot be read in this view, add a separate sparse route overlay or route map; keep the camera-view composition map unchanged.
 
-Narrative gaze and eye target remain owned by `shot-craft.md`. If a gaze direction is structurally critical to the composition, resolve it in `动作、对白与终点` before the Diagram step; the map may show only the resulting coarse head facing.
+Narrative gaze and eye target remain owned by `shot-craft.md`. If a gaze direction is structurally critical to the composition, resolve its attention hierarchy in `画面重心` and its visible action consequence in `动作与终点` before the Diagram step; the map may show only the resulting coarse head facing.
 
 A Diagram may check a shot against its `SceneSpatialContract`, but it cannot establish regions, connectivity, world distances, or other cross-shot topology. A single source composition has the same boundary.
 

@@ -43,7 +43,7 @@ Use this ordered structure only after every affected shot passes the structure-d
 
 For two or more shots, multiple cut points, or a complete sequence, this structure produces one unified command with one `情节：` timeline. Separate prompts are allowed only for a single shot or an explicit user request for separate outputs. The timeline is not a set of independent prompt cards: each shot must restate its own current visible state, spatial relation, action phase, camera-visible result, and terminal state. Do not use `同上一镜`、`继续刚才`、`承接上一镜` or similar relative wording as a substitute for that state.
 
-For each shot, declare only the fields relevant to its current visible set and execution: current visible semantic assets/subjects; current spatial relationship and state; current held, connected, or contacted object; current visible lighting result or light-source direction; current action phase; current dialogue/sound; and the visible endpoint. Omit absent fields. Bind global material labels and identity/appearance responsibilities once in their owning headings, then use semantic names in shot prose; never repeat `图片N`/`视频N` labels per shot. A pure environment shot receives no human-only fields.
+For each shot, declare only the fields relevant to its current visible set and execution: current visible semantic assets/subjects; current spatial relationship and state; current held, connected, or contacted object; current visible lighting result or light-source direction; current action phase; current dialogue/sound; and the visible endpoint. Omit absent optional fields; the required focus and light-composite relations remain visible, while only the audible prose may be suppressed under the explicit sound-description exception below. Bind global material labels and identity/appearance responsibilities once in their owning headings, then use semantic names in shot prose; never repeat `图片N`/`视频N` labels per shot. A pure environment shot receives no human-only fields.
 
 ```text
 主体：
@@ -57,7 +57,7 @@ For each shot, declare only the fields relevant to its current visible set and e
 
 情节：
 [required]
-镜头1（0-5秒）：[framing/camera]；[current visible state and space]；[action/performance/dialogue/local sound]；[camera's visible result]；[visual focus when needed]；[ending or handoff].
+镜头1（0-5秒）：[framing/camera]；[current visible state and space]；[current light/composite relation]；[action/performance and causal response]；[camera's visible result]；[visual focus]；[per-shot sound, including dialogue/narration when active]；[ending or handoff].
 
 [standing final sentence for new/reference generation]
 不添加字幕，不添加背景音乐。
@@ -95,25 +95,29 @@ Use this stable order:
 
 1. shot size, angle, and camera mode
 2. subject's current visible state and material spatial relationship
-3. action, performance, dialogue, local body/material/environment coupling, and causal response
-4. main camera movement and the visible result it creates
-5. visual focus only when several visible elements compete
-6. ending state, residual world motion, or next-shot handoff
+3. current subject/scene light-composite relation at the smallest visible scope
+4. action, performance, local body/material/environment coupling, and causal response
+5. main camera movement and the visible result it creates
+6. one visual focus and any supported attention/focal-plane shift
+7. per-shot sound: dialogue/narration, causal foley, active ambience, or explicit no-new-event/silence; render spoken content here once rather than duplicating it in the action clause, and never add BGM
+8. ending state, residual world motion, or next-shot handoff
 
-Omit an irrelevant field instead of inserting filler. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, or repositioned.
+Do not omit visual focus, per-shot sound, or the current light-composite relation for a generated, rebuilt, extended, or bridged visible unit. Keep each concise. The sole sound exception is a current-user request to omit all sound-description prose; retain its audible state internally and omit only that prose. Other irrelevant fields may be omitted. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, optical zoom, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, softened, compressed, expanded, or repositioned. Never substitute a dolly/track for a locked optical zoom.
 
 ## Audio and visible text
 
 Use the natural-language pattern demonstrated by the observed optimizer example:
 
 - dialogue: `角色说道：“台词。”`
-- persistent ambience: write it inside `场景：`
-- local sound effect: write it inside the relevant shot
-- music or subtitle: label it in ordinary Chinese only when active
+- persistent ambience: establish it inside `场景：`, then state its current audible presence compactly in every shot
+- local sound effect: write it inside the relevant shot and tie it to its visible cause
+- subtitles and BGM remain inactive under the standing user lock; diegetic visible text keeps its separate text owner
 
-Do not create a standalone sound section. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters.
+Do not create a standalone sound section. Every generated, rebuilt, extended, or bridged visible unit must contain one audible clause. When it has no supported dialogue, narration, foley, or ambience change, state `无对白，无新增声音事件` or the source-locked silence rather than inventing one. A current-user request for silence still renders the locked silence; a request to omit all sound-description prose retains the plan internally but suppresses only that per-shot prose. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Sound effects are allowed; BGM is not.
 
-For Seedance 2.5 new/reference generation, end the prompt with the standalone sentence `不添加字幕，不添加背景音乐。` outside any heading and do not attach it to the final shot. A background-music or subtitle field becomes active only through the current user, an active project/source requirement, or a reference input explicitly assigned the `audio` or `text` borrowed dimension. The mere presence of music or subtitles in a readable asset does not activate that field. Apply precedence separately: active background music removes only `不添加背景音乐`; active subtitles remove only `不添加字幕`; when both are active, omit the standing sentence. Edit, extension, and bridge preserve source-backed audio/text under their operation rules and never receive this standing generation sentence automatically. `不添加字幕` bans subtitle overlays, not source-backed signs, logos, titles, or other diegetic visible text. `不添加背景音乐` does not suppress active dialogue, ambience, or action sound. A current instruction to omit all sound-policy prose overrides rendering the background-music clause for that output.
+Within the dialogue, narration, ambience, foley, and effect-sound fields allowed by the standing lock, use this authority for the audible plan: current user -> active project/source -> a low-risk sound directly caused by the visible action or environment -> explicit no-new-event/silence. Rain, a visible footstep, cloth contact, a door, water, or an impact may supply its ordinary causal sound when the current shot shows that cause. Do not invent an offscreen crowd, animal, vehicle, device, alarm, voice, music, or story cue merely to fill the cell.
+
+For every Seedance 2.5 new/reference generation, always end the prompt with the standalone sentence `不添加字幕，不添加背景音乐。` outside any heading and do not attach it to the final shot. This is a user-owned standing lock, not a fallback: a brief, active project/source, reference audio/text, or request-local content instruction cannot remove either clause or activate subtitles/BGM. Only an explicit request to revise this standing Skill rule may change it. `不添加字幕` bans subtitle overlays, not source-backed signs, logos, titles, or other diegetic visible text. `不添加背景音乐` does not suppress dialogue, narration, ambience, action foley, or effect sound. A request to omit sound-description prose suppresses only per-shot sound prose and does not remove this final sentence. Edit, extension, and bridge preserve already embedded source audio/text under their operation rules, add no new subtitles or BGM, and never receive this generation sentence automatically.
 
 For visible text, state exact content, timing, frame position, appearance method, and only necessary style. Use a dedicated material responsibility for exact logo, typography, or layout.
 
@@ -124,7 +128,8 @@ For visible text, state exact content, timing, frame position, appearance method
 - Render each active stable-topology fact once at the smallest common scope. Multiple locations keep their topology with their owning shots or segments. Keep internal contract names out of the final prompt.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Apply `VisibleSetGate` to every shot, including pure environment and object shots. Do not write a character field, human body cue, gait, clothing, or hair for a shot whose current visible set contains no such subject; a pure environment clip may omit `主体：` entirely, and an environment/object interval inside a mixed clip receives only its visible environment/object facts.
-- Treat internal viewer priority and rendered `画面重心` as one field.
+- Treat confirmed viewer priority and rendered `画面重心` as one field, and render it once in every shot.
+- Apply `LightCompositeSpec` from `lighting-compositing.md`: bind a stable source anchor at its smallest shared scope and keep a local, moving, or effect source in its owning shot; every shot owns its current subject-facing response plus the smallest contact, nearby-receiver, depth, atmosphere, or exposure cue needed to show one shared light system.
 - Do not repeat a material label, global scene description, world driver, character appearance, camera rule, or negative instruction in every shot.
 - Do not repeat exact timing inside a shot after its range is established in the heading unless the explicit internal-time exception applies.
 - Do not use a generic suffix such as `微风吹动衣摆和树叶，水面泛起涟漪`. Select only visible receivers, connect them to one supported cause, and vary timing and amplitude by material and depth.

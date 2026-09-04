@@ -25,6 +25,8 @@ Use one short Chinese sentence when the subject, action, and continuity are obvi
 
 Write only the needed subject, action, and essential continuity. Do not add extra camera, lighting, mood, material, sound, or stability language just to make the shot look professional.
 
+The active adapter's required focus, audible state, and minimum light-composite relation are not optional enrichment. Compress them into the same short sentence at their minimum useful scope; do not expand them into extra craft detail.
+
 ### Standard Shot
 
 Use one to two compact Chinese sentences when the shot needs moderate control:
@@ -65,7 +67,7 @@ Apply the shot sentence order from the active platform adapter; this reference d
 
 Before choosing a shot size, treat every body part, prop, subject, and landmark required in the same frame as one minimum visible envelope. The framing must contain that envelope. If it cannot, remove only mutable visibility detail, use a visible reframing when camera movement is allowed, or surface the hard-lock conflict.
 
-- Establish one viewer priority and intended crop before adding contextual visibility. Render it as `画面重心` only when several visible elements would otherwise compete.
+- Establish one viewer priority and intended crop before adding contextual visibility. Render that priority once as `画面重心` in every generated, rebuilt, extended, or bridged visible unit; add a focus shift only when the shot supports one.
 - For a tight shot, use observable boundaries such as what the upper and lower frame edges cut, which body parts dominate, and which environment elements remain partial or out of focus.
 - Keep world-continuity details internal when they do not need to appear in this shot. Do not ask a chest-up frame to also show feet, a floor contact point, and a complete doorway merely to prove where the subject stands.
 - If two locked requirements need incompatible visible envelopes at the same boundary, state the conflict and recommend which framing purpose to protect. Do not repeat `紧近景` or add a negative list as a substitute for resolving it. Do not invent a reframing move when the camera or framing is locked.
@@ -91,29 +93,28 @@ Choose optics from the visible purpose rather than decorating every shot with a 
 - environment or choreography: preserve depth, geography, and route
 - detail or product: protect surface, edge, label, and focus transition
 
-Describe the result the model must show: camera distance, near/far perspective, background compression or expansion, environment readability, foreground exaggeration, subject separation, and depth-of-field behavior. Preserve an exact focal length, aperture, or FOV only when the user or source locks it; pair it with its visible consequence. Do not invent precise millimeters or optical parameters merely to sound professional.
+Describe the result the model must show: camera distance, near/far perspective, background compression or expansion, environment readability, foreground exaggeration, subject separation, depth-of-field behavior, and motion blur only when it materially changes action readability. Preserve an exact focal length, aperture, FOV, shutter, or motion-blur value only when the user or source locks it; pair it with its visible consequence. Do not invent precise optical parameters merely to sound professional. Motion blur is a shot/camera execution field; changing it preserves structure unless its dependency closure changes a listed structure field such as viewer priority, focal-plane state, action readability, or endpoint.
 
 Use one optical character within a shot. A dolly may change camera distance while preserving that character; a deliberate zoom must state the visible perspective/framing result. A cut may change optics, but the new choice must still agree with the structure-resolved crop, visible envelope, and spatial continuity. Check for accidental lens drift when a modification changes camera position or framing.
 
 ## Lighting Direction And Exposure
 
-Treat lighting as world-space geometry, not a mood adjective. When light materially affects readability or continuity, resolve this chain:
+Treat lighting as world-space geometry, not a mood adjective. `lighting-compositing.md` is the single owner of light authority and the mandatory generated-shot response chain. This section supplies only the camera-facing and crop-visibility constraints that chain must satisfy:
 
 `physical source -> world direction -> subject lit and shadow sides -> camera relation -> visible result`
 
-Record only the fields that change the image:
+Record only the constraints that change what the camera can read:
 
-- primary source and location: sun, window, practical lamp, fire, screen, or authorized effect
-- world direction and height
+- the camera relation to the already established source and world direction
 - whether the camera sees mainly the lit side, shadow side, rim, silhouette, or mixed planes
 - subject exposure and face/eye readability
 - background exposure and separation
 - important highlight, reflection, translucent, wet, metal, or edge-light receivers
 - the neighboring shot state that must remain continuous
 
-Write one compact source-direction-result sentence for a simple stable setup. Add exposure separation, receivers, or cross-shot continuity only for side/back/low-key light, moving or occluded light, reflective/translucent materials, multiple shots in one space, or a lighting-related failure. Do not add a lighting paragraph when the source has no material effect on the requested result.
+For a simple stable setup, pass these constraints into the one compact source-direction-result sentence owned by `LightCompositeSpec`; do not render a second lighting sentence. The structure table and every generated/rebuilt/extended/bridged unit still need that minimum shared-light relation; add further exposure separation, receivers, or cross-shot continuity only for side/back/low-key light, moving or occluded light, reflective/translucent materials, multiple shots in one space, or a lighting-related failure.
 
-A camera move or cut changes which lit plane the camera sees; it does not move the sun, window, lamp, or fire. Recalculate the camera-to-light relation after every camera-side change. Keep static source, direction, exposure, and highlight ownership here. Let `world-dynamics.md` own moving-light phase, shadow/reflection motion, occlusion, flicker, receiver response, and residual continuity.
+A camera move or cut changes which lit plane the camera sees; it does not move the sun, window, lamp, or fire. Recalculate the camera-to-light relation after every camera-side change and return that constraint to `LightCompositeSpec`. Let `SceneSpatialContract` retain a fixed source's identity and world location when cross-shot topology requires it; let `lighting-compositing.md` own static intensity/exposure and each current visible subject, shadow, reflection, and exposure result; let `world-dynamics.md` own moving-light phase, occlusion change, flicker, response delay, and residual timing. Render only the single integrated receiving result.
 
 ## Visual Specificity Pass
 
@@ -191,6 +192,6 @@ When the user requests dialogue, speech, lip sync, or visible mouth movement:
 - Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
 - For Seedance-family output, use the active Seedance adapter for dialogue and sound placement. For platform-neutral output, preserve the exact line and ownership in ordinary natural language.
 - Apply audio and visible-text rendering rules from the active platform adapter; this craft reference does not redefine them.
-- Write subtitle content only when the current user, active project/source, or an explicitly authorized text reference requires it. An adapter's trailing `不添加字幕` sentence is a negative default, not subtitle content.
+- Keep subtitle overlays disabled under the standing user lock. Requested diegetic signs, logos, titles, labels, or advertising text retain their normal visible-text owner and are not subtitles.
 
 If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.

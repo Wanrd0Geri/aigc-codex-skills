@@ -50,6 +50,8 @@ Never change the value or meaning of:
 
 Do not turn `严格编辑视频1` or `向后延长视频1` into `参考视频1` merely because the latter reads more smoothly. Normalizing a supplied handle or UUID to `视频1` must not change which asset the command targets.
 
+For a new/reference-generation artifact, the standing user lock in `SKILL.md` supersedes lower-authority brief, project/source, or reference music/subtitle content: remove those instructions and retain the final no-subtitle/no-BGM policy. A current-user request to add BGM or subtitles that does not explicitly revise the standing rule is a direct conflict; return it through the intent/fact gate instead of silently repairing a partial final artifact. Language-only cleanup may preserve already embedded source music/subtitles only when the artifact is an edit, extension, or bridge operation rather than new generation.
+
 Planning-derived or earlier-model shot-body subdivisions are not protected merely because they appear in the current wording. Preserve them only when the current user, an authoritative source, or the accepted version specifically records them as timing locks; otherwise let the adapter replace them with causal phase language during complete-unit recompilation.
 
 ## Post-adapter audit

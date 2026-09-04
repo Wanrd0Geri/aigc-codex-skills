@@ -1,6 +1,6 @@
 interface:
   display_name: "AIGC Video"
-  short_description: "默认先确认新镜头结构，明确授权直出；保持空间、动态与修复连续。"
-  default_prompt: "用 $aigc-video 根据 brief、素材或成片写出、优化或回检视频提示词；默认先确认新结构，明确要求跳过时直接编译，并完整复核空间、动态与修改影响。"
+  short_description: "先确认镜头重心、空间、声音与光影合成，再编译完整视频提示词。"
+  default_prompt: "用 $aigc-video 根据 brief、素材或成片写出、优化或回检视频提示词；默认先确认镜头重心、空间、动作、声音与光影合成关系，明确要求跳过时直接编译，并完整复核动态、连续性与修改影响。"
 policy:
   allow_implicit_invocation: true

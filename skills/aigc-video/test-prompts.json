@@ -50,9 +50,9 @@
     "expected": "Leads with the usable final prompt, uses at most one useful note outside it, and does not expose classification codes, workflow labels, ledgers, or a four-part process report."
   },
   {
-    "id": "video-vibe-11-explicit-music-overrides-default",
-    "prompt": "结构已经确认。用 $aigc-video 按 Vibe 的方式写10秒最终 Seedance 提示词：黑暗房间里，孩子看着门缝里的光，旁白必须保留“我一直在这里”，背景音乐是很轻的八音盒。",
-    "expected": "Preserves the narration text “我一直在这里” exactly and honors the explicit music request instead of applying the personal no-music default. It rewrites only supported visual and performance language."
+    "id": "video-vibe-11-complex-sfx-without-music",
+    "prompt": "结构已经确认。用 $aigc-video 按 Vibe 的方式写10秒最终 Seedance 提示词：黑暗房间里，孩子看着门缝里的光，旁白必须保留“我一直在这里”；门外暴雨持续，雨点敲窗，老旧门铰链轻响，孩子抬手时有衣袖摩擦，门缝被推开时出现短促木板摩擦声，远处压着一声闷雷。不要字幕，不要背景音乐。",
+    "expected": "Preserves the exact narration and builds a causal layered audible plan from rain ambience, window impacts, hinge, sleeve, wood, and distant thunder without inventing another source. It keeps foreground and background sound relations readable, adds no BGM or subtitle, and ends with the standalone sentence 不添加字幕，不添加背景音乐。"
   },
   {
     "id": "video-vibe-12-product-intent-not-dramatized",
@@ -67,7 +67,7 @@
   {
     "id": "video-seedance-01-dialogue-missing-blocker",
     "prompt": "给我一个15秒 Seedance 提示词：成年男演员在片场吃意面，一镜到底，有两句台词，要口型同步，最后遮住镜头黑场。",
-    "expected": "Recognizes that exact dialogue is required for lip sync but absent. It returns the compact one-shot structure-confirmation row, preserves the one-take and black-frame requirements, marks the two exact lines and their ownership 待确认 inside 动作、对白与终点, and folds one grouped dialogue question into the same confirmation round. It does not invent spoken text or render the final prompt."
+    "expected": "Recognizes that exact dialogue is required for lip sync but absent. It returns the compact one-shot structure-confirmation row, preserves the one-take and black-frame requirements, marks the two exact lines and their ownership 待确认 inside 声音, and folds one grouped dialogue question into the same confirmation round. It does not invent spoken text or render the final prompt."
   },
   {
     "id": "video-seedance-02-missing-reference-gate",
@@ -202,7 +202,7 @@
   {
     "id": "video-seedance-18-first-pass-multiref-minimum-sufficient",
     "prompt": "以下三镜结构已经确认。用 $aigc-video 直接写一版可粘贴的15秒 Seedance 最终提示词，三个镜头。古代山林牌坊前，曲伯在牌坊顶部，裘水镜在下方草地。曲伯起身说“若是不信，大可一试。”，身后出现巨大赤红人形法阵，法阵从掌心向裘水镜发射光束；裘水镜展开蓝色半球屏障化解攻击，最后两人恢复一上一下的静止对峙。@图1参考法阵体量、形态和构图关系；@图2参考牌坊、石阶、草地和山林环境；@图3参考裘水镜；@图4参考曲伯；@图5参考攻击光束；@图6参考防御屏障。参考图分工集中在开头说明一次，镜头正文不要重复@图N，每镜写成完整自然段。保留这句对白本身，但不要写音效、环境声、音乐或其他声音描述。第一次生成，请直接给最终提示词，不要解释过程。",
-    "expected": "Produces one ready-to-paste first-pass Seedance prompt with a single compact reference summary using 图片1 through 图片6 and no @ or UUID, followed by exactly three natural shot paragraphs. It preserves both identities, the above/below spatial relationship, exact dialogue, palm-fired attack, shield defense, action order, and final standoff. Shot bodies do not repeat material labels. It uses positive visible staging and does not externalize speculative reference blacklists. Apart from the required dialogue text, it adds no sound effects, ambience, music, audio labels, or sound-design prose."
+    "expected": "Produces one ready-to-paste first-pass Seedance prompt with a single compact reference summary using 图片1 through 图片6 and no @ or UUID, followed by exactly three natural shot paragraphs. It preserves both identities, the above/below spatial relationship, exact dialogue, palm-fired attack, shield defense, action order, and final standoff. Shot bodies do not repeat material labels. It uses positive visible staging and does not externalize speculative reference blacklists. Apart from the required dialogue text, it adds no per-shot sound effects, ambience, audio labels, or sound-design prose, while still ending with the standalone sentence 不添加字幕，不添加背景音乐。"
   },
   {
     "id": "video-seedance-19-observed-formation-complete-shot-repair",
@@ -267,7 +267,7 @@
   {
     "id": "video-neutral-01-final-from-brief",
     "prompt": "双人空间结构已经确认。根据这段描述直接写平台中立的最终视频提示词，不要 Seedance 或其他平台格式：夜雨中，女人在桥下浅水里，男人在桥面，两人不动；镜头最后拉远，同时看见两人和完整石桥。",
-    "expected": "Keeps final-artifact ownership in aigc-video, builds one platform-neutral executable prompt from the brief, preserves both subjects and the terminal wide composition, and omits Seedance anchors, information markers, adapter grammar, and platform claims. It does not route a new final-video request to language-only rewriting."
+    "expected": "Keeps final-artifact ownership in aigc-video, builds one platform-neutral executable prompt from the brief, preserves both subjects and the terminal wide composition, and states in ordinary platform-neutral language that subtitles and background music are disabled. It omits Seedance anchors, information markers, adapter grammar, and platform claims and does not route a new final-video request to language-only rewriting."
   },
   {
     "id": "video-vfx-01-giant-dominance-without-universal-crop",
@@ -322,7 +322,7 @@
   {
     "id": "video-audio-01-ugc-default-no-invented-sound",
     "prompt": "结构已经确认。写一个8秒 Seedance UGC 视频：手持手机拍女孩在便利店门口展示一瓶饮料，动作自然随意。没有提供任何声音要求。",
-    "expected": "Uses visual UGC cues such as casual handheld framing and small continuous actions, invents no room tone, street noise, ambience, action sound, music, or dialogue, and ends with the standalone sentence 不添加字幕，不添加背景音乐。 outside any heading."
+    "expected": "Uses visual UGC cues such as casual handheld framing and small continuous actions, invents no room tone, street noise, ambience, action sound, music, or dialogue, states the explicit per-shot fallback 无对白，无新增声音事件, and ends with the standalone sentence 不添加字幕，不添加背景音乐。 outside any heading."
   },
   {
     "id": "video-order-01-subject-action-before-camera",
@@ -350,9 +350,9 @@
     "expected": "Keeps action, scene, duration, and terminal letter state in one shared core, while placing only the explicitly different fixed-versus-push camera field in the two variant overlays. It does not reject the user-scoped camera difference or allow any unscoped semantic field to drift."
   },
   {
-    "id": "video-text-02-subtitle-without-sound-prose",
-    "prompt": "结构已经确认。写一个6秒 Seedance 提示词：女孩站在车站，最后出现字幕【明天见】。不要写音效、环境声、音乐或其他声音描述。",
-    "expected": "Preserves the explicitly requested visible subtitle 【明天见】 while omitting sound effects, ambience, music, and audio-policy prose. It does not misclassify the subtitle as sound description or remove it under the no-audio request."
+    "id": "video-text-02-title-without-sound-prose",
+    "prompt": "结构已经确认。写一个6秒 Seedance 提示词：女孩站在车站，最后画面中央出现标题文字【明天见】，这是片名卡，不是字幕。不要写音效、环境声或其他逐镜声音描述。",
+    "expected": "Preserves the exact title-card text 【明天见】 with its visible-text ownership and does not misclassify it as a subtitle. It omits per-shot sound prose as requested while retaining the internal audible state, adds no subtitle or BGM, and still ends with the standalone sentence 不添加字幕，不添加背景音乐。"
   },
   {
     "id": "video-boundary-02-text-only-boundaries",
@@ -450,9 +450,9 @@
     "expected": "Renders 图片1 once under 主体 as 苏云的外貌与服装来源, renders no generic 参考素材 heading, and uses only 苏云's semantic name afterward. It asks no presentation-only choice."
   },
   {
-    "id": "video-audio-02-standing-default-fieldwise-override",
+    "id": "video-audio-02-standing-lock-blocks-bgm",
     "prompt": "结构已经确认。写8秒 Seedance 2.5：女孩在雨夜车站等人，背景音乐使用我提供的钢琴曲，不要字幕。",
-    "expected": "Preserves the explicitly supplied piano music, removes only the conflicting background-music clause, and ends with the standalone sentence 不添加字幕。 It does not drop the music, retain a contradictory no-background-music instruction, or invent an alternative audio choice."
+    "expected": "Detects that the requested piano BGM directly conflicts with the standing no-BGM Skill lock and does not render a final or partial prompt. It identifies the single conflict and asks whether the user intends to revise that standing Skill rule; it does not silently activate, replace, or omit the requested music inside an otherwise final artifact."
   },
   {
     "id": "video-audio-03-operation-preserves-source-audio-text",
@@ -460,14 +460,14 @@
     "expected": "Uses strict edit grammar for the visual-only interval change, preserves the source music, dialogue, and subtitles exactly, and does not append the new/reference standing subtitle/background-music sentence as an edit command. It returns one complete operation command rather than an isolated field, replacement sentence, or ordinary generation-shot prompt."
   },
   {
-    "id": "video-audio-04-project-subtitle-fieldwise-override",
+    "id": "video-audio-04-standing-lock-blocks-project-subtitle",
     "prompt": "结构已经确认。项目规范要求片尾字幕固定为【明天见】，除此以外没有音乐要求。写一个6秒 Seedance 2.5 车站告别镜头。",
-    "expected": "Treats the active project subtitle as authoritative, preserves the exact visible subtitle, removes only the subtitle clause, and ends with the standalone sentence 不添加背景音乐。 It does not remove the project text or invent music."
+    "expected": "Keeps the user-owned standing lock above the lower-authority project subtitle field, omits the subtitle instead of treating 【明天见】 as active visible content, and renders no BGM. It preserves the exact standalone final sentence 不添加字幕，不添加背景音乐。 and does not invent replacement text or music."
   },
   {
-    "id": "video-audio-05-both-active-omit-standing-tail",
+    "id": "video-audio-05-subtitle-and-bgm-one-conflict",
     "prompt": "结构已经确认。写一个8秒 Seedance 2.5：背景音乐使用音频1，片尾出现字幕【一路顺风】。没有其他全局限制。",
-    "expected": "Activates music through the explicitly assigned audio reference and subtitles through the current instruction, removes both standing clauses, and omits the entire final audio-policy sentence. It preserves the exact subtitle and does not invent a 全局补充 heading."
+    "expected": "Detects one grouped conflict between the requested subtitle/BGM package and the standing no-subtitle/no-BGM Skill lock, then withholds the complete final prompt until that conflict is resolved. It asks once whether the user intends to revise the standing Skill rule and does not produce a partial artifact, activate audio1, preserve only one forbidden field, or invent a 全局补充 heading."
   },
   {
     "id": "video-subject-01-stable-text-subject-heading",
@@ -512,7 +512,7 @@
   {
     "id": "video-structure-review-01-unconfirmed-multicharacter-pending",
     "prompt": "视频1是五个人形粗模，图片1到图片5是五名正式角色，沿用视频1的时长和切镜。六个镜头里有人物同框、前后景遮挡和横移揭示顺序，结构还没有确认。罗大娘要克制地据理力争，徐大叔有些微醺。请写最终 Seedance 提示词。",
-    "expected": "Does not render a final platform prompt. It outputs only the canonical six-column 镜头结构确认 table for all six shots: 镜头, 构图与机位, 人物与空间, 动作、对白与终点, 简短表演意图, 光线与环境连续性. It keeps performance micro-detail and full world-response design out of the table, marks unreadable material facts 待确认 rather than guessing, and ends with one grouped confirmation request without old gate or evidence-state labels."
+    "expected": "Does not render a final platform prompt. It outputs only the canonical eight-column 镜头结构确认 table for all six shots: 镜头, 构图与机位, 画面重心, 人物与空间, 动作与终点, 简短表演意图, 声音, 光影、合成与环境连续性. Every row names one viewer priority, one audible plan, and one compact shared-light relation; it keeps performance micro-detail, detailed dynamic receiver design, and software compositing recipes out of the table, marks unreadable material facts 待确认 rather than guessing, and ends with one grouped confirmation request without old gate or evidence-state labels."
   },
   {
     "id": "video-structure-review-02-single-character-still-confirms",
@@ -532,7 +532,7 @@
   {
     "id": "video-structure-review-05-replacement-asset-field-scope",
     "prompt": "上一轮六镜结构已经确认。现在用视频2替换视频1，只更新镜头3和镜头4的人物站位、遮挡和运镜；角色身份、15秒总时长、镜头数量、顺序和全部台词不变。",
-    "expected": "Invalidates and rebuilds only shots 3 and 4 fields sourced from the replaced layout dimensions, preserves identity, total duration, shot count and order, exact dialogue, and unaffected world dynamics, then returns only the affected canonical six-column structure rows for confirmation. 光线与环境连续性 contains only inherited or continuity-critical facts. It does not clear the whole MotionSpec, retain stale 视频1 geometry, or render the final prompt before reconfirmation."
+    "expected": "Invalidates and rebuilds only shots 3 and 4 fields sourced from the replaced layout dimensions, preserves identity, total duration, shot count and order, exact dialogue, audible plans, light anchors, and unaffected world dynamics, then returns only the affected canonical eight-column structure rows for confirmation. It recomputes viewer priority and focal-plane state against the new blocking, occlusion, and camera, carrying an accepted value only when it still remains valid; it also recomputes the camera-visible response to the preserved world-light anchor. The two rows use the full current header and say 沿用已确认 only in fields that passed dependency recheck. It does not clear the whole MotionSpec, retain stale 视频1 geometry, or render the final prompt before reconfirmation."
   },
   {
     "id": "video-structure-review-06-performance-posture-inside-envelope",
@@ -637,37 +637,37 @@
   {
     "id": "video-world-review-01-pending-planned-column",
     "prompt": "8秒单镜最终 Seedance：固定中景，女孩在画面左侧，男孩在右侧，两人同排无遮挡。山风从左后方吹来，女孩转头看向男孩。站位都按这段文字，不用从图片读取。",
-    "expected": "Returns only one compact 镜头结构确认 row and one confirmation request. The row preserves the fixed medium shot, left-right order, head-turn action, and source-supplied left-rear wind in 光线与环境连续性 without designing a full receiver chain or exposing evidence-state labels. It does not render the final prompt in the same turn."
+    "expected": "Returns only one compact eight-column 镜头结构确认 row and one confirmation request. The row preserves the fixed medium shot, left-right order, head-turn action, and source-supplied left-rear wind. It names one viewer priority, gives an explicit no-dialogue/current ambience sound plan, and uses 光影、合成与环境连续性 for one compact source-subject-ground/depth integration relation plus the wind continuity, without exposing evidence-state labels or a detailed dynamic receiver chain. It does not render the final prompt in the same turn."
   },
   {
     "id": "video-world-review-02-unresolved-source-dynamic-pending",
     "prompt": "双人站位已经用文字写清：女人在左、男人在右、同排无遮挡。但视频1里的风向和浅水波纹传播方向必须原样继承，我看不清是向左还是向右。请写最终 Seedance 提示词。",
-    "expected": "Returns only the compact 镜头结构确认 table. 光线与环境连续性 names the unreadable required wind and ripple directions and ends with 待确认; the grouped confirmation request asks for clearer evidence or a direction decision plus the missing total duration. It does not expose old gate-state labels, guess directions or seconds, render a final prompt, or replace them with generic motion."
+    "expected": "Returns only the compact eight-column 镜头结构确认 table. 光影、合成与环境连续性 includes the current shared-light relation and names the unreadable required wind and ripple directions as 待确认; 声音 still states the current audible plan. The grouped confirmation request asks for clearer evidence or a direction decision plus the missing total duration. It does not expose old gate-state labels, guess directions or seconds, render a final prompt, or replace them with generic motion."
   },
   {
     "id": "video-world-review-03-intentionally-still-cell",
     "prompt": "8秒单镜最终 Seedance：正面中景固定机位，画面左边是乐奶奶，右边是罗大娘，两人同排站立无遮挡。做成刻意静止的压抑对峙，人物、衣服、背景和灯光都不动，只允许罗大娘说“走吧。”",
-    "expected": "Returns only one compact 镜头结构确认 row and one confirmation request. In 光线与环境连续性 it preserves the explicit still body, clothing, background, and light boundary and the spoken line as the only active beat, without status labels or invented breath, wind, cloth settling, particles, or camera motion. It does not render the final prompt until confirmation."
+    "expected": "Returns only one compact eight-column 镜头结构确认 row and one confirmation request. 动作与终点 contains only the visible speaking action and endpoint; 声音 contains 罗大娘：“走吧。” plus no invented ambience or music; 光影、合成与环境连续性 preserves the explicit still light/background boundary while stating a coherent shared-light relation. It adds no status labels or invented breath, wind, cloth settling, particles, or camera motion, and does not render the final prompt until confirmation."
   },
   {
     "id": "video-world-review-04-source-backed-cell",
     "prompt": "视频1是双人粗模，站位、遮挡和环境运动都按视频来。视频里山风清楚地从右向左吹，衣摆和树叶正处于同一次摆动中，地面水纹向左下扩散。请先整理镜头结构，再写最终提示词。",
-    "expected": "Returns only the compact 镜头结构确认 table. 光线与环境连续性 records the readable right-to-left wind, current shared cloth/foliage phase, and lower-left ripple propagation for confirmation without evidence-state labels or full shot prose. It does not render the final prompt, reset the phase, or enrich performance before confirmation."
+    "expected": "Returns only the compact eight-column 镜头结构确认 table. 光影、合成与环境连续性 states the current shared-light relation, then records the readable right-to-left wind, current shared cloth/foliage phase, and lower-left ripple propagation without evidence-state labels or full shot prose; 声音 and 画面重心 remain explicit. It does not render the final prompt, reset the phase, or enrich performance before confirmation."
   },
   {
     "id": "video-world-dynamics-10-full-scene-image-inventory",
     "prompt": "图片1是山谷场景图：前景有湿草和水洼，中景有溪流、人物长袍和树枝，远景有薄雾与云层。先按结构确认流程处理，再写8秒Seedance提示词。",
-    "expected": "Scans the readable scene image across foreground, midground, and background for all visible motion-capable candidates, including wet grass or puddle reflections, stream flow, robe and branches, fog and clouds. Before displaying the pending canonical structure row, it runs the core VisibleSetGate and excludes any world region or medium outside the current crop; 光线与环境连续性 records only source-backed or continuity-critical direction/phase facts and does not pre-design the full receiver chain. The inventory remains internal, does not animate every candidate, and does not invent rain, animals, falling leaves, new water, or unsupported exact directions."
+    "expected": "Scans the readable scene image across foreground, midground, and background for all visible motion-capable candidates, including wet grass or puddle reflections, stream flow, robe and branches, fog and clouds. Before displaying the pending canonical row, it runs VisibleSetGate and excludes any world region or medium outside the current crop. The eight-column row names one viewer priority and audible plan; 光影、合成与环境连续性 states a compact source-subject-contact/depth integration relation and only source-backed or continuity-critical motion direction/phase facts, without pre-designing the detailed dynamic receiver chain. The inventory remains internal and it invents no rain, animals, falling leaves, new water, or unsupported exact directions."
   },
   {
     "id": "video-world-dynamics-11-vfx-environment-coupling",
-    "prompt": "整枚8秒镜头结构已经确认，其中结构表的光线与环境连续性事实为：山谷里原有薄雾向右缓移、溪水顺坡流动，人物衣袍受谷风轻摆。两名角色交手时一道剑气从左向右掠过近地面。现在输出最终Seedance提示词。",
+    "prompt": "整枚8秒镜头结构已经确认，其中结构表的光影、合成与环境连续性事实为：山谷里原有薄雾向右缓移、溪水顺坡流动，人物衣袍受谷风轻摆。两名角色交手时一道剑气从左向右掠过近地面。现在输出最终Seedance提示词。",
     "expected": "Preserves one accepted persistent baseline system covering the coherent fog drift, stream flow, wind, and cloth response instead of resetting it. It treats the sword energy as the single dominant transient left-to-right driver, propagates its influence through only reachable existing receivers with distance and delay, and may press nearby grass, shear the water surface, split fog, move cloth, light, shadow, particles, or reflections only where supported. It renders the persistent baseline in 场景 and the effect-caused disturbance plus dissipation and residual in the owning 情节 shot, while keeping the fight action dominant and avoiding a second competing event driver, synchronized whole-frame motion, or invented damage and props."
   },
   {
     "id": "video-world-review-05-planned-dynamics-still-await-structure",
     "prompt": "8秒双人单镜，站位、遮挡和动作都已经在文字里写清。场景图里能看到长袍、草地和远处薄雾，但没有需要原样匹配的风向或运动相位。直接给最终 Seedance 提示词。",
-    "expected": "The world-dynamics review resolves internally without asking for an unstated wind direction or phase. 直接给最终 remains a speed request, so structure_review_mode stays review_required and the response contains only the compact structure-confirmation row; 光线与环境连续性 may remain — because no cross-shot state is locked."
+    "expected": "The world-dynamics review resolves internally without asking for an unstated wind direction or phase. 直接给最终 remains a speed request, so structure_review_mode stays review_required and the response contains only the compact eight-column structure-confirmation row. 画面重心 and 声音 are explicit; 光影、合成与环境连续性 carries the required shared-light relation while adding no invented world-motion clause."
   },
   {
     "id": "video-world-dynamics-12-authorized-vfx-consequence",
@@ -952,7 +952,7 @@
   {
     "id": "video-contract-07-incremental-shot-four-delta-markers",
     "prompt": "上一版四镜结构v3已经确认。现在只修改镜头4：原终点是人物停在门前，改为人物推门进入；镜头3的门已关闭状态因此要联动更新。请先给增量结构复核。",
-    "expected": "Shows 1–3 concise 变更摘要 bullets, then the same canonical six-column header: 镜头、构图与机位、人物与空间、动作、对白与终点、简短表演意图、光线与环境连续性. It shows only affected rows; the direct endpoint change is marked 【本轮修改】, the shot-3 or boundary consequence is marked 【联动修改】 only if the dependency actually changes, and unchanged cells in affected rows say 沿用已确认 instead of repeating old text. It ends with 未列出的镜头与未标注字段沿用已确认版本，已完成内部全量校验。 Unaffected fields are carried from v3 after complete internal MotionSpec and closure checks."
+    "expected": "Shows 1–3 concise 变更摘要 bullets, then the same canonical eight-column header: 镜头、构图与机位、画面重心、人物与空间、动作与终点、简短表演意图、声音、光影、合成与环境连续性. It shows only affected rows; the direct endpoint change is marked 【本轮修改】, the shot-3 or boundary consequence is marked 【联动修改】 only if the dependency actually changes, and unchanged cells in affected rows say 沿用已确认 instead of repeating old text. It ends with 未列出的镜头与未标注字段沿用已确认版本，已完成内部全量校验。 Unaffected fields are carried from v3 after complete internal MotionSpec and closure checks."
   },
   {
     "id": "video-contract-08-intent-fact-conflict-grouped-block",
@@ -992,7 +992,7 @@
   {
     "id": "video-contract-15-compact-structure-field-ownership",
     "prompt": "请先给结构确认表。人物是苏云和裘水镜，桥板有两处缺口；苏云跨缺口，裘水镜正常行走。之前生成里双脚一起落地、人物穿洞、衣摆延迟不对、瀑布水雾也不自然，请把所有修复要求都写清楚。",
-    "expected": "Returns the canonical six-column structure table but compresses each cell to its current job instead of pasting every repair note. 人物与空间 contains only the visible roster and execution-critical relation/position; 动作、对白与终点 contains the positive action and endpoint; 简短表演意图 contains only the smallest source-backed direction needed for scene meaning or cross-shot consistency, not choreography; 光线与环境连续性 contains only continuity-critical light/world state. It omits repeated appearance, repair history, diagnostic prose, exclusion stacks, and uses — for a non-material field."
+    "expected": "Returns the canonical eight-column structure table but compresses each cell to its current job instead of pasting every repair note. 画面重心 names one viewer priority; 人物与空间 contains only the visible roster and execution-critical relation/position; 动作与终点 contains the positive action and endpoint; 简短表演意图 contains only the smallest source-backed direction needed for scene meaning or cross-shot consistency; 声音 states the current audible plan; 光影、合成与环境连续性 states one compact shared-light relation plus only continuity-critical world state. It omits repeated appearance, repair history, diagnostic prose, exclusion stacks, software compositing terms, and uses — only for an optional non-material field."
   },
   {
     "id": "video-performance-04-close-reaction-playable-task",
@@ -1163,5 +1163,45 @@
     "id": "video-recovery-14-diagram-does-not-guarantee-fine-gap",
     "prompt": "当前完整镜头2（3-6秒）已经确认：侧面中近景固定机位，裘水镜在左、苏云在右，两人并肩同向；裘水镜抬右手靠近苏云肩膀，结尾手掌与肩膀必须保留清楚空隙。相同设置无站位图两次、加站位图两次，四条成片都实际触肩。请修复完整镜头，时间、机位、左右和朝向不变。",
     "expected": "Runs attribution first, retires the exhausted add-another-Diagram hypothesis, and selects one case-specific prompt-repair hypothesis for the shared approach/endpoint field with the discriminating criterion that a clearly visible gap persists in the terminal frame. Because the confirmed side medium-close crop already requires that visible gap, it preserves structure, successful macro left/right and facing geometry, and returns the complete repaired shot without an unnecessary new question. It does not stack no-touch negatives, claim a provider-wide capability boundary, assume another Diagram guarantees the gap, or rerun the same exhausted hypothesis."
+  },
+  {
+    "id": "video-light-composite-01-appearance-baked-light-does-not-own-scene",
+    "prompt": "结构已确认，8秒单镜。图片1只参考女孩身份、服装和材质，原图是白棚右侧暖光；图片2参考月夜庭院场景、构图和光线。女孩从庭院石阶走到灯笼旁，给最终Seedance提示词。",
+    "expected": "Treats 图片1 as appearance-only and does not preserve its baked white-studio warm key, shadow direction, background color cast, or exposure. 图片2 owns the moonlit courtyard light. The final shot binds the world-space source anchor, relights the girl from that source, and includes a coherent contact/cast shadow or ground reflection plus one depth/atmosphere and camera-exposure relation. It renders one 画面重心 and one per-shot sound clause, and does not append generic 光影统一, 角色融入场景, quality, or compositing jargon."
+  },
+  {
+    "id": "video-light-composite-02-effect-shares-light-with-receivers",
+    "prompt": "这枚6秒法术镜头的结构和特效设计都已确认：角色掌心出现青色光球，石殿保持低曝光，最终光球悬在胸前。请输出最终Seedance提示词。",
+    "expected": "Treats the authorized orb as an emissive source instead of a decorative overlay. It states the receiver order from hand and near-side face to clothing/stone floor and existing air particles or shadow only where visible, while preserving the low-exposure hall and avoiding whole-frame synchronized glow. The shot includes one viewer priority, current audible plan, visible endpoint, and no software pipeline recipe or generic cinematic suffix."
+  },
+  {
+    "id": "video-audio-08-every-shot-has-audible-state",
+    "prompt": "结构未确认。12秒三镜：镜头1雨夜站台全景无人说话；镜头2父亲递伞说“还给你”；镜头3女孩接伞但不说话。请给最终Seedance提示词。",
+    "expected": "Stops at the canonical eight-column structure table. Every 声音 cell is populated: shots 1 and 3 state no dialogue plus the current causal rain/foley ambience, while shot 2 preserves the exact speaker and line plus only supported local sound. Dialogue is not duplicated in 动作与终点, no background music is invented, and missing total duration is not re-asked because 12 seconds is supplied."
+  },
+  {
+    "id": "video-optics-01-optical-zoom-and-background-defocus",
+    "prompt": "结构未确认。5秒中近景，机位固定不前移，用缓慢光学变焦让人物面部在画面中逐渐变大；焦点始终锁在双眼，后景灯火保持柔和虚焦。请先给结构确认表。",
+    "expected": "Returns the canonical eight-column structure row. 构图与机位 preserves the fixed camera and deliberate optical zoom, states the visible framing result, and does not rewrite it as a dolly or track. 画面重心 keeps the eyes sharp and the background lights softly defocused throughout. It does not invent a focal length, aperture, or camera brand; sound and light/composite cells still satisfy their normal per-shot contracts."
+  },
+  {
+    "id": "video-optics-02-rack-focus-reopens-structure",
+    "prompt": "上一版6秒固定机位结构已确认，原本焦点一直在前景剑锋。现在改成开镜时剑锋清晰、后景人物虚化，随后焦点转移到后景人物双眼，剑锋变虚；其余构图、人物位置和动作不变。请先给增量结构复核。",
+    "expected": "Treats the focal-plane transition as a structure change and increments only the affected shot. The eight-column delta row places the fixed camera in 构图与机位 and the foreground-to-background rack focus, sharp/soft endpoint, and viewer-priority transfer in 画面重心. It does not hide the change inside light/composite refinement, invent an optical zoom, or preserve the prior focus state as unchanged."
+  },
+  {
+    "id": "video-light-composite-03-pure-environment-minimum-chain",
+    "prompt": "结构未确认。6秒纯环境空镜：阴天山谷里薄雾缓慢经过岩壁，没有人物、动物或发光特效。请先给结构确认表。",
+    "expected": "Returns the canonical eight-column structure row without inventing a subject, feet, contact shadow, nearby prop, or effect. The primary visible rock/fog surfaces replace the subject in LightCompositeSpec; 光影、合成与环境连续性 states the overcast source relation plus one currently visible atmosphere/depth or exposure integration cue. 画面重心 and 声音 remain explicit at their minimum useful scope."
+  },
+  {
+    "id": "video-neutral-02-strict-edit-keeps-own-formula",
+    "prompt": "结构已经确认。写一条平台中立的严格编辑指令：目标是视频1，2–5秒把女孩手里的红伞改成透明长柄伞；人物身份、动作、机位、场景光线和原有声音保持不变。不要写成 Seedance 格式。",
+    "expected": "Returns one complete platform-neutral edit instruction in ordinary language with the target, requested replacement, 2–5 second interval, and scoped preservation boundary. It preserves source light and sound instead of rebuilding them, omits Seedance handles and command tokens, and does not invent a separate story endpoint or new segment merely to satisfy an extension-style field list."
+  },
+  {
+    "id": "video-neutral-03-extension-keeps-own-formula",
+    "prompt": "新增片段结构已经确认。平台中立地把视频1向后延长4秒：原片结尾是女孩在窗边停住，左侧台灯持续照亮她和桌面，窗外雨声不断；新增片段里她转身走到桌边拿起信，结尾低头看信。不要使用任何平台专用格式。",
+    "expected": "Returns one complete platform-neutral extension instruction in ordinary language with the source, append-after direction, inherited pose/camera-light-audio seam state, four-second new segment, and explicit ending. The added segment carries its own current focus, shared light-response relation, and audible state without restarting the rain or lamp state. It omits provider handles, markers, and capability claims and does not collapse the extension into an edit-style interval replacement."
   }
 ]

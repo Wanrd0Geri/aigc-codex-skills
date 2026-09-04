@@ -18,6 +18,12 @@ For world dynamics:
 - An extension inherits its seam driver, direction, disturbance, and residual phase, then independently selects the new segment's mode.
 - A bridge inherits both source states, selects the transition's mode, and converges on the successor opening state.
 
+For light/composite and sound:
+
+- A preserving strict edit inherits source light/composite and audible state; restate only the preservation boundary needed for fields the edit could disturb.
+- A lighting/compositing edit reopens the affected review while preserving structure unless its dependency closure changes a structure field.
+- An extension or bridge inherits the seam light anchor, exposure relation, and active audible phase, then resolves the added segment's own minimum light-composite relation and current audible state. An explicit request to omit sound-description prose suppresses only that final prose.
+
 For `SceneSpatialContract`:
 
 - A strict edit preserves `scene_spatial_ref` while stable topology remains unchanged.
@@ -26,6 +32,8 @@ For `SceneSpatialContract`:
 - A bridge shares a contract only when both boundaries occupy the same established topology or the transition visibly connects them. Otherwise each boundary keeps its own contract.
 
 Use `change-impact-and-delivery.md` when modifying or repairing an existing command.
+
+For a platform-neutral operation, keep the matching task-kind formula below in ordinary language while omitting Seedance-specific command tokens: edit keeps target, requested change, interval, and preservation boundary; extension keeps source, direction, inherited seam state, new segment, and ending; bridge keeps predecessor ending, visible transition, and successor opening. Do not add a field that the selected operation does not own.
 
 ## Strict edit
 

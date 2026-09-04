@@ -67,7 +67,7 @@ For a loaded complex shot, scan the core gate's visible start/path/terminal sets
 
 Use these checks only when hierarchy, unusual scale, transformation, or a reveal materially affects the shot:
 
-1. Keep one viewer priority. Render it as `画面重心` only when several visible elements compete. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
+1. Keep one viewer priority and render it once as `画面重心`. A secondary subject may remain visible for causality, continuity, or scale without receiving an independent portrait treatment.
 2. Choose scale cues by shot purpose. Frame overflow, near-field perspective, occlusion, parallax, and a limited familiar-size cue can suggest a subject larger than the frame; a wide or complete view remains appropriate when geography, full anatomy, choreography, or the requested endpoint needs it.
 3. Prefer observable framing language to unsupported composition arithmetic. Preserve exact percentages when the user or source locks them; otherwise state what crosses the frame edge, what remains partial, and which depth relationship changes.
 4. If a formation should appear at its final scale rather than grow, establish its final spatial envelope and let material resolve across multiple separated regions. Use small-to-large scaling when growth itself is the intended event.

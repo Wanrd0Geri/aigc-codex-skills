@@ -27,9 +27,10 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 - per affected shot, optional `source_shot_id` for internal traceability and a contiguous `prompt_shot_index` beginning at 1 for rendered headings; these identifiers are never interchangeable
 - affected units, each with `structure_source`: current_text | visual_asset | inherited | unresolved, `structure_status`: pending | confirmed, an incrementing `structure_version`, and current-request `structure_review_mode`: review_required | direct_authorized
 - per affected shot or operation segment, `world_dynamics_review`: pending | resolved and, when the unit generates or redesigns visible motion, `world_dynamics_mode`: coupled_world | primary_action | intentional_stillness
+- per affected shot or operation segment, `light_composite_review`: pending | resolved; source-preserving operations may inherit it only while the active light, exposure, and subject/scene integration remain unchanged
 - per affected unit when specialist combat design applies, `combat_design_required`, `combat_design_status`: not_started | structure_ready | design_ready, and the exact `combat_structure_version` bound to its CombatHandoff
 
-Every new/reference-generated, structurally rebuilt, extended, or bridged visible unit starts `pending` with `review_required`. For optimization, strict edit, observed-result review, and repair, inherit only a structure version whose acceptance is explicitly recorded in the current text or project context while composition and endpoints remain preserved. Readable-source evidence and a supplied geometry asset establish facts; recorded acceptance supplies approval. Reopen affected rows when `change-impact-and-delivery.md` finds a structural dependency.
+Every new/reference-generated, structurally rebuilt, extended, or bridged visible unit starts `pending` with `review_required`. For optimization, strict edit, observed-result review, and repair, inherit only a structure version whose acceptance is explicitly recorded in the current text or project context and whose complete structure field set from `SKILL.md` remains preserved. Readable-source evidence and a supplied geometry asset establish facts; recorded acceptance supplies approval. Reopen affected rows when `change-impact-and-delivery.md` finds a structural dependency.
 
 A blocking-critical pose changes body footprint, crop, occlusion, contact geometry, route, locked opening/action boundary, or endpoint. Expressive posture inside the accepted blocking envelope remains a performance field. Light and world continuity facts remain in their owning ledgers and table context; they increment structure only through a visible structural dependency.
 
@@ -95,7 +96,7 @@ Run `VisibleSetGate` before compiling or displaying each structure-review row (a
 - `visible_terminal_set`: the requested terminal crop and its visible endpoint
 - `offscreen_causal_clue`: the smallest visible entry direction, gaze/body axis, light, impact point, or material response needed to explain an offscreen cause
 
-World existence, persistent topology, and a hidden cause do not enter a shot paragraph by themselves. A concrete noun is rendered only when it belongs to one of these sets. For a continuous moving shot that reveals space, an optional `visible_space_progression` records `current visible region -> region revealed by subject/camera movement -> terminal visible region`; omit it for a static shot or when no meaningful reveal occurs. The adapter and final QC consume this contract; they must not replace it with a scene-wide inventory.
+World existence, persistent topology, and a hidden visual cause do not enter a visual shot clause by themselves. A concrete visual noun is rendered only when it belongs to one of these sets. This gate does not delete authoritative offscreen dialogue, narration, ambience, or sound ownership from the audible plan; record an offscreen person in the visual roster only when their presence changes visible blocking, attention, or causality. For a continuous moving shot that reveals space, an optional `visible_space_progression` records `current visible region -> region revealed by subject/camera movement -> terminal visible region`; omit it for a static shot or when no meaningful reveal occurs. The adapter and final QC consume this contract; they must not replace it with a scene-wide inventory.
 
 ## IntentFactGate
 
@@ -142,7 +143,7 @@ Use `SceneSpatialContract[]` only when several shots share one location and stab
 
 Each consuming shot records `scene_spatial_ref: scene_id@spatial_version`. The contract owns stable world topology only. Shot and BoundaryState continue to own camera, crop, screen position, current visibility, current occlusion, current subject position, path, action axis, camera side, and action phase.
 
-A fixed light-source anchor stores only source identity and world location. On/off state, intensity, flicker, exposure, moving-light phase, and visible receiver response remain with Shot, BoundaryState, `shot-craft.md`, and `world-dynamics.md`.
+A fixed light-source anchor in `SceneSpatialContract` stores only source identity and world location. `LightCompositeSpec` owns active light authority, static intensity/exposure, and the current visible subject/material/atmosphere response; `shot-craft.md` supplies only the current crop and camera-facing visibility constraints to that result. On/off transitions, moving-light phase, occlusion change, flicker, response delay, and residual timing remain with Shot, BoundaryState, and `world-dynamics.md`; the light-composite pass consumes their current state without redefining its timing.
 
 A single composition frame or Diagram proves only the visible shot geometry it contains. Promote a spatial fact into this contract only when current-user instruction, readable multi-view evidence, an accepted storyboard/project source, or another authoritative source establishes it across shots. Diagram may consume or check a contract; it never writes one.
 
@@ -180,7 +181,7 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
 
 ## MotionSpec
 
-- goal and one viewer priority, rendered as `画面重心` only when the prompt needs it
+- goal and one viewer priority per shot, rendered as `画面重心`
 - medium/style
 - segment start and terminal BoundaryStates
 - initiating action
@@ -189,8 +190,9 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
 - primary performance carrier
 - applicable `SceneSpatialContract[]` and per-shot `scene_spatial_ref`
 - per-shot or per-operation world-dynamics review and mode; primary physical driver, necessary body mechanics, selected receivers, coupling, stability lock, and residual state only when that mode calls for them
-- total duration and continuous, non-overlapping shot-heading ranges that start at zero and end exactly at total duration; keep only current-user/source-locked shot-internal timing as a separate exact fact and never derive adjacent subdivisions; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
-- references and any active source-backed audio, dialogue, or visible text with its boundary phase
+- per-shot or per-operation light-composite review; source anchor, subject or primary-surface response, at least one currently visible integration cue from contact/nearby material, depth/atmosphere, or camera exposure, and only continuity state that changes the result
+- total duration and continuous, non-overlapping shot-heading ranges when the current user/source supplies them or the active adapter requires them; when ranges are active, start at zero and end exactly at total duration, keep only current-user/source-locked shot-internal timing as a separate exact fact, and never derive adjacent subdivisions; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
+- references and a complete per-shot audible plan: exact dialogue/narration, visible-action foley, active ambience, or explicit no-new-event/silence; source-operation boundaries may additionally preserve already embedded music/subtitles, while new/reference generation keeps them inactive under the standing lock
 - shots:
   - `structure_source`: current_text | visual_asset | inherited | unresolved
   - optional internal `source_shot_id`
@@ -202,14 +204,15 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
   - `scene_spatial_ref` when the shot consumes a stable cross-shot topology
   - `world_dynamics_review`: pending | resolved
   - `world_dynamics_mode`: coupled_world | primary_action | intentional_stillness when the shot generates or redesigns visible motion; a dynamics-preserving strict edit may leave it unset
+  - `light_composite_review`: pending | resolved; a preserving strict edit may inherit it
   - sparse visible-start BoundaryState
   - `VisibleSetGate` for the current start, visible path, and terminal frame
   - shot size, angle, and camera relation, including viewpoint owner when POV applies
   - current visible state, material offscreen presence, and spatial relationship
   - any visible entry or exit not already expressed by the boundaries
-  - action, performance, exact dialogue, and causal response
+  - action, performance, and causal response; exact dialogue/narration belongs to the sound plan below
   - main camera movement and its visible result
-  - viewer focus / `画面重心` only when several visible elements compete; dominance and scale cue only when material
+  - one viewer focus / `画面重心` for the current crop; focal-plane/depth-of-field state, focus shift, and scale cue when material
   - action chain and spatial causality: action axis when material, camera side, screen-entry direction, target or impact point, gaze/body axis, inherited phase when continuing the same event across a cut, and the immediate continuation after a reveal when the reveal is not the endpoint
   - optional `visible_space_progression`: current visible region -> region revealed by the subject/camera path -> terminal visible region, only when a continuous move materially reveals space
   - effect outcome when blocking, redirecting, dismantling, absorbing, reflecting, or evading must remain distinct
@@ -217,13 +220,14 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
   - optional `ActingTask` for a materially acting-driven dialogue, reaction, or close shot; its playable task must be rendered with visible execution rather than kept as internal-only analysis
   - `performance_continuity_anchor` only when relation, attention, intensity, or decision state must remain stable across a cut; when it controls the next performance, render that inherited state at the next shot's cut-in
   - local world layer selected by mode: coupled causal chain, primary action mechanics, or stable fields plus the sole activity beat
-  - space, light, and source-backed sound only when active
+  - complete per-shot sound plan: exact dialogue/narration owner, causal foley, active ambience, or explicit no-new-event/silence; only a source-operation seam may preserve already embedded music/subtitles
+  - current `LightCompositeSpec`: active source anchor, subject or primary-surface response, at least one currently visible integration cue from contact/nearby material, depth/atmosphere, or camera exposure, and continuity state only when material
   - sparse terminal BoundaryState
   - next handoff: only the subset of the terminal state that a later shot must inherit
 
 For A/B, keep one shared fact-and-lock core in the MotionSpec and record two variant overlays. Without explicit per-variant instructions, vary only unlocked viewer priority, supported performance carrier, atmosphere wording, or rhythm. Keep the established world driver, direction, material system, spatial contract, and resolved dynamics mode shared unless the user explicitly makes one of them the comparison variable. If the current user deliberately assigns different A/B values to another field such as camera, composition, wardrobe, or action, place only that named field in the corresponding overlays; it is variant-scoped rather than shared. Never vary any exact or semantic field that the user/source/project leaves shared. For A/B structure review, deliver one table built from the shared core; only a field deliberately placed in a variant overlay carries two labeled A/B values in its row — never two full parallel tables.
 
-Externalize the visible roster, visible action chain, and only the spatial, light, or dynamic-world clues needed for physical continuity. When a review-required structure version is pending, follow the compact columns in `SKILL.md`; keep detailed optics, lighting, receiver chains, offscreen world continuity, unused receivers, and unused boundary fields internal until review resolves.
+Externalize the visible roster, visible action chain, viewer priority, complete per-shot sound plan, and the smallest spatial, light-composite, or dynamic-world clues needed for physical continuity. When a review-required structure version is pending, follow the compact columns in `SKILL.md`; keep detailed optics, unused receivers, offscreen world continuity, production methods, and unused boundary fields internal until review resolves.
 
 Mark project-sourced facts separately from bounded interpretation. Never present an interpretation as a locked project fact.
 
