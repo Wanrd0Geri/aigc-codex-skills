@@ -1,117 +1,54 @@
-# Production Design Diagnostic Dimensions
+# Production design diagnosis
 
-Use this reference when an AIGC image or frame feels cheap, AI-looking, visually random, texture-poor, over-designed, world-inconsistent, or when the subject does not stand out from the environment.
+Use when the requested diagnosis concerns identity design, world coherence, prop function, material design or visual hierarchy. Apply `IMG-STYLE-01` in [diagnostic-dimensions.md](diagnostic-dimensions.md): a visible pattern is a defect only when it blocks the supported purpose. Separate the observed pattern, the evidence for intent, its consequence and a bounded repair. The repair options below are not automatic permissions.
 
-These dimensions diagnose art direction and production design. They are not lighting or color-grading checks. If a problem is caused by light direction, exposure, or color grade, name it as cinematography instead.
+## 1. Silhouette and identity design
 
-## 1. Character Silhouette And Identity
+Inspect outer shape, costume profile, hair/prop outline and recognition at the intended display scale. Face likeness or anatomical errors are local control failures unless the design itself causes them.
 
-**Scope**: the readable outer shape, costume profile, hair/prop outline, and whether the character remains identifiable at a glance.
+Call weak separation a defect only if immediate recognition is required and the subject cannot be identified. Camouflage, silhouette merging and ambiguous identity may be the intended result. Within released fields, simplify competing detail or clarify an existing identity anchor; do not invent a dominant costume feature for every character.
 
-**Not in scope**: face likeness or anatomy errors; those belong to AIGC control unless the design itself causes the problem.
+## 2. Costume, prop and environment coherence
 
-**Broken**: the character blends into the background, has no clear outline, or every design detail is equally busy.
+Compare readable costume, props, architecture, signage and technology against a user/project-backed world rule. Mixed eras, cultures or object styles can be deliberate; an unfamiliar combination alone is not evidence of failure.
 
-**Weak**: the character is readable only in close-up, but loses identity in medium or wide framing.
+If a specific element contradicts the assigned world rule, identify that element and propose the smallest authorized correction. Do not remove objects or rewrite the world merely to make everything stylistically uniform.
 
-**Working**: the character has a distinct silhouette, one or two memorable design anchors, and a clear value/color edge against the environment.
+## 3. Prop function and attention
 
-**Fix language**: "strengthen the character silhouette with a clearer outer shape, one dominant costume feature, and a controlled value contrast against the background."
+Inspect whether props convey the required information and whether visual density obstructs the intended action or attention path. Dense abundance, equal prominence and decorative clutter may be valid choices.
 
-## 2. Costume, Prop, And Environment Consistency
+If a prop competes with a source-backed priority, name the competition and consider a local change to placement, contrast or detail only where authorized. Do not impose a fixed count of story objects or discard props whose purpose is unknown.
 
-**Scope**: whether costume, props, architecture, signage, technology level, culture, and era appear to belong to the same world.
+## 4. Material design
 
-**Not in scope**: deliberate surreal contrast if the user's concept depends on it.
+Inspect whether the materials read as intended within the medium. Uniform matte surfaces, simplified highlights or shared texture frequency are not defects in themselves. Distinguish material design from a lighting/exposure mismatch.
 
-**Broken**: the image mixes unrelated time periods, cultural signs, or object styles without narrative purpose.
+If a needed material distinction is lost, repair the specific surface response, edge or texture relationship using the source/reference evidence. Do not assign worn metal, rough stone and realistic skin as universal quality defaults or add physical texture to flat artwork.
 
-**Weak**: most elements fit, but one prop, garment, or background detail feels imported from another image set.
+## 5. Subject-environment color hierarchy
 
-**Working**: costume, props, and environment share a coherent era, culture, material logic, and world rule.
+Inspect local costume, prop and set colors against the intended priority. A subject need not own the strongest saturation or value contrast; a hidden subject or dominant environment can be purposeful.
 
-**Fix language**: "align costume, props, and environment to one coherent world rule; remove objects that do not support the same era, culture, or technology level."
+When competing colors actually block the stated purpose, adjust the smallest authorized local relationship. Classify overall grade or lighting spill separately; do not recolor identity-critical clothing merely to improve separation.
 
-## 3. Prop Function And Importance Gradient
+## 6. Space and world use
 
-**Scope**: whether props have narrative function and whether visual density tells the viewer what matters.
+Inspect scale, entrances, paths and object placement only where the image must support a readable location or action. Impossible or flattened space can belong to the intended surreal/graphic design.
 
-**Not in scope**: decorative texture that intentionally creates chaos or abundance.
+If an entrance or contact point fails its required function, name the observable contradiction and the bounded repair. Camera projection errors belong to perspective; action-blocking set geometry belongs to production design. Do not rebuild an environment for unspecified realism.
 
-**Broken**: the frame is filled with random objects, all equally detailed, none carrying story or attention priority.
+## 7. Unintended generated detail
 
-**Weak**: useful props exist, but clutter competes with the main subject.
+Inspect melted design boundaries, duplicated objects, pseudo-text or ornaments that contradict an exact target or the medium's established detail system. Abstract symbols and dense ornament are not automatically meaningless.
 
-**Working**: one or two key props carry story information, secondary props support the world, and background objects stay subordinate.
+Repair only a demonstrated mismatch. Exact text uses the text gate; local deformation uses object repair; identity design changes require an authorized target. Do not delete marks merely because their meaning is unknown.
 
-**Fix language**: "reduce random prop density, keep one story-critical object dominant, and push secondary objects into lower contrast and simpler shapes."
+## Root-cause ownership
 
-## 4. Material Variety And Contrast
+- If costume/set local colors obstruct the intended distinction, consider production design.
+- If a visible source, reflection, contact or shadow relationship disagrees, consider lighting/integration. Absence of rim light alone proves neither a defect nor its cause.
+- If the assigned overall grade is violated, consider color grade.
+- If geometry, count or exact lettering is wrong, identify that control failure and use the corresponding evidence gate.
 
-**Scope**: fabric, skin, metal, glass, wood, stone, plastic, water, dust, and how their surface qualities differ.
-
-**Not in scope**: exposure or highlight roll-off caused by lighting; classify that as cinematography.
-
-**Broken**: all surfaces look equally glossy, equally matte, waxy, plastic, or over-sharpened.
-
-**Weak**: materials are recognizable, but the subject and environment share the same texture frequency.
-
-**Working**: materials have distinct roughness, reflectivity, weave, edge wear, and age; the subject's material contrast helps focus attention.
-
-**Fix language**: "separate material qualities: matte fabric, worn metal edges, rough stone, soft skin, and lower-detail background textures."
-
-## 5. Subject-Environment Color Hierarchy
-
-**Scope**: how costume, props, and environment divide color attention, and which element owns the strongest hue or saturation.
-
-**Not in scope**:
-
-- Overall emotional grade: use cinematic color-emotion diagnosis.
-- Color shifts caused by light or ambient bounce: use subject-environment lighting integration.
-
-**Broken**: the subject wears the same hue/value as the background and disappears, or the background owns the strongest color for no reason.
-
-**Weak**: the subject is visible, but accent colors compete across costume, props, and set.
-
-**Working**: the subject owns the clearest color or value contrast, while environment colors support the mood without stealing focus.
-
-**Fix language**: "give the subject one controlled accent color or value contrast; reduce competing saturation in the background and props."
-
-## 6. Space Logic And World Coherence
-
-**Scope**: whether the room, street, landscape, or fantasy space feels physically and culturally usable.
-
-**Not in scope**: lens distortion or perspective errors caused by camera rendering; classify those under cinematography or AIGC control.
-
-**Broken**: doors, stairs, furniture, roads, or architecture cannot physically work; scale relationships feel random.
-
-**Weak**: the space is mostly readable, but routes, entrances, or object placement do not support the action.
-
-**Working**: the environment has clear geography, practical object placement, and visual logic that supports blocking.
-
-**Fix language**: "clarify spatial logic with readable entrances, usable pathways, grounded object scale, and set dressing that supports the character's action."
-
-## 7. AIGC Design Artifacts
-
-**Scope**: design-level artifacts that make the image feel generated rather than art-directed.
-
-**Not in scope**: anatomical deformation, identity drift, or broken hands; those belong to AIGC control.
-
-**Broken**: decorative pseudo-details cover the image, symbols are meaningless, materials melt together, or the frame has generic fantasy/sci-fi filler.
-
-**Weak**: the main design works, but background details reveal style averaging or meaningless ornament.
-
-**Working**: detail density is intentional, symbols and props have readable purpose, and negative space is allowed to remain quiet.
-
-**Fix language**: "remove meaningless AI filler detail, keep only story-relevant ornament, and allow quieter surfaces and negative space around the subject."
-
-## Diagnosis Boundary
-
-When a single visible problem could belong to more than one category, name the root cause:
-
-- If the subject blends into the background because costume and set share the same hue/value, call it production design.
-- If the subject blends in because no rim light or ambient bounce separates them, call it cinematography.
-- If the image mood feels inconsistent because the entire grade mixes unrelated temperatures, call it color grade.
-- If objects deform, duplicate, melt, or contain unreadable pseudo-text, call it AIGC control.
-
-Prefer one root cause and one fix path. Do not repeat the same problem under multiple headings unless the image truly fails in multiple ways.
+One symptom can have several plausible causes. Use readable evidence to select a bounded repair; state uncertainty or ask only when alternatives would materially change the authorized result. Do not repeat one cause under multiple headings or turn a successful design into a mandatory edit.

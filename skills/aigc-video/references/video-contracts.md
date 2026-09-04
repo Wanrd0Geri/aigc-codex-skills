@@ -13,28 +13,35 @@ Use these contracts silently. They prevent creative stages, language cleanup, an
 7. Intent/fact gate
 8. Delivery topology and semantic closure
 9. Renderability gate
+10. State transitions and admission (VIDEO-STATE-01)
 
 ## TaskEnvelope
 
 - `terminal_artifact`: final_video_prompt
 - `platform` and `version`, or explicit `platform_neutral`
 - `task_kind`: new_text | reference | edit | extend | bridge. Use `reference` whenever an actual start-frame or end-frame asset/anchor is supplied. Use `new_text` only when start or terminal conditions are described in text with no boundary asset; record those conditions in BoundaryState without inventing an asset role.
-- `operation`: draft | optimize
+- `operation`: draft | optimize | language_only
 - `output_mode`: default | prompt_only | ab
 - `expression_request`: default | explicit_vibe
 - `project_scope`: optional project/episode/scene/shot ids
 - `requested_duration`
 - per affected shot, optional `source_shot_id` for internal traceability and a contiguous `prompt_shot_index` beginning at 1 for rendered headings; these identifiers are never interchangeable
-- affected units, each with `structure_source`: current_text | visual_asset | inherited | unresolved, `structure_status`: pending | confirmed, an incrementing `structure_version`, and current-request `structure_review_mode`: review_required | direct_authorized
+- affected units, each with `structure_source`: current_text | visual_asset | inherited | unresolved, `structure_status`: pending | confirmed | source_preserved, `structure_version`, `structure_review_mode`, and `acceptance_ref`; `source_preserved` uses null for the last three fields when no accepted design version exists
 - per affected shot or operation segment, `world_dynamics_review`: pending | resolved and, when the unit generates or redesigns visible motion, `world_dynamics_mode`: coupled_world | primary_action | intentional_stillness
-- per affected shot or operation segment, `light_composite_review`: pending | resolved; source-preserving operations may inherit it only while the active light, exposure, and subject/scene integration remain unchanged
+- per affected shot or operation segment, `light_composite_applicability`: physical | non_physical and `light_composite_review`: pending | resolved | not_applicable under `VIDEO-LIGHT-01`; preserving operations inherit unchanged source light/integration
 - per affected unit when specialist combat design applies, `combat_design_required`, `combat_design_status`: not_started | structure_ready | design_ready, and the exact `combat_structure_version` bound to its CombatHandoff
+
+For `operation: language_only`, inherit only production state that already exists. When an existing prompt has no recorded design or light-review state, leave those fields uninitialized/null rather than inventing confirmation, `source_preserved`, or a craft review. Literal and semantic checks still apply.
+
+### Structure provenance — VIDEO-STRUCTURE-01
 
 Every new/reference-generated, structurally rebuilt, extended, or bridged visible unit starts `pending` with `review_required`. For optimization, strict edit, observed-result review, and repair, inherit only a structure version whose acceptance is explicitly recorded in the current text or project context and whose complete structure field set from `SKILL.md` remains preserved. Readable-source evidence and a supplied geometry asset establish facts; recorded acceptance supplies approval. Reopen affected rows when `change-impact-and-delivery.md` finds a structural dependency.
 
+A first strict edit that preserves every structure field uses `structure_status: source_preserved` instead of inventing confirmation. Its evidence is the identified edit target, exact requested change/interval (or explicit whole-clip scope), and preservation boundary. Reuse ReferenceMap and BoundaryState for those facts; read media only where the requested change or a source-dependent claim requires it. Do not reconstruct hidden geometry merely to approve a color replacement. With no accepted design version, keep `structure_version`, `structure_review_mode`, and `acceptance_ref` null. This state is legal only for `task_kind: edit` and a ChangeSet whose dependency closure changes no structure field. It never grants permission to redesign a source, generate an extension, or bridge two clips. A previously recorded accepted version may remain `confirmed` if preserved.
+
 A blocking-critical pose changes body footprint, crop, occlusion, contact geometry, route, locked opening/action boundary, or endpoint. Expressive posture inside the accepted blocking envelope remains a performance field. Light and world continuity facts remain in their owning ledgers and table context; they increment structure only through a visible structural dependency.
 
-`structure_status` belongs to the structure version. `structure_review_mode` belongs to the current logical request and affected unit. Recorded confirmation sets `confirmed`; direct authorization removes the review pause for its scoped units and expires with the request. Direct authorization preserves the pending status. Use the delivery gate in `SKILL.md` as the single owner of phrase interpretation and final admission.
+`structure_status` belongs to the affected unit and, when designed, its current structure version. `structure_review_mode` belongs to the current logical request and affected unit. Recorded confirmation sets `confirmed`; direct authorization removes the review pause for its scoped units and expires with the request. Direct authorization preserves the pending status. Use `SKILL.md` for current-user authorization phrase interpretation and `VIDEO-STATE-01` below for final admission. `source_preserved` describes source inheritance, not a user acceptance event.
 
 ## EvidenceLedger
 
@@ -56,8 +63,8 @@ When the current user replaces a video, layout, storyboard, image, or other asse
 
 For each material record:
 
-- source identifier: keep any supplied platform handle, UUID, or filename internally so the asset cannot be confused with another input
-- final material label: default to a plain upload-order label such as `图片1`, `视频1`, or `音频1`; use a literal source identifier only when the current user explicitly requests it for the current output
+- source identifier: retain the supplied handle, UUID, or filename to keep asset identity stable
+- final material label: apply only `VIDEO-LITERAL-01` in `language-lint.md`; new/substantive platform compilation uses upload-order labels by default, while language-only cleanup retains the existing literal labels
 - asset state
 - operational role: reference_input | staging_map | start_frame_source | end_frame_target | edit_target | extension_source | bridge_predecessor | bridge_successor; record more than one only when the user explicitly combines roles
 - for `staging_map` only, `map_scope`: composition | route; one active version may exist per scope and owning shot
@@ -85,7 +92,7 @@ Record one intended rendered owner for each fact. The active platform adapter de
 
 Creative stages can write only mutable fields. Adapter syntax can wrap exact/semantic fields but cannot reinterpret them.
 
-A shot-internal timestamp written by an earlier model is not automatically exact merely because it appears in a current prompt or because the surrounding structure was accepted. Protect it only when the current user, an authoritative source, or the accepted version specifically records that internal time as a timing lock. Otherwise treat it as mutable planning scaffold and let the active adapter replace it with causal phase language.
+During new or substantive platform compilation, a shot-internal timestamp written by an earlier model is not automatically exact merely because it appears in a current prompt or because the surrounding structure was accepted. In that compilation path, protect it only when the current user, an authoritative source, or the accepted version specifically records it as a timing lock; otherwise treat it as mutable planning scaffold and let the active adapter replace it with causal phase language. Language-only cleanup preserves every supplied time under `VIDEO-LITERAL-01` and does not enter this normalization pass.
 
 ## VisibleSetGate
 
@@ -151,15 +158,17 @@ Compile these facts through the normal structure-review path. Render a stable sp
 
 ## ChangeSet
 
-For any modification, optimization, or failure repair, record silently:
+For any modification, optimization, failure repair, or material workflow transition, record silently in the existing ChangeSet; do not create a second state ledger:
 
-- literal changed field and source
+- `event_id`, triggering `source_event`, affected unit ids, literal changed field and source
 - `change_scope`: field | shot | sequence | global
 - affected shot or operation ids
 - invalidated dependencies and first stable unaffected boundaries
-- structure versions that remain confirmed or increment and return to pending, plus the current request's review mode for each affected unit
+- prior/current structure version and status, acceptance evidence reference, and current request-scoped review mode; null design metadata stays null on `source_preserved`
 - each touched prior corrective clause as `still_active | supplemented | superseded`, with its field/scope and the evidence for that disposition
-- `delivery_scope`: complete_shot | complete_sequence | complete_prompt | complete_operation
+- `delivery_scope`: complete_shot | complete_sequence | complete_prompt | complete_operation; `delivery_form`: replacement | standalone and, for a replacement, its complete current parent reference under `VIDEO-DELIVERY-01`
+- `changed_fields`, `invalidated_fields`, and `rechecked_fields` at the smallest affected scope
+- `delivery_decision`: wait_for_input | wait_for_review | deliver, and `admission_basis`: unresolved | confirmed_version | direct_authorized | source_preserved | language_only; attach the user/source evidence reference that supports it
 
 Use `change-impact-and-delivery.md` as the single owner of propagation and delivery scope. This contract records the result; it does not create a second dependency map.
 
@@ -190,21 +199,20 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
 - primary performance carrier
 - applicable `SceneSpatialContract[]` and per-shot `scene_spatial_ref`
 - per-shot or per-operation world-dynamics review and mode; primary physical driver, necessary body mechanics, selected receivers, coupling, stability lock, and residual state only when that mode calls for them
-- per-shot or per-operation light-composite review; source anchor, subject or primary-surface response, at least one currently visible integration cue from contact/nearby material, depth/atmosphere, or camera exposure, and only continuity state that changes the result
+- per-shot or per-operation light/composite applicability and review; physical imagery uses the minimum source-response-integration chain, explicit non-physical imagery uses only existing graphic/black-frame continuity under `VIDEO-LIGHT-01`
 - total duration and continuous, non-overlapping shot-heading ranges when the current user/source supplies them or the active adapter requires them; when ranges are active, start at zero and end exactly at total duration, keep only current-user/source-locked shot-internal timing as a separate exact fact, and never derive adjacent subdivisions; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
 - references and a complete per-shot audible plan: exact dialogue/narration, visible-action foley, active ambience, or explicit no-new-event/silence; source-operation boundaries may additionally preserve already embedded music/subtitles, while new/reference generation keeps them inactive under the standing lock
 - shots:
   - `structure_source`: current_text | visual_asset | inherited | unresolved
   - optional internal `source_shot_id`
   - rendered `prompt_shot_index`, contiguous from 1 in the current sequence
-  - `structure_status`: pending | confirmed
-  - `structure_version`
-  - current-request `structure_review_mode`: review_required | direct_authorized
+  - `structure_status`: pending | confirmed | source_preserved
+  - `structure_version`, `acceptance_ref`, and current-request `structure_review_mode` under `VIDEO-STRUCTURE-01`; null when the preserving source edit has no accepted design version
   - purpose
   - `scene_spatial_ref` when the shot consumes a stable cross-shot topology
   - `world_dynamics_review`: pending | resolved
   - `world_dynamics_mode`: coupled_world | primary_action | intentional_stillness when the shot generates or redesigns visible motion; a dynamics-preserving strict edit may leave it unset
-  - `light_composite_review`: pending | resolved; a preserving strict edit may inherit it
+  - `light_composite_applicability` and `light_composite_review` under `VIDEO-LIGHT-01`; a preserving strict edit may inherit unchanged source integration
   - sparse visible-start BoundaryState
   - `VisibleSetGate` for the current start, visible path, and terminal frame
   - shot size, angle, and camera relation, including viewpoint owner when POV applies
@@ -220,8 +228,8 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
   - optional `ActingTask` for a materially acting-driven dialogue, reaction, or close shot; its playable task must be rendered with visible execution rather than kept as internal-only analysis
   - `performance_continuity_anchor` only when relation, attention, intensity, or decision state must remain stable across a cut; when it controls the next performance, render that inherited state at the next shot's cut-in
   - local world layer selected by mode: coupled causal chain, primary action mechanics, or stable fields plus the sole activity beat
-  - complete per-shot sound plan: exact dialogue/narration owner, causal foley, active ambience, or explicit no-new-event/silence; only a source-operation seam may preserve already embedded music/subtitles
-  - current `LightCompositeSpec`: active source anchor, subject or primary-surface response, at least one currently visible integration cue from contact/nearby material, depth/atmosphere, or camera exposure, and continuity state only when material
+  - complete per-shot sound plan: exact dialogue/narration owner, `speech_visibility`: on_screen | off_screen | voiceover and separate `lip_sync_required` when speech exists, causal foley, active ambience, or explicit no-new-event/silence; only a source-operation seam may preserve already embedded music/subtitles
+  - current `LightCompositeSpec`: its applicability, minimum applicable relation, and only continuity state that changes the result; do not populate physical fields for non-physical imagery
   - sparse terminal BoundaryState
   - next handoff: only the subset of the terminal state that a later shot must inherit
 
@@ -252,11 +260,35 @@ The canonical structure gate owns phrase interpretation. Under `review_required`
 
 Map a design-ready handoff into MotionSpec without inventing a second attack-response chain or changing hit, block, evade, deflect, absorb, reflect, dismantle, or terminal behavior. `aigc-video` still owns duration, timestamps, material labels, locks, sound grammar, platform syntax, world-response integration, and complete delivery.
 
+## State transitions and admission — VIDEO-STATE-01
+
+Use the current MotionSpec and its latest ChangeSet to decide; status words without evidence are not approval. Only material transitions need a record. Keep this trace internal unless an audit is requested.
+
+| Trigger | State and invalidation | Next action |
+| --- | --- | --- |
+| New generated unit, extension, bridge, or structural source edit | `pending`, version 1 or next affected version, scoped review mode; unset old acceptance for the changed version | Resolve required facts and structural feasibility, then review or directly compile |
+| Explicit acceptance of the displayed current version | `confirmed`, unchanged version, `acceptance_ref` points to that user/project acceptance | Continue unfinished detail passes |
+| Current request explicitly skips structure review | Keep `pending`; set scoped `direct_authorized`; no acceptance record | Continue once remaining requirements resolve |
+| First source edit with no structural change | `source_preserved`, null version/review mode/acceptance; evidence from `VIDEO-STRUCTURE-01` | Render complete operation after its impact checks |
+| Non-structural detail change | Preserve confirmed/source-preserved state; invalidate only touched world/light/sound/performance dependencies | Recheck those fields, then deliver |
+| Structural dependency changes after confirmation or source preservation | Increment affected design version (null becomes 1), set `pending`; invalidate dependent Diagram and combat design readiness | Rebuild affected structure under the current request's review mode |
+| Pure language repair | Preserve all production state and literal locks; no new structure/version | Validate protected differences and deliver complete existing artifact |
+| Delivery, cancellation, or replacement of the logical request | Expire only that request's direct authorization | A new request receives its own mode; recorded acceptance is retained only for the same version |
+
+Before delivery, the latest ChangeSet must account for every invalidated field as rechecked or still unresolved. A detailed performance, light, or combat pass may write only within its accepted structure envelope. If it needs a structural change, return that change through the existing impact closure; it cannot silently retain the old confirmation or `design_ready`. Preserve unrelated accepted units. A confirmation reply resumes the pending stage; it never supplies missing source facts or skips an unfinished specialist phase.
+
+Admission order:
+
+1. Complete all internally resolvable checks. An unfinished internal pass is work to resume, not a reason to ask the user. A structural blocker or result-changing conflict under IntentFactGate gives `wait_for_input` / `unresolved`; display neither a guessed row nor a partial final prompt.
+2. A review-required pending designed unit with reliable structure gives `wait_for_review`; display the reliable current rows and one grouped request. An unresolved non-structural field, including a material light/boundary fact, may share this round as `待确认` only when IntentFactGate says the row is reliable.
+3. Before final rendering, every required fact, applicable world/light review, invalidated dependency, and specialist phase must be resolved. If required input is still missing after available internal work, give `wait_for_input` / `unresolved`; do not render a partial final artifact. Otherwise admit each unit from one evidenced basis: current `confirmed_version`, scoped `direct_authorized`, strict-edit `source_preserved`, or protected `language_only`. Combat design must be `design_ready` for that exact version when required. `not_applicable` light is legal only for explicit non-physical imagery. Language-only and untouched source fields do not acquire new craft reviews merely to pass admission.
+4. Check complete-unit delivery under `VIDEO-DELIVERY-01` and render. `stage_status` may be ready, assumed, or evidence-backed warn under `VIDEO-WARN-01`; it cannot override any earlier failed gate.
+
 ## Stage status
 
 Each stage resolves internally to:
 
 - `ready`: all required facts exist
 - `assumed`: a low-risk default was used
-- `warn`: the artifact can be delivered with a known stability tradeoff
+- `warn`: an executable, evidence-backed tradeoff meeting the sole `VIDEO-WARN-01` threshold in `SKILL.md`; recommendation/count alone does not set it
 - `blocked`: a missing asset or conflicting hard decision prevents a faithful result

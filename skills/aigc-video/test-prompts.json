@@ -77,7 +77,12 @@
   {
     "id": "video-seedance-03-one-shot-complexity-tradeoff",
     "prompt": "结构已经确认。8秒一镜到底：女主从地铁站跑到天台，群演追逐，爆炸，无人机环绕，最后切到特写落泪。",
-    "expected": "Finds that the previously confirmed row is not executable because one-take, location change, compound action, drone orbit, hard cut, and 8秒 conflict. It reopens the affected structure, puts the incompatible camera/action plan and recommended reduced direction inside the compact structure row as 待确认, and asks one grouped decision question. It renders no final prompt; the revised structure must be confirmed again."
+    "expected": "Identifies the hard conflict between a locked one-take and the final hard cut before displaying any structure row. It reopens only the affected structure, states that root conflict once, offers the smallest shootable one-take versus cut-based choices, and asks one grouped decision question. The eight-second compound route receives an additional intervention only if concrete evidence shows it cannot fit; count or complexity alone is not proof. It displays neither an impossible 待确认 row nor a partial final prompt.",
+    "rule_ids": [
+      "VIDEO-STATE-01",
+      "VIDEO-STRUCTURE-01",
+      "VIDEO-WARN-01"
+    ]
   },
   {
     "id": "video-seedance-04-structured-reference-composition",
@@ -142,7 +147,10 @@
   {
     "id": "video-seedance-16-explicit-precise-timing",
     "prompt": "结构已经确认。做一个9秒三镜头视频，每个镜头严格3秒：男人起跑、撞翻水果摊、翻墙消失。",
-    "expected": "Briefly warns that exact generated-shot timing can drift but preserves the user's explicit 3-second allocations, keeps one main action and one main camera strategy per shot, and does not silently remove the timing lock."
+    "expected": "Preserves the explicit three 3-second allocations and confirmed shot order, with one main action and camera strategy per shot. Exact timing alone does not trigger a generic drift warning; it gives a note only if concrete evidence meets VIDEO-WARN-01. It never silently removes the timing lock.",
+    "rule_ids": [
+      "VIDEO-WARN-01"
+    ]
   },
   {
     "id": "video-seedance-17-visible-text-override",
@@ -152,7 +160,11 @@
   {
     "id": "video-collaboration-01-material-performance-ambiguity",
     "prompt": "写最终 Seedance 提示词：女孩看到失踪父亲留下的信后笑了一下，但我没想好这个笑是释然，还是她在别人面前强装镇定。",
-    "expected": "Cites the supplied ambiguity and explains that the two readings change the performance intention and endpoint. It returns the compact structure-confirmation row, marks 简短表演意图 and any affected endpoint 待确认, recommends one direction with a reason, and folds both the interpretation choice and missing total duration into the same grouped confirmation round. It does not enrich gaze, breath, posture, invent seconds, or render the final prompt before confirmation."
+    "expected": "Identifies that the two explicitly unresolved readings change the scene meaning and terminal performance state. It resolves that result-changing ambiguity before displaying a guessed structure row or final prompt, offers a concise supported direction, and groups the interpretation decision with missing duration. It does not invent gaze, breath, posture, seconds, or a resolved endpoint while the reading is undecided.",
+    "rule_ids": [
+      "VIDEO-STATE-01",
+      "VIDEO-STRUCTURE-01"
+    ]
   },
   {
     "id": "video-collaboration-02-routine-choice-no-question",
@@ -172,12 +184,22 @@
   {
     "id": "video-language-lock-01-multishot-exact-fields",
     "prompt": "把这个最终 Seedance prompt 去 AI 味，但不能改任何硬信息：12秒，三镜头，@图1只做人脸身份参考；镜头1裘水镜站在门内；镜头2他说“你看见的不一定是真的”；镜头3少年没有回答，最后遮住镜头黑场。",
-    "expected": "Treats the supplied final prompt as already accepted, cleans only mutable prose, and returns the complete three-shot prompt rather than isolated rewritten sentences. It preserves 12秒, shot count/order, 图片1 identity-only responsibility, 裘水镜, exact dialogue, silent response, and final lens-cover black frame while normalizing the label without changing the asset mapping."
+    "expected": "Uses language_only without inventing acceptance or running a platform pass, cleans only mutable prose, and returns the complete supplied three-shot prompt. It preserves literal @图1, 12秒, shot count/order, identity-only responsibility, 裘水镜, exact dialogue, silent response, and the final lens-cover black frame. It neither normalizes the handle to 图片1 nor invents shot ranges, light sources, or a new review table.",
+    "rule_ids": [
+      "VIDEO-LANGUAGE-01",
+      "VIDEO-LITERAL-01",
+      "VIDEO-STATE-01"
+    ]
   },
   {
     "id": "video-language-lock-02-edit-command-not-rewritten",
     "prompt": "把这条最终 Seedance 编辑命令写自然一点：严格编辑@视频1的3-7秒，把桌上的旧香水瓶换成@图1里的白色面霜罐，人物动作、原有运镜、灯光和环境声保持不变。",
-    "expected": "Keeps strict-edit task grammar, normalizes the targets to 视频1 and 图片1, preserves the 3-7秒 interval, exact replacement, and every unchanged continuity layer, and outputs no @ or UUID. Language cleanup does not turn the command into reference generation or rewrite the entire platform structure. It returns one complete operation command rather than an isolated field, replacement sentence, or ordinary generation-shot prompt."
+    "expected": "Keeps strict-edit grammar and the exact literals @视频1, @图1, and 3-7秒; preserves the replacement and all unchanged continuity layers. Language-only cleanup does not strip @, normalize labels, verify/redesign provider syntax, or convert editing to reference generation. It returns one complete operation command rather than an isolated phrase and creates no new structure version or acceptance.",
+    "rule_ids": [
+      "VIDEO-LANGUAGE-01",
+      "VIDEO-LITERAL-01",
+      "VIDEO-DELIVERY-01"
+    ]
   },
   {
     "id": "video-extension-01-success-with-ending-state",
@@ -307,7 +329,11 @@
   {
     "id": "video-framing-02-incompatible-hard-locks",
     "prompt": "同一个画面必须同时既是胸部以上紧近景，又完整看见人物双脚、脚下门槛和整扇门；摄影机、焦段和景别全程不变，这两组要求都不能删。直接给我最终 Seedance 提示词。",
-    "expected": "Returns only the compact structure-confirmation row. In 构图与机位 it marks the tight crop versus full lower-body/complete-door envelope conflict 待确认, recommends which framing purpose to protect, and folds that decision plus the missing total duration into the same grouped confirmation round. It does not add a separate explanation block, invent seconds or a reframing move, silently delete a lock, pretend repetition can solve it, or emit a contradictory final prompt."
+    "expected": "Runs IntentFactGate before structure display: the locked chest-up crop cannot simultaneously contain both feet and the full door with fixed framing. It blocks the row and final prompt, states the conflict once, recommends the smallest shootable framing choice, and groups that decision with the missing duration. It never embeds the impossible geometry in a 待确认 row, invents reframing or seconds, or deletes a lock silently.",
+    "rule_ids": [
+      "VIDEO-STATE-01",
+      "VIDEO-STRUCTURE-01"
+    ]
   },
   {
     "id": "video-continuity-01-same-action-across-cut",
@@ -567,7 +593,13 @@
   {
     "id": "video-operation-05-multicharacter-strict-edit-preserves-structure",
     "prompt": "严格编辑视频1：只把第3到5秒罗大娘手里的白布改成灰布。视频里四个人的站位、遮挡、动作、运镜、对白和声音全部保持不变。",
-    "expected": "Treats the source structure as confirmed because the strict edit preserves composition, returns the direct narrow edit command, and does not insert a structure-confirmation table. It changes only the cloth color and preserves all four characters, blocking, action, camera, dialogue, and sound. It returns one complete operation command rather than an isolated field, replacement sentence, or ordinary generation-shot prompt."
+    "expected": "Uses source_preserved for this first non-structural source edit, with null structure_version, structure_review_mode, and acceptance_ref; it does not claim that unchanged source geometry was confirmed. It returns one complete strict-edit operation without a structure table, changing only cloth color at 3–5 seconds while preserving all four characters, blocking, action, camera, dialogue, and sound. It needs no old generation prompt or new geometry inspection merely to approve the unchanged structure.",
+    "rule_ids": [
+      "VIDEO-STRUCTURE-01",
+      "VIDEO-STATE-01",
+      "VIDEO-IMPACT-01",
+      "VIDEO-DELIVERY-01"
+    ]
   },
   {
     "id": "video-recovery-03-structural-repair-reopens-affected-shot",
@@ -732,7 +764,11 @@
   {
     "id": "video-pov-01-self-back-hard-lock-two-options",
     "prompt": "做8秒最终 Seedance：严格林川第一人称 POV，全程只从他的双眼看；同时林川本人完整背影必须一直在画面中央。固定机位，不使用镜子、玻璃反射、影子、替身、分身或切镜。直接给提示词。",
-    "expected": "Recognizes that strict first-person POV and persistent visibility of the viewpoint owner's own full back are mutually incompatible under the supplied exclusions. Returns only the compact structure-confirmation row, marks the camera/visibility conflict 待确认, and states the complete conflict once. In the same grouped request it gives two shootable options: preserve strict POV and remove Lin Chuan's visible back, or preserve the full back and change to a third-person rear view. It recommends one concisely. It renders no final prompt, reflection loophole, serial follow-up questions, long POV theory, or process report."
+    "expected": "Recognizes that strict eye-position POV cannot continuously show the viewpoint owner’s complete back under these locks. It blocks both structure display and final rendering, states the camera/visibility conflict once, and asks one grouped decision with two shootable options: keep strict POV without his visible back, or keep the full back with a third-person rear view. It recommends one concisely without fabricating a 待确认 geometry row, reflection loophole, or new shot.",
+    "rule_ids": [
+      "VIDEO-STATE-01",
+      "VIDEO-STRUCTURE-01"
+    ]
   },
   {
     "id": "video-extension-06-inherit-audio-text-sufficient-tail",
@@ -1077,7 +1113,11 @@
   {
     "id": "rewrite-04-numbered-anchor-locks",
     "prompt": "帮我把这个视频 prompt 改自然点：@图1控制少年外貌和服装，@图2控制老狐狸形象，@图3控制人物站位，镜头从门口方向后拉，所有人听到响声后看向镜头。",
-    "expected": "Treats @图1, @图2, and @图3 as exact language-only locks, preserves their roles plus camera and reaction order, and changes only connective wording."
+    "expected": "Treats @图1, @图2, and @图3 as exact language-only locks, preserves their roles plus camera and reaction order, and changes only connective wording.",
+    "rule_ids": [
+      "VIDEO-LANGUAGE-01",
+      "VIDEO-LITERAL-01"
+    ]
   },
   {
     "id": "rewrite-05-filename-anchor-locks",
@@ -1208,5 +1248,201 @@
     "id": "candidate-15-result-review-boundary",
     "prompt": "提示词静态自检全部通过，但没有提供生成视频。请判断打击感、身份稳定、触点准确和VFX遮挡是否通过。",
     "expected": "Marks impact feel, identity stability, contact accuracy and VFX occlusion as UNKNOWN or unverified because no rendered video exists; does not treat prompt completeness as render evidence; and lists the minimum observable video evidence required for each result-level judgment."
+  },
+  {
+    "id": "video-route-01-standalone-pasted-script-local",
+    "prompt": "下面就是全部剧本，没有外部项目：8秒一镜，男孩在门口把湿雨伞收起，最后把伞靠在门框旁。用 Seedance 2.5，先看结构。",
+    "expected": "Treats the complete pasted scene as local source; does not require aigc-project-context or external project lookup. Returns the canonical eight-column review row with reliable geometry, one visual focus, causal per-shot sound, and compact physical light integration. It preserves the endpoint without inventing a project package.",
+    "rule_ids": [
+      "VIDEO-ROUTE-01",
+      "VIDEO-STRUCTURE-01"
+    ]
+  },
+  {
+    "id": "video-route-02-language-only-unknown-provider-literals",
+    "prompt": "只改语句自然度，别改任何格式或参数：用现有 XVideo 格式，#S09 [0.0,2.5] @a.png；少年抬起头这个动作显得很自然很高级。不要查平台，不要新增设计。",
+    "expected": "Uses language_only and preserves #S09, [0.0,2.5], @a.png and inherited provider syntax literally. Removes only unsupported booster wording while preserving the head raise. Does not load/verify a provider adapter, normalize headings/timing, invent a structure acceptance, or claim verified platform readiness.",
+    "rule_ids": [
+      "VIDEO-ROUTE-01",
+      "VIDEO-LANGUAGE-01",
+      "VIDEO-LITERAL-01"
+    ]
+  },
+  {
+    "id": "video-literal-01-explicit-recompile-normalizes",
+    "prompt": "将这段资料重新编译成 Seedance 2.5 最终格式；本次跳过结构确认。8秒单镜，@图1是唯一上传图片，只做男孩外貌参考。男孩站在白墙旁收起雨伞并保持站立，无对白。",
+    "expected": "This is explicit new platform recompilation, so it maps the sole uploaded @图1 to 图片1 and uses the current adapter grammar. The scoped direct authorization admits this pending version without fabricating acceptance; it retains focus, causal sound and physical light/composite relation, then the standing no-subtitle/no-BGM ending.",
+    "rule_ids": [
+      "VIDEO-LITERAL-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-source-01-first-audio-edit-no-geometry-approval",
+    "prompt": "严格编辑视频1：移除全片背景音乐，保留对白和环境声；原有画面、切镜和时长完全不变。",
+    "expected": "Uses first-edit source_preserved with null design/acceptance metadata and delivers the complete audio-removal command. It does not request a prior generation prompt, geometry table, or media solely to approve unchanged visual structure; no image generation, extension, or new music is authorized.",
+    "rule_ids": [
+      "VIDEO-STRUCTURE-01",
+      "VIDEO-STATE-01",
+      "VIDEO-DELIVERY-01"
+    ]
+  },
+  {
+    "id": "video-source-02-structural-change-after-preserved",
+    "prompt": "上一轮只把视频1第3–5秒白布改成灰布，没有设计版本或结构确认。现在第3–5秒改成从人物背后拍，其他照旧。先给我看结构。",
+    "expected": "The camera-side change exits source_preserved, creates structure_version 1 with pending/review_required and null acceptance, and invalidates dependent crop, visibility, focus and light-facing facts. It obtains only source facts needed for the new view; if absent it waits for input before a guessed row. Once reliable, it shows the affected eight-column row for review, never inheriting nonexistent confirmation.",
+    "rule_ids": [
+      "VIDEO-STRUCTURE-01",
+      "VIDEO-STATE-01",
+      "VIDEO-IMPACT-01"
+    ]
+  },
+  {
+    "id": "video-speech-01-offscreen-door-legal",
+    "prompt": "本次跳过结构确认，写8秒一镜最终提示词：固定机位只拍关闭的房门，母亲在门外说“饭好了”，说完门仍关闭。母亲不出镜，不需要口型同步；房间内听到这句话，没有其他人物。",
+    "expected": "Keeps the mother exclusively in the authoritative audible plan with speech_visibility off_screen and lip_sync_required false. It preserves the closed-door crop and endpoint, fits the short line to audible time, and delivers without inventing face time, a cutaway, a visible mother, or a mouth-visibility conflict. Physical lighting still applies to the visible door.",
+    "rule_ids": [
+      "VIDEO-SPEECH-01",
+      "VIDEO-STATE-01",
+      "VIDEO-LIGHT-01"
+    ]
+  },
+  {
+    "id": "video-speech-02-offscreen-required-sync-conflict",
+    "prompt": "8秒一镜，固定机位全程只拍关闭的房门，母亲在门外说“饭好了”。母亲必须始终不出镜，但必须清楚看见她的嘴型和台词同步；两条都不能改。",
+    "expected": "Separates offscreen speech from the independently required visible lip sync and detects their hard contradiction. Blocks both structure row and final artifact, asks one grouped choice to preserve offscreen framing or show the mouth, and does not silently mark sync unnecessary.",
+    "rule_ids": [
+      "VIDEO-SPEECH-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-light-01-flat-graphic-na",
+    "prompt": "本次不需要结构确认。做6秒二维平面图形动画：白底，蓝色圆形水平移过一条红线，圆形始终在红线上层；无立体空间、无阴影，结尾停在右侧。无声。",
+    "expected": "Sets light_composite_applicability non_physical and light_composite_review not_applicable, while retaining graphic layer order, sharp edges, color/background continuity, visual focus and locked silence in the final unit. Does not invent a lamp, monitor, physical shadow, atmospheric receiver or source-response chain.",
+    "rule_ids": [
+      "VIDEO-LIGHT-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-light-02-physical-missing-source-not-na",
+    "prompt": "先整理8秒一镜结构。画面是三维角色站在石地上；人物外貌图只管身份，场景图才管照明。场景图现在打不开，源文也没有光源信息，光照方向必须严格跟场景图一致。",
+    "expected": "Physical imagery cannot use not_applicable to bypass the unreadable authoritative lighting. If the remaining visible structure is reliable, keeps the source light field 待确认 in the eight-column review round and requests that source; otherwise blocks the row under IntentFactGate. It does not borrow baked character light, invent scene light, or deliver a final prompt before the needed source is resolved.",
+    "rule_ids": [
+      "VIDEO-LIGHT-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-light-03-black-frame-voiceover",
+    "prompt": "本次跳过结构确认。5秒全画幅纯黑，始终不出现任何物体或文字，只听旁白说“我记得那一天。”，最后仍是黑场。",
+    "expected": "Uses non_physical/not_applicable for the entire black frame, intentional_stillness, and voiceover with lip_sync_required false. Preserves black-frame continuity, exact voiceover, the standing no-subtitle/no-BGM lock and the endpoint without fabricating visible geometry, mouth, lights, shadows, or a monitor.",
+    "rule_ids": [
+      "VIDEO-LIGHT-01",
+      "VIDEO-SPEECH-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-warn-01-recommendation-only-no-warning",
+    "prompt": "本次跳过结构确认。用9张人物身份图做9秒9镜肖像，每镜只出现一个人，人物按上传顺序依次出现，固定正面半身，不做复杂动作。参考图数量符合当前硬限制。",
+    "expected": "Checks the actual provider hard limits and per-shot fit, then compiles the authorized sequence. Nine image subjects crossing a recommendation alone creates no generic warning, split suggestion, cost note or approval pause. Each shot keeps one subject and the requested order; a note requires additional concrete evidence under VIDEO-WARN-01.",
+    "rule_ids": [
+      "VIDEO-WARN-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-warn-02-observed-executable-tradeoff",
+    "prompt": "结构已确认：8秒双人中景对话。实测同一套提示词连续两次在两人同时转身时脸部变形，固定站立时正常；这版我仍要保留同时转身，不改站位和台词，其他动作可以收简。请给完整修订版。",
+    "expected": "Uses the supplied repeated, specific failure comparison as evidence for the simultaneous-turn tradeoff. Simplifies only mutable secondary action within the unchanged structure, preserves the user’s turn/position/dialogue choice, and may give one concise stability note under VIDEO-WARN-01 without another approval pause. It never labels this a real render performed by the assistant.",
+    "rule_ids": [
+      "VIDEO-WARN-01",
+      "VIDEO-IMPACT-01",
+      "VIDEO-DELIVERY-01"
+    ]
+  },
+  {
+    "id": "video-delivery-01-local-replacement-parent-bindings",
+    "prompt": "当前完整提示词P7已给出并确认，主体/场景/风格在全局头部，镜头2是一句8–12秒的双人中景。现在只把镜头2的衣袖接触音补清楚，画面和其他镜头不变；只给我完整镜头2替换段。",
+    "expected": "Uses delivery_form replacement, identifies P7 and complete shot 2, retains its local visible start/action/endpoint and unchanged parent bindings, and changes only the audible detail plus its actual dependency closure. It does not present a sentence patch or falsely claim the replacement is a standalone prompt, and it does not repeat all other shots. If P7 is not actually available in the test conversation, requests the complete current unit instead of pretending to have read it.",
+    "rule_ids": [
+      "VIDEO-DELIVERY-01",
+      "VIDEO-IMPACT-01"
+    ]
+  },
+  {
+    "id": "video-delivery-02-standalone-needs-global-bindings",
+    "prompt": "把上一条镜头2单独拿去新会话生成，输出可以独立粘贴的完整提示词。保留原来的人物、衣服、场景和风格。",
+    "expected": "Uses delivery_form standalone and includes all required current material, scene/style, audible and standing-policy bindings for shot 2 from the actual available parent. If the referenced parent is unavailable, asks for it rather than inventing identity or leaving globals implicit. A complete local shot paragraph alone is not sufficient standalone delivery.",
+    "rule_ids": [
+      "VIDEO-DELIVERY-01",
+      "VIDEO-STATE-01"
+    ]
+  },
+  {
+    "id": "video-impact-01-camera-only-obscured-gaze",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-STATE-01"
+    ],
+    "pair": "camera-action-authorization",
+    "prompt": "已确认的完整5秒单镜提示词：主体：成年修表师，灰色工装。场景：修表师坐在工作台前面向北墙，东墙窗户始终在他的右侧；顶灯照亮头肩、台面和仪表玻璃。风格：写实。镜头1（0-5秒）：从工作台对面固定拍正面近景，修表师先注视面前的仪表，随后只把视线移向东墙窗户，头和身体一直不动；末帧仍看向该窗户，双手保持台面原位。画面重心是视线变化。全程无对白，无新增声音事件。不添加字幕，不添加背景音乐。\n本轮只把摄影机改到修表师正后方略高处，固定过肩近景，看见后脑和前方仪表；其他内容全部保持。本轮跳过结构确认，给完整修订提示词。",
+    "expected": "Changes only the authorized camera and its derived framing, visibility, focus/screen projection and light-facing result. The source eye shift still targets the fixed east-wall window, with unchanged head, body, hands, duration and endpoint. It may truthfully note that the eye detail is obscured from behind or choose another camera height inside the allowed rear view, but must not add a head turn, body rotation, hand gesture or repositioning as a readability aid or 联动修改. Because no demand to visibly inspect the eyes remains and structure review was explicitly skipped, it delivers the complete revision without a new routine permission round. An invalidated performance/readability dependency alone does not authorize action changes."
+  },
+  {
+    "id": "video-impact-02-camera-and-head-turn-authorized",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-STATE-01"
+    ],
+    "pair": "camera-action-authorization",
+    "prompt": "已确认的完整5秒单镜提示词：主体：成年修表师，灰色工装。场景：修表师坐在工作台前面向北墙，东墙窗户始终在他的右侧；顶灯照亮头肩、台面和仪表玻璃。风格：写实。镜头1（0-5秒）：从工作台对面固定拍正面近景，修表师先注视面前的仪表，随后只把视线移向东墙窗户，头和身体一直不动；末帧仍看向该窗户，双手保持台面原位。画面重心是视线变化。全程无对白，无新增声音事件。不添加字幕，不添加背景音乐。\n本轮把摄影机改到修表师正后方略高处，固定过肩近景，看见后脑和前方仪表；同时明确修改原来的头部不动限制：视线转向东墙窗户时，让头部也小幅向右转，末帧保持该朝向。身体、双手、时长和其他内容保持。本轮跳过结构确认，给完整修订提示词。",
+    "expected": "Uses the explicit current instruction as authority to add the small rightward head turn toward the same east-wall window and its held endpoint, while updating the rear camera, crop and light-facing consequences. It preserves body position, hands, duration, exact sound plan and unrelated facts. It does not impose a blanket ban on action changes, retain the superseded head-still lock, add further gestures or ask for a new approval. The ChangeSet attributes the head action to the user instruction, not to dependency invalidation or readability alone."
+  },
+  {
+    "id": "video-impact-03-recolor-visible-owned-reflection",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-LIGHT-01",
+      "VIDEO-STRUCTURE-01"
+    ],
+    "pair": "strict-edit-derived-support",
+    "prompt": "严格编辑视频1。当前源是6秒固定静止画面：橙色陶瓶放在黑色玻璃桌上，下方清楚可见属于这只陶瓶的倒影；左边还有一只白杯及它自己的倒影。只在第1至3秒将陶瓶表面颜色改为钴蓝，保持原形状、材质、明暗和桌面，其余画面、时间与声音保持。请直接给完整编辑指令。",
+    "expected": "Uses the complete strict-edit operation and source_preserved for the color-only change. Includes both the bottle color and only the same bottle’s existing reflected color in the 1–3-second scope. Preserves glass-table geometry/material and unrelated regions, the white cup and its reflection, lighting setup, shadow geometry, fixed camera, source duration, audio and interval-exterior content. Does not freeze the entire rendered tabletop, change the light source, run a new physical-scene design or add an approval round. The user’s explicit source description grounds the visible attribution; the answer does not claim independent media inspection."
+  },
+  {
+    "id": "video-impact-04-flat-icons-no-reflection-inference",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-LIGHT-01",
+      "VIDEO-STRUCTURE-01"
+    ],
+    "pair": "strict-edit-derived-support",
+    "prompt": "严格编辑视频1第1至3秒。当前是6秒纯二维平面界面：上方一个橙色瓶子图标，下方一个倒置橙色瓶子图标；它们是两个独立图标，下面的不是倒影。只把上方图标改成钴蓝，其形状不变；下方图标、背景、位置、时长与声音全部不变。",
+    "expected": "Changes only the upper icon’s color in the named interval and preserves the lower independent icon. Uses the nonphysical path without fabricating a reflection relation from the inverted geometry, and adds no shadows, light source, bounce, receiving surface, full-physics design, or new confirmation gate. Keeps the complete strict-edit command and source_preserved state without inventing acceptance."
+  },
+  {
+    "id": "video-impact-05-specific-reflection-lock-conflict",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-LIGHT-01",
+      "VIDEO-STATE-01"
+    ],
+    "pair": "strict-edit-reflection-authority",
+    "prompt": "视频1清楚显示橙色陶瓶和同一陶瓶在玻璃桌上的倒影。严格编辑第1至3秒，把瓶身改成钴蓝，但那只瓶子在桌上的倒影必须保持原来的橙色；同时要求倒影颜色物理真实、与瓶身颜色完全一致。这三条都不能删。",
+    "expected": "Detects the explicit conflict between blue body, specifically locked orange reflection and exact physical color agreement. Uses the existing IntentFactGate to ask one grouped choice before a contradictory row or final command, rather than silently overriding the reflection lock, omitting necessary support or repainting the tabletop. The conflict is grounded in the user’s exact incompatible requirements, not a universal preference for physical realism."
+  },
+  {
+    "id": "video-impact-06-deliberate-reflection-mismatch-preserved",
+    "rule_ids": [
+      "VIDEO-IMPACT-01",
+      "VIDEO-LIGHT-01",
+      "VIDEO-STRUCTURE-01"
+    ],
+    "pair": "strict-edit-reflection-authority",
+    "prompt": "视频1清楚显示橙色陶瓶和同一陶瓶在玻璃桌上的倒影。我要刻意做超现实错位：严格编辑第1至3秒，只把瓶身改成钴蓝，属于这只瓶子的倒影故意保持原橙色，不追求两者颜色物理一致。其他画面、桌面材质、光线、声音和时间不变。",
+    "expected": "Honors the explicit intentional mismatch: blue bottle body with its identified reflection remaining orange in the interval. Does not automatically recolor that specifically protected reflection or ask the user to confirm a physical-consistency tradeoff already resolved by the request. Preserves the source lighting, surface material and unrelated regions and returns a complete strict-edit command; no new source-light design or blanket realism gate is introduced."
   }
 ]

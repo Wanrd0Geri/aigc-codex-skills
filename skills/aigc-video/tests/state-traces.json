@@ -1,0 +1,613 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic_expected_state_fixtures",
+  "evidence_level": "fixture_only",
+  "description": "Expected multi-turn state examples for static and captured-trace comparison. These are authored fixtures, not model executions, tool observations, or real rendered-video results. Production prompts do not expose this schema.",
+  "scenarios": [
+    {
+      "id": "source-preserved-to-structural",
+      "rule_ids": [
+        "VIDEO-STRUCTURE-01",
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [],
+      "authorizations": [],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u1",
+            "request_id": "r1",
+            "text": "严格编辑视频1第3–5秒，只把手里白布改为灰布。固定中景、人物站位、动作和声音都保持原样。原场景顶灯与石地反光保持不变。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s1",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "video1:3-5",
+              "fields": {
+                "task_kind": "edit",
+                "structure_status": "source_preserved",
+                "structure_version": null,
+                "structure_review_mode": null,
+                "acceptance_ref": null,
+                "delivery_decision": "deliver",
+                "admission_basis": "source_preserved",
+                "changed_fields": [
+                  "cloth.color"
+                ],
+                "invalidated_fields": [
+                  "material_response"
+                ],
+                "rechecked_fields": [
+                  "material_response"
+                ],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved"
+              },
+              "evidence": [
+                "u1"
+              ]
+            }
+          ]
+        },
+        {
+          "user_event": {
+            "message_id": "u2",
+            "request_id": "r2",
+            "text": "现在改为固定左后方全身视角：人物站在中央，面向门，手中灰布不动；终点仍保持站姿，先看这段结构。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s2",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "video1:3-5",
+              "fields": {
+                "task_kind": "edit",
+                "structure_status": "pending",
+                "structure_version": 1,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": null,
+                "delivery_decision": "wait_for_review",
+                "admission_basis": "unresolved",
+                "changed_fields": [
+                  "camera.relation",
+                  "camera.crop"
+                ],
+                "invalidated_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "light_response"
+                ],
+                "rechecked_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "light_response"
+                ],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved"
+              },
+              "evidence": [
+                "u1",
+                "u2"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "accepted-light-refinement",
+      "rule_ids": [
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01",
+        "VIDEO-LIGHT-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [
+        {
+          "id": "accept-u10",
+          "message_id": "u10",
+          "unit_id": "shot1",
+          "structure_version": 4
+        }
+      ],
+      "authorizations": [],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u10",
+            "request_id": "r10",
+            "text": "确认刚才镜头1的结构版本4。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s10",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "shot1",
+              "fields": {
+                "task_kind": "reference",
+                "structure_status": "confirmed",
+                "structure_version": 4,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": "accept-u10",
+                "delivery_decision": "deliver",
+                "admission_basis": "confirmed_version",
+                "changed_fields": [],
+                "invalidated_fields": [],
+                "rechecked_fields": [],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved"
+              },
+              "evidence": [
+                "u10"
+              ]
+            }
+          ]
+        },
+        {
+          "user_event": {
+            "message_id": "u11",
+            "request_id": "r11",
+            "text": "只让顶灯照在肩上的亮度略低，面部、机位、站位、动作和终点不变。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s11",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "shot1",
+              "fields": {
+                "task_kind": "reference",
+                "structure_status": "confirmed",
+                "structure_version": 4,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": "accept-u10",
+                "delivery_decision": "deliver",
+                "admission_basis": "confirmed_version",
+                "changed_fields": [
+                  "light.intensity"
+                ],
+                "invalidated_fields": [
+                  "light_response",
+                  "material_response",
+                  "exposure_continuity"
+                ],
+                "rechecked_fields": [
+                  "light_response",
+                  "material_response",
+                  "exposure_continuity"
+                ],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved"
+              },
+              "evidence": [
+                "u10",
+                "u11"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "detail-cannot-keep-stale-combat-design",
+      "rule_ids": [
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [
+        {
+          "id": "accept-u20",
+          "message_id": "u20",
+          "unit_id": "fight1",
+          "structure_version": 2
+        }
+      ],
+      "authorizations": [],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u20",
+            "request_id": "r20",
+            "text": "确认战斗镜头结构版本2：近景只拍上半身，刀格挡后仍停在胸前。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s20",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "fight1",
+              "fields": {
+                "task_kind": "new_text",
+                "structure_status": "confirmed",
+                "structure_version": 2,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": "accept-u20",
+                "delivery_decision": "deliver",
+                "admission_basis": "confirmed_version",
+                "changed_fields": [],
+                "invalidated_fields": [],
+                "rechecked_fields": [],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved",
+                "combat_design_required": true,
+                "combat_design_status": "design_ready",
+                "combat_structure_version": 2
+              },
+              "evidence": [
+                "u20"
+              ]
+            }
+          ]
+        },
+        {
+          "user_event": {
+            "message_id": "u21",
+            "request_id": "r21",
+            "text": "丰富格挡时的身体受力，现在必须完整看见双脚踏地，画面改全身远景，格挡和终点不变，先看结构。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s21",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "fight1",
+              "fields": {
+                "task_kind": "new_text",
+                "structure_status": "pending",
+                "structure_version": 3,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": null,
+                "delivery_decision": "wait_for_review",
+                "admission_basis": "unresolved",
+                "changed_fields": [
+                  "camera.crop"
+                ],
+                "invalidated_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "diagram_scope",
+                  "combat_design"
+                ],
+                "rechecked_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "diagram_scope"
+                ],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved",
+                "combat_design_required": true,
+                "combat_design_status": "structure_ready",
+                "combat_structure_version": null
+              },
+              "evidence": [
+                "u20",
+                "u21"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "direct-authorization-expires",
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [],
+      "authorizations": [
+        {
+          "message_id": "u30",
+          "request_id": "r30",
+          "units": [
+            "shot1"
+          ],
+          "actions": [
+            "skip_structure_review"
+          ]
+        }
+      ],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u30",
+            "request_id": "r30",
+            "text": "本次镜头1跳过结构确认，直接编译这个8秒固定中景：少年把雨伞收起，最终伞尖抵地，保持站立。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s30",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "shot1",
+              "fields": {
+                "task_kind": "new_text",
+                "structure_status": "pending",
+                "structure_version": 1,
+                "structure_review_mode": "direct_authorized",
+                "acceptance_ref": null,
+                "delivery_decision": "deliver",
+                "admission_basis": "direct_authorized",
+                "changed_fields": [],
+                "invalidated_fields": [],
+                "rechecked_fields": [],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved",
+                "request_id": "r30"
+              },
+              "evidence": [
+                "u30"
+              ]
+            }
+          ]
+        },
+        {
+          "user_event": {
+            "message_id": "u31",
+            "request_id": "r31",
+            "text": "上一版完成了；这一轮让镜头1改成从门外拍，人物站在门内，先给我看新结构。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s31",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "shot1",
+              "fields": {
+                "task_kind": "new_text",
+                "structure_status": "pending",
+                "structure_version": 2,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": null,
+                "delivery_decision": "wait_for_review",
+                "admission_basis": "unresolved",
+                "changed_fields": [
+                  "camera.relation"
+                ],
+                "invalidated_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "light_response"
+                ],
+                "rechecked_fields": [
+                  "visible_roster",
+                  "viewer_priority",
+                  "light_response"
+                ],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "resolved",
+                "request_id": "r31"
+              },
+              "evidence": [
+                "u31"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nonphysical-not-a-physical-bypass",
+      "rule_ids": [
+        "VIDEO-LIGHT-01",
+        "VIDEO-STATE-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [],
+      "authorizations": [
+        {
+          "message_id": "u40",
+          "request_id": "r40",
+          "units": [
+            "graphic1"
+          ],
+          "actions": [
+            "skip_structure_review"
+          ]
+        }
+      ],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u40",
+            "request_id": "r40",
+            "text": "本次跳过结构确认：6秒白底平面圆形从左到右，始终位于红线上层，最终停住，全程无声。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s40",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "graphic1",
+              "fields": {
+                "task_kind": "new_text",
+                "structure_status": "pending",
+                "structure_version": 1,
+                "structure_review_mode": "direct_authorized",
+                "acceptance_ref": null,
+                "delivery_decision": "deliver",
+                "admission_basis": "direct_authorized",
+                "changed_fields": [],
+                "invalidated_fields": [],
+                "rechecked_fields": [],
+                "light_composite_applicability": "non_physical",
+                "light_composite_review": "not_applicable",
+                "world_dynamics_mode": "primary_action"
+              },
+              "evidence": [
+                "u40"
+              ]
+            }
+          ]
+        },
+        {
+          "user_event": {
+            "message_id": "u41",
+            "request_id": "r41",
+            "text": "改为真实球体放在石地上，用指定场景图的阴影方向；场景图尚未提供，先不要自行确定光线。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s41",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "graphic1",
+              "fields": {
+                "task_kind": "reference",
+                "structure_status": "pending",
+                "structure_version": 2,
+                "structure_review_mode": "review_required",
+                "acceptance_ref": null,
+                "delivery_decision": "wait_for_input",
+                "admission_basis": "unresolved",
+                "changed_fields": [
+                  "scene.medium",
+                  "visible_roster",
+                  "endpoint"
+                ],
+                "invalidated_fields": [
+                  "light_response",
+                  "boundary_state"
+                ],
+                "rechecked_fields": [],
+                "light_composite_applicability": "physical",
+                "light_composite_review": "pending"
+              },
+              "evidence": [
+                "u41"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "language-repair-keeps-production-state",
+      "rule_ids": [
+        "VIDEO-LANGUAGE-01",
+        "VIDEO-LITERAL-01",
+        "VIDEO-STATE-01"
+      ],
+      "structure_fields": [
+        "camera.relation",
+        "camera.crop",
+        "viewer_priority",
+        "visible_roster",
+        "blocking",
+        "route",
+        "dialogue.owner",
+        "action.boundary",
+        "endpoint"
+      ],
+      "acceptances": [],
+      "authorizations": [],
+      "turns": [
+        {
+          "user_event": {
+            "message_id": "u50",
+            "request_id": "r50",
+            "text": "只润色：严格编辑@视频1的3-7秒，将@图1的白色面霜罐替换桌上的香水瓶，其他不变。保留所有字面标签。"
+          },
+          "expected_events": [
+            {
+              "event_id": "s50",
+              "type": "state_snapshot",
+              "actor": "assistant_reported",
+              "unit_id": "command1",
+              "fields": {
+                "task_kind": "edit",
+                "operation": "language_only",
+                "structure_status": null,
+                "structure_version": null,
+                "structure_review_mode": null,
+                "acceptance_ref": null,
+                "delivery_decision": "deliver",
+                "admission_basis": "language_only",
+                "changed_fields": [
+                  "connective_wording"
+                ],
+                "invalidated_fields": [],
+                "rechecked_fields": [
+                  "exact_literals",
+                  "semantic_locks"
+                ],
+                "light_composite_applicability": null,
+                "light_composite_review": null,
+                "literal_before": [
+                  "@视频1",
+                  "3-7秒",
+                  "@图1"
+                ],
+                "literal_after": [
+                  "@视频1",
+                  "3-7秒",
+                  "@图1"
+                ]
+              },
+              "evidence": [
+                "u50"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

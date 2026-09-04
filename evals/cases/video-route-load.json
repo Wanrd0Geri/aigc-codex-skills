@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "video-route-load",
+  "title": "简单与复杂任务按需路由",
+  "family": "09-route-load",
+  "rule_ids": [
+    "VIDEO-ROUTE-01",
+    "VIDEO-WARN-01",
+    "VIDEO-LIGHT-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "只改平台中立提示词的语言，不做新设计：6秒，固定机位，平面蓝色方块从左移到右后停住，白底，无声。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    },
+    {
+      "id": "u2",
+      "role": "user",
+      "content": "开始新任务：30秒10镜，角色、素材职责、精确对白、走位、动作顺序和终点均已在当前 VideoContext 中确认。请使用可读上下文给最终提示词，不要为数量本身增加风险提示。",
+      "request_id": "r2",
+      "output_turn": "t2"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "validated-ten-shot-context",
+      "required": true,
+      "kind": "text",
+      "role": "实际完整已确认 VideoContext；尚未提供",
+      "path": null,
+      "sha256": null
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "simple-no-physical-invention",
+      "question": "第一轮是否按语言清理和非物理图形处理，不加物理灯具、接触影、表演或结构确认？",
+      "rule_ids": [
+        "VIDEO-ROUTE-01",
+        "VIDEO-LIGHT-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "complex-evidence-only",
+      "question": "第二轮是否读取真实上下文且不因数量单独预警，也不忽略实际缺失输入？",
+      "rule_ids": [
+        "VIDEO-WARN-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

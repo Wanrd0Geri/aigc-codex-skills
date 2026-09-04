@@ -1,6 +1,8 @@
 # Eight Conditional Image-Diagnosis Dimensions
 
-Use this rubric only for dimensions that contain a visible, intention-relevant finding. It is a relationship check, not a house style. Centered composition, lifted blacks, hard moonlight, warm tension, multiple key lights, flat depth, or no rim light can all be valid choices.
+## IMG-STYLE-01 — Judge against purpose and medium
+
+Use this rubric only for dimensions that contain a visible, intention-relevant finding. It is a relationship check, not a house style. Centered composition, lifted blacks, hard moonlight, warm tension, multiple key lights, flat depth, uniform matte materials, subject camouflage, or no rim light can all be valid choices. Photographic optics and material separation are not mandatory for a flat graphic, illustration or stylized design.
 
 Before calling anything weak or broken, establish:
 
@@ -71,7 +73,7 @@ Inspect whether color supports the source-backed emotional direction without red
 
 A problem exists only when the current color relationship visibly works against the stated intention or breaks continuity—not because it violates a conventional genre palette.
 
-If the emotional intention is unknown, describe the current read and ask rather than prescribing a grade.
+If the emotional intention is unknown, describe the current read without prescribing a grade. Ask only when a materially different target must be chosen for the requested edit.
 
 ## Ranking and repair
 

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "id": "image-remove-owned-reflection",
+  "title": "删除杯子及归属倒影",
+  "family": "13-removal-reflection",
+  "rule_ids": [
+    "IMG-SUPPORT-01",
+    "IMG-AUTH-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "图1为唯一底图。只移除白杯，并清理仅由该杯产生的倒影、接触影和必要残留，恢复对应桌面；灰布及其倒影、桌面边缘、背景、机位与光线保持不变。只给完整修图提示词。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "mirror-table-source",
+      "required": true,
+      "kind": "image",
+      "role": "唯一源图；白杯、其倒影、灰布和空桌面",
+      "path": "../fixtures/mirror-table-source.png",
+      "sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962"
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "removal-ownership",
+      "question": "是否删除白杯和可归属倒影/接触残留，而非只删杯体或清掉整片镜面/灰布倒影？",
+      "rule_ids": [
+        "IMG-SUPPORT-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "no-contradictory-keep",
+      "question": "是否避免“所有倒影不变”等抵消授权的默认锁，且不额外重设计？",
+      "rule_ids": [
+        "IMG-AUTH-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "actual-media-target",
+      "question": "如实际运行编辑器：逐目标检查授权终态、必要连带变化与源图/视频的保持范围；没有实际产出时保持pending，不从prompt推断。",
+      "rule_ids": [
+        "IMG-SUPPORT-01",
+        "IMG-AUTH-01"
+      ],
+      "evidence_kind": "media"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

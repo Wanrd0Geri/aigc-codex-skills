@@ -9,7 +9,7 @@ These communication actions resolve interpretation only. Structure review follow
 - `discuss`: evidence is insufficient, at least two readings are well supported, and choosing between them changes performance, action, rhythm, composition, continuity, or ending.
 - `assume and proceed`: the gap is non-material; choose the lowest-risk option.
 - `state and proceed`: after structure review resolves for the affected unit, the source gives a clear emotional direction; briefly state the bounded interpretation when useful, then deliver without adding another performance-approval round.
-- `warn and deliver`: the requested artifact remains executable but carries a stability tradeoff, such as exceeding a provider recommendation while staying inside hard limits.
+- `warn and deliver`: use only an executable, evidence-backed tradeoff admitted by `VIDEO-WARN-01` in `SKILL.md`; recommendation or count alone does not authorize a warning.
 - `structural replan`: locked time, space, subject count, action load, or camera load cannot fit the current structure; reopen the affected structure and present the smallest executable replan.
 - `silent`: routine platform syntax and non-material craft choices.
 

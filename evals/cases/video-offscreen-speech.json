@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "id": "video-offscreen-speech",
+  "title": "画外对白无需嘴部可见",
+  "family": "11-speech-visibility",
+  "rule_ids": [
+    "VIDEO-SPEECH-01",
+    "VIDEO-LANGUAGE-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "结构已确认。6秒固定近景，只拍门内女孩听门外父亲说“钥匙在桌上”。父亲始终画外，这镜不要求看见父亲嘴部或口型。给平台中立最终提示词。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [],
+  "authorizations": [],
+  "assertions": [
+    {
+      "id": "offscreen-exact-dialogue",
+      "kind": "dialogue",
+      "turn_id": "t1",
+      "text": "钥匙在桌上",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-LANGUAGE-01"
+      ],
+      "allow_terminal_punctuation": true
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "speaker-stays-offscreen",
+      "question": "是否保持父亲画外且不为对白补露脸/改机位，准确归属父亲说话、女孩倾听？",
+      "rule_ids": [
+        "VIDEO-SPEECH-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

@@ -6,6 +6,8 @@ Use when inserting or reconciling a person, product, prop, building, or other el
 
 Identify the support plane, local scale anchors, front/back order, contact points, light direction, receiving surface, and any foreground occluders. If no scale anchor or support plane is readable, state the uncertainty instead of inventing precise placement.
 
+For relocation or a support/light condition changed by another operation, use [edit-operation-state.md](edit-operation-state.md). Consume the resolved placement and lighting, clear old effects attributable to the moved object, and update only its necessary support. Do not preserve stale contact or recheck unrelated objects.
+
 ## Variables
 
 - `[目标对象]`

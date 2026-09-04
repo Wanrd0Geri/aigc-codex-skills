@@ -9,9 +9,20 @@ Use this reference for every new/reference generation, every displayed structure
 
 These examples support one prompt-level rule: a convincing composite is a shared cause-and-response system across subject, ground, nearby materials, atmosphere, depth, and camera exposure. A light direction attached only to the character is insufficient.
 
+## Applicability — VIDEO-LIGHT-01
+
+Decide applicability from the intended imagery before requiring physical fields:
+
+| Intended imagery | State | Required visible integration |
+| --- | --- | --- |
+| A physical world, including stylized 2D/3D people, environments, products, or VFX | `light_composite_applicability: physical`; review `pending` then `resolved` | The minimum physical chain below; do not use N/A to hide an unresolved source or mismatch |
+| Explicit flat graphics, a screen recording/interface canvas, or a pure black frame without a depicted physical scene | `light_composite_applicability: non_physical`; review `not_applicable` | Existing layer order, graphic edges, color/opacity and background continuity only where relevant; no invented lamp, monitor, reflection, shadow, air, or receiving surface |
+
+The eight-column structure table, focus, and per-shot sound remain required on the non-physical path. Its light/composite cell states the actual graphic or black-frame continuity rather than a physical-light recipe; final prose never prints `not_applicable`. A mixed unit scopes applicability to each visible interval: a black end frame does not waive lighting for the preceding physical scene. Untouched source light in a preserving strict edit is carried by its preservation boundary and needs no newly invented craft specification.
+
 ## LightCompositeSpec
 
-Resolve this chain for each generated, rebuilt, extended, or bridged visible unit. For a pure environment or object shot, the primary visible surface/object replaces the subject position in the chain:
+For `physical` imagery, resolve this chain for each generated, rebuilt, extended, or bridged visible unit. For a pure environment or object shot, the primary visible surface/object replaces the subject position in the chain:
 
 `source anchor -> subject response -> contact and nearby receivers -> depth/atmosphere -> camera-visible exposure result`
 
@@ -28,6 +39,10 @@ Keep only fields that materially change the visible result:
 
 For a simple shot, one compact sentence can carry source anchor, subject response, and one grounding or depth cue. Add more only for a side/back/low-key setup, reflective/translucent material, moving/occluded source, VFX, several shots in one space, or an observed failure.
 
+## Narrow source-edit integration
+
+For a strict color/material/removal edit, use the target-owned support rule in `VIDEO-IMPACT-01` in `change-impact-and-delivery.md`. Inherit the source lighting and integration, then check only responses actually changed by the target edit; an existing target reflection may need its color updated while the receiver surface, source light, shadow shape, and other objects remain unchanged. This is a local consequence check, not a new minimum-source/receiver design pass. Nonphysical imagery and source clips without that visible relation receive no invented reflection, shadow, or relighting clause.
+
 ## Authority and reference conflict
 
 Apply authority per lighting field:
@@ -42,7 +57,7 @@ If two authoritative assets assign incompatible light anchors or exposure states
 
 ## Structure-table rendering
 
-The `光影、合成与环境连续性` cell is a compact visible integration preview, not a mood label or software recipe. For every new/reference-generated, rebuilt, extended, or bridged visible unit, state:
+The `光影、合成与环境连续性` cell is a compact visible integration preview, not a mood label or software recipe. Apply `VIDEO-LIGHT-01` first. For each physical new/reference-generated, rebuilt, extended, or bridged visible unit, state:
 
 1. the active source anchor or inherited world-light relation;
 2. how the subject—or primary visible environment/object—and at least one visible ground, nearby-material, depth, or atmosphere receiver belong to that same light;
@@ -55,8 +70,12 @@ Examples:
 - `站台顶灯从人物右上方落下，暖光同时照亮面部、伞面和湿地反光，脚下接触影朝左后方，远处冷雨雾降低对比。`
 - `法术光球是当前主光源，青光先照亮施术手与近侧面部，再扫过石地和浮尘；背景仍保持低曝光。`
 - `夕阳世界方位不变；切到反打后人物改为左后侧轮廓受光，台阶投影和远山空气透视保持同一方向。`
+- Non-physical flat graphic: `白底保持一致，蓝色圆形始终位于红色线条上层，边缘清晰，移动中颜色与透明度不变。`
+- Pure black frame: `全画幅纯黑保持不变。`
 
 ## Final prompt ownership
+
+For non-physical imagery, render the relevant existing graphic/black-frame continuity once in its owning shot. The following physical-light rules apply only to `physical` imagery.
 
 - Put a stable source anchor and baseline atmosphere once at their smallest shared scope. Use `场景：` only when they remain valid across the complete sequence; otherwise keep each local, moving, or effect source in its owning shot.
 - In every owning shot, render the current subject-facing response plus the smallest contact, nearby-receiver, depth, or exposure cue needed to prove integration. The sentence must stand on its current visible state and must not say `同上一镜`.
@@ -66,6 +85,8 @@ Examples:
 - Consume the confirmed focal plane, depth of field, defocus, focus shift, and motion blur without redesigning them. Any change to those fields routes through the structure impact rules in `change-impact-and-delivery.md`.
 
 ## Failure diagnosis and smallest repair
+
+Apply the following diagnosis only to physical imagery. Graphic artifacts use their existing layer/edge/color facts rather than a synthetic shared-light chain.
 
 | Observed result | Likely cause | Smallest repair |
 | --- | --- | --- |

@@ -10,6 +10,19 @@ Use this semantic contract for GPT Image, Gemini/Nano Banana, Seedream, and unkn
 4. `Integration`: only relationships required to make changed pixels belong in the source.
 5. `Keep`: costly locks plus one general unchanged boundary.
 
+## IMG-AUTH-01 — Task permissions and Keep
+
+Resolve the whole request before rendering a capability fragment:
+
+1. `hard locks`: exact or semantic constraints explicitly held by the user or authoritative project source, including their scope.
+2. `authorized changes`: requested targets and the minimum attributable integration needed to complete them. A later explicit release replaces the named lock only; same-request contradictory targets stay unresolved.
+3. `source defaults`: unmentioned source attributes remain unchanged.
+4. `module defaults`: standalone Keep sentences are suggestions for a capability used alone; they never override the complete request.
+
+Build one task-level Keep from unreleased hard locks and source defaults outside the authorized changes and their necessary support. Remove or narrow a module's default Keep when it covers another authorized operation; retain its remaining scope. For example, moving the subject and warming the grade together releases those two attributes while keeping identity and pose. Do not ask the user to choose between these compatible edits.
+
+Ask only when an unreleased hard lock is contradicted, two target values cannot coexist, or the required integration would materially expand permission. Ordering or stages do not resolve such a contradiction. For dependent operations and attributable shadows/reflections, use [edit-operation-state.md](edit-operation-state.md); integration is bounded by ownership, not a license to redesign the scene.
+
 ## Standalone shape
 
 ```text
@@ -29,8 +42,8 @@ Omit `图1是唯一底图` when the interface already exposes one unambiguous ba
 
 ## Composition rules
 
-- One capability: use that capability's standalone fragment.
-- Several capabilities: preserve their unique actions, merge duplicate roles and locks, and state shared dependencies once.
+- One capability: use its operation and integration fragment with the resolved task-level Keep.
+- Several capabilities: preserve their unique actions, discard superseded module defaults, and state shared roles, dependencies, and task-level Keep once.
 - Never append several full templates end to end.
 - Do not print an empty section.
 - Do not include diagnosis, evidence labels, validation status, model parameters, or API controls inside the prompt.

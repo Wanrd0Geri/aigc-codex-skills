@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "status": "candidate-contract-registry",
+  "rules": [
+    {
+      "id": "IMG-AUTH-01",
+      "owner": "skills/aigc-image/references/edit-contract.md",
+      "summary": "完整请求拥有授权，模块默认 Keep 不抵消已授权修改",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-EVIDENCE-01",
+      "owner": "skills/aigc-image/SKILL.md",
+      "summary": "观察、解释与目标分别归属",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-STATE-01",
+      "owner": "skills/aigc-image/references/edit-operation-state.md",
+      "summary": "observed/planned/verified 与依赖重验分离",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-SUPPORT-01",
+      "owner": "skills/aigc-image/references/edit-operation-state.md",
+      "summary": "局部修改包含可归属的必要连带像素",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-OPTICS-01",
+      "owner": "skills/aigc-image/references/edit-lens-flare.md",
+      "summary": "区分光源被遮挡与成像层鬼影",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-STYLE-01",
+      "owner": "skills/aigc-image/references/diagnostic-dimensions.md",
+      "summary": "按用途选择审美修复，允许保持成熟图",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "IMG-PATH-01",
+      "owner": "skills/aigc-image/SKILL.md",
+      "summary": "按任务按需加载和交付",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-ROUTE-01",
+      "owner": "skills/aigc-video/SKILL.md",
+      "summary": "任务范围决定所需路径",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-STRUCTURE-01",
+      "owner": "skills/aigc-video/references/video-contracts.md",
+      "summary": "结构状态与确认、源保留分离",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-STATE-01",
+      "owner": "skills/aigc-video/references/video-contracts.md",
+      "summary": "状态变更失效与继承",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-LANGUAGE-01",
+      "owner": "skills/aigc-video/references/language-lint.md",
+      "summary": "纯语言保留字面锚点和准确控制",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-SPEECH-01",
+      "owner": "skills/aigc-video/references/shot-craft.md",
+      "summary": "台词、画内外声与口型条件分开",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-LIGHT-01",
+      "owner": "skills/aigc-video/references/lighting-compositing.md",
+      "summary": "照明权限及物理适用性",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-WARN-01",
+      "owner": "skills/aigc-video/SKILL.md",
+      "summary": "无证据不触发泛化负载警告",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-IMPACT-01",
+      "owner": "skills/aigc-video/references/change-impact-and-delivery.md",
+      "summary": "只重验受影响字段与完整交付",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-DELIVERY-01",
+      "owner": "skills/aigc-video/references/change-impact-and-delivery.md",
+      "summary": "交付须有适用的准入依据",
+      "evidence": "normative-contract; not behavior test result"
+    },
+    {
+      "id": "VIDEO-LITERAL-01",
+      "owner": "skills/aigc-video/references/language-lint.md",
+      "summary": "唯一字面锚点归一化策略；纯语言清理保留而新编译按adapter",
+      "evidence": "normative-contract; not behavior test result"
+    }
+  ]
+}

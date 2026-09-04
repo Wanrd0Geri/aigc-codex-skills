@@ -1,33 +1,32 @@
 # Halo capability
 
-Use only for a soft glow physically attached to an existing visible emitter or intense motivated reflection.
+Use for soft source-attached glow around a readable emitter or intense motivated reflection, including one created by a separately authorized operation.
 
 ## Evidence gate
 
-Identify the source, its visible geometry, local brightness, surrounding contrast, and occlusion. No visible emitter or motivated reflection means no physical halo. Offer a light-hierarchy repair or require explicit authorization for a stylized overlay.
+Identify the source, geometry, local brightness, surrounding contrast and how source visibility is affected by occlusion. If a prior authorized operation produces the source, consume its planned state under [edit-operation-state.md](edit-operation-state.md); do not claim it is already visible. With neither source evidence nor an authorized producer, offer a supported repair or clarify a stylized overlay target.
 
 ## Shape rules
 
-- point source: round or horizontally slightly wider ellipse
-- strip source: narrow elongated soft band
-- area or irregular emitter: glow follows the visible contour
-- continuous three-layer falloff: small bright inner core, translucent middle layer, broad faint outer layer
+- Fit the spread to the emitter and requested medium: compact around a point, elongated around a strip, or following an area emitter's silhouette.
+- Use a continuous soft falloff by default. A bright core, translucent middle and broad faint outer region are one optional treatment, not three mandatory visible bands or a universal physical law.
+- Do not normalize a readable stylized glow into a photographic one without authorization.
 
 ## Variables
 
-- `[现有光源]`
-- `[点状／条状／面状或不规则轮廓]`
+- `[本轮确定的发光源]`
 - `[克制／较明显的强度]`
-- `[允许覆盖的局部范围]`
+- `[允许覆盖的局部范围]` and `[与光源和媒介相符的扩散形态]`
 
 ## Canonical prompt
 
 ```text
-图1是唯一底图。只在[现有光源]周围添加[克制／较明显]的柔和光晕，并让形状跟随其[点状／条状／面状或不规则]发光轮廓：点状光源呈圆形或横向略宽的椭圆，条状光源呈细长柔光带，面状或不规则光源沿可见轮廓扩散。光晕由紧贴光源的小范围明亮内核、半透明柔和中层和宽而微弱的外层连续衰减组成，仅限于[允许覆盖的局部范围]。保持原有曝光、综合色调、白平衡、光线方向、构图、主体及其余未提及内容不变。
+图1是唯一底图。在[本轮确定的发光源]周围添加[克制／较明显]的柔和光晕，使其呈现[与光源和媒介相符的扩散形态]，从发光轮廓向外连续衰减，仅限于[允许覆盖的局部范围]。保持本轮已确定的光源位置、光线方向与曝光关系；保持[任务级保留项]，其余未提及内容不变。
 ```
 
 ## Prohibited drift
 
-- no hard ring, detached glow, repeated concentric circles, full-frame fog wash, or new emitter
+- Do not introduce an unrequested hard ring, detached glow, repeated concentric circles, or full-frame fog wash.
+- Glow itself does not create a new emitter; a new emitter needs its own authorized producing operation.
 - do not cover a face, readable text, logo, or focal detail unless explicitly authorized
-- halo does not authorize lens flare, bokeh, exposure change, or grading
+- Halo does not independently authorize flare, bokeh, exposure change or grading; when those are also authorized, use the joint task state and Keep.

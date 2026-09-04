@@ -33,7 +33,11 @@ Choose one terminal artifact:
 
 🔴 **CHECKPOINT · 🛑 STOP** when the required image is missing, a required region is unreadable, or image roles would produce materially different edits. Ask one focused question and do not fabricate the source-dependent result.
 
-## 2. Build one source ledger
+### IMG-PATH-01 — Load by task path
+
+Language-only cleanup uses the lint reference, then output and its lock comparison; skip the visual ledger and edit modules. Diagnosis uses the ledger and diagnosis references; it does not load edit compilation unless a repair prompt or performed edit is authorized. A single independent edit uses the common edit references and its selected capability. Read [references/edit-operation-state.md](references/edit-operation-state.md) for dependent edits, observation/target conflicts, removal or movement with associated effects, or performed-edit result tracking. Keep this state internal and sparse.
+
+## 2. Separate source observations from targets
 
 Record only visible or user-supplied facts:
 
@@ -49,7 +53,11 @@ Classify control:
 - `editable`: only the properties authorized in this request
 - `unresolved`: a choice that would produce a materially different result
 
-The visible source overrides older handoff prose. The latest user instruction releases only the locks it names.
+### IMG-EVIDENCE-01 — Observation and target authority
+
+The readable image owns what its pixels currently show; it does not override the user's or project's target specification. Record an incorrect visible label as the observation and the supplied correct copy as the target, with their sources. Correct stale prose about current pixels without discarding valid target locks. Preserve field-level authority from `ImageContext`; a reference contributes only assigned attributes. The latest user instruction releases only the locks it names.
+
+Separate directly readable evidence from a qualified visual interpretation and a materially unresolved choice. A plausible offscreen source or depth relation may justify a bounded repair; do not present it as a visible fact or invent exact position, identity, text, or measurements. Ask only when competing interpretations would materially change the authorized result.
 
 For products and packaging, additionally lock silhouette and proportions, closure geometry, material and color identity, exact label copy and hierarchy, crop, scale, set, contact shadow, and unrequested props unless the user releases them.
 
@@ -66,14 +74,15 @@ For any edit, read:
 3. [references/capability-router.md](references/capability-router.md)
 4. only the capability files selected by the router
 
-Each capability owns its trigger, evidence gate, variables, canonical fragment, prohibited drift, and fallback. A request for one capability never authorizes another.
+Each capability owns its trigger, evidence gate, variables, canonical fragment, prohibited drift, and fallback. A capability cannot expand task permission. Necessary integration may use another module within the same authorized edit; module defaults do not create new user locks. Resolve permissions once under `IMG-AUTH-01` in the edit contract.
 
 ## 4. Enforce evidence gates
 
-Run every selected capability's evidence gate before compiling.
+Run selected capability gates in dependency order. Keep observed source facts, authorized planned results, and inspected results distinct under `IMG-STATE-01` when operations depend on one another.
 
 - If visible evidence supports the edit, fill the capability variables from the image and user instruction.
-- If evidence is missing but a smaller physical repair works, recommend that repair.
+- A later capability may consume a condition explicitly produced by an earlier authorized operation, such as a new lamp producing the emitter for glow. Describe that dependency as planned, never as already visible. In staged actual edits, inspect the preceding result before using it as verified evidence.
+- If neither readable evidence nor an authorized producer supports the condition, recommend a smaller supported repair or ask for the missing material choice.
 - If the user explicitly authorizes a stylized or non-physical overlay, state the released physical constraint outside the prompt, then compile the requested effect.
 - If exact identity, text, logo, or texture is unreadable, request a clearer source when exact recovery matters; otherwise restrict reconstruction to verifiable features.
 
@@ -91,10 +100,10 @@ The shared semantic order is:
 
 This is an internal contract, not a mandatory heading set. Omit empty or unnecessary blocks.
 
-- One capability: render its complete standalone prompt.
-- Several compatible capabilities: merge their fragments into one prompt; state input roles and shared locks once.
+- One capability: render its standalone operation with task-level Keep.
+- Several compatible capabilities: merge their operations into one prompt; state input roles and task-level Keep once. Remove module default keeps superseded by authorized changes.
 - Never concatenate several complete templates.
-- If capabilities conflict, follow the dependency order in `capability-router.md`. If the conflict releases a protected lock, stop at the checkpoint.
+- Resolve dependencies using `capability-router.md`; only an unreleased user/project lock or incompatible target values require a decision. Compatible authorized edits do not require another approval because their standalone templates protect each other's attributes.
 
 Use concrete visible endpoints. Translate `更高级`, `更自然`, `电影感`, or `质感更好` into motivated light, readable depth, controlled contrast, coherent material response, or another source-supported result. Do not leave mood adjectives as executable instructions.
 
@@ -129,9 +138,9 @@ Check that:
 - every source-dependent claim is visible or explicitly supplied
 - every reference contributes only its assigned attributes
 - only authorized properties changed
-- selected capabilities passed their evidence gates
-- capability order is valid and repeated locks were merged
-- exact visible text remains exact; unreadable text was not invented
+- selected gates have readable evidence or an identified authorized producer; planned results were not reported as verified
+- capability order is valid, affected dependencies were refreshed, and task-level Keep contains no superseded module defaults
+- protected exact text matches its authoritative target; authorized corrections replaced the erroneous source copy and unreadable text was not invented
 - prompt settings remain outside the visual instruction when possible
 - language-only cleanup preserved every exact lock, reference role, target, endpoint, integration relation, provider control, and unchanged boundary
 - the response contains exactly the requested artifact
@@ -144,11 +153,11 @@ Read [references/validation-status.md](references/validation-status.md) before c
 | --- | --- | --- |
 | Required image missing | Request the actual image or useful crop. | Return no source-dependent diagnosis or edit prompt. |
 | Image roles ambiguous | Offer the most likely mapping and ask one role question. | Keep unassigned attributes unavailable. |
-| Requested effect fails its evidence gate | Name the missing evidence and propose the smallest physical repair. | Require explicit authorization before a stylized non-physical overlay. |
+| Requested effect lacks a condition | First check for an authorized operation that produces it. | If absent, propose a supported repair or ask before changing the physical/stylistic target. |
 | Exact face, text, logo, or texture is unreadable | Request a clearer source or crop. | Reconstruct only verifiable features and state the risk outside the prompt. |
-| Too many edits conflict | Order them by dependency and recommend stages. | If the user keeps one pass, include all authorized edits and state the stability risk outside the prompt. |
+| Edits appear to conflict | Merge task permissions, discard superseded module defaults, then resolve actual dependencies. | Ask only about incompatible targets or unreleased locks; stages cannot solve a contradictory target. |
 | Provider behavior is undocumented | Use the canonical natural-language contract. | Do not invent syntax, limits, or reliability claims. |
-| Generated result drifts | Compare the result against Target, Change, Integration, and Keep. | Revise one failed capability or shared dependency; do not rewrite unrelated modules. |
+| Generated result drifts | Compare against the locked source, target and inspected candidate under `IMG-STATE-01`. | Repair the failed operation and affected dependents; never adopt drift as a new identity/text baseline. |
 | Language-only request needs an unseen visual choice | Name the missing visible variable and ask one focused question. | Preserve the source prompt; do not invent an edit decision. |
 
 ## Avoid

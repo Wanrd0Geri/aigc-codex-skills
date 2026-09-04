@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "id": "image-planned-lamp",
+  "title": "新增灯具与计划光晕",
+  "family": "02-planned-lamp",
+  "rule_ids": [
+    "IMG-STATE-01",
+    "IMG-EVIDENCE-01",
+    "IMG-AUTH-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "图1为源图。只给修图提示词：在白杯与灰布之间的空桌面增加一盏亮着的暖色台灯，让台灯照亮邻近桌面并产生克制光晕；保留白杯、灰布、镜头与其余内容。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "mirror-table-source",
+      "required": true,
+      "kind": "image",
+      "role": "唯一源图；白杯、其倒影、灰布和空桌面",
+      "path": "../fixtures/mirror-table-source.png",
+      "sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962"
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "planned-not-observed",
+      "question": "是否将灯与发光条件写为已授权计划，不声称源图已有台灯、不误拒绝缺少现有光源？",
+      "rule_ids": [
+        "IMG-STATE-01",
+        "IMG-EVIDENCE-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "dependency-chain",
+      "question": "新增灯→局部受光和反射→光晕是否闭合且保持其他锁？",
+      "rule_ids": [
+        "IMG-AUTH-01",
+        "IMG-STATE-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "actual-media-target",
+      "question": "如实际运行编辑器：逐目标检查授权终态、必要连带变化与源图/视频的保持范围；没有实际产出时保持pending，不从prompt推断。",
+      "rule_ids": [
+        "IMG-STATE-01",
+        "IMG-EVIDENCE-01",
+        "IMG-AUTH-01"
+      ],
+      "evidence_kind": "media"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

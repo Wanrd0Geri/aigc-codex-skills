@@ -5,9 +5,9 @@ Select the smallest set whose authorized changes fully cover the request. Read o
 | User intent or diagnosed root cause | Capability file | Evidence gate |
 | --- | --- | --- |
 | establish, transfer, or reconstruct focus; change depth of field | [edit-focus-depth.md](edit-focus-depth.md) | target plane is identifiable; exact recovery needs readable detail |
-| add source-attached glow | [edit-halo.md](edit-halo.md) | existing visible emitter or intense motivated reflection |
+| add source-attached glow | [edit-halo.md](edit-halo.md) | observed emitter/intense reflection or authorized producer of one |
 | add optical flare ghosts or streak | [edit-lens-flare.md](edit-lens-flare.md) | strong source enters or plausibly faces the lens |
-| form background bokeh | [edit-bokeh.md](edit-bokeh.md) | existing background highlights lie behind the focal plane |
+| form background bokeh | [edit-bokeh.md](edit-bokeh.md) | observed or explicitly planned highlights behind the resolved focal plane |
 | correct convergence, horizon, or spatial projection | [edit-perspective.md](edit-perspective.md) | target geometry and intended plane are readable |
 | move, crop, resize, or rebalance framing | [edit-composition.md](edit-composition.md) | user authorizes composition change |
 | insert or reconcile scale, contact, overlap, and grounding | [edit-placement-contact.md](edit-placement-contact.md) | support surface and occlusion order are readable |
@@ -30,25 +30,25 @@ Use only the stages present in the request:
 6. halo, lens flare, and bokeh
 7. local cleanup
 
-The order is a dependency rule, not a demand for seven passes. Merge compatible stages into one prompt when earlier changes do not destabilize later evidence.
+This is a common order, not seven required passes or a substitute for this task's dependencies. Use [edit-operation-state.md](edit-operation-state.md) when one operation creates or changes what another reads: for example, adding a lamp precedes its light response and glow; removing an occluder precedes judging its exposed background. Independent changes may share one prompt. Refresh consumed evidence after upstream changes.
 
 ## Conflict rules
 
-- Focus owns focal planes; bokeh may consume only highlights already placed behind that plane.
-- Lighting owns source direction and exposure hierarchy; halo and flare may not invent a conflicting source.
+- Focus owns the resolved focal plane; bokeh consumes observed highlights or authorized planned highlights behind that plane.
+- Lighting owns the resolved source direction and exposure hierarchy; halo and flare consume those conditions without inventing a conflicting source.
 - Perspective owns projection; composition may crop or reposition only after the intended projection is fixed.
 - Palette transfer owns color relationships, not luminance hierarchy, shadow geometry, material identity, or scene content unless separately authorized.
 - Object insertion uses placement/contact before material integration.
-- If one capability edits a property another capability protects, ask which property wins before compiling.
+- Apply `IMG-AUTH-01` in [edit-contract.md](edit-contract.md): merge authorized writes before Keep, and discard conflicting standalone defaults. Ask only about incompatible targets or unreleased user/project locks, not compatible authorized combinations.
 
 ## Cinematic routing
 
-Translate `电影感` in this order:
+Translate `电影感` within the intended medium and purpose; inspect relevant relationships in this order:
 
-1. readable subject priority and focal plane
+1. readable subject priority and, when appropriate to the medium, focal plane
 2. motivated light and shadow hierarchy
 3. depth and atmospheric separation
 4. coherent material response
 5. only then a source-supported optical finishing effect
 
-Do not use optical effects when one of the first four relationships is the actual failure.
+Repair the actual failing relationship before proposing optical finishing. If the user explicitly asks for a finishing effect, preserve that scope; do not substitute unrelated improvements or impose photographic depth on flat artwork.

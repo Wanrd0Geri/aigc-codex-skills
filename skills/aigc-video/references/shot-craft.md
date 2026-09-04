@@ -25,7 +25,7 @@ Use one short Chinese sentence when the subject, action, and continuity are obvi
 
 Write only the needed subject, action, and essential continuity. Do not add extra camera, lighting, mood, material, sound, or stability language just to make the shot look professional.
 
-The active adapter's required focus, audible state, and minimum light-composite relation are not optional enrichment. Compress them into the same short sentence at their minimum useful scope; do not expand them into extra craft detail.
+The active adapter's required focus, audible state, and applicable light/composite relation under `VIDEO-LIGHT-01` are not optional enrichment. Compress them into the same short sentence at their minimum useful scope; do not expand them into extra craft detail.
 
 ### Standard Shot
 
@@ -99,7 +99,7 @@ Use one optical character within a shot. A dolly may change camera distance whil
 
 ## Lighting Direction And Exposure
 
-Treat lighting as world-space geometry, not a mood adjective. `lighting-compositing.md` is the single owner of light authority and the mandatory generated-shot response chain. This section supplies only the camera-facing and crop-visibility constraints that chain must satisfy:
+For physical imagery, treat lighting as world-space geometry, not a mood adjective. `VIDEO-LIGHT-01` in `lighting-compositing.md` owns applicability and light authority; explicit non-physical imagery follows its graphic continuity path and skips the physical chain below. This section supplies only the camera-facing and crop-visibility constraints that chain must satisfy:
 
 `physical source -> world direction -> subject lit and shadow sides -> camera relation -> visible result`
 
@@ -112,7 +112,7 @@ Record only the constraints that change what the camera can read:
 - important highlight, reflection, translucent, wet, metal, or edge-light receivers
 - the neighboring shot state that must remain continuous
 
-For a simple stable setup, pass these constraints into the one compact source-direction-result sentence owned by `LightCompositeSpec`; do not render a second lighting sentence. The structure table and every generated/rebuilt/extended/bridged unit still need that minimum shared-light relation; add further exposure separation, receivers, or cross-shot continuity only for side/back/low-key light, moving or occluded light, reflective/translucent materials, multiple shots in one space, or a lighting-related failure.
+For a simple stable setup, pass these constraints into the one compact source-direction-result sentence owned by `LightCompositeSpec`; do not render a second lighting sentence. The structure table and every physical generated/rebuilt/extended/bridged unit still need that minimum shared-light relation; add further exposure separation, receivers, or cross-shot continuity only for side/back/low-key light, moving or occluded light, reflective/translucent materials, multiple shots in one space, or a lighting-related failure.
 
 A camera move or cut changes which lit plane the camera sees; it does not move the sun, window, lamp, or fire. Recalculate the camera-to-light relation after every camera-side change and return that constraint to `LightCompositeSpec`. Let `SceneSpatialContract` retain a fixed source's identity and world location when cross-shot topology requires it; let `lighting-compositing.md` own static intensity/exposure and each current visible subject, shadow, reflection, and exposure result; let `world-dynamics.md` own moving-light phase, occlusion change, flicker, response delay, and residual timing. Render only the single integrated receiving result.
 
@@ -152,7 +152,7 @@ When the current user/project selects the cinematic 3D CG profile meaning, rende
 
 For performing subjects, scale detail by complexity. Do not reduce performance to labels like `sad`, `happy`, `stares`, or `walks`.
 
-Keep performance detail inside the resolved blocking envelope. Expressive posture, balance, and hand support may change after confirmation while body footprint, crop, occlusion, contact geometry, route, locked opening/action boundary, and endpoint remain stable. A change to any of those structure fields follows `change-impact-and-delivery.md` before enrichment.
+Keep performance detail inside both the authorized change scope and the resolved blocking envelope. Expressive posture, balance, and hand support may be refined after confirmation only when performance is mutable or its adjustment is requested, while body footprint, crop, occlusion, contact geometry, route, locked opening/action boundary, and endpoint remain stable. A camera-only revision does not open a new performance-design pass: apply the mutation boundary in `VIDEO-IMPACT-01` in `change-impact-and-delivery.md`. A change to any structure field follows that impact contract before enrichment.
 
 - **Simple**: one visible action plus one cue, such as gaze target, hand contact, posture shift, or expression change.
 - **Standard**: starting pose, active body part, contact point, movement direction, gaze target, and continuity anchor when useful.
@@ -172,7 +172,7 @@ When prop handling is the main action, define the visible active hand, contact, 
 
 When non-contact is a material lock, make the visible separation part of the terminal geometry rather than describing only an approach toward the target. State where the active hand, body, or prop visibly stops relative to an existing reference, then hold or withdraw it; do not rely on repeated `不接触` wording to counteract an otherwise contact-completing action. If the requested near-gap is too small for the resolved crop to verify, surface the smallest framing, isolated-shot, or boundary-asset choice instead of pretending the text alone guarantees that distance.
 
-When gaze is narratively material, name the visible target. If the target is off the camera axis, the head or eyes could plausibly remain forward, or an observed result missed the target, use the smallest sufficient orientation chain: torso relation -> head turn -> nose/chin direction -> eye direction -> target. Omit links already made unambiguous by the framing.
+When gaze is narratively material, name its established target and describe only the authorized orientation/action. Use the smallest sufficient orientation chain (torso relation -> head/nose/chin direction -> eye direction -> target) to clarify existing state; add a turn only when that action is authorized. A locked eye movement does not become a head or body turn because a new camera hides the eyes. Under `VIDEO-IMPACT-01`, choose within the allowed camera range, preserve the action with its visibility limit, or resolve a concrete hard conflict. Omit links already unambiguous in the frame.
 
 ## Cross-Shot Action Phase
 
@@ -182,16 +182,18 @@ The inherited visible state is more important than any continuity label: an alre
 
 Carry world-facing and world position across a cut unless a visible turn or reposition occurs before that boundary. A new camera side may reveal a face or reverse screen order, but it does not authorize the subjects to rotate toward each other. Solve face visibility by placing the camera around the preserved blocking; if the requested face view cannot coexist with the locked facing or axis, reopen the affected structure instead of silently changing the performance geometry.
 
-## Dialogue And Lip Sync
+## Dialogue And Lip Sync — VIDEO-SPEECH-01
+
+Speech and mouth synchronization are separate requirements. For every active spoken line, record its exact content and owner, `speech_visibility: on_screen | off_screen | voiceover`, and independent `lip_sync_required: true | false`. Use `on_screen` for a visible speaker, `off_screen` for a scene speaker outside the crop, and `voiceover` for narration detached from a visible speaking body. An on-screen speaker may still have an obscured mouth; visibility of the body alone does not prove a synchronizable mouth.
 
 When the user requests dialogue, speech, lip sync, or visible mouth movement:
 
-- State who speaks, the exact spoken line, and whether the mouth is visible in the frame.
+- State who speaks and the exact line. Render offscreen speech or voiceover in `声音` without adding a visible body or changing the camera. Require visible-mouth checks only when `lip_sync_required` is true or the requested visible speech itself needs matching mouth motion.
 - For visible multi-character dialogue, establish the attention handoff: speaker -> addressed listener -> only the materially affected visible reaction. Use at most one necessary listener response per main dialogue beat unless the source locks more. Do not make every visible character react at once or stare toward the same direction throughout unless the source explicitly requires it.
-- Fit dialogue to the actual speaking time, natural delivery speed, pauses, reactions, and stable visible-mouth time. A short clip may contain several brief lines when the timeline genuinely gives them room; a long sentence may already overload one short shot.
-- Give the speaking subject enough stable face time; avoid hiding the mouth behind fast camera motion, back view, heavy occlusion, or a cutaway.
+- Fit every line to actual audible speaking time, natural delivery speed, pauses, and reactions. Include stable visible-mouth time only when lip sync is required. A short clip may contain several brief lines when the timeline genuinely gives them room; a long sentence may already overload one short shot.
+- For required visible lip sync, give the speaking subject enough stable mouth visibility; avoid hiding it behind fast camera motion, back view, heavy occlusion, or a cutaway. An authorized offscreen line or voiceover needs audible capacity, not a face shot.
 - For Seedance-family output, use the active Seedance adapter for dialogue and sound placement. For platform-neutral output, preserve the exact line and ownership in ordinary natural language.
 - Apply audio and visible-text rendering rules from the active platform adapter; this craft reference does not redefine them.
 - Keep subtitle overlays disabled under the standing user lock. Requested diegetic signs, logos, titles, labels, or advertising text retain their normal visible-text owner and are not subtitles.
 
-If dialogue is requested but the mouth is not visible or the shot is too short for lip sync, state the conflict and recommend a framing or duration change. Do not reduce exact dialogue or alter locked framing without the user's approval.
+If required lip sync conflicts with locked mouth visibility, route the result-changing conflict through IntentFactGate before a structure row or final prompt. If any exact line cannot fit its audible interval, resolve that timing conflict regardless of visibility. Preserve offscreen speech and voiceover when they fit; do not introduce a face shot merely because dialogue exists. Do not reduce exact dialogue or alter locked framing without the user's authorization.

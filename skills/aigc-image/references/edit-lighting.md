@@ -6,6 +6,8 @@ Use to repair motivated light direction, local illumination, shadow ownership, e
 
 Identify visible or motivated sources, target region, direction, hardness, falloff, shadow geometry, local bounce, and the grade properties the user protects. A request for `电影感` does not authorize a new LUT, camera emulation, time of day, or unrelated source.
 
+An explicitly authorized new source supplies planned light conditions under [edit-operation-state.md](edit-operation-state.md); it is not evidence of a source already in the image. Refresh receiving surfaces, attributable shadows/reflections and downstream optical effects when source placement, output or occlusion changes. Weather/time defaults in the standalone fragment yield only when those changes are also authorized under the task contract.
+
 ## Variables
 
 - `[目标区域]`

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "id": "image-multiturn-complete",
+  "title": "图像多轮完整交付保留旧锁",
+  "family": "10-multiturn-delivery",
+  "rule_ids": [
+    "IMG-AUTH-01",
+    "IMG-STATE-01",
+    "IMG-SUPPORT-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "图1为唯一源图。只给提示词：将灰布改成暗蓝，白杯、其倒影、相机、桌面和背景保持不变。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    },
+    {
+      "id": "u2",
+      "role": "user",
+      "content": "继续上一轮，把暗蓝改成深绿，其他要求照旧。请给替换后完整提示词。",
+      "request_id": "r1",
+      "output_turn": "t2"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "mirror-table-source",
+      "required": true,
+      "kind": "image",
+      "role": "唯一源图；白杯、其倒影、灰布和空桌面",
+      "path": "../fixtures/mirror-table-source.png",
+      "sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962"
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "superseded-color",
+      "question": "第二轮是否删除已被替代的暗蓝指令，完整输出深绿修改及仍有效的白杯/倒影/相机等锁？",
+      "rule_ids": [
+        "IMG-AUTH-01",
+        "IMG-STATE-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "no-fake-verified",
+      "question": "未实际编辑前是否保持计划状态，不声称灰布已变色？",
+      "rule_ids": [
+        "IMG-STATE-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "actual-media-target",
+      "question": "如实际运行编辑器：逐目标检查授权终态、必要连带变化与源图/视频的保持范围；没有实际产出时保持pending，不从prompt推断。",
+      "rule_ids": [
+        "IMG-AUTH-01",
+        "IMG-STATE-01",
+        "IMG-SUPPORT-01"
+      ],
+      "evidence_kind": "media"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

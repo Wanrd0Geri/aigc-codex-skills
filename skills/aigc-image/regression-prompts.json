@@ -5,7 +5,10 @@
       "readable_source_image"
     ],
     "prompt": "处理一下这张图。",
-    "expected": "States the likely interpretation and asks whether the user wants diagnosis, an edit prompt, or the edit performed; does not silently choose a terminal artifact."
+    "expected": "States the likely interpretation and asks whether the user wants diagnosis, an edit prompt, or the edit performed; does not silently choose a terminal artifact.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "product-cleanup-locks",
@@ -13,6 +16,167 @@
       "readable_product_image"
     ],
     "prompt": "只清理背景灰尘并压住瓶身反光，瓶子轮廓、比例、封口结构、材质颜色、标签原文和层级、构图与接触阴影都不能改变。给我修图提示词。",
-    "expected": "Calls object cleanup plus only the needed material or lighting integration; protects silhouette, proportions, closure geometry, material and color identity, exact label copy and hierarchy, crop, scale, set, and contact shadow; does not redesign the product or set."
+    "expected": "Calls object cleanup plus only the needed material or lighting integration; protects silhouette, proportions, closure geometry, material and color identity, exact label copy and hierarchy, crop, scale, set, and contact shadow; does not redesign the product or set.",
+    "rule_ids": [
+      "IMG-AUTH-01",
+      "IMG-SUPPORT-01"
+    ]
+  },
+  {
+    "id": "image-combine-layout-grade",
+    "rule_ids": [
+      "IMG-AUTH-01"
+    ],
+    "prompt": "将人物移到画面左侧，同时把整体色调调暖，人物身份和姿势不变，一份修图提示词。",
+    "expected": "Merges composition and grade under the whole request, removes their superseded standalone Keep defaults, preserves identity and pose, and returns one complete prompt without asking which compatible edit wins.",
+    "requires": [
+      "readable_source_image"
+    ]
+  },
+  {
+    "id": "image-combine-real-lock-conflict",
+    "rule_ids": [
+      "IMG-AUTH-01"
+    ],
+    "prompt": "人物位置必须完全保持原样，同时把同一个人物移动到画面左侧。给我修图提示词。",
+    "expected": "Identifies the same-position and moved-position targets as an unresolved real conflict and asks one focused question; does not resolve it by silently releasing the hard lock or proposing stages.",
+    "requires": [
+      "readable_source_image"
+    ]
+  },
+  {
+    "id": "image-plan-new-lamp-glow",
+    "rule_ids": [
+      "IMG-STATE-01",
+      "IMG-AUTH-01"
+    ],
+    "prompt": "在右后方墙上新增一盏暖色壁灯，让它照亮旁边墙面，并给这盏新灯加克制光晕；人物和构图不变，给我一份提示词。",
+    "expected": "Plans lamp creation, local light response and glow in dependency order. Halo consumes the authorized planned emitter and exposure, does not claim a lamp was observed or verified, does not demand nonphysical-overlay approval, and preserves one task-level Keep.",
+    "requires": [
+      "readable_unlit_wall_image"
+    ]
+  },
+  {
+    "id": "image-plan-no-producer",
+    "rule_ids": [
+      "IMG-STATE-01"
+    ],
+    "prompt": "原图里没有灯，我不允许新增光源，也不接受图形叠加，但请只加真实的源附着光晕。",
+    "expected": "Does not let the desired halo act as its own producer. Identifies the missing emitter under the explicit locks and asks about the incompatible target or proposes a supported alternative without inventing a planned lamp.",
+    "requires": [
+      "readable_overcast_image_without_emitters"
+    ]
+  },
+  {
+    "id": "image-plan-move-source-refresh",
+    "rule_ids": [
+      "IMG-STATE-01"
+    ],
+    "prompt": "上一版提示词已把右侧壁灯、受光和光晕写好。这次只将壁灯移到左侧，其余已定人物和构图不变。请交付完整修订提示词。",
+    "expected": "Updates the lamp target and refreshes its local illumination, owned shadows/reflections and halo dependencies; removes obsolete right-side relations, retains unrelated identity/composition locks, and reports no actual output verification.",
+    "requires": [
+      "readable_source_image_with_lamp"
+    ]
+  },
+  {
+    "id": "image-remove-owned-effects",
+    "rule_ids": [
+      "IMG-SUPPORT-01"
+    ],
+    "prompt": "把镜面桌上的杯子删掉，恢复自然桌面，旁边花瓶和整张图的构图、光线都不变。给我提示词。",
+    "expected": "Includes the cup and its attributable reflection, cast/contact shadows and local restoration support even outside the cup silhouette. Protects vase effects and the global lighting/composition; does not constrain reconstruction only to newly exposed silhouette pixels.",
+    "requires": [
+      "readable_mirror_table_cup_image"
+    ]
+  },
+  {
+    "id": "image-remove-retain-stylized-reflection",
+    "rule_ids": [
+      "IMG-SUPPORT-01",
+      "IMG-AUTH-01"
+    ],
+    "prompt": "删掉桌上的杯子，但明确保留镜面里原有杯子倒影，做超现实画面，其他不变。给我提示词。",
+    "expected": "Treats retained reflection as an explicit stylized target, removes only the authorized object/support, preserves the named reflection, and does not request the same authorization again or force physical correction.",
+    "requires": [
+      "readable_mirror_table_cup_image"
+    ]
+  },
+  {
+    "id": "image-evidence-target-label",
+    "rule_ids": [
+      "IMG-EVIDENCE-01",
+      "IMG-AUTH-01"
+    ],
+    "prompt": "项目已经确认正确标签是“天衡”，这张源图误写为“天衔”。按项目标准只修正标签字样，产品、位置和字体版式不变，给我提示词。",
+    "expected": "Keeps the source glyphs as observation and 天衡 as supplied authoritative target. Does not let visible erroneous copy override target truth, quotes the replacement exactly, and preserves the other product/layout locks.",
+    "requires": [
+      "readable_product_wrong_label_image"
+    ]
+  },
+  {
+    "id": "image-optics-source-obstruction",
+    "rule_ids": [
+      "IMG-OPTICS-01"
+    ],
+    "prompt": "按图中这盏被树干部分遮住的强路灯，添加符合成像原理的少量镜头鬼影，保持构图和其他光线。给我提示词。",
+    "expected": "Bases flare on the source-to-lens path and partial source obstruction; can attenuate or alter flare with incident light. Does not assert that flare ignores all occlusion or requires an entirely unobstructed visible emitter.",
+    "requires": [
+      "readable_lamp_partly_behind_tree_image"
+    ]
+  },
+  {
+    "id": "image-optics-ghost-over-silhouette",
+    "rule_ids": [
+      "IMG-OPTICS-01"
+    ],
+    "prompt": "强光源直接入镜，镜头鬼影的投影会经过前景栏杆区域。加少量真实镜头鬼影，别把栏杆改掉，给我提示词。",
+    "expected": "Preserves the railing geometry while treating the ghosts as imaging-space artifacts, not world-space objects to be individually clipped at railing silhouettes. Checks source incidence separately and respects any actual protected detail constraints.",
+    "requires": [
+      "readable_bright_source_and_foreground_image"
+    ]
+  },
+  {
+    "id": "image-bokeh-smooth-filled-disc",
+    "rule_ids": [
+      "IMG-STYLE-01",
+      "IMG-STATE-01"
+    ],
+    "prompt": "把背景现有小灯变成柔和、盘面均匀的焦外光斑，不要亮边圈，焦点和其他内容不变，给我提示词。",
+    "expected": "Uses the existing eligible highlight set and focal plane, accepts smoothly filled discs, and does not impose translucent centers or brighter rims as a physical requirement.",
+    "requires": [
+      "readable_source_image_with_background_highlights"
+    ]
+  },
+  {
+    "id": "image-style-flat-matte-diagnosis",
+    "rule_ids": [
+      "IMG-STYLE-01"
+    ],
+    "prompt": "这是一张故意统一哑光、空间扁平的剪纸海报，人物要融入背景。只检查是否有妨碍字样阅读的问题，不要变成写实摄影。",
+    "expected": "Checks the stated lettering purpose and medium, does not classify uniform matte materials, flattened depth or subject camouflage as defects, and does not append an unrequested edit prompt or photographic treatment.",
+    "requires": [
+      "readable_flat_matte_poster_image"
+    ]
+  },
+  {
+    "id": "image-path-language-no-visual-expansion",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ],
+    "prompt": "只检查这段修图提示词是否通顺，能用就原样返回：图1是唯一底图。只清理墙面右上角两处灰尘，保持墙面纹理、颜色、人物、灯光和构图不变。",
+    "expected": "Uses protected language lint and returns the mature complete prompt unchanged, without requiring source images, instantiating operation state, loading visual capability decisions, or generating an image."
+  },
+  {
+    "id": "image-perform-candidate-baseline",
+    "rule_ids": [
+      "IMG-STATE-01",
+      "IMG-EVIDENCE-01"
+    ],
+    "prompt": "图1是原始底图，图2是上一轮把背景调暖后的结果，但图2人物脸变了。继续修回图1身份，同时保留已完成的暖背景。",
+    "expected": "Keeps Image 1 as the identity target and Image 2 as a candidate with one successful change. Plans a local identity repair with affected checks, does not promote the drifted face to a baseline, and marks fields verified only after inspecting an actual output. If no editing capability is available, reports that limitation rather than fabricating execution.",
+    "requires": [
+      "readable_locked_source_image",
+      "readable_failed_candidate_image"
+    ]
   }
 ]

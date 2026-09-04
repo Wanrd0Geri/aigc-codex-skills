@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "id": "image-small-cleanup",
+  "title": "小污点局部编辑保护",
+  "family": "04-surgical-cleanup",
+  "rule_ids": [
+    "IMG-SUPPORT-01",
+    "IMG-AUTH-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "图1里只清理右上角墙面标注的两处小污点；人物身份、产品标签原文、纹理、明暗、构图和其余区域保持不变。只给提示词。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "marked-cleanup-source",
+      "required": true,
+      "kind": "image",
+      "role": "有可读人物、标签和两个真实标注污点的源图；尚未提供",
+      "path": null,
+      "sha256": null
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "cleanup-scope",
+      "question": "是否只处理两处污点及其必要填补，无额外美化、身份重建或改字？",
+      "rule_ids": [
+        "IMG-SUPPORT-01",
+        "IMG-AUTH-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

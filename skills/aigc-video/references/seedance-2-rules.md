@@ -1,6 +1,6 @@
 # Seedance 2.5 Prompt Adapter
 
-Use for Seedance-family generation and 2.0/2.0 Fast operations.
+Use for new/substantive Seedance-family compilation and 2.0/2.0 Fast operations. Pure language repair does not enter this adapter; `VIDEO-LITERAL-01` in `language-lint.md` preserves its supplied syntax.
 
 Source basis:
 
@@ -16,7 +16,7 @@ Use `素材编号（按上传顺序） + 具体用途`. Build this map internall
 
 For one coarse white-model video that governs the whole clip, place one natural unheaded reference sentence before `主体：` and name only the dimensions actually borrowed. Put subject/prop correspondence in `主体：`; put an actual supplied or described environment in `场景：`; do not mention an absent scene, light, material, guide, or other unborrowed dimension merely to exclude it.
 
-Default final labels are plain upload-order labels. Treat a supplied `@` handle, UUID, or filename as internal mapping evidence and normalize it to `图片1`、`视频1` or `音频1`. Preserve a literal handle only when the current user explicitly requests it for the current output. If upload order is unknown and the map matters, ask instead of guessing.
+Apply only `VIDEO-LITERAL-01` in `language-lint.md` for label scope: this compilation path defaults to plain upload-order labels and retains source identifiers internally; language-only cleanup preserves every supplied literal. Resolve unknown material order only when this compilation actually needs it.
 
 ```text
 主体：
@@ -43,7 +43,7 @@ Use this ordered structure only after every affected shot passes the structure-d
 
 For two or more shots, multiple cut points, or a complete sequence, this structure produces one unified command with one `情节：` timeline. Separate prompts are allowed only for a single shot or an explicit user request for separate outputs. The timeline is not a set of independent prompt cards: each shot must restate its own current visible state, spatial relation, action phase, camera-visible result, and terminal state. Do not use `同上一镜`、`继续刚才`、`承接上一镜` or similar relative wording as a substitute for that state.
 
-For each shot, declare only the fields relevant to its current visible set and execution: current visible semantic assets/subjects; current spatial relationship and state; current held, connected, or contacted object; current visible lighting result or light-source direction; current action phase; current dialogue/sound; and the visible endpoint. Omit absent optional fields; the required focus and light-composite relations remain visible, while only the audible prose may be suppressed under the explicit sound-description exception below. Bind global material labels and identity/appearance responsibilities once in their owning headings, then use semantic names in shot prose; never repeat `图片N`/`视频N` labels per shot. A pure environment shot receives no human-only fields.
+For each shot, declare only the fields relevant to its current visible set and execution: current visible semantic assets/subjects; current spatial relationship and state; current held, connected, or contacted object; current applicable light/composite result; current action phase; current dialogue/sound; and the visible endpoint. Omit absent optional fields; the required focus and applicable physical-light or graphic-continuity relation under `VIDEO-LIGHT-01` remain visible, while only the audible prose may be suppressed under the explicit sound-description exception below. Bind global material labels and identity/appearance responsibilities once in their owning headings, then use semantic names in shot prose; never repeat `图片N`/`视频N` labels per shot. A pure environment shot receives no human-only fields.
 
 ```text
 主体：
@@ -80,7 +80,7 @@ Never render a `全局补充：` heading. Put an owned whole-clip requirement na
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
 - Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. Render each shot through its resolved world-dynamics mode.
 - Shots use semantic names and state only visible changes or continuity-critical inheritance.
-- Each shot paragraph is executable in isolation from its current frame through its terminal frame. Describe inherited facts as present current state (for example, an already-open door or an already-connected beam), never as an instruction to consult an earlier shot. Keep the full command unified while keeping per-shot semantic closure.
+- Each shot paragraph states a complete local interval from its current frame through its terminal frame within the unified command; its unchanged global material/scene bindings remain owned by that command under `VIDEO-DELIVERY-01`. Describe inherited facts as present current state (for example, an already-open door or an already-connected beam), never as an instruction to consult an earlier shot. Keep the full command unified while keeping per-shot semantic closure.
 - When a dialogue, reaction, or close shot has a material `ActingTask`, write its playable task inline with the smallest visible execution cue. Add what feedback the character checks and how the strategy changes only when those turns are source-backed. Do not output `目标：`、`策略：` or another analysis label, and do not replace task logic with an expression list.
 - When a performance continuity anchor controls the shot, state the inherited relation, attention, intensity, or decision at cut-in before advancing the performance. Do not output the anchor label or repeat the full earlier task.
 - When an authorized audio/video rhythm materially controls a visual event, state the event's causal alignment to the relevant strong beat, rhythm change, speech turn, or sound cue in the owning shot. Mention the material label only at its single binding point; rhythm-only borrowing does not authorize the source music, lyrics, or background audio.
@@ -95,25 +95,25 @@ Use this stable order:
 
 1. shot size, angle, and camera mode
 2. subject's current visible state and material spatial relationship
-3. current subject/scene light-composite relation at the smallest visible scope
+3. current applicable light/composite relation at the smallest visible scope under `VIDEO-LIGHT-01`
 4. action, performance, local body/material/environment coupling, and causal response
 5. main camera movement and the visible result it creates
 6. one visual focus and any supported attention/focal-plane shift
 7. per-shot sound: dialogue/narration, causal foley, active ambience, or explicit no-new-event/silence; render spoken content here once rather than duplicating it in the action clause, and never add BGM
 8. ending state, residual world motion, or next-shot handoff
 
-Do not omit visual focus, per-shot sound, or the current light-composite relation for a generated, rebuilt, extended, or bridged visible unit. Keep each concise. The sole sound exception is a current-user request to omit all sound-description prose; retain its audible state internally and omit only that prose. Other irrelevant fields may be omitted. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, optical zoom, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, softened, compressed, expanded, or repositioned. Never substitute a dolly/track for a locked optical zoom.
+Do not omit visual focus, per-shot sound, or applicable light/composite continuity for a generated, rebuilt, extended, or bridged visible unit. Apply `VIDEO-LIGHT-01` for physical imagery versus explicit flat graphics/screen recordings/black frames; do not invent a physical source for the latter. Keep each concise. The sole sound exception is a current-user request to omit all sound-description prose; retain its audible state internally and omit only that prose. Other irrelevant fields may be omitted. A self-explanatory `固定机位` needs no restatement; a push, pan, crane, optical zoom, rack focus, orbit, or track should state what becomes larger, smaller, revealed, hidden, sharp, softened, compressed, expanded, or repositioned. Never substitute a dolly/track for a locked optical zoom.
 
 ## Audio and visible text
 
 Use the natural-language pattern demonstrated by the observed optimizer example:
 
-- dialogue: `角色说道：“台词。”`
+- visible dialogue: `角色说道：“台词。”`; offscreen dialogue: `画外传来角色的声音：“台词。”`; voiceover: `旁白：“台词。”`. Keep speech visibility and lip-sync demand separate under `VIDEO-SPEECH-01` in `shot-craft.md`.
 - persistent ambience: establish it inside `场景：`, then state its current audible presence compactly in every shot
 - local sound effect: write it inside the relevant shot and tie it to its visible cause
 - subtitles and BGM remain inactive under the standing user lock; diegetic visible text keeps its separate text owner
 
-Do not create a standalone sound section. Every generated, rebuilt, extended, or bridged visible unit must contain one audible clause. When it has no supported dialogue, narration, foley, or ambience change, state `无对白，无新增声音事件` or the source-locked silence rather than inventing one. A current-user request for silence still renders the locked silence; a request to omit all sound-description prose retains the plan internally but suppresses only that per-shot prose. Preserve exact dialogue and speaker ownership. Keep the mouth visible when lip sync matters. Sound effects are allowed; BGM is not.
+Do not create a standalone sound section. Every generated, rebuilt, extended, or bridged visible unit must contain one audible clause. When it has no supported dialogue, narration, foley, or ambience change, state `无对白，无新增声音事件` or the source-locked silence rather than inventing one. A current-user request for silence still renders the locked silence; a request to omit all sound-description prose retains the plan internally but suppresses only that per-shot prose. Preserve exact dialogue and speaker ownership. Keep a stable visible mouth only when lip sync is required under `VIDEO-SPEECH-01`; authoritative offscreen dialogue and voiceover need no invented face shot. Sound effects are allowed; BGM is not.
 
 Within the dialogue, narration, ambience, foley, and effect-sound fields allowed by the standing lock, use this authority for the audible plan: current user -> active project/source -> a low-risk sound directly caused by the visible action or environment -> explicit no-new-event/silence. Rain, a visible footstep, cloth contact, a door, water, or an impact may supply its ordinary causal sound when the current shot shows that cause. Do not invent an offscreen crowd, animal, vehicle, device, alarm, voice, music, or story cue merely to fill the cell.
 
@@ -128,8 +128,8 @@ For visible text, state exact content, timing, frame position, appearance method
 - Render each active stable-topology fact once at the smallest common scope. Multiple locations keep their topology with their owning shots or segments. Keep internal contract names out of the final prompt.
 - Put per-shot visibility, blocking, occlusion, action phase, dialogue, and ending in the timeline.
 - Apply `VisibleSetGate` to every shot, including pure environment and object shots. Do not write a character field, human body cue, gait, clothing, or hair for a shot whose current visible set contains no such subject; a pure environment clip may omit `主体：` entirely, and an environment/object interval inside a mixed clip receives only its visible environment/object facts.
-- Treat confirmed viewer priority and rendered `画面重心` as one field, and render it once in every shot.
-- Apply `LightCompositeSpec` from `lighting-compositing.md`: bind a stable source anchor at its smallest shared scope and keep a local, moving, or effect source in its owning shot; every shot owns its current subject-facing response plus the smallest contact, nearby-receiver, depth, atmosphere, or exposure cue needed to show one shared light system.
+- Treat the current structure-resolved viewer priority and rendered `画面重心` as one field, and render it once in every shot.
+- Apply `VIDEO-LIGHT-01` and `LightCompositeSpec` from `lighting-compositing.md`: a physical shot owns its current subject-facing response plus the smallest visible shared-light integration cue, with a stable anchor at its smallest shared scope and local/moving/effect sources in their owning shots. A non-physical shot owns only its relevant graphic or black-frame continuity.
 - Do not repeat a material label, global scene description, world driver, character appearance, camera rule, or negative instruction in every shot.
 - Do not repeat exact timing inside a shot after its range is established in the heading unless the explicit internal-time exception applies.
 - Do not use a generic suffix such as `微风吹动衣摆和树叶，水面泛起涟漪`. Select only visible receivers, connect them to one supported cause, and vary timing and amplitude by material and depth.

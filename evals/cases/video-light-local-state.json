@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "id": "video-light-local-state",
+  "title": "局部灯光与结构失效",
+  "family": "07-local-light-state",
+  "rule_ids": [
+    "VIDEO-STATE-01",
+    "VIDEO-LIGHT-01",
+    "VIDEO-IMPACT-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "当前已确认完整镜头2，结构版本3：固定中景，女孩站在窗边看信，保持站位、机位、焦点、遮挡和终点。只把桌灯亮度降低，灯位置方向不变；输出完整镜头并记录可观察状态字段。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    },
+    {
+      "id": "u2",
+      "role": "user",
+      "content": "同一逻辑任务继续：现在把机位改成女孩左后方跟拍她走到桌边，结尾停下看信；请先给受影响结构。",
+      "request_id": "r1",
+      "output_turn": "t2"
+    }
+  ],
+  "fixtures": [],
+  "authorizations": [],
+  "assertions": [
+    {
+      "id": "light-keeps-version",
+      "kind": "trace_fields",
+      "turn_id": "t1",
+      "selector": {
+        "type": "state_snapshot",
+        "unit_id": "shot2"
+      },
+      "fields": {
+        "structure_status": "confirmed",
+        "structure_version": 3
+      },
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ]
+    },
+    {
+      "id": "camera-reopens",
+      "kind": "trace_fields",
+      "turn_id": "t2",
+      "selector": {
+        "type": "state_snapshot",
+        "unit_id": "shot2"
+      },
+      "fields": {
+        "structure_status": "pending",
+        "structure_version": 4,
+        "delivery_decision": "wait_for_review"
+      },
+      "rule_ids": [
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01"
+      ]
+    },
+    {
+      "id": "state-consistency-t1",
+      "kind": "state_consistency",
+      "turn_id": "t1",
+      "structure_fields": [
+        "camera",
+        "shot_size",
+        "frame_crop",
+        "viewpoint",
+        "focus",
+        "visible_roster",
+        "screen_position",
+        "depth",
+        "occlusion",
+        "path",
+        "blocking_pose",
+        "action",
+        "dialogue_owner",
+        "endpoint"
+      ],
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ]
+    },
+    {
+      "id": "state-consistency-t2",
+      "kind": "state_consistency",
+      "turn_id": "t2",
+      "structure_fields": [
+        "camera",
+        "shot_size",
+        "frame_crop",
+        "viewpoint",
+        "focus",
+        "visible_roster",
+        "screen_position",
+        "depth",
+        "occlusion",
+        "path",
+        "blocking_pose",
+        "action",
+        "dialogue_owner",
+        "endpoint"
+      ],
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ]
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "local-light-closure",
+      "question": "第一轮是否复核光照连带但不重开结构；第二轮是否只使受影响结构与照明关系失效？",
+      "rule_ids": [
+        "VIDEO-LIGHT-01",
+        "VIDEO-IMPACT-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied",
+  "acceptances": [
+    {
+      "message_id": "u1",
+      "unit_id": "shot2",
+      "structure_version": 3
+    }
+  ]
+}

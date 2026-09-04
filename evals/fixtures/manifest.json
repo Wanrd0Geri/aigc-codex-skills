@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "assets": [
+    {
+      "id": "mirror-table-source",
+      "path": "mirror-table-source.png",
+      "sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962",
+      "kind": "image",
+      "provenance": {
+        "id": "mirror-table-source",
+        "role": "edit_target",
+        "path": "/Users/gerry/Documents/Codex/2026-09-05/new-chat/work/skill-structure-runs/media/mirror-table-source.png",
+        "sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962",
+        "origin": "image_gen__imagegen; generated test fixture, not user production media",
+        "tool_call": "exec-dda1b205-6aac-417f-bbdf-72bb4f7a2a27",
+        "model": "built-in imagegen (tool does not expose selected model/settings)",
+        "settings": {},
+        "observed": "White mug at left with whole reflection below, gray folded cloth at right; empty middle tabletop, neutral directional diffuse light, no visible lamp.",
+        "captured_at": "2026-09-04T20:34:17.679953+00:00"
+      },
+      "observations": "白杯在左，杯体倒影可见；灰布在右且有局部倒影；桌面中部空；未见台灯。",
+      "evidence_status": "source_fixture_visually_inspected; not edited-result validation"
+    },
+    {
+      "id": "mirror-table-static-5s",
+      "path": "mirror-table-static-5s.mp4",
+      "sha256": "4b2eb87671a492bf5fc07c051b8982cea2d79fda8a256732414620f3c1ca32f9",
+      "kind": "video",
+      "provenance": {
+        "origin": "ffmpeg loop of mirror-table-source.png plus silent audio; constructed input fixture",
+        "duration_seconds": 5,
+        "width": 768,
+        "height": 512,
+        "fps": 24,
+        "video_codec": "H264 yuv420p",
+        "audio": "AAC stereo 48000Hz silent anullsrc",
+        "source_image_sha256": "e08a4633b1c3f3faca75a66e396be3e59c065bd77197b0b2ff1b15151d8d9962"
+      },
+      "limits": "Tests reading/static source preservation only; no motion, contact, lip-sync or dynamic seam ground truth."
+    }
+  ]
+}

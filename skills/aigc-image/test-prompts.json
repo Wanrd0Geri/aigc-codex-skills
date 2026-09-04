@@ -5,7 +5,11 @@
       "readable_source_image"
     ],
     "prompt": "图中所有区域都一样清楚。把中景红衣人物设为唯一实焦，前景和背景按距离虚化；背景现有小灯可以形成克制的焦外光斑。人物、构图、色调和光线不要改变。给我一份通用修图提示词。",
-    "expected": "Calls only establish-focus and background-bokeh capabilities, binds bokeh to existing background highlights, preserves the named locks, resolves shared focus/depth dependencies, and compiles one coherent edit prompt rather than concatenating two full templates."
+    "expected": "Calls only establish-focus and background-bokeh capabilities, binds bokeh to existing background highlights, preserves the named locks, resolves shared focus/depth dependencies, and compiles one coherent edit prompt rather than concatenating two full templates.",
+    "rule_ids": [
+      "IMG-AUTH-01",
+      "IMG-STATE-01"
+    ]
   },
   {
     "id": "edit-scene-semantic-palette",
@@ -14,7 +18,11 @@
       "readable_semantic_palette_card"
     ],
     "prompt": "图1是场景，图2是十二色色卡。使用图2调整图1的色调和色温，但人物、构图、材质、光线方向和明暗关系不能改变。给我一份通用修图提示词。",
-    "expected": "Assigns Image 1 as the only scene base and Image 2 as semantic color mapping only; maps dark structure, local colors, and light colors by fixed position; preserves luminance and scene invariants; and prevents the card grid, swatches, or layout from entering the scene."
+    "expected": "Assigns Image 1 as the only scene base and Image 2 as semantic color mapping only; maps dark structure, local colors, and light colors by fixed position; preserves luminance and scene invariants; and prevents the card grid, swatches, or layout from entering the scene.",
+    "rule_ids": [
+      "IMG-AUTH-01",
+      "IMG-STATE-01"
+    ]
   },
   {
     "id": "diagnose-invalid-optical-stack",
@@ -22,61 +30,99 @@
       "readable_source_image"
     ],
     "prompt": "这张均匀阴天人像没有明显亮光源。给它加满光晕、镜头光斑和焦外光斑，让画面更有电影感。",
-    "expected": "Diagnoses that the requested physical evidence is absent, refuses to stack unsupported halo, lens flare, and bokeh, recommends the smallest focus or light-hierarchy repair, and allows a non-physical overlay only after explicit user authorization."
+    "expected": "Diagnoses that the requested physical evidence is absent, refuses to stack unsupported halo, lens flare, and bokeh, recommends the smallest focus or light-hierarchy repair, and allows a non-physical overlay only after explicit user authorization.",
+    "rule_ids": [
+      "IMG-AUTH-01",
+      "IMG-STATE-01"
+    ]
   },
   {
     "id": "rewrite-01-light-cleanup",
     "prompt": "把这个 prompt 改自然点：中景，女孩独自站在雨夜街口，低头看脚边积水，冷色调，电影感，高质量。",
-    "expected": "Does not assume that this text-only generation-style prompt is an image edit. It asks whether the user wants image generation, image editing, or video wording, and does not fabricate a base image or edit target."
+    "expected": "Does not assume that this text-only generation-style prompt is an image edit. It asks whether the user wants image generation, image editing, or video wording, and does not fabricate a base image or edit target.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-03-incompatible-style-targets",
     "prompt": "改成自然语言：未来城市，女主角很酷，赛博朋克，又要宫崎骏，又要写实电影感，情绪复杂。",
-    "expected": "Does not treat this as an image edit without a base image and target. It identifies the incompatible visual-medium choice and asks one focused artifact or dominant-medium question."
+    "expected": "Does not treat this as an image edit without a base image and target. It identifies the incompatible visual-medium choice and asks one focused artifact or dominant-medium question.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-14-final-image-edit-route",
     "prompt": "我有一张图，直接给我最终修图提示词：人物不变，把白天改成暴雨夜。",
-    "expected": "Keeps ownership in aigc-image, requests the actual readable image before source-dependent weather and lighting claims, and then compiles one edit contract that preserves the person."
+    "expected": "Keeps ownership in aigc-image, requests the actual readable image before source-dependent weather and lighting claims, and then compiles one edit contract that preserves the person.",
+    "rule_ids": [
+      "IMG-PATH-01",
+      "IMG-EVIDENCE-01"
+    ]
   },
   {
     "id": "rewrite-15-named-image-prompt-cleanup",
     "prompt": "只把这段 Midjourney 文生图 prompt 改自然，不要重做创意，保留参数：女孩站在雨夜车站，低头看手里的旧车票，冷色调，高级感，高质量 --ar 16:9 --stylize 150",
-    "expected": "Does not claim ownership as the image editor. It routes the Midjourney prompt to the dedicated Midjourney workflow and preserves the literal parameter suffix during handoff."
+    "expected": "Does not claim ownership as the image editor. It routes the Midjourney prompt to the dedicated Midjourney workflow and preserves the literal parameter suffix during handoff.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-17-supported-image-owner",
     "prompt": "把这份 GPT Image 2 产品海报提示词优化成最终可用版本，文字和版式都要更稳定。",
-    "expected": "Does not treat a text-to-image poster-generation request as source-image editing. It routes to an appropriate image-generation or design workflow and requests missing poster content instead of fabricating it."
+    "expected": "Does not treat a text-to-image poster-generation request as source-image editing. It routes to an appropriate image-generation or design workflow and requests missing poster content instead of fabricating it.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-19-midjourney-parameter-change-route",
     "prompt": "把这段 Midjourney prompt 改自然，并把 --ar 1:1 换成 --ar 16:9、删掉 --stylize 500：女孩站在雨夜车站 --ar 1:1 --stylize 500",
-    "expected": "Routes to the dedicated Midjourney workflow because platform parameters change; preserves the scene facts and exact requested parameter delta without absorbing Midjourney support into aigc-image."
+    "expected": "Routes to the dedicated Midjourney workflow because platform parameters change; preserves the scene facts and exact requested parameter delta without absorbing Midjourney support into aigc-image.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "image-language-01-existing-edit-prompt",
     "prompt": "只把这段修图提示词写自然，不改变任何控制：图1是唯一底图。图2只提供面霜罐外观。把图1桌上的旧香水瓶换成图2的面霜罐，保持人物、构图、灯光、标签文字和背景不变。",
-    "expected": "Keeps ownership in aigc-image language-only mode, preserves both input roles, replacement target, exact endpoint and every Keep lock, and returns the complete edit prompt without requesting a source image or redesigning the edit."
+    "expected": "Keeps ownership in aigc-image language-only mode, preserves both input roles, replacement target, exact endpoint and every Keep lock, and returns the complete edit prompt without requesting a source image or redesigning the edit.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "image-language-02-abstract-edit-wording",
     "prompt": "只改提示词语言，不看图补内容：图1是唯一底图，让背景更高级、更电影感，人物和产品不变。",
-    "expected": "Recognizes that the abstract terms require an unseen visual choice, preserves all supplied locks, and asks one focused question instead of inventing lighting, depth, optics, color, or composition."
+    "expected": "Recognizes that the abstract terms require an unseen visual choice, preserves all supplied locks, and asks one focused question instead of inventing lighting, depth, optics, color, or composition.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "image-language-03-mature-noop",
     "prompt": "检查这段修图提示词，已经能执行就不要改：图1是唯一底图。只清除右上角墙面的两处灰尘，不改变墙面纹理、颜色、光照、人物、构图和其他区域。",
-    "expected": "Recognizes a mature executable edit contract and returns it unchanged, without adding provider syntax, negative-prompt tails, camera terms, or extra cleanup targets."
+    "expected": "Recognizes a mature executable edit contract and returns it unchanged, without adding provider syntax, negative-prompt tails, camera terms, or extra cleanup targets.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-06-humanizer-boundary",
     "prompt": "把这个 AIGC prompt 去 AI 味：这不仅是一个画面，更是少年命运感的表达，要写得更有人味、更有作者观点。",
-    "expected": "Finds no executable subject action or setting, adds no author voice or visual invention, and asks one focused visible-choice question before rewriting."
+    "expected": "Finds no executable subject action or setting, adds no author voice or visual invention, and asks one focused visible-choice question before rewriting.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   },
   {
     "id": "rewrite-09-cliche-to-visible-control",
     "prompt": "改成自然语言：通过光影展现命运感，整体氛围拉满，高级感、电影感、史诗感都要有。",
-    "expected": "Recognizes that no visible subject or beat exists, fabricates no scene, and asks one focused question about the subject or event."
+    "expected": "Recognizes that no visible subject or beat exists, fabricates no scene, and asks one focused question about the subject or event.",
+    "rule_ids": [
+      "IMG-PATH-01"
+    ]
   }
 ]

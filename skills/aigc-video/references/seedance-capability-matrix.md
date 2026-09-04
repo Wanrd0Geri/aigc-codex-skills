@@ -34,13 +34,13 @@ These are stability guidance, not rejection limits:
 - ordinary edit input: no more than 20 seconds is recommended
 - reference images for editing: 1–5 are recommended; 6–8 may be attempted with lower stability
 
-When the user's request is accepted by a hard limit but exceeds a recommendation, deliver the best faithful prompt and mention the stability tradeoff briefly. Do not reject it as impossible.
+These ranges are internal risk candidates. Use only `VIDEO-WARN-01` in `SKILL.md` to decide whether concrete evidence warrants intervention or a note; crossing a recommendation alone neither blocks nor produces a warning.
 
 ## Prompt-control evidence
 
 - Seedance 2.5 accepts second-based shot ranges and uses them in official multi-shot examples. This does not by itself require shot-body subdivisions.
 - The provider reports improved negative control for subtitles and background music. Treat this as a targeted capability, not proof that long generic negative lists are universally reliable.
-- Upload-order labels are sufficient for responsibility binding and are the default final form. Do not output a supplied `@` handle or UUID unless the current user explicitly requests it.
+- Upload-order labels are sufficient for responsibility binding. Normalization scope and language-only literal preservation are owned solely by `VIDEO-LITERAL-01` in `language-lint.md`.
 
 ## Seedance 2.0 legacy boundaries
 

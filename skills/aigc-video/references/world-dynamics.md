@@ -97,12 +97,12 @@ When the current user explicitly asks for a flowing world, environmental dynamic
 
 ## Structure-table input
 
-The table in `SKILL.md` owns its columns. `lighting-compositing.md` supplies the required shared-light relation to `光影、合成与环境连续性`; world dynamics may add only continuity-critical motion content to the same cell:
+The table in `SKILL.md` owns its columns. `VIDEO-LIGHT-01` in `lighting-compositing.md` supplies the applicable physical-light or non-physical graphic/black-frame continuity to `光影、合成与环境连续性`; world dynamics may add only continuity-critical motion content to the same cell:
 
 - For source-backed or inherited continuity, write the source plus only a direction, active phase, disturbance, or residual state whose preservation changes the shot.
 - For `intentional_stillness`, write the explicit stable fields and sole activity beat when useful.
 - For a materially required unreadable fact, write that fact followed by `待确认` and keep the review pending.
-- Do not replace the required light/composite relation with `—`. When no cross-shot world-motion fact is locked, add no world-motion clause. Keep mode selection and the detailed dynamic receiver chain internal until structure review resolves.
+- Do not replace applicable light/composite continuity with `—` or invent physical receivers for explicitly non-physical imagery. When no cross-shot world-motion fact is locked, add no world-motion clause. Keep mode selection and the detailed dynamic receiver chain internal until structure review resolves.
 
 Examples: `继承视频1右向左风向，水面余波保持当前相位。` / `背景与灯光保持静止，仅腕表匀速转动。` / `视频中的风向无法可靠辨认，待确认。`
 
@@ -117,6 +117,7 @@ After structure review resolves, complete the selected mode internally and rende
 - Pure environment: normally use `coupled_world`; define existing driver, propagation through depth, material differences, and residual state.
 - One-take: when `coupled_world` applies, maintain drivers and accumulating disturbances along the route as framing changes.
 - Previsualization/white model: normally use `primary_action`; use `intentional_stillness` when stability is the inspection target.
+- Flat graphics/screen recordings: animate only the authorized graphic/UI change; use `primary_action` for that change or `intentional_stillness` for a held screen/black frame, without adding physical world receivers.
 - Strict edit: resolve without a mode when the operation preserves source dynamics. A dynamics edit returns the review to pending and selects a new mode.
 - Extension/bridge: inherit the boundary phase, select the new segment's mode, and converge on the successor's opening world state for a bridge.
 

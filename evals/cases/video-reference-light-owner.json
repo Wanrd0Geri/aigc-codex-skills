@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "id": "video-reference-light-owner",
+  "title": "角色烘焙光与场景光权限",
+  "family": "08-light-owner",
+  "rule_ids": [
+    "VIDEO-LIGHT-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "结构已确认。8秒固定中景，图片1只参考女孩外貌和服装，图片2只参考月夜庭院及从画面右侧照来的月光。女孩站在庭院看信。请写最终 Seedance 提示词，人物按庭院受光。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "appearance-warm-studio",
+      "required": true,
+      "kind": "image",
+      "role": "暖棚拍角色外观；尚未提供",
+      "path": null,
+      "sha256": null
+    },
+    {
+      "id": "moonlight-courtyard",
+      "required": true,
+      "kind": "image",
+      "role": "右侧月光庭院；尚未提供",
+      "path": null,
+      "sha256": null
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "scene-owns-light",
+      "question": "是否保留角色外观但不继承暖棚拍烘焙光；同源月光是否贯穿主体与可见接触/反射/空气关系？",
+      "rule_ids": [
+        "VIDEO-LIGHT-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

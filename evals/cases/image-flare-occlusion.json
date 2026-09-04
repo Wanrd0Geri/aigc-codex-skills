@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "image-flare-occlusion",
+  "title": "光源遮挡与成像层鬼影",
+  "family": "03-flare-mechanism",
+  "rule_ids": [
+    "IMG-OPTICS-01",
+    "IMG-EVIDENCE-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "图1中低位强光源与前景柱子可读。给两版修图提示词：A 保持机位，柱子完全挡住该光源时压低它引起的眩光；B 光源仍露出时允许已有镜头鬼影投影经过柱子所在的画面区域。不要把鬼影按柱子轮廓当成场景物体裁断。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "flare-source",
+      "required": true,
+      "kind": "image",
+      "role": "强光源与前景柱子的可读照片；尚未提供",
+      "path": null,
+      "sha256": null
+    }
+  ],
+  "authorizations": [],
+  "assertions": [],
+  "manual_checks": [
+    {
+      "id": "mechanism-separated",
+      "question": "是否区分致眩光源遮挡与成像层投影，且未宣称所有眩光都不受遮挡？",
+      "rule_ids": [
+        "IMG-OPTICS-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

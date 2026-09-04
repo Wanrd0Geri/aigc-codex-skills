@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "video-literal-anchors",
+  "title": "纯语言逐字保留锚点与台词",
+  "family": "05-language-literals",
+  "rule_ids": [
+    "VIDEO-LANGUAGE-01",
+    "VIDEO-LITERAL-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "只把这条最终 Seedance 编辑命令写自然一点，不改变任何控制和素材写法：严格编辑@视频1的3-7秒，把@图1里的白色面霜罐替换到桌上的旧香水瓶位置；保留人物动作、原有运镜、灯光、环境声和对白“钥匙在桌上”。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [],
+  "authorizations": [],
+  "assertions": [
+    {
+      "id": "video-anchor",
+      "kind": "literal",
+      "turn_id": "t1",
+      "text": "@视频1",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-LITERAL-01"
+      ]
+    },
+    {
+      "id": "image-anchor",
+      "kind": "literal",
+      "turn_id": "t1",
+      "text": "@图1",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-LITERAL-01"
+      ]
+    },
+    {
+      "id": "edit-interval",
+      "kind": "literal",
+      "turn_id": "t1",
+      "text": "3-7秒",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-LANGUAGE-01"
+      ]
+    },
+    {
+      "id": "exact-dialogue",
+      "kind": "dialogue",
+      "turn_id": "t1",
+      "text": "钥匙在桌上",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-LANGUAGE-01"
+      ],
+      "allow_terminal_punctuation": true
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "same-operation",
+      "question": "是否保持严格编辑、同一替换关系与全部保留项，无新增结构确认？",
+      "rule_ids": [
+        "VIDEO-LANGUAGE-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "id": "video-cross-shot-action",
+  "title": "同一动作跨镜不重启",
+  "family": "06-cross-shot-action",
+  "rule_ids": [
+    "VIDEO-STATE-01",
+    "VIDEO-DELIVERY-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "结构已确认。平台中立，8秒两镜。镜头1 0-4秒：甲将钥匙递给乙，乙右手已经握住钥匙；镜头2 4-8秒：从乙侧面拍，承接乙已握住钥匙的状态，甲松手收回，乙把钥匙放入口袋。两镜只有这一次交接，不重新递钥匙。请给完整提示词。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    }
+  ],
+  "fixtures": [],
+  "authorizations": [],
+  "assertions": [
+    {
+      "id": "shot-timeline",
+      "kind": "timeline",
+      "turn_id": "t1",
+      "duration": 8,
+      "shot_count": 2,
+      "rule_ids": [
+        "VIDEO-DELIVERY-01"
+      ]
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "continuous-phase",
+      "question": "镜头2是否从已握住状态继续，无重做交接或重启蓄力，终点钥匙归乙？",
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ],
+      "evidence_kind": "prompt"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}

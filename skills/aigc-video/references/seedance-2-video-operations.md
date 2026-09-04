@@ -2,11 +2,11 @@
 
 Load only for strict editing, extension, or seamless transition. Keep these operational commands separate from the new-generation timeline formula.
 
-Use plain upload-order labels such as `视频1`, `图片1`, and `音频1` by default. Keep supplied handles or UUIDs only in the internal mapping; render one literally only when the current user explicitly requests it for the current output.
+For new/substantive operation compilation, use label mapping under `VIDEO-LITERAL-01` in `language-lint.md`. Pure wording cleanup preserves the existing command and all literal handles, intervals, and controls.
 
 ## Structure and delivery
 
-- A strict edit inherits a confirmed structure version only while `change-impact-and-delivery.md` preserves every structure field. A structural change increments only the affected interval and applies the current request's review mode.
+- A strict edit preserves an actually accepted version only while its structure fields remain unchanged. A first non-structural source edit instead uses `source_preserved`, with no invented version, review mode, or acceptance, under `VIDEO-STRUCTURE-01`. A structural change creates/increments only the affected interval version and applies the current request's review mode.
 - An extension creates a new visible segment. Inherit its source BoundaryState under `video-contracts.md`; resolve structure review for the added segment before writing the command.
 - A bridge creates a new transition. Inherit each source BoundaryState under `video-contracts.md`; resolve structure review for the transition before writing the command.
 - After the structure-delivery gate passes, return one complete operation command. Never return only the changed phrase, interval field, or preservation sentence.
@@ -20,9 +20,9 @@ For world dynamics:
 
 For light/composite and sound:
 
-- A preserving strict edit inherits source light/composite and audible state; restate only the preservation boundary needed for fields the edit could disturb.
+- A preserving strict edit inherits the source light setup and audible state; apply `VIDEO-IMPACT-01` in `change-impact-and-delivery.md` to any necessary visible target-owned response. Keeping the light setup does not freeze the changed target's existing reflection color. Check only touched support; do not run new scene-light design for a small color edit.
 - A lighting/compositing edit reopens the affected review while preserving structure unless its dependency closure changes a structure field.
-- An extension or bridge inherits the seam light anchor, exposure relation, and active audible phase, then resolves the added segment's own minimum light-composite relation and current audible state. An explicit request to omit sound-description prose suppresses only that final prose.
+- An extension or bridge inherits the seam's applicable light/graphic continuity and active audible phase, then resolves the new segment under `VIDEO-LIGHT-01` and its current audible state. A non-physical seam never supplies a fabricated lamp or shadow; a new physical segment still needs its own physical review. An explicit request to omit sound-description prose suppresses only that final prose.
 
 For `SceneSpatialContract`:
 
@@ -52,10 +52,11 @@ Example:
 - add: name the new element, interval when needed, frame position, relation, and visible action
 - modify: name the original object or attribute and the replacement result
 - remove: name what disappears, the fill/reveal result, and the smallest preservation boundary
+- include only source-evidenced, target-owned necessary support under `VIDEO-IMPACT-01`, such as that object's visible reflection color; preserve the rest of its receiving surface and unrelated objects rather than freezing the whole surface
 - preserve only fields that the edit could disturb; do not append a full global-lock inventory
 - when marked regions actually exist, use the local-annotation rules in `seedance-2.5-special-workflows.md`
 
-Unmentioned content should remain unchanged, but write an explicit preservation boundary for high-cost identity, action, camera, audio, or composition fields that the requested edit could plausibly disturb.
+Unmentioned content should remain unchanged, but write an explicit preservation boundary for high-cost identity, action, camera, audio, or composition fields that the requested edit could plausibly disturb. Keep the target and any required attributable support in the same time scope; interval-exterior source content remains unchanged. Do not append generic reflection or relighting prose when the source provides no such visible relation.
 
 ## Extension
 

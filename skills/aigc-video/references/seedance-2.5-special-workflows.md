@@ -117,7 +117,7 @@ Use the strict-edit formula. State the target view and the visible consequence, 
 
 Do not combine `固定机位` with a tracking move. If the new view crosses the action axis, state the visible crossing or preserve screen direction explicitly.
 
-A viewpoint or camera-side change is structural. Increment the affected interval's `structure_version`, set it to `pending`, and apply the current request's review mode to its new crop, screen/depth relationship, occlusion, and route before rendering the complete strict-edit command. A camera setting change that demonstrably preserves all those fields may inherit confirmation.
+A viewpoint or camera-side change is structural. Create version 1 from an unversioned `source_preserved` edit, otherwise increment the affected interval's `structure_version`; set it to `pending`, and apply the current request's review mode to its new crop, screen/depth relationship, occlusion, and route before rendering the complete strict-edit command. A camera setting change that demonstrably preserves all structure fields may preserve an actual confirmation or use the non-structural `source_preserved` path; it never creates acceptance.
 
 ## Background-music removal
 

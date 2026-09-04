@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "id": "video-first-source-edit",
+  "title": "初次严格改色与结构重建",
+  "family": "12-source-preserved",
+  "rule_ids": [
+    "VIDEO-STRUCTURE-01",
+    "VIDEO-STATE-01",
+    "VIDEO-IMPACT-01",
+    "VIDEO-DELIVERY-01"
+  ],
+  "messages": [
+    {
+      "id": "u1",
+      "role": "user",
+      "content": "视频1是当前原片，5秒静态镜面桌、白杯和灰布，无动作、无切镜，静音音轨。第一次提交，只在2–4秒将灰布改成深蓝，其形状、白杯和倒影、镜头、背景与原声音不变。给完整严格编辑指令，另记录可观察的交付状态。",
+      "request_id": "r1",
+      "output_turn": "t1"
+    },
+    {
+      "id": "u2",
+      "role": "user",
+      "content": "继续同一视频任务，现在把这段机位改成从左后方环绕白杯拍摄；先给受影响结构。",
+      "request_id": "r1",
+      "output_turn": "t2"
+    }
+  ],
+  "fixtures": [
+    {
+      "id": "mirror-table-static-5s",
+      "required": true,
+      "kind": "video",
+      "role": "唯一源视频；静态镜面桌5秒，无动作或切镜，静音音轨",
+      "path": "../fixtures/mirror-table-static-5s.mp4",
+      "sha256": "4b2eb87671a492bf5fc07c051b8982cea2d79fda8a256732414620f3c1ca32f9"
+    }
+  ],
+  "authorizations": [],
+  "assertions": [
+    {
+      "id": "source-edit-interval",
+      "kind": "interval",
+      "turn_id": "t1",
+      "count": 1,
+      "rule_ids": [
+        "VIDEO-DELIVERY-01"
+      ],
+      "start": 2,
+      "end": 4
+    },
+    {
+      "id": "preserved-unconfirmed",
+      "kind": "trace_fields",
+      "turn_id": "t1",
+      "selector": {
+        "type": "state_snapshot",
+        "unit_id": "segment1"
+      },
+      "fields": {
+        "structure_status": "source_preserved",
+        "structure_version": null,
+        "structure_review_mode": null,
+        "acceptance_ref": null,
+        "delivery_decision": "deliver",
+        "admission_basis": "source_preserved"
+      },
+      "rule_ids": [
+        "VIDEO-STRUCTURE-01",
+        "VIDEO-DELIVERY-01"
+      ]
+    },
+    {
+      "id": "edit-structure-reopens",
+      "kind": "trace_fields",
+      "turn_id": "t2",
+      "selector": {
+        "type": "state_snapshot",
+        "unit_id": "segment1"
+      },
+      "fields": {
+        "structure_status": "pending",
+        "structure_version": 1,
+        "structure_review_mode": "review_required",
+        "delivery_decision": "wait_for_review"
+      },
+      "rule_ids": [
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01"
+      ]
+    },
+    {
+      "id": "state-consistency-t1",
+      "kind": "state_consistency",
+      "turn_id": "t1",
+      "structure_fields": [
+        "camera",
+        "shot_size",
+        "frame_crop",
+        "viewpoint",
+        "focus",
+        "visible_roster",
+        "screen_position",
+        "depth",
+        "occlusion",
+        "path",
+        "blocking_pose",
+        "action",
+        "dialogue_owner",
+        "endpoint"
+      ],
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ]
+    },
+    {
+      "id": "state-consistency-t2",
+      "kind": "state_consistency",
+      "turn_id": "t2",
+      "structure_fields": [
+        "camera",
+        "shot_size",
+        "frame_crop",
+        "viewpoint",
+        "focus",
+        "visible_roster",
+        "screen_position",
+        "depth",
+        "occlusion",
+        "path",
+        "blocking_pose",
+        "action",
+        "dialogue_owner",
+        "endpoint"
+      ],
+      "rule_ids": [
+        "VIDEO-STATE-01"
+      ]
+    }
+  ],
+  "manual_checks": [
+    {
+      "id": "first-edit-no-false-confirmation",
+      "question": "第一轮是否执行源保留严格编辑且不伪造确认；第二轮是否准确重开结构、传播机位依赖？",
+      "rule_ids": [
+        "VIDEO-STRUCTURE-01",
+        "VIDEO-IMPACT-01"
+      ],
+      "evidence_kind": "prompt"
+    },
+    {
+      "id": "actual-media-target",
+      "question": "如实际运行编辑器：逐目标检查授权终态、必要连带变化与源图/视频的保持范围；没有实际产出时保持pending，不从prompt推断。",
+      "rule_ids": [
+        "VIDEO-STRUCTURE-01",
+        "VIDEO-STATE-01",
+        "VIDEO-IMPACT-01",
+        "VIDEO-DELIVERY-01"
+      ],
+      "evidence_kind": "media"
+    }
+  ],
+  "status": "case_specification_only; no model execution implied"
+}
