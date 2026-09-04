@@ -1,6 +1,6 @@
 ---
 name: aigc-vfx-combat
-description: Design readable, high-tension donghua, xianxia, or wuxia combat and optional VFX before a final Seedance 2.5 video prompt. Use for close combat, weapon exchanges, spells, transformations, clashes, large-scale techniques, or results described as flat, weightless, unclear, or lacking tension. This skill owns shot-level combat causality, contact physics, initiative changes, effect form, and presentation; `aigc-video` owns the final Seedance 2.5 prompt, reference grammar, locks, and delivery.
+description: Design readable, high-tension donghua, xianxia, or wuxia combat and optional VFX before a final Seedance 2.5 video prompt. Use for fight stories, close combat, weapon exchanges, spells, transformations, clashes, large-scale techniques, or results described as flat, weightless, unclear, or lacking tension. This skill owns short fight dramaturgy, shot-level combat causality, contact physics, initiative changes, effect form, and presentation; `aigc-video` owns final prompt compilation, reference grammar, locks, and delivery.
 ---
 
 # AIGC VFX & Combat Design
@@ -9,6 +9,7 @@ Turn a fight or technique into a readable chain of causes and consequences, then
 
 ## Ownership and handoff
 
+- This skill owns the plain-language FightStory and only the short fight dramaturgy visible inside the assigned exchange: immediate goals, resistance, escalation, initiative change, false victory or reversal when requested, and ending function. It does not create long-form character arcs, subplots, lore, or a new outcome.
 - This skill owns shot-level combat logic: combat objective, starting geometry, initiative, attack-response chain, contact, momentum transfer, ending state, and optional VFX presentation.
 - `aigc-video` owns the final Seedance 2.5 prompt, duration, timestamps, reference labels, locks, sound grammar, and complete deliverable.
 - For a final video request, use a two-phase handoff: build only the combat structure, let `aigc-video` resolve its canonical structure gate, then resume this skill for presentation, optional VFX, and feasibility before `aigc-video` renders the final prompt. For design-only requests, return the design card below and stop.
@@ -37,7 +38,18 @@ Solve those causes before styling. Tension comes from **readable threat + speed 
 
 Do not force every request into `蓄力 → 爆发 → 余波`; that arc belongs to technique spectacle, not every punch, parry, or reversal.
 
-### 2. Build the combat-tension pass when an exchange exists
+### 2. Resolve the plain-language FightStory when the fight arc is still being designed
+
+Read `references/fight-story.md` when the request asks for a fight story or synopsis, creates or rewrites a multi-beat fight, or asks to repair a fight whose escalation, initiative curve, reversal, or ending is not yet accepted.
+
+- Preserve every supplied winner, ability, weapon, location, damage limit, beat order, and ending. Add only the visible causality needed to connect them.
+- Render the FightStory as ordinary continuous Chinese. Do not expose FightBeat, axis, ledger, structure-version, camera-table, platform, or prompt terminology.
+- Do not force this stage onto one isolated attack-response beat, a mechanics-only question, an audit of fixed shots, a fixed accepted story, or a pure spectacle with no fight arc. Check the same dramaturgy internally and continue to the owning technical stage.
+- A request for speed such as “直接给提示词” does not waive story review. Only an explicit instruction to skip the story/synopsis review does; then keep the FightStory internal and continue.
+
+**🔴 CHECKPOINT · 🛑 STOP — FightStory review:** when the FightStory is new or materially changed and review has not been explicitly skipped, return only the plain-language story plus one confirmation request. Do not add technical design, a structure table, VFX enrichment, or a final video prompt in that turn. After the user confirms that exact story, continue at the combat-tension or spectacle structure stage without retelling it.
+
+### 3. Build the combat-tension pass when an exchange exists
 
 Read `references/combat-tension.md`. Establish, in this order:
 
@@ -50,7 +62,7 @@ Read `references/combat-tension.md`. Establish, in this order:
 
 Use the macro rhythm `压 → 抢 → 碰 → 翻 → 留` when the exchange needs a complete dramatic arc. A short beat may compress it, but must still answer: **who initiates, how contact resolves, and who changes the situation**.
 
-### 3. Resolve the shared structure gate for every final video
+### 4. Resolve the shared structure gate for every final video
 
 For any new or reference-driven final video, pass the combat or spectacle structure packet into `aigc-video` before presentation or VFX enrichment. The packet contains only source locks, visible roster, starting geometry or spectacle envelope, action/FightBeat order, contact or effect result, and terminal boundary.
 
@@ -62,7 +74,7 @@ Follow the gate result instead of testing only whether the structure is approved
 
 When the user later confirms a pending combat structure, resume this skill at the next phase before `aigc-video` renders. Do not let a confirmation reply bypass the unfinished combat design. A design-only request may receive the complete design card without this extra confirmation round.
 
-### 4. Add VFX only after the action works
+### 5. Add VFX only after the action works
 
 For mixed combat or spectacle, set one color family and one signature form root per side. Read `references/vfx-library.md` for form and material vocabulary. Pick one form and 2–3 material words; more dilutes.
 
@@ -74,7 +86,7 @@ Nest `蓄力 → 爆发 → 余波` inside the relevant technique or finisher:
 
 For a normal hit, require one readable bodily or weapon reaction. Add at most one reachable environment receiver when the source or user authorizes it. Do not manufacture ground cracks, shockwaves, or building damage merely to prove force.
 
-### 5. Design presentation around readability
+### 6. Design presentation around readability
 
 Read `references/shot-language.md` for axis, screen direction, shot-distance contrast, speed contrast, contact emphasis, and VFX presentation. Establish the action before adding complex camera motion.
 
@@ -82,7 +94,7 @@ Read `references/shot-language.md` for axis, screen direction, shot-distance con
 - Camera shake, whip pans, motion blur, speed lines, slow motion, white flashes, and black-and-white inserts may emphasize an already readable contact; they must not replace it.
 - Use close framing to prove contact, wider framing to prove displacement, and a held ending to prove the result when those functions are needed.
 
-### 6. Run the Seedance 2.5 feasibility pass
+### 7. Run the Seedance 2.5 feasibility pass
 
 Read `references/model-priors.md` for known priors and failure recovery.
 
@@ -100,6 +112,7 @@ After the shared structure gate resolves, compile one internal `CombatHandoff` f
 The handoff must preserve:
 
 - source and user locks;
+- the accepted FightStory and its immediate goals, escalation, initiative turns, reversal logic, and ending function when that stage applied;
 - combat problem or spectacle intent;
 - starting geometry or spatial envelope;
 - initiative curve, FightBeats, contact ledger, and terminal boundary when an exchange exists;
