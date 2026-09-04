@@ -1203,5 +1203,10 @@
     "id": "video-neutral-03-extension-keeps-own-formula",
     "prompt": "新增片段结构已经确认。平台中立地把视频1向后延长4秒：原片结尾是女孩在窗边停住，左侧台灯持续照亮她和桌面，窗外雨声不断；新增片段里她转身走到桌边拿起信，结尾低头看信。不要使用任何平台专用格式。",
     "expected": "Returns one complete platform-neutral extension instruction in ordinary language with the source, append-after direction, inherited pose/camera-light-audio seam state, four-second new segment, and explicit ending. The added segment carries its own current focus, shared light-response relation, and audible state without restarting the rain or lamp state. It omits provider handles, markers, and capability claims and does not collapse the extension into an edit-style interval replacement."
+  },
+  {
+    "id": "candidate-15-result-review-boundary",
+    "prompt": "提示词静态自检全部通过，但没有提供生成视频。请判断打击感、身份稳定、触点准确和VFX遮挡是否通过。",
+    "expected": "Marks impact feel, identity stability, contact accuracy and VFX occlusion as UNKNOWN or unverified because no rendered video exists; does not treat prompt completeness as render evidence; and lists the minimum observable video evidence required for each result-level judgment."
   }
 ]

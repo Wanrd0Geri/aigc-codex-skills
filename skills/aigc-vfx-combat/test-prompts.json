@@ -73,5 +73,65 @@
     "id": "combat-15-spectacle-final-gates-before-vfx",
     "prompt": "最终要Seedance 2.5视频：宗门护山大阵启动，青玉法环覆盖山门上空，10秒，直接给提示词。",
     "expected": "Classifies as 招式奇观, builds only the source, spatial envelope, trigger, route, visible result and terminal boundary before entering aigc-video's canonical structure gate, treats 直接给提示词 as speed only, and holds detailed VFX form, presentation and feasibility until the structure gate resolves."
+  },
+  {
+    "id": "candidate-01-plain-language-fight-story",
+    "prompt": "设计一段20秒双人兵器战。先只给我大白话版本，让我看懂这场打斗讲了什么，不要分镜术语和提示词。",
+    "expected": "Uses ordinary Chinese to explain both immediate goals, the visible obstacle, escalation, initiative change and ending; omits FightBeat, axis, camera and ledger terminology; and invents no power, winner or environment damage."
+  },
+  {
+    "id": "candidate-02-false-victory-reversal",
+    "prompt": "30秒：A与B先势均力敌，A逐渐占优；观众以为A要赢时，B用一直存在但尚未发动的武器能力逆转，结尾只揭示新威胁不继续攻击。",
+    "expected": "Provides the plain-language fight story before technical design, gives every initiative change a visible cause, earns the false-victory impression, seeds B's weapon ability before the reversal, and stops at the revealed threat without adding another attack."
+  },
+  {
+    "id": "candidate-04-composition-proof",
+    "prompt": "巨体对手从画面深处逼近，小体型角色被压到桥栏边。设计一个不靠特效的构图方案，并说明画面重心和下一步战术。",
+    "expected": "Makes the tactical pressure readable through concrete silhouette separation, depth, scale, force line, edge pressure or negative space; gives the viewer one clear priority and the smaller fighter one visible next option; and does not rely on a fixed percentage or shot-size label as proof."
+  },
+  {
+    "id": "candidate-05-camera-role-and-anchor",
+    "prompt": "角色在屋脊上锁住长棍，摄影机环绕半圈后继续交锋；不能让人物跳到寺门或改变世界位置。",
+    "expected": "Binds the orbit to the staff axis or contact point, preserves visible roof-ridge and tile-slope anchors before and after the move, changes only viewing angle, and carries both fighters' world positions, facing and contact state into the next action."
+  },
+  {
+    "id": "candidate-06-state-relay-weapon-ownership",
+    "prompt": "三镜连续打斗中，黑铁棍始终属于B；A只用手臂格挡。请设计镜头接力并自检武器归属。",
+    "expected": "Tracks the staff's owner, grip, direction, contact state and terminal position in every shot; keeps A from holding the staff; starts each new shot from the previous terminal state; and reports the ownership audit with localized evidence."
+  },
+  {
+    "id": "candidate-07-staged-transformation",
+    "prompt": "角色的普通手臂要在三个镜头中逐步形成半包裹金色臂甲，终段出现背部脊柱状能量和尾部稳定结构，但不出现龙头或完整巨龙。",
+    "expected": "Defines at least three distinct inheritable stages, gives each change a source and propagation path, preserves each shot's terminal coverage as the next opening state, and stops at the partial arm armor plus spine-and-tail structure without expanding into a dragon head or complete dragon."
+  },
+  {
+    "id": "candidate-08-aerial-support-trajectory",
+    "prompt": "B从寺庙梁柱借力跃起，在空中转体下劈，必须避免无支撑悬空攻击。",
+    "expected": "Shows support, push-off, ascent, apex, descending rotation, contact and landing; keeps the takeoff evidence and landing visible despite camera movement; and lets any cut inherit the current flight phase rather than restarting the jump."
+  },
+  {
+    "id": "candidate-09-speed-clarity-blur",
+    "prompt": "高速疾冲接近、短促碰撞、击飞追击。需要二维动画般速度感，但不要全程模糊。",
+    "expected": "Builds speed through a readable anchor, abrupt distance closure, directional blur or controlled smear, reappearance at a new position and consequence; keeps the decisive contact and attack-response relation clear; and re-establishes a trackable true body during the chase."
+  },
+  {
+    "id": "candidate-10-2d-technique-routing",
+    "prompt": "参考视频有夸张形变帧、抽帧感、单帧冲击画和黑白闪。请判断哪些适合写进Seedance提示词，哪些应交给动作参考或后期；用户禁止黑白效果。",
+    "expected": "Honors the no-black-and-white lock, assigns action intent and terminal state to text, exact pose spacing and deformation to a checked motion reference, and frame-exact impact frames or cadence to post; it does not promise stable single-frame control from prose."
+  },
+  {
+    "id": "candidate-11-rhythm-breath-audit",
+    "prompt": "检查一段30秒提示词：前10秒13次切镜，中10秒5次，后10秒3次，其中门洞画面静止3.4秒，但故事要求持续高压并在最后2秒留悬念。",
+    "expected": "Locates the density collapse and the functionless 3.4-second hold, preserves the final two-second suspense breath, avoids converting the whole sequence to constant maximum speed, and limits the repair to the affected rhythm span instead of rewriting the story."
+  },
+  {
+    "id": "candidate-12-audit-calibration-clean",
+    "prompt": "对一份已明确位置、武器归属、触点、形态阶段、时间闭合且无用户冲突的简短打斗设计执行自检。",
+    "expected": "Uses PASS, WARN, UNKNOWN and N/A according to available evidence, does not invent a FAIL or rewrite a clean field to appear strict, distinguishes prompt-level evidence from render-only evidence, and reports only localized actionable findings."
+  },
+  {
+    "id": "candidate-13-audit-planted-defects",
+    "prompt": "审查四镜设计：镜1 B双手持棍在屋顶；镜2 A在寺门突然持同一根棍；镜3 B没有起跳便悬空下劈；镜4 A的普通手臂直接变成完整巨龙。",
+    "expected": "Finds the location jump, weapon ownership transfer, missing aerial support and skipped transformation stages; cites the responsible shots; assigns each finding to the correct layer; and proposes the smallest repair closure without adding style or plot."
   }
 ]
