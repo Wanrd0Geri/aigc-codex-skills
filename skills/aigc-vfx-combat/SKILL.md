@@ -53,7 +53,7 @@ Read `references/fight-story.md` when the request asks for a fight story or syno
 
 ### 3. Build the combat-tension pass when an exchange exists
 
-Read `references/combat-tension.md`. Establish, in this order:
+Read `references/combat-tension.md`. Choose ordinary actions and contacts in open designs; preserve source-locked gaps. Establish:
 
 1. the visible combat problem — what A is trying to achieve now and how B prevents it;
 2. starting geometry — left/right, depth, distance, height, facing, support surface, and action axis;

@@ -2,6 +2,10 @@
 
 Read this file for any fight with a meaningful attacker-defender exchange. It defines the action structure before VFX or camera styling.
 
+## Design choices and source gaps
+
+In an open action-design request, unspecified ordinary body actions, attacking limbs, defensive responses, contact points and relative blocking are design choices. Choose one simple concrete exchange that fulfills the supplied order and result; do not return these choices as fictitious “既定” slots. Preserve all source locks and do not invent identities, weapons, powers, injuries, damage or new environment surfaces. Missing source-dependent facts or decisions explicitly reserved by the user remain unresolved. The aerial target/landing exception in `state-relay.md` remains in force; story review and fixed-shot audits keep their existing boundaries.
+
 ## Root-cause map
 
 | Visible failure | Root cause | Tempting but wrong fix | Structural fix |

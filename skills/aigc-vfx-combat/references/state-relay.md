@@ -40,7 +40,7 @@ For aerial action use the complete chain:
 
 Name the last real support, takeoff vector, current height relation and intended landing/contact surface. Airborne bodies do not gain a new impulse, stop, hover or begin a second jump unless an authorized ability supplies force. If the sequence promises contact and landing, both must reach visible terminal states rather than being replaced by a suspended pose.
 
-When the request explicitly says to avoid an unsupported or hovering attack, the design must close the strike/contact phase and a landing or recovered-support phase. If the exact target or landing surface was not supplied, retain `既定目标触点` and `既定落面` as typed unresolved slots, complete every other mechanic, and mark a design-only card `warn`; request the missing facts only before final-video `design_ready`. Do not invent an opponent, weapon, injury, damage or new surface, and do not omit either phase.
+When the request explicitly says to avoid an unsupported or hovering attack, the design must close the strike/contact phase and a landing or recovered-support phase. If the exact target or landing surface was not supplied, retain `既定目标触点` and `既定落面` as typed unresolved slots, complete every other mechanic, and mark a design-only card `warn`; request the missing facts only before final-video `design_ready`. Do not invent an opponent, weapon, injury, damage or new surface, and do not omit either phase. This source-gap exception does not make slots the default for ordinary open-design contacts; use `combat-tension.md` to distinguish them.
 
 ### C. WorldState — location, height, support and anchors
 
