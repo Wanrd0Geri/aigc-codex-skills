@@ -44,6 +44,8 @@ Read `references/fight-story.md` when the request asks for a fight story or syno
 
 - Preserve every supplied winner, ability, weapon, location, damage limit, beat order, and ending. Add only the visible causality needed to connect them.
 - Render the FightStory as ordinary continuous Chinese. Do not expose FightBeat, axis, ledger, structure-version, camera-table, platform, or prompt terminology.
+- Preserve an exact supplied total duration in the plain heading or confirmation sentence without inventing internal time ranges.
+- When a reversal is requested, place one authorized carrier, behavior, or dormant-state clue before the reveal paragraph. A retrospective statement introduced during the reversal is not a seed.
 - Do not force this stage onto one isolated attack-response beat, a mechanics-only question, an audit of fixed shots, a fixed accepted story, or a pure spectacle with no fight arc. Check the same dramaturgy internally and continue to the owning technical stage.
 - A request for speed such as “直接给提示词” does not waive story review. Only an explicit instruction to skip the story/synopsis review does; then keep the FightStory internal and continue.
 

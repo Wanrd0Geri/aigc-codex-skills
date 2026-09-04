@@ -36,7 +36,7 @@ Every paragraph must advance at least one observable state: distance, posture, f
 - Escalate by changing the problem, not by listing stronger adjectives or more attacks.
 - Build advantage cumulatively: one side gains better distance, angle, height, support, recovery time, route access, or control of an existing weapon or ability.
 - A false victory requires repeated visible evidence before the apparent finishing opportunity.
-- A reversal must use an authorized fact that was visible, stated, or naturally prepared earlier. Do not invent its material, shape, element, damage, or exact mechanism when only its tactical function is known.
+- A reversal must use an authorized fact that was visible, stated, or naturally prepared earlier. Before the reveal paragraph, show one separate clue tied to its owner or carrier: the fighter preserves it, protects it, repeatedly repositions it, declines to spend it, or carries a user-supplied dormant sign. Merely saying during the reveal that the ability “had always existed” is retrospective explanation, not a seed. Do not invent its material, shape, element, damage, or exact mechanism when only its tactical function is known.
 - A suspense ending stops after the new threat becomes readable through activation, entry, occupation of routes, aim, or changed range. It does not continue into another attack or outcome.
 
 ## Terrain and props
@@ -46,6 +46,7 @@ Use terrain or a prop only when it changes a route, support, line of sight, dist
 ## Plain-language rendering
 
 - Use ordinary continuous Chinese, normally two to four short paragraphs.
+- Preserve a supplied total duration in the heading or final confirmation sentence. Do not create shot timecodes or subdivide the duration here.
 - Name the fighters and concrete actions. Prefer “B逼得A只能沿墙退” over “B掌握主动权”.
 - Do not use FightBeat, action axis, contact ledger, MotionSpec, structure version, lens, camera movement, timestamp, platform syntax, or prompt labels.
 - Do not include a technical checklist after the story unless the user explicitly asks for one.
@@ -59,6 +60,7 @@ Use terrain or a prop only when it changes a route, support, line of sight, dist
 | A named ability exists but its appearance or mechanism is unspecified | Use only its minimum tactical function and visible ownership | Keep form/material/damage unresolved for later design |
 | The sequence contains attacks but no state change | Remove repetition and make one exchange alter position, freedom, recovery, weapon relation, or initiative | If no change is authorized, frame the segment as a test/stalemate and end honestly |
 | A reversal has no prior seed | Reuse an authorized weapon, terrain fact, recovery pattern, or ability already present | If none exists, ask for the reversal source instead of inventing one |
+| The first clue appears only in the reversal sentence | Move an authorized carrier behavior or dormant state into an earlier paragraph without defining the hidden mechanism | If no earlier visible clue is authorized, keep the reversal pending and ask once |
 | A suspense ending continues into contact | Stop at readable activation, occupation, aim, or range change | Move any later attack into a separately approved continuation |
 | The user supplies a fixed accepted story | Preserve it and check dramaturgy internally | Repair only missing visible causality; do not reopen the story review |
 
@@ -67,7 +69,7 @@ Use terrain or a prop only when it changes a route, support, line of sight, dist
 Return only:
 
 ```text
-【白话打斗故事】
+【白话打斗故事｜<supplied total duration when present>】
 <two to four compact paragraphs in ordinary Chinese>
 
 请确认这版打斗走向；确认后再进入动作、镜头与特效设计。

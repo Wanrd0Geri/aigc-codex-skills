@@ -47,7 +47,7 @@
   {
     "id": "combat-10-final-seedance-ownership",
     "prompt": "用 $aigc-vfx-combat 给我最终可粘贴的 Seedance 2.5 打斗提示词：雨中双刀交锋，8秒。",
-    "expected": "Runs the combat structure pass and enters aigc-video's canonical structure-confirmation gate because the new fight structure is not approved; preserves 8 seconds, does not treat the design card as the final platform prompt, and does not render the final Seedance 2.5 artifact in the same turn even though the user asks for it directly."
+    "expected": "Runs the new-fight FightStory review before technical structure, preserves the supplied 8-second duration in plain language, and stops for confirmation without a design card, structure table, VFX enrichment or final Seedance prompt. After that exact story is confirmed, it must still enter aigc-video's canonical structure gate rather than treating story approval as shot-structure approval."
   },
   {
     "id": "combat-11-three-failure-method-change",
