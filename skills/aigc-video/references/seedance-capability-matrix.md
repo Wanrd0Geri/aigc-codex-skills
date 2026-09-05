@@ -59,5 +59,5 @@ Do not infer a 2.0 output resolution or expose a 2.5-only mode without current p
 
 - More accepted assets do not mean more useful assets. Assign one clear responsibility to every retained asset and remove only true duplicates or conflicts.
 - Long duration does not need a different prompt grammar. When shot count is unlocked, allocate source- or story-supported shots by beat; when it is locked, reduce density inside the existing shot headings. Do not create extra timed subsections inside a shot merely because the clip is long.
-- Very short duration does not justify dropping readable shot-heading ranges. Use fewer shots only when shot count is unlocked, and keep one readable beat per shot; do not replace a short shot with internal timestamp scaffolding.
+- For target timelines, very short duration does not justify dropping shot-heading ranges; concise sub-second boundaries are allowed when needed under `VIDEO-TIME-01`. Whole-clip reference timing uses untimed headings even with readable cuts. Use fewer shots only when shot count is unlocked and feasibility requires it, and keep one readable beat per shot; do not replace a short shot with internal timestamp scaffolding.
 - If the exact current UI differs from this file, the visible current UI wins and this file must be updated before making a hard-limit claim.

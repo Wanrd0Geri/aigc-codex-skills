@@ -90,7 +90,7 @@ Record one intended rendered owner for each fact. The active platform adapter de
 - mutable: free expression wording
 - unresolved: a decision requiring discussion or a bounded assumption
 
-Creative stages can write only mutable fields. Adapter syntax can wrap exact/semantic fields but cannot reinterpret them.
+Creative stages can write only mutable fields. Adapter syntax can wrap exact/semantic fields but cannot reinterpret them. Preserving source timing does not require printing measured timecodes: under `VIDEO-TIME-01`, the assigned video reference may own that timing in the final prompt. Explicit numeric-output and synchronization requirements remain rendered locks.
 
 During new or substantive platform compilation, a shot-internal timestamp written by an earlier model is not automatically exact merely because it appears in a current prompt or because the surrounding structure was accepted. In that compilation path, protect it only when the current user, an authoritative source, or the accepted version specifically records it as a timing lock; otherwise treat it as mutable planning scaffold and let the active adapter replace it with causal phase language. Language-only cleanup preserves every supplied time under `VIDEO-LITERAL-01` and does not enter this normalization pass.
 
@@ -200,7 +200,7 @@ A terminal BoundaryState is the desired ending image even when no later shot nee
 - applicable `SceneSpatialContract[]` and per-shot `scene_spatial_ref`
 - per-shot or per-operation world-dynamics review and mode; primary physical driver, necessary body mechanics, selected receivers, coupling, stability lock, and residual state only when that mode calls for them
 - per-shot or per-operation light/composite applicability and review; physical imagery uses the minimum source-response-integration chain, explicit non-physical imagery uses only existing graphic/black-frame continuity under `VIDEO-LIGHT-01`
-- total duration and continuous, non-overlapping shot-heading ranges when the current user/source supplies them or the active adapter requires them; when ranges are active, start at zero and end exactly at total duration, keep only current-user/source-locked shot-internal timing as a separate exact fact, and never derive adjacent subdivisions; for the explicit unreadable-cut coarse-white-model exception, preserve source order and cuts and render ordered shots without invented time ranges
+- total duration and continuous, non-overlapping shot-heading ranges when the current user/source supplies them or the active adapter requires them; when ranges are active, start at zero and end exactly at total duration, keep only current-user/source-locked shot-internal timing as a separate exact fact, and never derive adjacent subdivisions; when a supplied previsualization/coarse/white-model video owns whole-clip timing, retain measured ranges internally and render ordered untimed shots plus one reference timing binding under `VIDEO-TIME-01`; readable cuts do not require numeric output, while explicitly required numeric ranges or synchronization cues remain narrow exceptions
 - references and a complete per-shot audible plan: exact dialogue/narration, visible-action foley, active ambience, or explicit no-new-event/silence; source-operation boundaries may additionally preserve already embedded music/subtitles, while new/reference generation keeps them inactive under the standing lock
 - shots:
   - `structure_source`: current_text | visual_asset | inherited | unresolved

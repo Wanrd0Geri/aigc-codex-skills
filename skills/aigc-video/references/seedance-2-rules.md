@@ -14,7 +14,7 @@ Re-check version-specific limits after a provider update. Read `seedance-capabil
 
 Use `素材编号（按上传顺序） + 具体用途`. Build this map internally. For Seedance new/reference generation, never render a generic `参考素材：` block: put subject-reference materials in `主体：`, scene-reference materials together with the environment in `场景：`, look/style references in `风格：`, and motion, camera, storyboard, audio, text, or time-scoped roles in their owning `情节` shot or active audio/text sentence. `主体：` is required whenever any character, animal, product, vehicle, or key prop appears anywhere in the clip. Omit it only for a clip that remains a pure environment or empty shot from beginning to end.
 
-For one coarse white-model video that governs the whole clip, place one natural unheaded reference sentence before `主体：` and name only the dimensions actually borrowed. Put subject/prop correspondence in `主体：`; put an actual supplied or described environment in `场景：`; do not mention an absent scene, light, material, guide, or other unborrowed dimension merely to exclude it.
+For one previsualization/coarse/white-model video that governs the whole clip, place one natural unheaded reference sentence before `主体：` and name only the dimensions actually borrowed. Put subject/prop correspondence in `主体：`; put an actual supplied or described environment in `场景：`; do not mention an absent scene, light, material, guide, or other unborrowed dimension merely to exclude it.
 
 Apply only `VIDEO-LITERAL-01` in `language-lint.md` for label scope: this compilation path defaults to plain upload-order labels and retains source identifiers internally; language-only cleanup preserves every supplied literal. Resolve unknown material order only when this compilation actually needs it.
 
@@ -63,20 +63,28 @@ For each shot, declare only the fields relevant to its current visible set and e
 不添加字幕，不添加背景音乐。
 ```
 
-Do not open with `生成一段N秒的……`. Duration belongs in the shot-heading ranges and remains an exact production fact. The explicit unreadable-cut coarse-model route omits those ranges instead of inventing them.
+Do not open with `生成一段N秒的……`. Duration remains a production fact; its rendered owner follows `VIDEO-TIME-01` below. A whole-clip timing reference owns inherited duration and cuts without duplicated numeric ranges.
 
 Never render a `全局补充：` heading. Put an owned whole-clip requirement naturally in `主体：`, `场景：`, `风格：`, or `情节：`. If a genuine cross-shot control has no better owner, append it once as a natural unheaded sentence after the last shot and before the standing subtitle/music sentence.
 
-## Timeline rules
+## Timeline rules — VIDEO-TIME-01
+
+Choose the timing owner from the reference’s assigned role, not from whether a video happens to be attached:
+
+- **Whole-clip reference timing:** when a supplied previsualization/coarse/white-model video owns duration, shot order, cuts, and rhythm, bind those dimensions once in the opening reference sentence (for example, `沿用视频1的镜头顺序、切点与节奏。`) and render `镜头1：`、`镜头2：` without ranges. This applies to a single shot too and to both readable and unreadable numeric cut times. Retain measured times/frame counts internally for correspondence, capacity, and boundary checks; do not copy metadata decimals such as `5.733333` or round source cuts into a competing text timeline. The video must be supplied to the generation platform; do not claim video conditioning when only an analysis transcript is available.
+- **Target timeline:** with no timing reference, or a video assigned only action/camera/appearance, obtain the target duration and render concise shot-heading ranges. Creating a new previsualization is also this route unless a supplied video owns its timing. Do not inherit an action reference’s duration or cuts automatically.
+- **Explicit timing requirements:** preserve user-requested numeric ranges and user/authoritative-production-source synchronization locks (for example, `第3秒亮灯`) even with a timing reference, only at their stated scope. A measured cut, clip metadata, or frame-rate conversion is evidence, not by itself a requirement to print that number. Never infer adjacent timing subdivisions. Resolve a real conflict with reference timing through the existing authority gate.
+
+These are generation instructions, not a guarantee of second- or frame-accurate execution. Required synchronization must be checked in the actual result; text checks cannot establish it. Language-only cleanup keeps supplied timing literally, and edit/extension/bridge intervals retain their operation grammar.
 
 - Number rendered headings with contiguous prompt-local indices beginning at `镜头1`, even when source/project identifiers are `场10镜5`, `10-12`, UUIDs, filenames, or non-contiguous storyboard labels. Preserve that source-to-local mapping internally; never render `镜头10-5`、`镜头10-12` or another project id as the Seedance shot heading.
-- Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike, except for the unreadable-cut coarse-white-model route below.
-- The shot heading is the default owner of exact generation timing. Inside that shot paragraph, write `开镜时的当前状态 -> 连续因果过程 -> 可见终点` in natural causal prose and let Seedance distribute the phases across the heading range. A shot may contain several necessary action phases without becoming a second timestamped timeline.
+- Use `镜头N（开始-结束秒）：` for 5-second, 15-second, 30-second, and ultra-long outputs alike, when the target-timeline route applies; reference-owned timing uses the untimed headings above.
+- For a target timeline, the shot heading owns the target range. Inside that shot paragraph, write `开镜时的当前状态 -> 连续因果过程 -> 可见终点` in natural causal prose and let Seedance distribute the phases within that range or the inherited reference rhythm. A shot may contain several necessary action phases without becoming a second timestamped timeline.
 - Do not infer or render shot-body ranges such as `4-6秒`、`6-8秒`、`17-18秒` from action complexity, planning estimates, keyframe spacing, or a failed result. Use `随后`、`当……时`、`过程中`、`落地后`、`最终` or equivalent observable transitions instead.
 - A narrow exception applies only when the current user or readable authoritative source explicitly locks an internal second/frame time. This may govern an action or visibility change, dialogue, visible text, audio, VFX, or frame-accurate synchronization. Preserve only the stated time or stated subdivision and do not create neighboring subdivisions. Edit, extension, and bridge intervals follow their operation grammar rather than this generation-shot rule.
-- Start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
-- Use integer-second boundaries by default. Never introduce decimals; preserve them only when the current user or an exact source explicitly requires sub-second timing.
-- If locked shot count and duration cannot give every shot a positive integer range, ask for a longer duration or restructuring permission instead of using decimals.
+- When rendering a target timeline, start at 0, use continuous non-overlapping ranges, and end exactly at total duration.
+- For an unlocked target timeline, prefer integer-second boundaries when they fit. Use concise sub-second boundaries when short shots require them; use only the precision needed, without long computed decimals. Preserve explicitly locked numeric timing at its required precision.
+- An integer-format preference alone never justifies lengthening or restructuring a sequence. Ask only for a real lock conflict or evidenced feasibility failure; an explicit user requirement for integers still remains a lock.
 - Use frame ranges only for frame-accurate sync, and state the active frame rate and total frame count.
 - Keep one readable beat and one main camera strategy per shot. A short cut may carry an instantaneous state or action phase. Render each shot through its resolved world-dynamics mode.
 - Shots use semantic names and state only visible changes or continuity-critical inheritance.
@@ -85,8 +93,8 @@ Never render a `全局补充：` heading. Put an owned whole-clip requirement na
 - When a performance continuity anchor controls the shot, state the inherited relation, attention, intensity, or decision at cut-in before advancing the performance. Do not output the anchor label or repeat the full earlier task.
 - When an authorized audio/video rhythm materially controls a visual event, state the event's causal alignment to the relevant strong beat, rhythm change, speech turn, or sound cue in the owning shot. Mention the material label only at its single binding point; rhythm-only borrowing does not authorize the source music, lyrics, or background audio.
 - When a cut continues one event, state the inherited phase and advance it. Do not repeat approach, wind-up, launch, contact, or another completed onset.
-- For previsualization, use the same timeline formula once total duration is known; establish the selected representative state at cut-in.
-- For a coarse white-model video, inherit the source duration, shot order, and cuts without asking for or separately writing total duration. Reuse exact ranges only when they are readable. When the cut ranges are unreadable, preserve the source order and cuts and render `镜头1：`、`镜头2：` in order without time ranges; this explicit exception overrides the normal timestamp formula and never authorizes invented seconds.
+- When generating a new previsualization without inherited video timing, use target ranges once total duration is known; establish the selected representative state at cut-in.
+- For a coarse/white-model video assigned whole-clip timing, apply the reference-owned route above: inherit duration, order, and cuts without asking for or separately writing total duration; readable numeric cuts do not change the untimed-heading default.
 - Every final shot states a compact framing/camera relation from its resolved source authority and the current visible spatial relation. A generic whole-clip reference sentence never substitutes for either field in an individual shot.
 
 ## Shot sentence order

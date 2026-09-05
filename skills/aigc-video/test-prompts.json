@@ -518,7 +518,7 @@
   {
     "id": "video-white-model-01-opening-reference-and-subject-map",
     "prompt": "粗模逐镜结构已经确认，直接输出最终提示词。视频1是黄色、蓝色、绿色三个人形粗模，只参考人物动作、站位、移动路线、运镜和切镜；图片1、图片2、图片3依次是三个最终角色。场景参考图片4。沿用视频1的时长和切镜，不要问总时长。",
-    "expected": "Starts with one natural unheaded sentence that names only 视频1的人物动作、站位、移动路线、运镜和切镜, places the yellow/blue/green correspondence to 图片1/图片2/图片3 at the start of 主体, and puts 图片4 in 场景. It preserves source duration and cuts without asking for or separately writing total duration; when exact cut ranges are unreadable, it renders ordered 镜头N entries without time ranges and never invents seconds. It does not invent light reference, missing-scene prose, viewport exclusions, a 参考素材 heading, or a 全局补充 heading."
+    "expected": "Starts with one natural unheaded sentence that names only 视频1的人物动作、站位、移动路线、运镜和切镜, places the yellow/blue/green correspondence to 图片1/图片2/图片3 at the start of 主体, and puts 图片4 in 场景. It preserves source duration and cuts without asking for or separately writing total duration; whether numeric cut ranges are readable or not, it renders ordered 镜头N entries without time ranges, binds inherited timing once, and keeps measured seconds internal. It does not invent light reference, missing-scene prose, viewport exclusions, a 参考素材 heading, or a 全局补充 heading."
   },
   {
     "id": "video-white-model-02-text-scene-and-no-pink-elephant",
@@ -958,7 +958,7 @@
   {
     "id": "video-contract-01-coarse-four-shot-unified-topology",
     "prompt": "四镜粗模结构已经确认，视频1可读出四个切点和完整时长。视频1只参考镜头顺序、时间切点、机位构图、空间关系、运动路径和关键状态；请直接写最终Seedance提示词。",
-    "expected": "Returns one unified Seedance command with one timeline and four ordered time segments, never four independent prompts. It preserves the readable four cuts and uses the generic coarse-model contract while allowing only supported in-between motion."
+    "expected": "Returns one unified Seedance command with four ordered untimed shot headings, never four independent prompts. Binds the source timing/cuts/rhythm once, retains readable measured cuts internally without copying numeric ranges, and uses the generic coarse-model contract while allowing only supported in-between motion."
   },
   {
     "id": "video-contract-02-current-state-closure-no-relative-shot-language",
@@ -1193,6 +1193,21 @@
     "id": "video-visual-specificity-02-profile-does-not-leak",
     "prompt": "结构已确认。给我写一个手机实拍感UGC产品短视频：白天厨房里，一只手拿起透明水杯喝一口，固定机位，6秒。没有要求CG、电影或丰富材质描述。",
     "expected": "Does not activate or leak the cinematic 3D CG profile. It preserves the requested UGC live-action style, writes only visible product/scene/camera facts needed for the shot, and does not append a generic cinematic, resolution, camera-brand, material, or negative-prompt quality tail."
+  },
+  {
+    "id": "video-visual-specificity-03-default-finished-cg-simple-action",
+    "prompt": "结构已确认，给最终Seedance 2.5提示词。三维CG成片，6秒单镜固定近景：黑发少年穿灰色粗布衣坐在旧木桌旁，安静听画外雨声，结尾仍坐着；脸部清晰，背景柔化。左侧窗户透入柔和天光，衣服和木桌都受这束光照明。没有对白，没有其他人。",
+    "expected": "Automatically applies finished-CG fidelity without requesting another rich-description instruction. Delivers the full confirmed six-second prompt with explicit cinematic rendering, crop-readable hair and skin treatment, material-specific cloth/wood, and coherent subject/table receiving light. Does not compress the result to one sentence just because the action is simple, duplicate all surface facts in every owner, or add movement, props, visible rain, a second person or another camera/focus beat. Hair/skin detail preserves the existing character and reads as desired rendering rather than a claim about an unseen reference image."
+  },
+  {
+    "id": "video-visual-specificity-04-default-wide-visible-coverage",
+    "prompt": "结构已确认，三维CG成片，8秒固定峡谷大全景，无人物。深灰岩壁、狭窄石路、少量垂藤，清晨侧逆光，远处已有薄雾。保持地形与画面静止，无对白，无新增声音事件。给最终提示词。",
+    "expected": "Retains substantial finished-CG style, rock/vegetation surface response, shared light and atmospheric depth at the wide crop. Omits skin, eyes, hair, cloth and human mechanics because none are visible; does not introduce people, a close-up, weather, moving plants or extra light to fill the fidelity coverage. Keeps the confirmed fixed eight-second shot and audible state, with no sentence-count shortcut or generic quality-only suffix."
+  },
+  {
+    "id": "video-visual-specificity-05-explicit-preview-and-style-boundary",
+    "prompt": "结构已确认，做6秒三维白模预演，只有灰色低模机器人站在灰色方台上，固定全景。我要检查机器人脚底与台面的接触位置，所有物体都静止，保持灰色低模，没有皮肤、毛发和精细材质，不做成片渲染。",
+    "expected": "Preserves the explicitly requested static low-poly gray preview, its geometry, crop and contact relation. Does not apply the finished-CG cinematic profile, fine surface texture, realistic skin/hair or animation to a 3D preview merely because the default now favors detailed final prompts. Keeps the required ordinary physical light/contact and sound state at the preview's intended level; no new review is required for untouched confirmed geometry."
   },
   {
     "id": "video-performance-12-amplitude-escalates-one-carrier",
@@ -1464,5 +1479,35 @@
     "id": "round3-n1",
     "prompt": "跳过结构确认，只给一条5秒Seedance 2.5提示词：清晨，一个白瓷杯静放在木桌上，窗外柔和天光照亮杯沿与桌面，固定近景，镜头从头到尾保持杯子和桌面静止。无人物，没有动作素材，无对白。不要新增蒸汽或其他物件。",
     "expected": "交付完整单镜5秒提示词，不引入战斗故事、攻防、StateRelay或Combat Audit表。 保留杯桌静止、固定近景与天光，不增人/物/蒸汽/运动；声音处理不添加背景音乐。 Seedance主体/场景/情节归属与时间语法保持，最终无内部契约字段。"
+  },
+  {
+    "id": "video-timing-01-reference-measured-decimal-single-shot",
+    "prompt": "单镜结构已确认。视频1是生成时会一起上传的预演，负责整段时长、节奏、运镜和动作。测得总时长5.733333秒，这只是媒体测量记录，不要求把这个数字写进提示词。固定中景，女孩从左侧走到桌边放下杯子，终点手离开杯子；室内窗光、杯底接触桌面的声音。写最终Seedance提示词。",
+    "expected": "Uses one reference binding for the inherited timing and other authorized dimensions and one untimed 镜头1 heading. Retains the measured duration internally without printing, rounding, or asking to confirm it; preserves action/camera/endpoint and does not invent a cut or promise frame accuracy."
+  },
+  {
+    "id": "video-timing-02-reference-action-only-target-duration",
+    "prompt": "两镜结构已确认，目标8秒：第一镜女孩走到窗前，第二镜她推开窗停住。视频1也会上传，但只参考走路动作，不参考原片时长、切点或节奏；原片5.733333秒。清晨窗光与鸟鸣。请写最终Seedance提示词。",
+    "expected": "Renders a continuous target timeline from 0 to 8 with two concise positive ranges; assigns video1 only the walking motion. Does not inherit the measured clip duration/cuts or use untimed headings merely because a video is attached."
+  },
+  {
+    "id": "video-timing-03-reference-explicit-event-sync",
+    "prompt": "两镜预演结构已确认，视频1负责整段10秒的节奏和切点，生成时会上传；第一镜女孩站在暗室桌旁，第二镜近景拍桌灯。必须在全片第3秒亮灯，第一镜要看到灯亮时她被照亮。仅灯开关声，无对白。输出最终提示词。",
+    "expected": "Uses reference-owned timing and ordered untimed headings while explicitly rendering the full-clip third-second lamp-on event in shot1 and inheriting its lit state in shot2. Does not invent numeric neighboring phases or omit the sync lock; makes no exact-execution guarantee."
+  },
+  {
+    "id": "video-timing-04-short-cuts-no-integer-format-block",
+    "prompt": "结构已确认，无参考视频，4秒五镜：近景信号灯由红变绿，特写按钮亮起，特写仪表指针开始上升，近景绿灯保持常亮，特写显示屏出现数字“1”；无对白，每镜仅对应机械提示音。请分配简洁时间区间，不要改总时长或镜头数。",
+    "expected": "Keeps five positive continuous shot ranges covering 0–4 using concise sub-second boundaries. Does not ask to lengthen or restructure merely because five integer-second shots cannot fit, and does not generate long arithmetic decimals or shot-body subdivisions."
+  },
+  {
+    "id": "video-timing-05-reference-explicit-numeric-headings",
+    "prompt": "两镜预演结构已确认，视频1会一起上传并负责节奏。请在最终提示词里明确保留我指定的镜头1（0-2.5秒）和镜头2（2.5-5秒），这两段与预演一致。第一镜女孩推开门，第二镜她在门内停住，室内暖光与门轴声，无对白。",
+    "expected": "Preserves the explicitly requested numeric heading ranges despite reference-owned timing, with matching order and total duration. Does not erase user-requested decimals, infer finer phases, or generalize the exception to measured metadata."
+  },
+  {
+    "id": "video-timing-06-language-only-measured-looking-literal",
+    "prompt": "仅润色这段现有视频提示词的中文，不改变格式、时码、素材标记或任何动作：参考视频1。情节：镜头1（0–5.733333秒）：固定中景，女孩在桌边坐着，保持坐姿，没有动作。无对白，无新增声音事件。不添加字幕，不添加背景音乐。",
+    "expected": "Uses protected language_only delivery and returns the complete prompt with the supplied 0–5.733333 range unchanged. Does not apply the new timing normalization, infer a new reference responsibility, or request structure confirmation."
   }
 ]

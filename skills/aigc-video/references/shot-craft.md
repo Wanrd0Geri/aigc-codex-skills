@@ -7,29 +7,29 @@ Load this reference when a shot needs performance direction, camera movement des
 1. Shot detail levels
 2. Camera movement, framing, and optical result
 3. World, screen, camera, and lighting coordinates
-4. Conditional visual specificity
+4. Visual specificity and default finished-CG fidelity
 5. Performance, cross-shot action, and dialogue
 
 ## Shot Detail Levels
 
-Length is decided per shot or action unit, not per whole video. These labels control only detail density after structure review resolves under `SKILL.md`. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
+Length follows the executable visual requirements, not a word or sentence quota. These labels control action/camera explanation after structure review resolves under `SKILL.md`; they never cap the style/material/fidelity layer. A simple action can still need a fully specified finished image. Follow an explicit user length limit; otherwise preserve distinct useful detail and remove only redundant meaning. Never reveal the `simple` / `standard` / `complex` labels in the final prompt.
 
 ### Simple Shot
 
-Use one short Chinese sentence when the subject, action, and continuity are obvious:
+Keep the action chain straightforward when the subject, action, and continuity are obvious:
 
 - One clear subject or one clear edit.
 - One main action with no layered blocking.
 - Little risk of confusing asset operational roles, borrowed-dimension assignments, spatial relationships, or emotional intent.
 - Atmosphere, light, sound, and camera do not change the user's meaning.
 
-Write only the needed subject, action, and essential continuity. Do not add extra camera, lighting, mood, material, sound, or stability language just to make the shot look professional.
+Describe the subject, action, and continuity, then retain the applicable visual-fidelity requirements below. Do not add new camera moves, events, props, mood, or sound merely to lengthen a simple shot; describing an existing surface or shared light more fully does not add an action beat.
 
-The active adapter's required focus, audible state, and applicable light/composite relation under `VIDEO-LIGHT-01` are not optional enrichment. Compress them into the same short sentence at their minimum useful scope; do not expand them into extra craft detail.
+The active adapter's required focus, audible state, and applicable light/composite relation under `VIDEO-LIGHT-01` are not optional enrichment. Give them enough prose to be executable in their owning fields; do not force them and the visual-fidelity layer into one short sentence.
 
 ### Standard Shot
 
-Use one to two compact Chinese sentences when the shot needs moderate control:
+Use as many natural Chinese sentences as needed when the shot needs moderate control:
 
 - A clear subject plus atmosphere, space, expression, prop, or one active reference-input borrowed dimension.
 - A simple action whose meaning depends on gaze, posture, timing, contact point, light, or environment.
@@ -118,9 +118,9 @@ A camera move or cut changes which lit plane the camera sees; it does not move t
 
 ## Visual Specificity Pass
 
-Run this hard pass only when the route in `SKILL.md` is active for the affected generation unit: the current user/project asks for enriched or higher-specificity visuals, supplies a visible descriptor bundle, or selects the cinematic 3D CG profile through ordinary language such as `院线级三维渲染CG动画电影`. The user never needs an internal profile token.
+Run this pass by default for finished 3D CG new/reference generation and substantive recompilation whose scope permits visual refinement, even when the user does not repeat `丰富描述` or `顶级电影三维CG动画`. The intended medium must already be established by the user or authorized source; a rough 3D motion reference alone does not select it. Also run it when the current user/project asks for enriched visuals, supplies a visible descriptor bundle, or selects a cinematic profile. The user never needs an internal profile token.
 
-Do not activate from the word `电影感` alone during language-only cleanup, for a source edit that must preserve the existing look, or for an unrelated product, UGC, previsualization, graphic, or other style task unless the current request makes visual enrichment material. This pass improves semantic and shot specificity; it does not prove or guarantee higher base image quality.
+Preserve the existing look during language-only cleanup and source-preserving edits. Explicit flat graphics, 2D, live-action UGC, clay/low-poly art direction, and requested white-model or green-screen inspection outputs keep their own visual intent; do not impose realistic skin, cinematic CG, or new scene lighting on them. When white-model footage is only a motion/layout reference for a requested finished CG output, the finished-CG default does apply. This pass makes desired qualities explicit; it does not prove that longer prompts or more adjectives improve every render.
 
 After structure resolves and before platform rendering:
 
@@ -128,6 +128,23 @@ After structure resolves and before platform rendering:
 2. preserve exact locks; translate an empty booster only when the current brief supports concrete facts, otherwise remove it
 3. assign each concrete fact to one smallest stable owner, then run `VisibleSetGate` against every crop
 4. merge duplicates and resolve true material/light/optics conflicts through the authority order in `SKILL.md`
+
+### Default finished-CG fidelity coverage
+
+Treat the following as required coverage when applicable, not an optional suffix. Start with the established art style; cinematic fidelity improves its execution without redesigning faces, age, proportions, costume, palette, or stylization. For an otherwise unspecified finished-CG quality level, use the cinematic profile below. Current user/project style constraints take priority.
+
+| Applicable visible feature | Make the desired result explicit | Rendered owner |
+| --- | --- | --- |
+| Whole-clip rendering | cinematic CG quality, nuanced light-to-shadow transitions, softly contained highlights, retained shadow detail, coherent color/exposure across subject and environment | `风格：` |
+| Existing hair/fur readable in medium or close views | natural grouping and density, soft strand edges, restrained highlights; movement only when caused by an authorized body action or active world driver | stable construction in `主体：`; local light/motion response in the shot |
+| Existing exposed skin readable in close views | fine surface texture, natural color variation and soft light transmission; preserve the character's established stylization instead of defaulting to live-action anatomy | stable skin treatment in `主体：`; crop-visible receiving response in the shot |
+| Visible clothing, props and environment surfaces | material-appropriate texture, roughness, reflectance and existing wear; distinguish cloth, embroidery, wood, stone or metal only where those materials exist | `主体：` / `场景：` |
+| Physical light and image depth | shared source/receiver relation, grounding or nearby-surface response, depth/exposure separation; describe haze only when supported | source in `场景：` or its local shot; visible response in the shot under `VIDEO-LIGHT-01` |
+| Authorized subject motion | readable weight, contact, inertia, cloth/hair follow-through appropriate to the existing action; keep an intentionally still subject still | owning shot under `world-dynamics.md` |
+
+For example, a compatible `风格：` treatment can say: `院线级三维渲染的CG动画电影截帧质感。明暗过渡细腻，高光柔和收束，暗部保留层次；色彩丰富而克制，人物与环境保持一致的材质响应和曝光关系。` This is an adaptable rendering baseline, not the entire prompt or a substitute for the applicable hair, skin, surface and shared-light descriptions in their owners.
+
+Describe desired fidelity for an established material without claiming that unseen fine detail was observed in the source. Do not invent skin blemishes, embroidery patterns, weather, fog, extra lights, strands on a bald head, or a new focus pull. In a wide landscape, surface/depth/light coverage replaces inapplicable portrait detail; never change the crop to fit this checklist. An explicit brief-output request compresses the prose while preserving the most material controls. Without that request, a sentence cap, short duration, or simple action is not a reason to drop applicable coverage. Finish by checking what the generator actually receives: `三维CG动画，质感统一` alone does not satisfy this default.
 
 | Owner | Put here | Keep out |
 | --- | --- | --- |
@@ -138,7 +155,7 @@ After structure resolves and before platform rendering:
 
 Keep only facts the requested crop can show. Iris moisture, skin scattering, hair strands, or lip texture may control a close shot but do not belong in a wide environment shot. A foreground ribbon, sleeve, weapon, branch, or flare is allowed only when that object/effect already exists or is explicitly authorized; this pass cannot invent it merely to create depth.
 
-When the current user/project selects the cinematic 3D CG profile meaning, render `院线级三维渲染的CG动画电影截帧` exactly once in `风格：`. Concrete subject, scene, light, material, and optical facts carry execution. Do not add `正片`, `国漫`, `不是海报`, or `不是游戏宣传图`; the profile implies no regional, period, costume, or palette fact.
+When the current user/project selects the cinematic 3D CG profile meaning, or the compatible finished-CG default above applies, render `院线级三维渲染的CG动画电影截帧` exactly once in `风格：`. Concrete subject, scene, light, material, and optical facts carry execution. Do not add `正片`, `国漫`, `不是海报`, or `不是游戏宣传图`; the profile implies no regional, period, costume, or palette fact.
 
 | Trigger | First repair | If still unresolved |
 | --- | --- | --- |
